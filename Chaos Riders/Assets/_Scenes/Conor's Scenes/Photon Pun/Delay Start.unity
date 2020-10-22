@@ -206,52 +206,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &152922276
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 152922277}
-  - component: {fileID: 152922278}
-  m_Layer: 0
-  m_Name: DelayStartLobbyController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &152922277
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 152922276}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 195.35791, y: 336.1986, z: -65.94592}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &152922278
+--- !u!114 &152922278 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 820674877786702354, guid: 8bcb0fad9d4d209479d76cec22c00a19, type: 3}
+  m_PrefabInstance: {fileID: 820674877937494708}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 152922276}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d190b8378a8533d4e88b31ac9623f188, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delayStartButton: {fileID: 1121685187}
-  delayCancelButton: {fileID: 991921309}
-  RoomSize: 3
 --- !u!1 &252632453
 GameObject:
   m_ObjectHideFlags: 0
@@ -723,50 +688,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 813371675}
   m_CullTransparentMesh: 0
---- !u!1 &943102070
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 943102071}
-  - component: {fileID: 943102072}
-  m_Layer: 0
-  m_Name: DelayStartRoomController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &943102071
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 943102070}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 195.35791, y: 336.1986, z: -65.94592}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &943102072
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 943102070}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ef5285ab22a76d4baaf92578b7095bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  waitingRoomSceneIndex: 1
 --- !u!1 &991921309
 GameObject:
   m_ObjectHideFlags: 0
@@ -1311,3 +1232,125 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 04343e7cf7ea47b45bbc3e23c7501f67, type: 3}
+--- !u!1001 &820674877937494708
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 820674877786702352, guid: 8bcb0fad9d4d209479d76cec22c00a19, type: 3}
+      propertyPath: m_Name
+      value: DelayStartLobbyController
+      objectReference: {fileID: 0}
+    - target: {fileID: 820674877786702353, guid: 8bcb0fad9d4d209479d76cec22c00a19, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 195.35791
+      objectReference: {fileID: 0}
+    - target: {fileID: 820674877786702353, guid: 8bcb0fad9d4d209479d76cec22c00a19, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 336.1986
+      objectReference: {fileID: 0}
+    - target: {fileID: 820674877786702353, guid: 8bcb0fad9d4d209479d76cec22c00a19, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -65.94592
+      objectReference: {fileID: 0}
+    - target: {fileID: 820674877786702353, guid: 8bcb0fad9d4d209479d76cec22c00a19, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 820674877786702353, guid: 8bcb0fad9d4d209479d76cec22c00a19, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 820674877786702353, guid: 8bcb0fad9d4d209479d76cec22c00a19, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 820674877786702353, guid: 8bcb0fad9d4d209479d76cec22c00a19, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 820674877786702353, guid: 8bcb0fad9d4d209479d76cec22c00a19, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 820674877786702353, guid: 8bcb0fad9d4d209479d76cec22c00a19, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 820674877786702353, guid: 8bcb0fad9d4d209479d76cec22c00a19, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 820674877786702353, guid: 8bcb0fad9d4d209479d76cec22c00a19, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 820674877786702354, guid: 8bcb0fad9d4d209479d76cec22c00a19, type: 3}
+      propertyPath: delayStartButton
+      value: 
+      objectReference: {fileID: 1121685187}
+    - target: {fileID: 820674877786702354, guid: 8bcb0fad9d4d209479d76cec22c00a19, type: 3}
+      propertyPath: delayCancelButton
+      value: 
+      objectReference: {fileID: 991921309}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8bcb0fad9d4d209479d76cec22c00a19, type: 3}
+--- !u!1001 &4768556934947010271
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4768556934272609960, guid: 97b72205e55e8fc478a2f24f9ddd71f9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 195.35791
+      objectReference: {fileID: 0}
+    - target: {fileID: 4768556934272609960, guid: 97b72205e55e8fc478a2f24f9ddd71f9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 336.1986
+      objectReference: {fileID: 0}
+    - target: {fileID: 4768556934272609960, guid: 97b72205e55e8fc478a2f24f9ddd71f9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -65.94592
+      objectReference: {fileID: 0}
+    - target: {fileID: 4768556934272609960, guid: 97b72205e55e8fc478a2f24f9ddd71f9, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4768556934272609960, guid: 97b72205e55e8fc478a2f24f9ddd71f9, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4768556934272609960, guid: 97b72205e55e8fc478a2f24f9ddd71f9, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4768556934272609960, guid: 97b72205e55e8fc478a2f24f9ddd71f9, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4768556934272609960, guid: 97b72205e55e8fc478a2f24f9ddd71f9, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4768556934272609960, guid: 97b72205e55e8fc478a2f24f9ddd71f9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4768556934272609960, guid: 97b72205e55e8fc478a2f24f9ddd71f9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4768556934272609960, guid: 97b72205e55e8fc478a2f24f9ddd71f9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4768556934272609961, guid: 97b72205e55e8fc478a2f24f9ddd71f9, type: 3}
+      propertyPath: m_Name
+      value: DelayStartRoomController
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 97b72205e55e8fc478a2f24f9ddd71f9, type: 3}
