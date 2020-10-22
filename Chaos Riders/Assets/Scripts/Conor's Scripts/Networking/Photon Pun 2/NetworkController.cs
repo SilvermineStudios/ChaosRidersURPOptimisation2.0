@@ -14,8 +14,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
         PhotonNetwork.ConnectUsingSettings(); // connects to photon master servers
     }
 
-    //callback function for when the first connection is established
-    public override void OnConnectedToMaster() 
+
+    public override void OnConnectedToMaster() //callback function for when the first connection is established
     {
         Debug.Log("We are now connected to the " + PhotonNetwork.CloudRegion + " server"); //outputs the connected region to the console
     }
