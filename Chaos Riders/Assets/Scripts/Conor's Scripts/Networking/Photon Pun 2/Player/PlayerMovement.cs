@@ -5,7 +5,7 @@ using Photon.Pun;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private PhotonView pv;
+    [SerializeField] private GameObject playerCam;
 
     [SerializeField] private float movementSpeed = 6f;
     [SerializeField] private float rotationSpeed = 300f;
@@ -15,14 +15,18 @@ public class PlayerMovement : MonoBehaviour
     public CharacterController controller;
     public Transform cam;
 
-    void Start()
+
+    void Awake()
     {
-        pv = GetComponent<PhotonView>();
+        if (GetComponent<PhotonView>().IsMine)
+        {
+            playerCam.SetActive(true);
+        }
     }
 
     void Update()
     {
-        if(pv.IsMine)
+        if(GetComponent<PhotonView>().IsMine)
         {
             Movement();
         }
