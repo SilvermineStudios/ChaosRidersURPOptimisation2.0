@@ -8,150 +8,123 @@ namespace Invector.vCharacterController
 
         public virtual void ControlAnimatorRootMotion()
         {
-            if (this.GetComponent<PhotonView>().IsMine) //check if the object is yours
+            if (!this.enabled) return;
+
+            if (inputSmooth == Vector3.zero)
             {
-                if (!this.enabled) return;
-
-                if (inputSmooth == Vector3.zero)
-                {
-                    transform.position = animator.rootPosition;
-                    transform.rotation = animator.rootRotation;
-                }
-
-                if (useRootMotion)
-                    MoveCharacter(moveDirection);
+                transform.position = animator.rootPosition;
+                transform.rotation = animator.rootRotation;
             }
-            else return;
+
+            if (useRootMotion)
+                MoveCharacter(moveDirection);
         }
 
         public virtual void ControlLocomotionType()
         {
-            if (this.GetComponent<PhotonView>().IsMine) //check if the object is yours
+            if (lockMovement) return;
+
+            if (locomotionType.Equals(LocomotionType.FreeWithStrafe) && !isStrafing || locomotionType.Equals(LocomotionType.OnlyFree))
             {
-                if (lockMovement) return;
-
-                if (locomotionType.Equals(LocomotionType.FreeWithStrafe) && !isStrafing || locomotionType.Equals(LocomotionType.OnlyFree))
-                {
-                    SetControllerMoveSpeed(freeSpeed);
-                    SetAnimatorMoveSpeed(freeSpeed);
-                }
-                else if (locomotionType.Equals(LocomotionType.OnlyStrafe) || locomotionType.Equals(LocomotionType.FreeWithStrafe) && isStrafing)
-                {
-                    isStrafing = true;
-                    SetControllerMoveSpeed(strafeSpeed);
-                    SetAnimatorMoveSpeed(strafeSpeed);
-                }
-
-                if (!useRootMotion)
-                    MoveCharacter(moveDirection);
+                SetControllerMoveSpeed(freeSpeed);
+                SetAnimatorMoveSpeed(freeSpeed);
             }
-            else return;
+            else if (locomotionType.Equals(LocomotionType.OnlyStrafe) || locomotionType.Equals(LocomotionType.FreeWithStrafe) && isStrafing)
+            {
+                isStrafing = true;
+                SetControllerMoveSpeed(strafeSpeed);
+                SetAnimatorMoveSpeed(strafeSpeed);
+            }
+
+            if (!useRootMotion)
+                MoveCharacter(moveDirection);
         }
 
         public virtual void ControlRotationType()
         {
-            if (this.GetComponent<PhotonView>().IsMine) //check if the object is yours
+            if (lockRotation) return;
+
+            bool validInput = input != Vector3.zero || (isStrafing ? strafeSpeed.rotateWithCamera : freeSpeed.rotateWithCamera);
+
+            if (validInput)
             {
-                if (lockRotation) return;
+                // calculate input smooth
+                inputSmooth = Vector3.Lerp(inputSmooth, input, (isStrafing ? strafeSpeed.movementSmooth : freeSpeed.movementSmooth) * Time.deltaTime);
 
-                bool validInput = input != Vector3.zero || (isStrafing ? strafeSpeed.rotateWithCamera : freeSpeed.rotateWithCamera);
-
-                if (validInput)
-                {
-                    // calculate input smooth
-                    inputSmooth = Vector3.Lerp(inputSmooth, input, (isStrafing ? strafeSpeed.movementSmooth : freeSpeed.movementSmooth) * Time.deltaTime);
-
-                    Vector3 dir = (isStrafing && (!isSprinting || sprintOnlyFree == false) || (freeSpeed.rotateWithCamera && input == Vector3.zero)) && rotateTarget ? rotateTarget.forward : moveDirection;
-                    RotateToDirection(dir);
-                }
+                Vector3 dir = (isStrafing && (!isSprinting || sprintOnlyFree == false) || (freeSpeed.rotateWithCamera && input == Vector3.zero)) && rotateTarget ? rotateTarget.forward : moveDirection;
+                RotateToDirection(dir);
             }
-            else return;
         }
 
         public virtual void UpdateMoveDirection(Transform referenceTransform = null)
         {
-            if (this.GetComponent<PhotonView>().IsMine) //check if the object is yours
+            if (input.magnitude <= 0.01)
             {
-                if (input.magnitude <= 0.01)
-                {
-                    moveDirection = Vector3.Lerp(moveDirection, Vector3.zero, (isStrafing ? strafeSpeed.movementSmooth : freeSpeed.movementSmooth) * Time.deltaTime);
-                    return;
-                }
-
-                if (referenceTransform && !rotateByWorld)
-                {
-                    //get the right-facing direction of the referenceTransform
-                    var right = referenceTransform.right;
-                    right.y = 0;
-                    //get the forward direction relative to referenceTransform Right
-                    var forward = Quaternion.AngleAxis(-90, Vector3.up) * right;
-                    // determine the direction the player will face based on input and the referenceTransform's right and forward directions
-                    moveDirection = (inputSmooth.x * right) + (inputSmooth.z * forward);
-                }
-                else
-                {
-                    moveDirection = new Vector3(inputSmooth.x, 0, inputSmooth.z);
-                }
+                moveDirection = Vector3.Lerp(moveDirection, Vector3.zero, (isStrafing ? strafeSpeed.movementSmooth : freeSpeed.movementSmooth) * Time.deltaTime);
+                return;
             }
-            else return; 
+
+            if (referenceTransform && !rotateByWorld)
+            {
+                //get the right-facing direction of the referenceTransform
+                var right = referenceTransform.right;
+                right.y = 0;
+                //get the forward direction relative to referenceTransform Right
+                var forward = Quaternion.AngleAxis(-90, Vector3.up) * right;
+                // determine the direction the player will face based on input and the referenceTransform's right and forward directions
+                moveDirection = (inputSmooth.x * right) + (inputSmooth.z * forward);
+            }
+            else
+            {
+                moveDirection = new Vector3(inputSmooth.x, 0, inputSmooth.z);
+            }
         }
 
         public virtual void Sprint(bool value)
         {
-            if (this.GetComponent<PhotonView>().IsMine) //check if the object is yours
-            {
-                var sprintConditions = (input.sqrMagnitude > 0.1f && isGrounded &&
-                !(isStrafing && !strafeSpeed.walkByDefault && (horizontalSpeed >= 0.5 || horizontalSpeed <= -0.5 || verticalSpeed <= 0.1f)));
+            var sprintConditions = (input.sqrMagnitude > 0.1f && isGrounded &&
+            !(isStrafing && !strafeSpeed.walkByDefault && (horizontalSpeed >= 0.5 || horizontalSpeed <= -0.5 || verticalSpeed <= 0.1f)));
 
-                if (value && sprintConditions)
+            if (value && sprintConditions)
+            {
+                if (input.sqrMagnitude > 0.1f)
                 {
-                    if (input.sqrMagnitude > 0.1f)
+                    if (isGrounded && useContinuousSprint)
                     {
-                        if (isGrounded && useContinuousSprint)
-                        {
-                            isSprinting = !isSprinting;
-                        }
-                        else if (!isSprinting)
-                        {
-                            isSprinting = true;
-                        }
+                        isSprinting = !isSprinting;
                     }
-                    else if (!useContinuousSprint && isSprinting)
+                    else if (!isSprinting)
                     {
-                        isSprinting = false;
+                        isSprinting = true;
                     }
                 }
-                else if (isSprinting)
+                else if (!useContinuousSprint && isSprinting)
                 {
                     isSprinting = false;
                 }
             }
-            else return;        }
+            else if (isSprinting)
+            {
+                isSprinting = false;
+            }
+        }
 
         public virtual void Strafe()
         {
-            if (this.GetComponent<PhotonView>().IsMine) //check if the object is yours
-            {
-                isStrafing = !isStrafing;
-            }
-            else return;
+            isStrafing = !isStrafing;
         }
 
         public virtual void Jump()
         {
-            if (this.GetComponent<PhotonView>().IsMine) //check if the object is yours
-            {
-                // trigger jump behaviour
-                jumpCounter = jumpTimer;
-                isJumping = true;
+            // trigger jump behaviour
+            jumpCounter = jumpTimer;
+            isJumping = true;
 
-                // trigger jump animations
-                if (input.sqrMagnitude < 0.1f)
-                    animator.CrossFadeInFixedTime("Jump", 0.1f);
-                else
-                    animator.CrossFadeInFixedTime("JumpMove", .2f);
-            }
-            else return;
+            // trigger jump animations
+            if (input.sqrMagnitude < 0.1f)
+                animator.CrossFadeInFixedTime("Jump", 0.1f);
+            else
+                animator.CrossFadeInFixedTime("JumpMove", .2f);
         }
    
     }
