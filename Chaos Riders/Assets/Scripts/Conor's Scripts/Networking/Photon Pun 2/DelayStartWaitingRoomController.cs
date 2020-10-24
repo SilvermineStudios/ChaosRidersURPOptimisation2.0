@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using Photon.Chat;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class DelayStartWaitingRoomController : MonoBehaviourPunCallbacks
 {
+    #region Variables
+
     //photon view for sending rpc that updates timer
     private PhotonView myPhotonView;
 
@@ -32,7 +35,8 @@ public class DelayStartWaitingRoomController : MonoBehaviourPunCallbacks
     private float fullGameTimer;
     //countdown timer reset variables
     [SerializeField] private float maxWaitTime; 
-    [SerializeField] private float maxFullGameWaitTime; 
+    [SerializeField] private float maxFullGameWaitTime;
+    #endregion
 
     void Start()
     {
@@ -49,6 +53,7 @@ public class DelayStartWaitingRoomController : MonoBehaviourPunCallbacks
     void Update()
     {
         WaitingForMorePlayers();
+        
     }
 
     public void PlayerCountUpdate()

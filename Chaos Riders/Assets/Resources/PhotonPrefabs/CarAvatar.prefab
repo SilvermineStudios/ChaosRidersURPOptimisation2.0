@@ -2117,12 +2117,12 @@ GameObject:
   - component: {fileID: 7942538553603735380}
   - component: {fileID: 6223362253447640774}
   - component: {fileID: 7148638738035847018}
-  - component: {fileID: 233567824874638503}
   - component: {fileID: 5470695814118569139}
   - component: {fileID: 5761770835243514209}
   - component: {fileID: 7594932733184380221}
   - component: {fileID: -7281374198204877652}
   - component: {fileID: 4552196059427937871}
+  - component: {fileID: 1821853742800972191}
   m_Layer: 0
   m_Name: CarAvatar
   m_TagString: Untagged
@@ -2264,21 +2264,6 @@ MonoBehaviour:
   wheel1: {fileID: 756187109948287077}
   wheel2: {fileID: 8242300543338290937}
   coefficient: 3750
---- !u!114 &233567824874638503
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3665268805338767731}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72c7cefcff9a6e340aedc2a04cced671, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wheel1: {fileID: 5156244754830323055}
-  wheel2: {fileID: 4095628201702879056}
-  coefficient: 3250
 --- !u!114 &5470695814118569139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2370,6 +2355,20 @@ MonoBehaviour:
   - {fileID: 8300000, guid: da4dd7b50a1f13a43969da5abbee120b, type: 3}
   backfire: []
   backfireSource: {fileID: 0}
+--- !u!114 &1821853742800972191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3665268805338767731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4d3c5e81188fbb4cb81be580aac8935, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterValue: 0
+  myCharacter: {fileID: 0}
 --- !u!1 &3668515497105935749
 GameObject:
   m_ObjectHideFlags: 0
