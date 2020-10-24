@@ -45,7 +45,7 @@ public class CustomMatchmakingLobbyController : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.NickName = "Player " + Random.Range(0, 1000); //random player name when not chosen
         }
-        playerNameInput.text = PhotonNetwork.NickName; //update input field with player name
+        //playerNameInput.text = PhotonNetwork.NickName; //update input field with player name
     }
 
     public void PlayerNameUpdate(string nameInput)
