@@ -15,14 +15,14 @@ public class AvatarSetup : MonoBehaviour
         pv = GetComponent<PhotonView>();
         if(pv.IsMine) //make sure it only calls it for the person it belongs to
         {
-            pv.RPC("RPC_AddCharacter", RpcTarget.AllBuffered, PlayerInfo.pi.mySelectedCharacter);
+            //pv.RPC("RPC_AddCharacter", RpcTarget.AllBuffered, PlayerInfo.pi.mySelectedCharacter);
         }
     }
 
     [PunRPC]
     void RPC_AddCharacter(int whichCharacter)
     {
-        characterValue = whichCharacter;
-        myCharacter = Instantiate(PlayerInfo.pi.allCharacters[whichCharacter], transform.position, transform.rotation, transform);
+        //characterValue = whichCharacter;
+        //myCharacter = Instantiate(PlayerInfo.pi.allCharacters[whichCharacter], transform.position, transform.rotation, transform);
     }
 }

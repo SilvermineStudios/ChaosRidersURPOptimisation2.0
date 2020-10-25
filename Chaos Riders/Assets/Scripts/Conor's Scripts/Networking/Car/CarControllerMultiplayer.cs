@@ -14,7 +14,7 @@ public class CarControllerMultiplayer : MonoBehaviour
     [SerializeField] private bool multiplayer = true;
 
     // Add all wheels of the car here, so brake and steering forces can be applied to them.
-    public Wheel[] wheels;
+    public WheelMultiplayer[] wheels;
 
     // A transform object which marks the car's center of gravity.
     // Cars with a higher CoG tend to tilt more in corners.
@@ -95,7 +95,7 @@ public class CarControllerMultiplayer : MonoBehaviour
         get
         {
             float val = 0.0f;
-            foreach (Wheel w in wheels)
+            foreach (WheelMultiplayer w in wheels)
                 val += w.slipVelo / wheels.Length;
             return val;
         }
@@ -333,7 +333,7 @@ public class CarControllerMultiplayer : MonoBehaviour
 
 
         // Apply inputs
-        foreach (Wheel w in wheels)
+        foreach (WheelMultiplayer w in wheels)
         {
             w.brake = BreakPedal() ? brake : 0;
             w.handbrake = handbrake;

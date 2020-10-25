@@ -13,7 +13,7 @@ public class DriveTrainMultiplayer : MonoBehaviour
     [SerializeField] private bool multiplayer = true;
 
     // All the wheels the drivetrain should power
-    public Wheel[] poweredWheels;
+    public WheelMultiplayer[] poweredWheels;
 
     // The gear ratios, including neutral (0) and reverse (negative) gears
     public float[] gearRatios;
@@ -176,14 +176,14 @@ public class DriveTrainMultiplayer : MonoBehaviour
             {
                 float drivetrainFraction = 1.0f / poweredWheels.Length;
                 float averageAngularVelo = 0;
-                foreach (Wheel w in poweredWheels)
+                foreach (WheelMultiplayer w in poweredWheels)
                     averageAngularVelo += w.angularVelocity * drivetrainFraction;
 
                 float engineAngularAcceleration = (engineTorque - engineFrictionTorque) / engineInertia;
 
 
                 // Apply torque to wheels
-                foreach (Wheel w in poweredWheels)
+                foreach (WheelMultiplayer w in poweredWheels)
                 {
                     float lockingTorque = (averageAngularVelo - w.angularVelocity) * differentialLockCoefficient;
                     w.drivetrainInertia = inertia * drivetrainFraction;
@@ -269,14 +269,14 @@ public class DriveTrainMultiplayer : MonoBehaviour
             {
                 float drivetrainFraction = 1.0f / poweredWheels.Length;
                 float averageAngularVelo = 0;
-                foreach (Wheel w in poweredWheels)
+                foreach (WheelMultiplayer w in poweredWheels)
                     averageAngularVelo += w.angularVelocity * drivetrainFraction;
 
                 float engineAngularAcceleration = (engineTorque - engineFrictionTorque) / engineInertia;
 
 
                 // Apply torque to wheels
-                foreach (Wheel w in poweredWheels)
+                foreach (WheelMultiplayer w in poweredWheels)
                 {
                     float lockingTorque = (averageAngularVelo - w.angularVelocity) * differentialLockCoefficient;
                     w.drivetrainInertia = inertia * drivetrainFraction;

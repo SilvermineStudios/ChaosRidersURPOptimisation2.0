@@ -950,7 +950,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1888269865008703436}
   m_Layer: 0
-  m_Name: Center
+  m_Name: FL Center
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1154,7 +1154,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8963432671704390693}
   m_Layer: 0
-  m_Name: Center
+  m_Name: BR Center
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1767,7 +1767,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 171263018990310634}
-  - component: {fileID: 4095628201702879056}
+  - component: {fileID: 1216212973734636327}
   m_Layer: 0
   m_Name: FR
   m_TagString: Untagged
@@ -1790,7 +1790,7 @@ Transform:
   m_Father: {fileID: 3509820878897759768}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4095628201702879056
+--- !u!114 &1216212973734636327
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1799,7 +1799,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3412807764591981102}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b48c34c22a32584fa5c539b25c7a75a, type: 3}
+  m_Script: {fileID: 11500000, guid: 57e059f06eb8f9e41bc328b7422d6740, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 0.35
@@ -2116,13 +2116,14 @@ GameObject:
   - component: {fileID: 632047352266805733}
   - component: {fileID: 7942538553603735380}
   - component: {fileID: 6223362253447640774}
-  - component: {fileID: 7148638738035847018}
   - component: {fileID: 5470695814118569139}
-  - component: {fileID: 5761770835243514209}
   - component: {fileID: 7594932733184380221}
   - component: {fileID: -7281374198204877652}
   - component: {fileID: 4552196059427937871}
   - component: {fileID: 1821853742800972191}
+  - component: {fileID: 7861168241851362712}
+  - component: {fileID: 1943946152}
+  - component: {fileID: 1943946158}
   m_Layer: 0
   m_Name: CarAvatar
   m_TagString: Untagged
@@ -2184,8 +2185,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   multiplayer: 1
   poweredWheels:
-  - {fileID: 756187109948287077}
-  - {fileID: 8242300543338290937}
+  - {fileID: 3823546921867807082}
+  - {fileID: 5572355197658371225}
   gearRatios:
   - -3
   - 0
@@ -2229,10 +2230,10 @@ MonoBehaviour:
   playerCamera: {fileID: 2090611328824587637}
   multiplayer: 1
   wheels:
-  - {fileID: 5156244754830323055}
-  - {fileID: 4095628201702879056}
-  - {fileID: 756187109948287077}
-  - {fileID: 8242300543338290937}
+  - {fileID: 667031931}
+  - {fileID: 1216212973734636327}
+  - {fileID: 3823546921867807082}
+  - {fileID: 5572355197658371225}
   centerOfMass: {fileID: 8745392821409325244}
   inertiaFactor: 1.48
   brake: 0
@@ -2249,21 +2250,6 @@ MonoBehaviour:
   steerReleaseTime: 0.1
   veloSteerReleaseTime: 0
   steerCorrectionFactor: 0
---- !u!114 &7148638738035847018
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3665268805338767731}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72c7cefcff9a6e340aedc2a04cced671, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wheel1: {fileID: 756187109948287077}
-  wheel2: {fileID: 8242300543338290937}
-  coefficient: 3750
 --- !u!114 &5470695814118569139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2277,22 +2263,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coefficients: {x: 3, y: 0.3, z: 0.4}
---- !u!114 &5761770835243514209
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3665268805338767731}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbed57aa2a8abc64c9a70251b5ed9174, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  front:
-  - {fileID: 5156244754830323055}
-  - {fileID: 4095628201702879056}
-  compensationFactor: 1
 --- !u!114 &7594932733184380221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2369,6 +2339,52 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterValue: 0
   myCharacter: {fileID: 0}
+--- !u!114 &7861168241851362712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3665268805338767731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ac31d92ce72cc74b874c583d93cfede, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  front:
+  - {fileID: 667031931}
+  - {fileID: 1216212973734636327}
+  compensationFactor: 1
+--- !u!114 &1943946152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3665268805338767731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 274d6c9f066816741af1411e61a4622b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wheel1: {fileID: 667031931}
+  wheel2: {fileID: 1216212973734636327}
+  coefficient: 3750
+--- !u!114 &1943946158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3665268805338767731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 274d6c9f066816741af1411e61a4622b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wheel1: {fileID: 3823546921867807082}
+  wheel2: {fileID: 5572355197658371225}
+  coefficient: 3750
 --- !u!1 &3668515497105935749
 GameObject:
   m_ObjectHideFlags: 0
@@ -4450,7 +4466,7 @@ GameObject:
   m_Component:
   - component: {fileID: 117043230959916478}
   m_Layer: 0
-  m_Name: Center
+  m_Name: FR Center
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4561,7 +4577,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 238272319006672343}
-  - component: {fileID: 756187109948287077}
+  - component: {fileID: 3823546921867807082}
   m_Layer: 0
   m_Name: BL
   m_TagString: Untagged
@@ -4584,7 +4600,7 @@ Transform:
   m_Father: {fileID: 3509820878897759768}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &756187109948287077
+--- !u!114 &3823546921867807082
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4593,7 +4609,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6972025317445022498}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b48c34c22a32584fa5c539b25c7a75a, type: 3}
+  m_Script: {fileID: 11500000, guid: 57e059f06eb8f9e41bc328b7422d6740, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 0.35
@@ -4775,7 +4791,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 582293497109257074}
-  - component: {fileID: 8242300543338290937}
+  - component: {fileID: 5572355197658371225}
   m_Layer: 0
   m_Name: BR
   m_TagString: Untagged
@@ -4798,7 +4814,7 @@ Transform:
   m_Father: {fileID: 3509820878897759768}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8242300543338290937
+--- !u!114 &5572355197658371225
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4807,7 +4823,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7211829812512229776}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b48c34c22a32584fa5c539b25c7a75a, type: 3}
+  m_Script: {fileID: 11500000, guid: 57e059f06eb8f9e41bc328b7422d6740, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 0.35
@@ -5128,7 +5144,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2261928585466534728}
-  - component: {fileID: 5156244754830323055}
+  - component: {fileID: 667031931}
   m_Layer: 0
   m_Name: FL
   m_TagString: Untagged
@@ -5151,7 +5167,7 @@ Transform:
   m_Father: {fileID: 3509820878897759768}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5156244754830323055
+--- !u!114 &667031931
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5160,7 +5176,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7726771552087271033}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b48c34c22a32584fa5c539b25c7a75a, type: 3}
+  m_Script: {fileID: 11500000, guid: 57e059f06eb8f9e41bc328b7422d6740, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 0.35
@@ -6711,7 +6727,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8887391523738252751}
   m_Layer: 0
-  m_Name: Center
+  m_Name: BL Center
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

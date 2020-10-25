@@ -15,7 +15,7 @@ public class findcenter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       Debug.Log( GetComponent<Renderer>().bounds.center);
+       //Debug.Log( GetComponent<Renderer>().bounds.center);
         o.transform.position = GetComponent<Renderer>().bounds.center;
     }
 }
