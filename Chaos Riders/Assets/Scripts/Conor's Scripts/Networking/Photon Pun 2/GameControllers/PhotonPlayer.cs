@@ -33,8 +33,14 @@ public class PhotonPlayer : MonoBehaviour
             //myAvatar = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "CarAvatar"), GameSetup.gs.spawnPoints[spawnPicker].position, GameSetup.gs.spawnPoints[spawnPicker].rotation, 0);
             //Debug.Log("Player: " + arrayIndex + " spawned at spawnpoint: " + arrayIndex);
             //myAvatar = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "CarAvatar"), GameSetup.gs.spawnPoints[arrayIndex].position, GameSetup.gs.spawnPoints[arrayIndex].rotation, 0);
+            
         }
         //StartCoroutine(Timer(time));
+
+        if(pv.IsMine)
+        {
+            CallSpawnPlayers();
+        }
     }
 
     private IEnumerator Timer(float time)
@@ -52,8 +58,13 @@ public class PhotonPlayer : MonoBehaviour
     }
 
     [PunRPC]
-    void RPC_GetIndex()
+    void SpawnPlayers()
     {
-
+        //PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "CarAvatar"), GameSetup.gs.spawnPoints[arrayIndex].position, GameSetup.gs.spawnPoints[arrayIndex].rotation, 0);
+        Debug.Log("Spawened player at: " + arrayIndex);
+    }
+    public void CallSpawnPlayers()
+    {
+        //pv.RPC("SpawnPlayers", RpcTarget.All);
     }
 }
