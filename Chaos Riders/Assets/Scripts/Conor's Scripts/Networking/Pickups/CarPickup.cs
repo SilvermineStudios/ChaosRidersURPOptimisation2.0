@@ -1,16 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class CarPickup : MonoBehaviour
 {
     private GameObject go;
 
     private bool hasSpeedBoost = false;
+    private PhotonView pv;
 
     void Start()
     {
         go = this.GetComponent<GameObject>();
+        pv = GetComponent<PhotonView>();
     }
 
     private void Update()
@@ -26,15 +30,12 @@ public class CarPickup : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //if the player picked up a speed pickup
-        if (other.CompareTag("SpeedPickUp"))
-        {
+        if (other.CompareTag("SpeedPickUp") && pv.IsMine)
             hasSpeedBoost = true;
-        }
 
-        if (other.CompareTag("InvinciblePickUp"))
-        {
+        //if the player picked up the invincible pickup
+        if (other.CompareTag("InvinciblePickUp") && pv.IsMine)
             StartCoroutine(InvincibleTimer(PickupManager.InvincibleTime));
-        }
     }
 
     private IEnumerator InvincibleTimer(float time)
@@ -52,9 +53,11 @@ public class CarPickup : MonoBehaviour
     private IEnumerator SpeedBoostTimer(float time)
     {
         Debug.Log("Speed boost");
+        PickupManager.speedUI.SetActive(true);
 
         yield return new WaitForSeconds(time);
 
+        PickupManager.speedUI.SetActive(false);
         Debug.Log("Normal speed");
         
     }

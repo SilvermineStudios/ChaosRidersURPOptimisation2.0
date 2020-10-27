@@ -18,15 +18,20 @@ public class PickupManager : MonoBehaviour
     [SerializeField] private GameObject invinciblePic;
     public static GameObject invincibleUI;
 
+    [SerializeField] private GameObject speedPic;
+    public static GameObject speedUI;
+
     void Start()
     {
         invinciblePic.SetActive(false);
+        speedPic.SetActive(false);
 
         pickupRespawnTime = pickupRespawn;
         InvincibleTime = invincibleTimer;
         speedBoostTime = speedBoostTimer;
 
         invincibleUI = invinciblePic;
+        speedUI = speedPic;
     }
 
 }
