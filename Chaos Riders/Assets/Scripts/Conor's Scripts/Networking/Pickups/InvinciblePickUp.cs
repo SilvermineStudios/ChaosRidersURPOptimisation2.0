@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpeedPickup : MonoBehaviour
+public class InvinciblePickUp : MonoBehaviour
 {
     public bool pickedUp = false;
     private MeshRenderer myMesh;
@@ -18,7 +18,7 @@ public class SpeedPickup : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(!pickedUp)
+        if (!pickedUp)
         {
             pickedUp = true;
             myMesh.enabled = false;

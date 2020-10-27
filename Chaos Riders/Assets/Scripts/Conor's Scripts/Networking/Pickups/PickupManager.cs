@@ -4,19 +4,29 @@ using UnityEngine;
 
 public class PickupManager : MonoBehaviour
 {
-    public GameObject[] pickups;
-    public GameObject pickupHolder; //the gameobject all the pickups are children of
-    private int amountOfPickUps;
+    //linked scripts: SpeedPickup, CarPickup
+
+    [SerializeField] private float pickupRespawn = 5f;
+    public static float pickupRespawnTime;
+
+    [SerializeField] private float invincibleTimer = 5f;
+    public static float InvincibleTime;
+
+    [SerializeField] private float speedBoostTimer = 5f;
+    public static float speedBoostTime;
+
+    [SerializeField] private GameObject invinciblePic;
+    public static GameObject invincibleUI;
 
     void Start()
     {
-        //amountOfPickUps = pickupHolder.get
-        //pickups = new GameObject[];
+        invinciblePic.SetActive(false);
+
+        pickupRespawnTime = pickupRespawn;
+        InvincibleTime = invincibleTimer;
+        speedBoostTime = speedBoostTimer;
+
+        invincibleUI = invinciblePic;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
