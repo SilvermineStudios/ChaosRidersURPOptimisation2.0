@@ -7,6 +7,9 @@ using UnityEngine;
 
 public class GameSetup : MonoBehaviour
 {
+    [SerializeField] GameObject mainCam;
+    [SerializeField] bool mainCamera = true;
+
     public static GameSetup gs;
     public Transform[] spawnPoints;
     public Player[] players = PhotonNetwork.PlayerList;
@@ -20,8 +23,11 @@ public class GameSetup : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void Awake()
     {
-
+        if (mainCamera)
+            mainCam.SetActive(true);
+        else
+            mainCam.SetActive(false);
     }
 }
