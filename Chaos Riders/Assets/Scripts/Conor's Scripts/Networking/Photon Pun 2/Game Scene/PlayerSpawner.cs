@@ -8,38 +8,27 @@ using UnityEngine.UI;
 
 public class PlayerSpawner : MonoBehaviourPunCallbacks
 {
-    private Button startButton;
-    public GameObject startButtonGO;
-
-    public int spawnTimer = 5;
-
-    public GameObject playerCar;
+    [SerializeField]private float spawnTimer = 8.5f; //have this variable match the length of time the camera animation is
 
     private void Awake()
     {
-        startButton = startButtonGO.GetComponent<Button>();
-        Button();
+        if(PhotonNetwork.IsMasterClient)
+        {
+            StartCoroutine(Timer(spawnTimer));
+        }
     }
 
-    private void Start()
-    {
-        startButton.onClick.AddListener(StartGame);
-    }
-
-
-    private IEnumerator Timer(float time, int i)
+    private IEnumerator Timer(float time)
     {
         Debug.Log("Timer started");
 
         yield return new WaitForSeconds(time);
 
-        //StartGame();
+        StartGame();
     }
 
-    void StartGame()
+    public void StartGame()
     {
-        startButtonGO.SetActive(false);
-
         for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
         {
             photonView.RPC("RPC_StartGame", PhotonNetwork.PlayerList[i], GameSetup.gs.spawnPoints[i].position, GameSetup.gs.spawnPoints[i].rotation);
@@ -50,13 +39,5 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
     void RPC_StartGame(Vector3 spawnPos, Quaternion spawnRot)
     {
         PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "CarAvatar"), spawnPos, spawnRot, 0);
-    }
-
-    private void Button()
-    {
-        if (PhotonNetwork.IsMasterClient)
-            startButtonGO.SetActive(true);
-        else
-            startButtonGO.SetActive(false);
     }
 }
