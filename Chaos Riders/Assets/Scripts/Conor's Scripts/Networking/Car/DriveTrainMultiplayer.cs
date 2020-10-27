@@ -10,7 +10,7 @@ public class DriveTrainMultiplayer : MonoBehaviour
     #region Variables
 
     private PhotonView pv;
-    [SerializeField] private bool multiplayer = true;
+    public bool multiplayer = true;
 
     // All the wheels the drivetrain should power
     public WheelMultiplayer[] poweredWheels;

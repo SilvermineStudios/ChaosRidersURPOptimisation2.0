@@ -145,7 +145,7 @@ public class CarControllerMultiplayer : MonoBehaviour
 
     private bool GasPedal()
     {
-        if (Input.GetAxis("RT") > 0.1f)
+        if (Input.GetAxis("RT") > 0.1f || Input.GetKey(KeyCode.W))
         {
             return true;
         }
@@ -158,7 +158,7 @@ public class CarControllerMultiplayer : MonoBehaviour
 
     private bool BreakPedal()
     {
-        if (Input.GetAxis("LT") > 0.1f)
+        if (Input.GetAxis("LT") > 0.1f || Input.GetKey(KeyCode.S))
         {
             return true;
         }
