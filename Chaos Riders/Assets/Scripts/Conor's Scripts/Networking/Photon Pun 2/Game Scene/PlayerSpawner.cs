@@ -20,8 +20,6 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
 
     private IEnumerator Timer(float time)
     {
-        //Debug.Log("Timer started");
-
         yield return new WaitForSeconds(time);
 
         StartGame();
