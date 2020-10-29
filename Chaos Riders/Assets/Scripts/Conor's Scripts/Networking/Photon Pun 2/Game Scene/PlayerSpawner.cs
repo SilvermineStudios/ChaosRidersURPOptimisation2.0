@@ -29,10 +29,25 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
 
     public void StartGame()
     {
+
+        switch(PhotonNetwork.PlayerList.Length)
+        {
+            case 2:
+                photonView.RPC("RPC_StartGame", PhotonNetwork.PlayerList[0], GameSetup.gs.spawnPoints[0].position, GameSetup.gs.spawnPoints[0].rotation);
+                break;
+            case 1:
+                photonView.RPC("RPC_StartGame", PhotonNetwork.PlayerList[0], GameSetup.gs.spawnPoints[0].position, GameSetup.gs.spawnPoints[0].rotation);
+                break;
+            default:
+                break;
+        }
+
+        /*
         for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
         {
             photonView.RPC("RPC_StartGame", PhotonNetwork.PlayerList[i], GameSetup.gs.spawnPoints[i].position, GameSetup.gs.spawnPoints[i].rotation);
         }
+        */
     }
 
     [PunRPC]

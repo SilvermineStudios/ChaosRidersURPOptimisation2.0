@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using Turrets;
-
+using Photon.Pun;
 namespace TurretDemo
 {
     public class TurretTester : MonoBehaviour
@@ -9,11 +9,21 @@ namespace TurretDemo
         public Vector3 targetPos;
         public Transform targetTransform;
 
-        [Space]
+        private PhotonView pv;
+
+        
         public bool turretsIdle = false;
+
+        private void Start()
+        {
+            pv = GetComponent<PhotonView>();
+        }
 
         private void Update()
         {
+            if(!pv.IsMine) { return; }
+
+
             // Toggle turret idle.
             if (Input.GetKeyDown(KeyCode.E))
                 turretsIdle = !turretsIdle;
@@ -32,10 +42,7 @@ namespace TurretDemo
             }
         }
 
-        private void OnDrawGizmos()
-        {
-            Gizmos.DrawWireSphere(targetPos, 1.0f);
-        }
+
 
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class Gun : MonoBehaviour
 {
@@ -8,15 +9,19 @@ public class Gun : MonoBehaviour
     public GameObject bullet;
 
     public float timeSinceLastBullet, fireRate;
+    public PhotonView pv;
 
     private void Start()
     {
+        //pv = transform.parent.parent.parent.GetComponent<PhotonView>();
         timeSinceLastBullet = fireRate;
     }
 
     void Update()
     {
-        if(Input.GetAxis("RT") > 0.01f)
+        if (!pv.IsMine) { return; }
+
+        if (Input.GetAxis("RT") > 0.01f && pv.IsMine)
         {
             if(timeSinceLastBullet > fireRate)
             {

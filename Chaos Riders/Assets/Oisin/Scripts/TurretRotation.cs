@@ -1,4 +1,7 @@
 ﻿using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
+
 
 namespace Turrets
 {
@@ -34,27 +37,30 @@ namespace Turrets
 
         private bool aiming = false;
 
+        private PhotonView pv;
 
         private void Start()
         {
-            if (aiming == false)
+            pv = GetComponent<PhotonView>();
+
+            if (!aiming && pv.IsMine)
                 aimPoint = transform.TransformPoint(Vector3.forward * 100.0f);
         }
 
         private void Update()
         {
-            if (!runRotationsInFixed)
+            if (!runRotationsInFixed && pv.IsMine)
             {
                 RotateTurret();
             }
 
-            if (showDebugRay)
+            if (showDebugRay && pv.IsMine)
                 DrawDebugRays();
         }
 
         private void FixedUpdate()
         {
-            if (runRotationsInFixed)
+            if (runRotationsInFixed && pv.IsMine)
             {
                 RotateTurret();
             }
