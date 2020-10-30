@@ -10,11 +10,15 @@ public class Gun : MonoBehaviour
 
     public float timeSinceLastBullet, fireRate;
     public PhotonView pv;
+    private AudioSource speaker;
+    public AudioClip gunShot;
+
 
     private void Start()
     {
-        //pv = transform.parent.parent.parent.GetComponent<PhotonView>();
+        pv = transform.parent.parent.parent.GetComponent<PhotonView>();
         timeSinceLastBullet = fireRate;
+        speaker = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -44,5 +48,7 @@ public class Gun : MonoBehaviour
     {
         GameObject fired = Instantiate(bullet, spawnpoint.transform.position, transform.rotation);
         fired.GetComponent<Rigidbody>().AddForce(transform.forward * 100, ForceMode.Impulse);
+
+        speaker.PlayOneShot(gunShot);
     }
 }

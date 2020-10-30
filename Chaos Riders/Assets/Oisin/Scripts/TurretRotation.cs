@@ -43,8 +43,8 @@ namespace Turrets
         {
             pv = GetComponent<PhotonView>();
 
-            if (!aiming && pv.IsMine)
-                aimPoint = transform.TransformPoint(Vector3.forward * 100.0f);
+            //if (!aiming && pv.IsMine)
+                //aimPoint = transform.TransformPoint(Vector3.forward * 100.0f);
         }
 
         private void Update()

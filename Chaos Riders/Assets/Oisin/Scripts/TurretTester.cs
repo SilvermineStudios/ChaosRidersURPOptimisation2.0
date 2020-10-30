@@ -38,7 +38,7 @@ namespace TurretDemo
                 else
                     tur.SetAimpoint(targetTransform.position);
 
-                tur.SetIdle(turretsIdle);
+                //tur.SetIdle(turretsIdle);
             }
         }
 
