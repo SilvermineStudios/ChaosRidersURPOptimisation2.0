@@ -8,19 +8,22 @@ public class CarPickup : MonoBehaviour
 {
     private GameObject go;
 
-    private bool hasSpeedBoost = false;
+    [SerializeField] private bool hasSpeedBoost = false;
     private PhotonView pv;
+
+    private DriveTrainMultiplayer dt;
 
     void Start()
     {
         go = this.GetComponent<GameObject>();
         pv = GetComponent<PhotonView>();
+        dt = GetComponent<DriveTrainMultiplayer>();
     }
 
     private void Update()
     {
         //player can speedboost by pressing the w key when they have one
-        if (hasSpeedBoost && Input.GetKeyDown(KeyCode.W))
+        if (hasSpeedBoost && Input.GetKeyDown(KeyCode.LeftShift))
         {
             hasSpeedBoost = false;
             StartCoroutine(SpeedBoostTimer(PickupManager.speedBoostTime));
@@ -30,11 +33,11 @@ public class CarPickup : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //if the player picked up a speed pickup
-        if (other.CompareTag("SpeedPickUp") && pv.IsMine)
+        if (other.CompareTag("SpeedPickUp") && pv.IsMine || other.CompareTag("SpeedPickUp") && !dt.multiplayer) //the or is for testing when not in multiplayer
             hasSpeedBoost = true;
 
         //if the player picked up the invincible pickup
-        if (other.CompareTag("InvinciblePickUp") && pv.IsMine)
+        if (other.CompareTag("InvinciblePickUp") && pv.IsMine || other.CompareTag("InvinciblePickUp") && !dt.multiplayer) //the or is for testing when not in multiplayer
             StartCoroutine(InvincibleTimer(PickupManager.InvincibleTime));
     }
 
