@@ -30,6 +30,8 @@ public class SpeedPickup : MonoBehaviour
 
     private IEnumerator Timer(float time)
     {
+        //add speed boost here
+
         yield return new WaitForSeconds(time);
 
         pickedUp = false;

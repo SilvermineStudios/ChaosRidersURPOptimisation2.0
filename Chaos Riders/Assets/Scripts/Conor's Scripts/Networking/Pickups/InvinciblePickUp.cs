@@ -30,6 +30,8 @@ public class InvinciblePickUp : MonoBehaviour
 
     private IEnumerator Timer(float time)
     {
+        //invincible
+
         yield return new WaitForSeconds(time);
 
         pickedUp = false;

@@ -47,7 +47,9 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
             }
             else
             {
-                photonView.RPC("RPC_StartGameShooter", PhotonNetwork.PlayerList[i], GameSetup.gs.spawnPoints[i].position, GameSetup.gs.spawnPoints[i].rotation);
+                //after the cars are spawned make a transform array of the shooter spawn positions
+                //change -> GameSetup.gs.spawnPoints[i].position, GameSetup.gs.spawnPoints[i].rotation to 
+                photonView.RPC("RPC_StartGameShooter", PhotonNetwork.PlayerList[i], GameSetup.gs.spawnPoints[i].position, GameSetup.gs.spawnPoints[i].rotation); 
                 driver = !driver;
             }
         }
