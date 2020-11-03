@@ -16,6 +16,8 @@ public class AICarController : MonoBehaviour
      
     [SerializeField] private WaypointManager waypointManager;
     [SerializeField] private Transform[] waypoints;
+
+    [SerializeField] private Vector3 centerOfMass;
     
 
     private void Awake()
@@ -27,6 +29,8 @@ public class AICarController : MonoBehaviour
     {
         waypoints = new Transform[waypointManager.waypoints.Length];
         waypoints = waypointManager.waypoints;
+
+        GetComponent<Rigidbody>().centerOfMass = centerOfMass;
     }
 
     private void FixedUpdate()
