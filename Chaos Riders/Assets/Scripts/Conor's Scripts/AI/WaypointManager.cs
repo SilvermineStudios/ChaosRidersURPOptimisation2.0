@@ -5,6 +5,7 @@ using UnityEngine;
 public class WaypointManager : MonoBehaviour
 {
     [SerializeField] private Color lineColour;
+    [SerializeField] private float sphereRadius = 0.3f;
     public Transform[] waypoints;
 
     private void OnDrawGizmos()
@@ -30,6 +31,7 @@ public class WaypointManager : MonoBehaviour
                 previosWaypoint = waypoints[waypoints.Length - 1].position;
 
             Gizmos.DrawLine(previosWaypoint, currentWaypoint);
+            Gizmos.DrawSphere(currentWaypoint, sphereRadius);
         }
     }
 }
