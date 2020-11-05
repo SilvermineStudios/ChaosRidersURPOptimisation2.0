@@ -54,7 +54,7 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
             {
                 //after the cars are spawned make a transform array of the shooter spawn positions
                 //change -> GameSetup.gs.spawnPoints[i].position, GameSetup.gs.spawnPoints[i].rotation to 
-                photonView.RPC("RPC_StartGameShooter", PhotonNetwork.PlayerList[i], car.transform.position, car.transform.rotation);
+                photonView.RPC("RPC_StartGameShooter", PhotonNetwork.PlayerList[i], GameSetup.gs.spawnPoints[i].position, GameSetup.gs.spawnPoints[i].rotation);
                 //Debug.Log(shooter);
                 spawnCounter++;
                 driver = !driver;
