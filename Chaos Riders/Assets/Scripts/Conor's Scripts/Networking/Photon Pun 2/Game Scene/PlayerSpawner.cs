@@ -10,9 +10,11 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
 {
     [SerializeField]private float spawnTimer = 8.5f; //have this variable match the length of time the camera animation is
 
+    [SerializeField] public static GameObject car,shooter;
+
     //Bool to flip if spawn car or shooter
     private bool driver = true;
-
+    private float spawnCounter;
 
     private void Awake()
     {
@@ -31,6 +33,8 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
 
     public void StartGame()
     {
+        spawnCounter = 0;
+
         for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
         {
             //Original
@@ -44,31 +48,57 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
             {
                 photonView.RPC("RPC_StartGame", PhotonNetwork.PlayerList[i], GameSetup.gs.spawnPoints[i].position, GameSetup.gs.spawnPoints[i].rotation);
                 driver = !driver;
+                spawnCounter++;
             }
             else
             {
                 //after the cars are spawned make a transform array of the shooter spawn positions
                 //change -> GameSetup.gs.spawnPoints[i].position, GameSetup.gs.spawnPoints[i].rotation to 
-                photonView.RPC("RPC_StartGameShooter", PhotonNetwork.PlayerList[i], GameSetup.gs.spawnPoints[i].position, GameSetup.gs.spawnPoints[i].rotation); 
+                photonView.RPC("RPC_StartGameShooter", PhotonNetwork.PlayerList[i], car.transform.position, car.transform.rotation);
+                //Debug.Log(shooter);
+                spawnCounter++;
                 driver = !driver;
             }
+
+            if(spawnCounter == 2)
+            {
+                Transform dccc;
+                
+
+                dccc = car.transform;
+
+
+                dccc = shooter.transform.parent;
+                //shooter.transform.parent = car.transform;
+                spawnCounter = 0;
+            }
         }
-        
+
+        if (PhotonNetwork.PlayerList.Length % 2 != 0)
+        {
+            //spawn Ai shooter
+        }
 
 
 
     }
-
-    [PunRPC]
-    void RPC_StartGame(Vector3 spawnPos, Quaternion spawnRot)
-    {
-        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "CarAvatar"), spawnPos, spawnRot, 0);
-    }
-
 
     [PunRPC]
     void RPC_StartGameShooter(Vector3 spawnPos, Quaternion spawnRot)
     {
-        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Shooter"), spawnPos, spawnRot, 0);
+        shooter = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Shooter"), spawnPos, spawnRot, 0);
+        //shooter = shooter.transform.GetChild(0).gameObject;
+        //Debug.Log(shooter);
     }
+
+
+    [PunRPC]
+    void RPC_StartGame(Vector3 spawnPos, Quaternion spawnRot)
+    {
+        car = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "CarAvatar"), spawnPos, spawnRot, 0);
+        //car = car.transform.GetChild(0).gameObject;
+    }
+
+
+
 }

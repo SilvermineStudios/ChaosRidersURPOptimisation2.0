@@ -55,6 +55,10 @@ public class DriveTrainMultiplayer : MonoBehaviour
     public float differentialLockCoefficient = 0;
 
     // inputs
+    public bool nitro;
+    [SerializeField] private float nitroBoost = 2.5f;
+
+
     // engine throttle
     public float throttle = 0;
     // engine throttle without traction control (used for automatic gear shifting)
@@ -106,6 +110,12 @@ public class DriveTrainMultiplayer : MonoBehaviour
         {
             result = 0;
         }
+
+        if (nitro)
+        {
+            result *= nitroBoost;
+        }
+
 
         return result;
     }

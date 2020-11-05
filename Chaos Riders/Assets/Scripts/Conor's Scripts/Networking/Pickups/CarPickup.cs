@@ -23,7 +23,7 @@ public class CarPickup : MonoBehaviour
     private void Update()
     {
         //player can speedboost by pressing the w key when they have one
-        if (hasSpeedBoost && Input.GetKeyDown(KeyCode.LeftShift))
+        if (hasSpeedBoost && (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetButtonDown("A")))
         {
             hasSpeedBoost = false;
             StartCoroutine(SpeedBoostTimer(PickupManager.speedBoostTime));
@@ -55,6 +55,9 @@ public class CarPickup : MonoBehaviour
     ///////////////////////////////////////////////////
     private IEnumerator SpeedBoostTimer(float time)
     {
+        dt.nitro = true;
+
+
         Debug.Log("Speed boost");
         PickupManager.speedUI.SetActive(true);
 
@@ -62,6 +65,7 @@ public class CarPickup : MonoBehaviour
 
         PickupManager.speedUI.SetActive(false);
         Debug.Log("Normal speed");
-        
+
+        dt.nitro = false;
     }
 }

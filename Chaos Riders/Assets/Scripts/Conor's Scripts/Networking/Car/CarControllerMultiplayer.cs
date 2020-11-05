@@ -171,7 +171,7 @@ public class CarControllerMultiplayer : MonoBehaviour
     //all of the stuff that was in update is now here
     private void PlayerUpdate()
     {
-        if (drivetrain.gear <= 3)
+        if (drivetrain.gear <= 3 || drivetrain.nitro)
         {
             GetComponent<Rigidbody>().angularDrag = 0.1f;
         }
