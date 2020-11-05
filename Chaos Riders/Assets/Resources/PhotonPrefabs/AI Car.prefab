@@ -1683,9 +1683,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d6532e1d2a565d48a623f2c53384a43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxMotorTorque: 80
+  maxMotorTorque: 300
   currentSpeed: 0
-  maxSpeed: 100
+  maxSpeed: 2000
   maxSteerAngle: 45
   currentWaypoint: 0
   changeWaypointDistance: 30
@@ -1693,7 +1693,7 @@ MonoBehaviour:
   FR: {fileID: 3328310971132180599}
   waypointManager: {fileID: 0}
   waypoints: []
-  centerOfMass: {fileID: 5794168058085301240}
+  centerOfMass: {x: 0, y: -0.2, z: 2}
 --- !u!65 &4029253875945408200
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2397,7 +2397,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3719073164530120797}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 1.648, z: -0.22}
+  m_LocalPosition: {x: 0.5, y: 1.369, z: -0.22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1837897696640187740}
