@@ -14,4 +14,9 @@ public class PhotonPlayer : MonoBehaviour
     {
         pv = GetComponent<PhotonView>();
     }
+
+    private void Start()
+    {
+        
+    }
 }
