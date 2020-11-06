@@ -13,7 +13,7 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
     [SerializeField] public static GameObject car,shooter;
 
     //Bool to flip if spawn car or shooter
-    private bool driver = false;
+    private bool driver = true;
     private float spawnCounter;
 
     private void Awake()
