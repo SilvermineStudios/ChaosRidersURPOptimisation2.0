@@ -54,7 +54,7 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
             {
                 //after the cars are spawned make a transform array of the shooter spawn positions
                 //change -> GameSetup.gs.spawnPoints[i].position, GameSetup.gs.spawnPoints[i].rotation to 
-                photonView.RPC("RPC_StartGameShooter", PhotonNetwork.PlayerList[i], GameSetup.gs.spawnPoints[i].position, GameSetup.gs.spawnPoints[i].rotation);
+                photonView.RPC("RPC_StartGameShooter", PhotonNetwork.PlayerList[i], car.transform.position, car.transform.rotation);
                 driver = !driver;
             }
 
@@ -80,8 +80,8 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
     [PunRPC]
     void RPC_StartGame(Vector3 spawnPos, Quaternion spawnRot)
     {
-        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "CarAvatar"), spawnPos, spawnRot, 0);
-
+        car = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "CarAvatar"), spawnPos, spawnRot, 0);
+        car = car.transform.GetChild(0).gameObject;
     }
 
 
