@@ -11,7 +11,7 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
     [SerializeField]private float spawnTimer = 8.5f; //have this variable match the length of time the camera animation is
 
     //Bool to flip if spawn car or shooter
-    private bool driver = true;
+    public bool driver = true;
 
 
     private void Awake()
@@ -34,12 +34,12 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
         for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
         {
             //Original
-            //photonView.RPC("RPC_StartGame", PhotonNetwork.PlayerList[i], GameSetup.gs.spawnPoints[i].position, GameSetup.gs.spawnPoints[i].rotation);
+            photonView.RPC("RPC_StartGame", PhotonNetwork.PlayerList[i], GameSetup.gs.spawnPoints[i].position, GameSetup.gs.spawnPoints[i].rotation);
 
 
 
             //Added code - Oisin
-
+            /*
             if(driver)
             {
                 photonView.RPC("RPC_StartGame", PhotonNetwork.PlayerList[i], GameSetup.gs.spawnPoints[i].position, GameSetup.gs.spawnPoints[i].rotation);
@@ -52,6 +52,7 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
                 photonView.RPC("RPC_StartGameShooter", PhotonNetwork.PlayerList[i], GameSetup.gs.spawnPoints[i].position, GameSetup.gs.spawnPoints[i].rotation); 
                 driver = !driver;
             }
+            */
         }
         
 
