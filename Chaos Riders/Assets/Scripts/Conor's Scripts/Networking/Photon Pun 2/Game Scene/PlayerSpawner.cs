@@ -13,7 +13,10 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
     //Bool to flip if spawn car or shooter
     public bool driver = true;
     public List<Transform> gunSpawnPoints = new List<Transform>();
-    private bool canSpawnShooters = true;
+    public List<GameObject> gunners = new List<GameObject>();
+    public bool canSpawnShooters = true;
+
+    private bool startSpawningGunners = false;
 
 
     private void Awake()
@@ -71,20 +74,25 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
 
     private void Update()
     {
+        if (gunners.Count > 0)
+            canSpawnShooters = false;
+
+        if (gunSpawnPoints.Count > 0)
+            startSpawningGunners = true;
+
         //if there is at least 1 gun spawn point in the scene
         if (gunSpawnPoints.Count > 0 && canSpawnShooters)
         {
+            canSpawnShooters = false;
             if (PhotonNetwork.PlayerList.Length == 2 || PhotonNetwork.PlayerList.Length == 3) //////////////////////////////////////////////////////2 or 3 players
             {
                 photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[1], gunSpawnPoints[0].position, gunSpawnPoints[0].rotation, gunSpawnPoints[0]);
-                canSpawnShooters = false;
             }
 
             if (PhotonNetwork.PlayerList.Length == 4 || PhotonNetwork.PlayerList.Length == 5) //////////////////////////////////////////////////////4 or 5 players
             {
                 photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[1], gunSpawnPoints[0].position, gunSpawnPoints[0].rotation, gunSpawnPoints[0]);
                 photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[3], gunSpawnPoints[1].position, gunSpawnPoints[1].rotation, gunSpawnPoints[1]);
-                canSpawnShooters = false;
             }
 
             if (PhotonNetwork.PlayerList.Length == 6 || PhotonNetwork.PlayerList.Length == 7) //////////////////////////////////////////////////////6 or 7 players
@@ -92,7 +100,6 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
                 photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[1], gunSpawnPoints[0].position, gunSpawnPoints[0].rotation, gunSpawnPoints[0]);
                 photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[3], gunSpawnPoints[1].position, gunSpawnPoints[1].rotation, gunSpawnPoints[1]);
                 photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[5], gunSpawnPoints[2].position, gunSpawnPoints[2].rotation, gunSpawnPoints[2]);
-                canSpawnShooters = false;
             }
 
             if (PhotonNetwork.PlayerList.Length == 8 || PhotonNetwork.PlayerList.Length == 9) //////////////////////////////////////////////////////6 or 7 players
@@ -101,7 +108,6 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
                 photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[3], gunSpawnPoints[1].position, gunSpawnPoints[1].rotation, gunSpawnPoints[1]);
                 photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[5], gunSpawnPoints[2].position, gunSpawnPoints[2].rotation, gunSpawnPoints[2]);
                 photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[7], gunSpawnPoints[3].position, gunSpawnPoints[3].rotation, gunSpawnPoints[3]);
-                canSpawnShooters = false;
             }
 
             if (PhotonNetwork.PlayerList.Length == 10) /////////////////////////////////////////////////////////////////////////////////////////////10 players
@@ -111,10 +117,7 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
                 photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[5], gunSpawnPoints[2].position, gunSpawnPoints[2].rotation, gunSpawnPoints[2]);
                 photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[7], gunSpawnPoints[3].position, gunSpawnPoints[3].rotation, gunSpawnPoints[3]);
                 photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[9], gunSpawnPoints[4].position, gunSpawnPoints[4].rotation, gunSpawnPoints[4]);
-                canSpawnShooters = false;
             }
-
-            
         }
     }
 

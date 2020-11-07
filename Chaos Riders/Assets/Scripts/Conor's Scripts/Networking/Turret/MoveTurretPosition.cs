@@ -20,6 +20,14 @@ public class MoveTurretPosition : MonoBehaviour
     private Vector3 _positionOffset;
     private Quaternion _rotationOffset;
 
+    private PlayerSpawner ps;
+
+    private void OnEnable()
+    {
+        ps = FindObjectOfType<PlayerSpawner>();
+        ps.gunners.Add(this.gameObject);
+    }
+
     private void Awake()
     {
         //pv.GetComponent<PhotonView>();
