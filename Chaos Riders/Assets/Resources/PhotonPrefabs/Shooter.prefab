@@ -494,6 +494,8 @@ GameObject:
   - component: {fileID: 5692180483627005512}
   - component: {fileID: 3314324769832298288}
   - component: {fileID: -5707058284350358157}
+  - component: {fileID: 3070370984002329309}
+  - component: {fileID: 877768503}
   m_Layer: 0
   m_Name: Shooter
   m_TagString: Untagged
@@ -620,8 +622,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1.6275276, z: 1}
-  m_Center: {x: 0, y: -0.49623615, z: 0}
+  m_Size: {x: 3.1609821, y: 3.4257498, z: 6.10608}
+  m_Center: {x: -0.04037738, y: -0.93332344, z: 1.7055821}
 --- !u!114 &-5707058284350358157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -637,6 +639,34 @@ MonoBehaviour:
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
+--- !u!114 &3070370984002329309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8912298972765249336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86a0fb2db96015a4684db2c1e1087333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &877768503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8912298972765249336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44e994cd748128d449c6c54314d260ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ammoMesh: {fileID: 8912298971982642061}
+  barrelMesh: {fileID: 8912298972230569310}
+  standMesh: {fileID: 8912298972753636966}
+  platformMesh: {fileID: 8912298973352698715}
 --- !u!1 &8912298972904598191
 GameObject:
   m_ObjectHideFlags: 0
