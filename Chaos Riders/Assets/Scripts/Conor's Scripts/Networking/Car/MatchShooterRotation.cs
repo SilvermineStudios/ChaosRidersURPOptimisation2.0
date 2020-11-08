@@ -4,20 +4,19 @@ using UnityEngine;
 
 public class MatchShooterRotation : MonoBehaviour
 {
+    //CAR TURRET REFS
     [SerializeField] private Transform carModelHolder;
     [SerializeField] private Transform carTurretBase, carTurretBarrels;
 
+    //SHOOTER PLAYER REFS
     private GameObject shooter;
     private Transform shooterT, modelHolder;
     private Transform turretBase, turretBarrels;
     private bool assignT = false;
+    private bool hasShooter = false;
 
-    void Start()
-    {
-        
-    }
-
-    void AssingTransforms()
+    
+    void AssingTransforms()//getting the shooter players transforms
     {
         modelHolder = shooterT.Find("Model Holder");
         turretBase = modelHolder.Find("Base");
@@ -26,15 +25,18 @@ public class MatchShooterRotation : MonoBehaviour
 
     void Update()
     {
-        //assign the shooter transforms
-        if(assignT)
+        if (hasShooter) //only run if there is a shooter in the game
         {
-            assignT = false;
-            AssingTransforms();
-        }
+            //assign the shooter transforms
+            if (assignT)
+            {
+                assignT = false; //stop this from repeating
+                AssingTransforms();
+            }
 
-        carTurretBase.transform.rotation = turretBase.transform.rotation;
-        carTurretBarrels.transform.rotation = turretBarrels.transform.rotation;
+            carTurretBase.transform.rotation = turretBase.transform.rotation; /////////////make the car turret base rotation be the same as the shooter turret base rotation
+            carTurretBarrels.transform.rotation = turretBarrels.transform.rotation;/////////////make the car turret barrel rotation be the same as the shooter turret barrel rotation
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -44,6 +46,7 @@ public class MatchShooterRotation : MonoBehaviour
             shooter = other.gameObject;
             shooterT = other.gameObject.transform;
             assignT = true;
+            hasShooter = true;
         }
     }
 }

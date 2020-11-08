@@ -23,7 +23,7 @@ public class MakeCarTurretInvisable : MonoBehaviour
 
     void Update()
     {
-        car = mtp.car;
+        car = mtp.car; ////////////////////////////////////////////////////////////STOP FROM LOOPING
         carTurret = car.transform.Find("ShooterAttach");
 
         meshRenderers = carTurret.GetComponentsInChildren<MeshRenderer>();

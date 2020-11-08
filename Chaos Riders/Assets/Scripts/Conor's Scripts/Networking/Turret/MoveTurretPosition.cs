@@ -10,12 +10,9 @@ public class MoveTurretPosition : MonoBehaviour
     //private PhotonView pv;
 
     public GameObject car;
-    private Transform carGunPos;
-    private Vector3 carpos;
+    private Transform carGunPos; 
 
-
-
-    public Transform FakeParent;
+    private Transform FakeParent;
 
     private Vector3 _positionOffset;
     private Quaternion _rotationOffset;
@@ -43,25 +40,16 @@ public class MoveTurretPosition : MonoBehaviour
 
     private void Update()
     {
-        //if(pv.IsMine)
-        //{
-            carGunPos = car.GetComponent<MultiplayerCarPrefabs>().gunSpawnPoint;
+        if (FakeParent == null)
+            return;
 
-            if (FakeParent == null)
-                return;
+        carGunPos = car.GetComponent<MultiplayerCarPrefabs>().gunSpawnPoint;
 
         var targetPos = carGunPos.position;
         var targetRot = car.transform.rotation;
 
         this.transform.position = RotatePointAroundPivot(targetPos, targetPos, targetRot);
         this.transform.localRotation = targetRot;
-        //}
-        //else if(!multiplayer)
-    }
-
-    private void FixedUpdate()
-    {
-        
     }
 
     public void SetFakeParent(Transform parent)
