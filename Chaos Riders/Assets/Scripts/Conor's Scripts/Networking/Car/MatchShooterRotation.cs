@@ -14,6 +14,7 @@ public class MatchShooterRotation : MonoBehaviour
     private Transform turretBase, turretBarrels;
     private bool assignT = false;
     private bool hasShooter = false;
+    private bool canConnect = true;
 
     
     void AssingTransforms()//getting the shooter players transforms
@@ -41,8 +42,11 @@ public class MatchShooterRotation : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "shooter") //if the car detects a shooter above it
+        if (!canConnect) return;
+
+        if (other.gameObject.tag == "shooter" && canConnect) //if the car detects a shooter above it
         {
+            canConnect = false;
             shooter = other.gameObject;
             shooterT = other.gameObject.transform;
             assignT = true;

@@ -18,6 +18,7 @@ public class MoveTurretPosition : MonoBehaviour
     private Quaternion _rotationOffset;
 
     private PlayerSpawner ps;
+    private bool canConnect = true;
 
     private void OnEnable()
     {
@@ -76,8 +77,11 @@ public class MoveTurretPosition : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "car")
+        if (!canConnect) return;
+
+        if (other.gameObject.tag == "car" && canConnect)
         {
+            canConnect = false;
             car = other.gameObject;
             FakeParent = other.gameObject.transform;
         }

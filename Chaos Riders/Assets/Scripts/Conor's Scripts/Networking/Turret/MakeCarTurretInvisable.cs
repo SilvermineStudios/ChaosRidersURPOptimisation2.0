@@ -13,6 +13,7 @@ public class MakeCarTurretInvisable : MonoBehaviour
     private int gunMeshCount = 4; //ammo, barrel, stand, platform
 
     private PhotonView pv;
+    private bool canAssign = true;
 
     void Start()
     {
@@ -23,16 +24,19 @@ public class MakeCarTurretInvisable : MonoBehaviour
 
     void Update()
     {
-        car = mtp.car; ////////////////////////////////////////////////////////////STOP FROM LOOPING
-        carTurret = car.transform.Find("ShooterAttach");
-
-        meshRenderers = carTurret.GetComponentsInChildren<MeshRenderer>();
-
-        if(pv.IsMine)
+        if(mtp.car != null && canAssign)
         {
-            foreach (MeshRenderer mr in meshRenderers)
+            canAssign = false;
+            car = mtp.car; ////////////////////////////////////////////////////////////STOP FROM LOOPING  <--- <--- <--- <--- <---
+            carTurret = car.transform.Find("ShooterAttach");
+            meshRenderers = carTurret.GetComponentsInChildren<MeshRenderer>();
+
+            if (pv.IsMine)
             {
-                mr.enabled = false;
+                foreach (MeshRenderer mr in meshRenderers)
+                {
+                    mr.enabled = false; //invisible: disable all the mesh renderers on the cars turret for the shooter
+                }
             }
         }
     }
