@@ -12,7 +12,7 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
 
     public List<Transform> gunSpawnPoints = new List<Transform>();
     public List<GameObject> gunners = new List<GameObject>();
-    public bool canSpawnShooters = true;
+    private bool canSpawnShooters = true;
 
     private bool startSpawningGunners = false;
 
