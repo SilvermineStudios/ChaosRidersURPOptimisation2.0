@@ -13,7 +13,7 @@ public class MatchShooterRotation : MonoBehaviour
     private Transform shooterT, modelHolder;
     private Transform turretBase, turretBarrels;
     private bool assignT = false;
-    private bool hasShooter = false;
+    [SerializeField] private bool hasShooter = false;
     private bool canConnect = true;
 
     
@@ -26,7 +26,7 @@ public class MatchShooterRotation : MonoBehaviour
 
     void Update()
     {
-        if (hasShooter) //only run if there is a shooter in the game
+        if (hasShooter && shooter != null) //only run if there is a shooter in the game
         {
             //assign the shooter transforms
             if (assignT)
@@ -52,5 +52,10 @@ public class MatchShooterRotation : MonoBehaviour
             assignT = true;
             hasShooter = true;
         }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        hasShooter = false;
     }
 }
