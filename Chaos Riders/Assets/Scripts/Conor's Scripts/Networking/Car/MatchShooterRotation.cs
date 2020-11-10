@@ -53,9 +53,4 @@ public class MatchShooterRotation : MonoBehaviour
             hasShooter = true;
         }
     }
-
-    private void OnTriggerExit(Collider other)
-    {
-        hasShooter = false;
-    }
 }
