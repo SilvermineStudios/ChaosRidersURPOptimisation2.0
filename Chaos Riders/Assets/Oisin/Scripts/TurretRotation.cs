@@ -7,6 +7,7 @@ namespace Turrets
 {
     public class TurretRotation : MonoBehaviour
     {
+
         public bool runRotationsInFixed = false;
 
         
@@ -37,7 +38,7 @@ namespace Turrets
 
         private bool aiming = false;
 
-        private PhotonView pv;
+        [SerializeField] private PhotonView pv;
 
         private void Start()
         {
@@ -80,7 +81,7 @@ namespace Turrets
 
         private void RotateTurret()
         {
-            if (aiming)
+            if (aiming && pv.IsMine)
             {
                 RotateBase();
                 RotateBarrels();

@@ -12,6 +12,10 @@ public class GameSetup : MonoBehaviour
     public Player[] players = PhotonNetwork.PlayerList;
     public PhotonPlayer[] photonPlayers;
 
+
+    //new
+    public int nextPlayersTeam;
+
     private void OnEnable()
     {
         if(GameSetup.gs == null)

@@ -34,4 +34,26 @@ public class WaypointManager : MonoBehaviour
             Gizmos.DrawSphere(currentWaypoint, sphereRadius);
         }
     }
+
+
+
+    #region code
+    /*
+     * 
+     * 
+     * 
+     * LOADS OF CODE HERE!!
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+    #endregion
+
+
+
+
+
+
 }
