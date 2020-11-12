@@ -12,10 +12,14 @@ public class Health : MonoBehaviour
     Slider healthbar;
     [SerializeField] GameObject deathParticles;
 
-    public bool dead;
+    
+    public bool isDead { get { return dead; } private set { isDead = dead; } }
+
+    bool dead;
 
     void Start()
     {
+
         health = 100;
         healthbar = GetComponentInChildren<Slider>();
 
@@ -29,9 +33,32 @@ public class Health : MonoBehaviour
 
         if(health <= 0 && !dead)
         {
-            deathParticles.SetActive(true);
+            dead = true;
+        }
+        if(dead)
+        {
+            Die();
         }
 
+    }
+
+    public float timeSinceDeath, deathTimer;
+
+    void Die()
+    {
+        deathParticles.SetActive(true);
+        
+        if (timeSinceDeath > deathTimer)
+        {
+            dead = false;
+            health = 100;
+            deathParticles.SetActive(false);
+            timeSinceDeath = 0;
+        }
+        else
+        {
+            timeSinceDeath += Time.deltaTime;
+        }  
     }
 
 

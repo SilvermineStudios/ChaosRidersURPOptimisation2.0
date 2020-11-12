@@ -18,7 +18,9 @@ public class AICarController : MonoBehaviour
     [SerializeField] private Transform[] waypoints;
 
     [SerializeField] private Vector3 centerOfMass;
-    
+
+    private Health healthScript;
+
 
     private void Awake()
     {
@@ -31,14 +33,27 @@ public class AICarController : MonoBehaviour
         waypoints = waypointManager.waypoints;
 
         GetComponent<Rigidbody>().centerOfMass = centerOfMass;
+        healthScript = GetComponent<Health>();
     }
 
     private void FixedUpdate()
     {
+        //if dead bring to a stop and dont steer or update waypoints
+        if (healthScript.isDead) { Die(); return; }
+
         ApplySteer();
         Drive();
         CheckWaypointDistance();
     }
+
+
+    private void Die()
+    {
+        //stops car from moving
+        FL.brakeTorque = 1000f;
+        FR.brakeTorque = 1000f;
+    }
+
 
     //steers the car towards the next waypoint
     private void ApplySteer()
@@ -52,6 +67,10 @@ public class AICarController : MonoBehaviour
     //moves the car
     private void Drive()
     {
+        //allows car to move
+        FL.brakeTorque = 0f;
+        FR.brakeTorque = 0f;
+
         currentSpeed = 2 * Mathf.PI * FL.radius * FL.rpm * 60 / 100; //displays current speed based on how fast the wheel is spinning
 
         //if the car is not at its max speed yet speed up
@@ -70,7 +89,8 @@ public class AICarController : MonoBehaviour
     //calculates the distance between the car and the nextwaypoint
     private void CheckWaypointDistance()
     {
-        if(Vector3.Distance(transform.position, waypoints[currentWaypoint].position) < changeWaypointDistance) //if the car is within the changewaypointDistance of the currentwaypoint
+
+        if (Vector3.Distance(transform.position, waypoints[currentWaypoint].position) < changeWaypointDistance) //if the car is within the changewaypointDistance of the currentwaypoint
         {
             if (currentWaypoint == waypoints.Length - 1) //if the car is at the last waypoint
                 currentWaypoint = 0; //make the next waypoint the first waypoint

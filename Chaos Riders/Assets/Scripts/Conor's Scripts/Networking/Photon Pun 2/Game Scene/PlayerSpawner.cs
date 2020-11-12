@@ -25,10 +25,13 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        AssignCarSpawnPointsToArray();
-        if (PhotonNetwork.IsMasterClient)
+        if (IsThisMultiplayer.Instance.multiplayer)
         {
-            StartCoroutine(TimerToSpawnCars(spawnTimer));
+            AssignCarSpawnPointsToArray();
+            if (PhotonNetwork.IsMasterClient)
+            {
+                StartCoroutine(TimerToSpawnCars(spawnTimer));
+            }
         }
     }
 
@@ -82,6 +85,8 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
 
     private void Update()
     {
+        if (!IsThisMultiplayer.Instance.multiplayer) { return; }
+
         if (gunners.Count > 0)
             canSpawnShooters = false;
 

@@ -26,6 +26,7 @@ public class RaycastMinigun : MonoBehaviour
     void Update()
     {
         
+        
         if (!pv.IsMine && IsThisMultiplayer.Instance.multiplayer) { return; }
 
         if ((Input.GetAxis("RT") > 0.01f || Input.GetButton("Fire1")) && (pv.IsMine || !IsThisMultiplayer.Instance.multiplayer))
