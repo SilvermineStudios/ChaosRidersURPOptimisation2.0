@@ -21,12 +21,8 @@ namespace TurretDemo
 
         private void Update()
         {
-            if(!pv.IsMine) { return; }
+            if(!pv.IsMine && IsThisMultiplayer.multiplayer) { return; }
 
-
-            // Toggle turret idle.
-            if (Input.GetKeyDown(KeyCode.E))
-                turretsIdle = !turretsIdle;
 
             // When a transform is assigned, pass that to the turret. If not,
             // just pass in whatever this is looking at.

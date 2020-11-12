@@ -109,7 +109,7 @@ public class CarControllerMultiplayer : MonoBehaviour
     }
     void Start()
     {
-        if(pv.IsMine && multiplayer)
+        if(pv.IsMine && IsThisMultiplayer.multiplayer)
         {
             playerCamera.SetActive(true);
 
@@ -119,7 +119,7 @@ public class CarControllerMultiplayer : MonoBehaviour
             GetComponent<Rigidbody>().inertiaTensor *= inertiaFactor;
             drivetrain = GetComponent(typeof(DriveTrainMultiplayer)) as DriveTrainMultiplayer;
         }
-        else if(!multiplayer)
+        else if(!IsThisMultiplayer.multiplayer)
         {
             playerCamera.SetActive(true);
 
@@ -133,11 +133,11 @@ public class CarControllerMultiplayer : MonoBehaviour
 
     void Update()
     {
-        if(pv.IsMine && multiplayer)
+        if(pv.IsMine && IsThisMultiplayer.multiplayer)
         {
             PlayerUpdate();
         }
-        else if(!multiplayer)
+        else if(!IsThisMultiplayer.multiplayer)
         {
             PlayerUpdate();
         }

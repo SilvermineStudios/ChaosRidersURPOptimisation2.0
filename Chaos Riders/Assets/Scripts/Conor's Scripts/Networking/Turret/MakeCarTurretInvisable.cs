@@ -24,7 +24,7 @@ public class MakeCarTurretInvisable : MonoBehaviour
 
     void Update()
     {
-        if(mtp.car != null && canAssign)
+        if(mtp.car != null && canAssign && IsThisMultiplayer.multiplayer)
         {
             canAssign = false;
             car = mtp.car; ////////////////////////////////////////////////////////////STOP FROM LOOPING  <--- <--- <--- <--- <---

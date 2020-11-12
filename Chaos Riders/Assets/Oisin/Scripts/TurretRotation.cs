@@ -36,21 +36,23 @@ namespace Turrets
 
         private Vector3 aimPoint;
 
+        [SerializeField]
         private bool aiming = false;
 
         [SerializeField] private PhotonView pv;
+
 
         private void Start()
         {
             pv = GetComponent<PhotonView>();
 
-            //if (!aiming && pv.IsMine)
-                //aimPoint = transform.TransformPoint(Vector3.forward * 100.0f);
+            if (!aiming)// && pv.IsMine)
+                aimPoint = transform.TransformPoint(Vector3.forward * 100.0f);
         }
 
         private void Update()
         {
-            if (!runRotationsInFixed && pv.IsMine)
+            if ((!runRotationsInFixed && pv.IsMine) || (!runRotationsInFixed && !IsThisMultiplayer.multiplayer))
             {
                 RotateTurret();
             }
@@ -61,9 +63,10 @@ namespace Turrets
 
         private void FixedUpdate()
         {
-            if (runRotationsInFixed && pv.IsMine)
+            if ((runRotationsInFixed && pv.IsMine) || (runRotationsInFixed && !IsThisMultiplayer.multiplayer))
             {
                 RotateTurret();
+                Debug.Log(232323);
             }
         }
 
@@ -81,8 +84,9 @@ namespace Turrets
 
         private void RotateTurret()
         {
-            if (aiming && pv.IsMine)
+            if (aiming && (pv.IsMine || !IsThisMultiplayer.multiplayer))
             {
+                Debug.Log(333333);
                 RotateBase();
                 RotateBarrels();
             }
@@ -90,8 +94,10 @@ namespace Turrets
 
         private void RotateBase()
         {
+            
             if (turretBase != null)
             {
+                
                 Vector3 localTargetPos = transform.InverseTransformPoint(aimPoint);
                 localTargetPos.y = 0.0f;
 
@@ -100,6 +106,7 @@ namespace Turrets
                 Vector3 clampedLocalVec2Target = localTargetPos;
                 if (limitTraverse)
                 {
+                    
                     if (localTargetPos.x >= 0.0f)
                         clampedLocalVec2Target = Vector3.RotateTowards(Vector3.forward, localTargetPos, Mathf.Deg2Rad * rightTraverse, float.MaxValue);
                     else
@@ -117,8 +124,10 @@ namespace Turrets
 
         private void RotateBarrels()
         {
+            Debug.Log(111111);
             if (turretBase != null && turretBarrels != null)
             {
+                Debug.Log(22222);
                 Vector3 localTargetPos = turretBase.InverseTransformPoint(aimPoint);
                 localTargetPos.x = 0.0f;
 
@@ -133,7 +142,7 @@ namespace Turrets
                 // Create new rotation towards the target in local space.
                 Quaternion rotationGoal = Quaternion.LookRotation(clampedLocalVec2Target);
                 Quaternion newRotation = Quaternion.RotateTowards(turretBarrels.localRotation, rotationGoal, 360);
-
+                Debug.Log(333333);
                 turretBarrels.localRotation = newRotation;
             }
         }

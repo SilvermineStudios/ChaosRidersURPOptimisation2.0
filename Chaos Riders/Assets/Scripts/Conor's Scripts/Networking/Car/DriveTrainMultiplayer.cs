@@ -131,7 +131,7 @@ public class DriveTrainMultiplayer : MonoBehaviour
 
     private void Update()
     {
-        if(pv.IsMine && multiplayer)
+        if(pv.IsMine && IsThisMultiplayer.multiplayer)
         {
             if (shiftedRecently)
             {
@@ -142,7 +142,7 @@ public class DriveTrainMultiplayer : MonoBehaviour
                 }
             }
         }
-        else if(!multiplayer)
+        else if(!IsThisMultiplayer.multiplayer)
         {
             if (shiftedRecently)
             {
@@ -158,7 +158,7 @@ public class DriveTrainMultiplayer : MonoBehaviour
     
     void FixedUpdate()
     {
-        if(pv.IsMine && multiplayer)
+        if(pv.IsMine && IsThisMultiplayer.multiplayer)
         {
             float ratio = gearRatios[gear] * finalDriveRatio;
             float inertia = engineInertia * Sqr(ratio);
@@ -251,7 +251,7 @@ public class DriveTrainMultiplayer : MonoBehaviour
                 gear = (gear == 0 ? 2 : 0);
             }
         }
-        else if(!multiplayer)
+        else if(!IsThisMultiplayer.multiplayer)
         {
             float ratio = gearRatios[gear] * finalDriveRatio;
             float inertia = engineInertia * Sqr(ratio);
