@@ -11,6 +11,9 @@ public class RaycastMinigun : MonoBehaviour
     private AudioSource speaker;
     public AudioClip gunShot;
 
+    public float minigunDamage;
+    [SerializeField] float playerNumber = 1;
+
     public LayerMask layerMask;
 
     private void Start()
@@ -52,7 +55,10 @@ public class RaycastMinigun : MonoBehaviour
 
         if (Physics.Raycast(spawnpoint.transform.position, raycastDir, out hit, Mathf.Infinity, layerMask))
         {
-            Debug.DrawRay(transform.position, raycastDir * hit.distance, Color.yellow);
+            float[] DamagetoTake = new float[2];
+            DamagetoTake[0] = minigunDamage;
+            DamagetoTake[1] = playerNumber;
+            hit.transform.gameObject.SendMessage("TakeDamage", DamagetoTake);
             Debug.Log("Did Hit");
         }
         else
