@@ -52,7 +52,7 @@ namespace Turrets
 
         private void Update()
         {
-            if ((!runRotationsInFixed && pv.IsMine) || (!runRotationsInFixed && !IsThisMultiplayer.multiplayer))
+            if ((!runRotationsInFixed && pv.IsMine) || (!runRotationsInFixed && !IsThisMultiplayer.Instance.multiplayer))
             {
                 RotateTurret();
             }
@@ -63,7 +63,7 @@ namespace Turrets
 
         private void FixedUpdate()
         {
-            if ((runRotationsInFixed && pv.IsMine) || (runRotationsInFixed && !IsThisMultiplayer.multiplayer))
+            if ((runRotationsInFixed && pv.IsMine) || (runRotationsInFixed && !IsThisMultiplayer.Instance.multiplayer))
             {
                 RotateTurret();
             }
@@ -83,7 +83,7 @@ namespace Turrets
 
         private void RotateTurret()
         {
-            if (aiming && (pv.IsMine || !IsThisMultiplayer.multiplayer))
+            if (aiming && (pv.IsMine || !IsThisMultiplayer.Instance.multiplayer))
             {
                 RotateBase();
                 RotateBarrels();

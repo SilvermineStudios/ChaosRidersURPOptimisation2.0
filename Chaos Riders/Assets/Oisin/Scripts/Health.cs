@@ -10,11 +10,15 @@ public class Health : MonoBehaviour
     [SerializeField] float lastHit;
 
     Slider healthbar;
+    [SerializeField] GameObject deathParticles;
+
+    public bool dead;
 
     void Start()
     {
         health = 100;
         healthbar = GetComponentInChildren<Slider>();
+
     }
 
 
@@ -22,6 +26,12 @@ public class Health : MonoBehaviour
     void Update()
     {
         healthbar.value = health;
+
+        if(health <= 0 && !dead)
+        {
+            deathParticles.SetActive(true);
+        }
+
     }
 
 

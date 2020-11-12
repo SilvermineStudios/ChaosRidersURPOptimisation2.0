@@ -21,7 +21,7 @@ namespace TurretDemo
 
         private void Update()
         {
-            if(!pv.IsMine && IsThisMultiplayer.multiplayer) { return; }
+            if(!pv.IsMine && IsThisMultiplayer.Instance.multiplayer) { return; }
 
 
             // When a transform is assigned, pass that to the turret. If not,

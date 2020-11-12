@@ -22,9 +22,9 @@ public class dumb : MonoBehaviour
         pv = GetComponent<PhotonView>();
 
 
-        if (!pv.IsMine && IsThisMultiplayer.multiplayer) { return; }
+        if (!pv.IsMine && IsThisMultiplayer.Instance.multiplayer) { return; }
 
-        if (pv.IsMine || !IsThisMultiplayer.multiplayer)
+        if (pv.IsMine || !IsThisMultiplayer.Instance.multiplayer)
         {
             playerCamera.SetActive(true);
         }
@@ -33,10 +33,10 @@ public class dumb : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!pv.IsMine && IsThisMultiplayer.multiplayer) { return; }
+        if (!pv.IsMine && IsThisMultiplayer.Instance.multiplayer) { return; }
 
         
-        if(pv.IsMine || !IsThisMultiplayer.multiplayer)
+        if(pv.IsMine || !IsThisMultiplayer.Instance.multiplayer)
         {
             target.transform.RotateAround(transform.position, Vector3.up, Input.GetAxis("Horizontal") * Hspeed * Time.deltaTime);
             target.transform.Translate(new Vector3(0, Input.GetAxis("Vertical") * Vspeed, 0));
