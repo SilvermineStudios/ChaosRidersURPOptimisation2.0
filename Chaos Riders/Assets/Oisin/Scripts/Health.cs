@@ -42,7 +42,7 @@ public class Health : MonoBehaviour
 
     }
 
-    public float timeSinceDeath, deathTimer;
+    float timeSinceDeath, deathTimer = 5;
 
     void Die()
     {
