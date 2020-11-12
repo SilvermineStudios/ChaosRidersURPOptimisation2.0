@@ -66,7 +66,6 @@ namespace Turrets
             if ((runRotationsInFixed && pv.IsMine) || (runRotationsInFixed && !IsThisMultiplayer.multiplayer))
             {
                 RotateTurret();
-                Debug.Log(232323);
             }
         }
 
@@ -86,7 +85,6 @@ namespace Turrets
         {
             if (aiming && (pv.IsMine || !IsThisMultiplayer.multiplayer))
             {
-                Debug.Log(333333);
                 RotateBase();
                 RotateBarrels();
             }
@@ -124,10 +122,8 @@ namespace Turrets
 
         private void RotateBarrels()
         {
-            Debug.Log(111111);
             if (turretBase != null && turretBarrels != null)
             {
-                Debug.Log(22222);
                 Vector3 localTargetPos = turretBase.InverseTransformPoint(aimPoint);
                 localTargetPos.x = 0.0f;
 
@@ -142,7 +138,6 @@ namespace Turrets
                 // Create new rotation towards the target in local space.
                 Quaternion rotationGoal = Quaternion.LookRotation(clampedLocalVec2Target);
                 Quaternion newRotation = Quaternion.RotateTowards(turretBarrels.localRotation, rotationGoal, 360);
-                Debug.Log(333333);
                 turretBarrels.localRotation = newRotation;
             }
         }
