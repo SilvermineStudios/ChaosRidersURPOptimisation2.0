@@ -33,11 +33,11 @@ public class CarPickup : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //if the player picked up a speed pickup
-        if (other.CompareTag("SpeedPickUp") && pv.IsMine || other.CompareTag("SpeedPickUp") && !dt.multiplayer) //the or is for testing when not in multiplayer
+        if (other.CompareTag("SpeedPickUp") && pv.IsMine || other.CompareTag("SpeedPickUp") && !IsThisMultiplayer.Instance.multiplayer) //the or is for testing when not in multiplayer
             hasSpeedBoost = true;
 
         //if the player picked up the invincible pickup
-        if (other.CompareTag("InvinciblePickUp") && pv.IsMine || other.CompareTag("InvinciblePickUp") && !dt.multiplayer) //the or is for testing when not in multiplayer
+        if (other.CompareTag("InvinciblePickUp") && pv.IsMine || other.CompareTag("InvinciblePickUp") && !IsThisMultiplayer.Instance.multiplayer) //the or is for testing when not in multiplayer
             StartCoroutine(InvincibleTimer(PickupManager.InvincibleTime));
     }
 

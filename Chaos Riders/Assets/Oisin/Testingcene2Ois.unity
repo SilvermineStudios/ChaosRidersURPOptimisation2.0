@@ -199,11 +199,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &141072133 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3043033493105963232, guid: 2a12aa29d7e4e8341934934d4c2f5938, type: 3}
-  m_PrefabInstance: {fileID: 3043033492974397413}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &179016000
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -985,11 +980,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1227120263}
   m_CullTransparentMesh: 0
---- !u!4 &1259361457 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3043033492084142932, guid: 2a12aa29d7e4e8341934934d4c2f5938, type: 3}
-  m_PrefabInstance: {fileID: 3043033492974397413}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1270562401
 GameObject:
   m_ObjectHideFlags: 0
@@ -2431,11 +2421,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1399357814644981833, guid: 6b99145cae833e04cbed5c6fec358d16, type: 3}
   m_PrefabInstance: {fileID: 1399357815206001453}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &2378929444630088641 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 343709949430308968, guid: 2a12aa29d7e4e8341934934d4c2f5938, type: 3}
-  m_PrefabInstance: {fileID: 3043033492974397413}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3043033492974397413
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2443,6 +2428,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2109867049}
     m_Modifications:
+    - target: {fileID: 3043033492974397416, guid: 2a12aa29d7e4e8341934934d4c2f5938, type: 3}
+      propertyPath: viewIdField
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3395196458690048736, guid: 2a12aa29d7e4e8341934934d4c2f5938, type: 3}
       propertyPath: photonPlayersGO.Array.size
       value: 4
@@ -2599,15 +2588,15 @@ PrefabInstance:
     - target: {fileID: 260065168898266405, guid: 74fbbeb9738fc254496e8a4c31702711, type: 3}
       propertyPath: spawnPoints.Array.data[0]
       value: 
-      objectReference: {fileID: 2378929444630088641}
+      objectReference: {fileID: 0}
     - target: {fileID: 260065168898266405, guid: 74fbbeb9738fc254496e8a4c31702711, type: 3}
       propertyPath: spawnPoints.Array.data[1]
       value: 
-      objectReference: {fileID: 141072133}
+      objectReference: {fileID: 0}
     - target: {fileID: 260065168898266405, guid: 74fbbeb9738fc254496e8a4c31702711, type: 3}
       propertyPath: spawnPoints.Array.data[2]
       value: 
-      objectReference: {fileID: 1259361457}
+      objectReference: {fileID: 0}
     - target: {fileID: 260065168898266405, guid: 74fbbeb9738fc254496e8a4c31702711, type: 3}
       propertyPath: spawnPoints.Array.data[3]
       value: 

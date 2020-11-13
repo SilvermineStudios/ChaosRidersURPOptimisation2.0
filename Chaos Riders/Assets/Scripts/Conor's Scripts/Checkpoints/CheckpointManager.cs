@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaypointManager : MonoBehaviour
+public class CheckpointManager : MonoBehaviour
 {
     [SerializeField] private bool drawLines = true;
     [SerializeField] private bool drawSpheres = true;
@@ -13,10 +13,10 @@ public class WaypointManager : MonoBehaviour
     [SerializeField] private Transform[] waypoints;
 
 
-    [SerializeField] private GameObject waypointPrefab;
+    [SerializeField] private GameObject checkpointPrefab;
     [SerializeField] private float yOffset = -6f;
 
-    
+
 
 
     private void Awake()
@@ -66,8 +66,8 @@ public class WaypointManager : MonoBehaviour
         //spawns the waypoint prefab at each waypoint
         for (int i = 0; i < waypointLocations.Length; i++)
         {
-            Vector3 spawnPos = new Vector3(waypointLocations[i].position.x, waypointLocations[i].position.y + yOffset, waypointLocations[i].position.z);  
-            waypoints[i] = Instantiate(waypointPrefab, spawnPos, waypointLocations[i].rotation).transform;
+            Vector3 spawnPos = new Vector3(waypointLocations[i].position.x, waypointLocations[i].position.y + yOffset, waypointLocations[i].position.z);
+            waypoints[i] = Instantiate(checkpointPrefab, spawnPos, waypointLocations[i].rotation).transform;
         }
     }
 
@@ -80,25 +80,6 @@ public class WaypointManager : MonoBehaviour
 
     private void Update()
     {
-        
+
     }
-
-
-
-
-
-
-    #region code
-    /*
-     * 
-     * 
-     * 
-     * LOADS OF CODE HERE!!
-     * 
-     * 
-     * 
-     * 
-     * 
-     */
-    #endregion
 }
