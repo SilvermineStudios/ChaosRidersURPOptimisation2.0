@@ -6,7 +6,7 @@ using Photon.Pun;
 public class dumb : MonoBehaviour
 {
 
-    //This script moves a cube around for the gun and camera to face towards, to be replaced later
+    //This script moves a cube around for the gun and camera to face towards, to be replaced later when working with the actual model
 
 
 
@@ -22,9 +22,9 @@ public class dumb : MonoBehaviour
         pv = GetComponent<PhotonView>();
 
 
-        if (!pv.IsMine) { return; }
+        if (!pv.IsMine && IsThisMultiplayer.Instance.multiplayer) { return; }
 
-        if(pv.IsMine)
+        if (pv.IsMine || !IsThisMultiplayer.Instance.multiplayer)
         {
             playerCamera.SetActive(true);
         }
@@ -33,10 +33,10 @@ public class dumb : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!pv.IsMine) { return; }
+        if (!pv.IsMine && IsThisMultiplayer.Instance.multiplayer) { return; }
 
         
-        if(pv.IsMine)
+        if(pv.IsMine || !IsThisMultiplayer.Instance.multiplayer)
         {
             target.transform.RotateAround(transform.position, Vector3.up, Input.GetAxis("Horizontal") * Hspeed * Time.deltaTime);
             target.transform.Translate(new Vector3(0, Input.GetAxis("Vertical") * Vspeed, 0));

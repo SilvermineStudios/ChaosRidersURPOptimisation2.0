@@ -25,10 +25,13 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        AssignCarSpawnPointsToArray();
-        if (PhotonNetwork.IsMasterClient)
+        if (IsThisMultiplayer.Instance.multiplayer)
         {
-            StartCoroutine(TimerToSpawnCars(spawnTimer));
+            AssignCarSpawnPointsToArray();
+            if (PhotonNetwork.IsMasterClient)
+            {
+                StartCoroutine(TimerToSpawnCars(spawnTimer));
+            }
         }
     }
 
@@ -40,7 +43,7 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
     }
 
 
-    
+
     public void SpawnCars()
     {
         if(PhotonNetwork.PlayerList.Length == 1 || PhotonNetwork.PlayerList.Length == 2) ////////////////////////////////////////////////////////////1 or 2 players
@@ -78,17 +81,19 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
             photonView.RPC("RPC_SpawnCar", PhotonNetwork.PlayerList[8], carSpawnPoints[4].position, carSpawnPoints[4].rotation);
         }
     }
-    
-    
+
+
     private void Update()
     {
+        if (!IsThisMultiplayer.Instance.multiplayer) { return; }
+
         if (gunners.Count > 0)
             canSpawnShooters = false;
 
         if (gunSpawnPoints.Count > 0)
             startSpawningGunners = true;
 
-        
+
         //spawn gunners
         if (gunSpawnPoints.Count > 0 && canSpawnShooters)
         {
@@ -143,13 +148,17 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
     [PunRPC]
     void RPC_SpawnCar(Vector3 spawnPos, Quaternion spawnRot)
     {
-        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "CarAvatar"), spawnPos, spawnRot, 0);
+        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Shooter"), spawnPos, spawnRot, 0);
+
     }
 
 
     [PunRPC]
     void RPC_SpawnShooter(Vector3 spawnPos, Quaternion spawnRot)
     {
-        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Shooter"), spawnPos, spawnRot, 0);
+        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "CarAvatar"), spawnPos, spawnRot, 0);
     }
+
+
+
 }

@@ -55,6 +55,10 @@ public class DriveTrainMultiplayer : MonoBehaviour
     public float differentialLockCoefficient = 0;
 
     // inputs
+    public bool nitro;
+    [SerializeField] private float nitroBoost = 2.5f;
+
+
     // engine throttle
     public float throttle = 0;
     // engine throttle without traction control (used for automatic gear shifting)
@@ -107,6 +111,12 @@ public class DriveTrainMultiplayer : MonoBehaviour
             result = 0;
         }
 
+        if (nitro)
+        {
+            result *= nitroBoost;
+        }
+
+
         return result;
     }
 
@@ -121,7 +131,7 @@ public class DriveTrainMultiplayer : MonoBehaviour
 
     private void Update()
     {
-        if(pv.IsMine && multiplayer)
+        if(pv.IsMine && IsThisMultiplayer.Instance.multiplayer)
         {
             if (shiftedRecently)
             {
@@ -132,7 +142,7 @@ public class DriveTrainMultiplayer : MonoBehaviour
                 }
             }
         }
-        else if(!multiplayer)
+        else if(!IsThisMultiplayer.Instance.multiplayer)
         {
             if (shiftedRecently)
             {
@@ -148,7 +158,7 @@ public class DriveTrainMultiplayer : MonoBehaviour
     
     void FixedUpdate()
     {
-        if(pv.IsMine && multiplayer)
+        if(pv.IsMine && IsThisMultiplayer.Instance.multiplayer)
         {
             float ratio = gearRatios[gear] * finalDriveRatio;
             float inertia = engineInertia * Sqr(ratio);
@@ -241,7 +251,7 @@ public class DriveTrainMultiplayer : MonoBehaviour
                 gear = (gear == 0 ? 2 : 0);
             }
         }
-        else if(!multiplayer)
+        else if(!IsThisMultiplayer.Instance.multiplayer)
         {
             float ratio = gearRatios[gear] * finalDriveRatio;
             float inertia = engineInertia * Sqr(ratio);

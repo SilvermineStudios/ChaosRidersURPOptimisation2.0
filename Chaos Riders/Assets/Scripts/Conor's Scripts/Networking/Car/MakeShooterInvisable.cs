@@ -18,7 +18,7 @@ public class MakeShooterInvisable : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!pv.IsMine)
+        if(!pv.IsMine && IsThisMultiplayer.Instance.multiplayer)
         {
             ammoMesh.enabled = false;
             barrelMesh.enabled = false;

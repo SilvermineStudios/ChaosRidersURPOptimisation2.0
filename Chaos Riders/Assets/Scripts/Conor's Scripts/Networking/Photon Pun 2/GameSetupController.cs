@@ -8,7 +8,10 @@ public class GameSetupController : MonoBehaviour
 {
     void Start()
     {
-        CreatePlayer(); //create a networked player object
+        if (IsThisMultiplayer.Instance.multiplayer)
+        {
+            CreatePlayer(); //create a networked player object
+        }
     }
 
     private void CreatePlayer()

@@ -102,14 +102,18 @@ public class CarControllerMultiplayer : MonoBehaviour
 
     }
     #endregion
+
+    Health healthScript;
+
     // Initialize
     private void Awake()
     {
+        healthScript = GetComponent<Health>();
         pv = GetComponent<PhotonView>();
     }
     void Start()
     {
-        if(pv.IsMine && multiplayer)
+        if(pv.IsMine && IsThisMultiplayer.Instance.multiplayer)
         {
             playerCamera.SetActive(true);
 
@@ -119,7 +123,7 @@ public class CarControllerMultiplayer : MonoBehaviour
             GetComponent<Rigidbody>().inertiaTensor *= inertiaFactor;
             drivetrain = GetComponent(typeof(DriveTrainMultiplayer)) as DriveTrainMultiplayer;
         }
-        else if(!multiplayer)
+        else if(!IsThisMultiplayer.Instance.multiplayer)
         {
             playerCamera.SetActive(true);
 
@@ -133,11 +137,21 @@ public class CarControllerMultiplayer : MonoBehaviour
 
     void Update()
     {
-        if(pv.IsMine && multiplayer)
+        if(healthScript.isDead)
+        {
+            GetComponent<Rigidbody>().drag = 5;
+            return;
+        }
+        else
+        {
+            GetComponent<Rigidbody>().drag = 0;
+        }
+
+        if(pv.IsMine && IsThisMultiplayer.Instance.multiplayer)
         {
             PlayerUpdate();
         }
-        else if(!multiplayer)
+        else if(!IsThisMultiplayer.Instance.multiplayer)
         {
             PlayerUpdate();
         }
@@ -171,7 +185,7 @@ public class CarControllerMultiplayer : MonoBehaviour
     //all of the stuff that was in update is now here
     private void PlayerUpdate()
     {
-        if (drivetrain.gear <= 3)
+        if (drivetrain.gear <= 3 || drivetrain.nitro)
         {
             GetComponent<Rigidbody>().angularDrag = 0.1f;
         }

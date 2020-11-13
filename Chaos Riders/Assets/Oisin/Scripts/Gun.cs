@@ -12,7 +12,7 @@ public class Gun : MonoBehaviour
     public PhotonView pv;
     private AudioSource speaker;
     public AudioClip gunShot;
-
+    public Health healthScript;
 
     private void Start()
     {
@@ -23,9 +23,14 @@ public class Gun : MonoBehaviour
 
     void Update()
     {
-        if (!pv.IsMine) { return; }
+        if (!pv.IsMine && IsThisMultiplayer.Instance.multiplayer) { return; }
 
-        if (Input.GetAxis("RT") > 0.01f && pv.IsMine)
+        if(pv.IsMine && healthScript.isDead)
+        {
+            return;
+        }
+
+        if ((Input.GetAxis("RT") > 0.01f || Input.GetButton("Fire1")) && (pv.IsMine || !IsThisMultiplayer.Instance.multiplayer) )
         {
             if(timeSinceLastBullet > fireRate)
             {

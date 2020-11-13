@@ -49,6 +49,10 @@ public class Drivetrain : MonoBehaviour {
     public float differentialLockCoefficient = 0;
 
     // inputs
+    public bool nitro;
+
+
+
     // engine throttle
     public float throttle = 0;
     // engine throttle without traction control (used for automatic gear shifting)
@@ -70,6 +74,7 @@ public class Drivetrain : MonoBehaviour {
 
     float Sqr(float x) { return x * x; }
 
+    
 
     // Calculate engine torque for current rpm and throttle values.
     float CalcEngineTorque()
@@ -99,6 +104,11 @@ public class Drivetrain : MonoBehaviour {
         if (rpm < 0)
         {
             result = 0;
+        }
+
+        if(nitro)
+        {
+            result *= 2.5f;
         }
 
         return result;
