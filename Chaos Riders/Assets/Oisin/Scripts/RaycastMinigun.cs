@@ -5,6 +5,7 @@ using Photon.Pun;
 public class RaycastMinigun : MonoBehaviour
 {
     public GameObject spawnpoint,barrel;
+    GameObject car;
     public GameObject pointer;
     public float timeSinceLastBullet, fireRate;
     public PhotonView pv;
@@ -20,6 +21,7 @@ public class RaycastMinigun : MonoBehaviour
 
     private void Start()
     {
+        car = GetComponentInParent<MoveTurretPosition>().car;
         pv = transform.parent.parent.parent.GetComponent<PhotonView>();
         timeSinceLastBullet = fireRate;
         speaker = GetComponent<AudioSource>();
@@ -63,7 +65,7 @@ public class RaycastMinigun : MonoBehaviour
 
         if (Physics.Raycast(spawnpoint.transform.position, raycastDir, out hit, Mathf.Infinity, layerMask))
         {
-            if (hit.transform.gameObject.layer == 10)
+            if (hit.transform.gameObject.layer == 10 && hit.transform.gameObject != car)
             {
                 float[] DamagetoTake = new float[2];
                 DamagetoTake[0] = minigunDamage;
