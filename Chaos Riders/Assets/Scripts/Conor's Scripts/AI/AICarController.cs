@@ -14,7 +14,7 @@ public class AICarController : MonoBehaviour
 
     [SerializeField] private WheelCollider FL, FR; // the front tire wheel colliders
      
-    [SerializeField] private WaypointManager waypointManager;
+    [SerializeField] private AIWaypointManager waypointManager;
     [SerializeField] private Transform[] waypoints;
 
     [SerializeField] private Vector3 centerOfMass;
@@ -22,7 +22,7 @@ public class AICarController : MonoBehaviour
 
     private void Awake()
     {
-        waypointManager = FindObjectOfType<WaypointManager>(); //find the waypoint manager
+        waypointManager = FindObjectOfType<AIWaypointManager>(); //find the waypoint manager
     }
 
     void Start()
