@@ -102,9 +102,13 @@ public class CarControllerMultiplayer : MonoBehaviour
 
     }
     #endregion
+
+    Health healthScript;
+
     // Initialize
     private void Awake()
     {
+        healthScript = GetComponent<Health>();
         pv = GetComponent<PhotonView>();
     }
     void Start()
@@ -133,6 +137,16 @@ public class CarControllerMultiplayer : MonoBehaviour
 
     void Update()
     {
+        if(healthScript.isDead)
+        {
+            GetComponent<Rigidbody>().drag = 5;
+            return;
+        }
+        else
+        {
+            GetComponent<Rigidbody>().drag = 0;
+        }
+
         if(pv.IsMine && IsThisMultiplayer.Instance.multiplayer)
         {
             PlayerUpdate();

@@ -10,24 +10,30 @@ public class RaycastMinigun : MonoBehaviour
     public PhotonView pv;
     private AudioSource speaker;
     public AudioClip gunShot;
-
+    public Health healthScript;
     public float minigunDamage;
     [SerializeField] float playerNumber = 1;
 
     public LayerMask layerMask;
+    public LineRenderer lr;
+
 
     private void Start()
     {
         pv = transform.parent.parent.parent.GetComponent<PhotonView>();
         timeSinceLastBullet = fireRate;
         speaker = GetComponent<AudioSource>();
+        lr = GetComponentInChildren<LineRenderer>();
     }
 
     void Update()
-    {
-        
-        
+    {       
         if (!pv.IsMine && IsThisMultiplayer.Instance.multiplayer) { return; }
+
+        if (pv.IsMine && healthScript.isDead)
+        {
+            return;
+        }
 
         if ((Input.GetAxis("RT") > 0.01f || Input.GetButton("Fire1")) && (pv.IsMine || !IsThisMultiplayer.Instance.multiplayer))
         {
@@ -44,6 +50,7 @@ public class RaycastMinigun : MonoBehaviour
         else
         {
             timeSinceLastBullet = fireRate;
+            lr.enabled = false;
         }
     }
 
@@ -56,17 +63,24 @@ public class RaycastMinigun : MonoBehaviour
 
         if (Physics.Raycast(spawnpoint.transform.position, raycastDir, out hit, Mathf.Infinity, layerMask))
         {
-            float[] DamagetoTake = new float[2];
-            DamagetoTake[0] = minigunDamage;
-            DamagetoTake[1] = playerNumber;
-            hit.transform.gameObject.SendMessage("TakeDamage", DamagetoTake);
-            Debug.Log("Did Hit");
+            if (hit.transform.gameObject.layer == 10)
+            {
+                float[] DamagetoTake = new float[2];
+                DamagetoTake[0] = minigunDamage;
+                DamagetoTake[1] = playerNumber;
+                hit.transform.gameObject.SendMessage("TakeDamage", DamagetoTake);
+                Debug.Log("Did Hit");
+            }
+            else
+            {
+                Debug.Log("Did not Hit");
+            }
         }
-        else
-        {
-            Debug.DrawRay(transform.position, raycastDir * 1000, Color.white);
-            Debug.Log("Did not Hit");
-        }
+
+
+        lr.enabled = true;
+        lr.SetPosition(0, spawnpoint.transform.position);
+        lr.SetPosition(1, hit.point);
 
         speaker.PlayOneShot(gunShot);
     }
