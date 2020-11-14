@@ -9,10 +9,16 @@ public class LapCounter : MonoBehaviour
     public static TMP_Text lapsText;
     [SerializeField] private TMP_Text lapsTextUI;
 
+    public static GameObject FinishLine;
+    [SerializeField] private GameObject finishLine;
+
     
 
     void Awake()
     {
+        FinishLine = finishLine;
+        FinishLine.SetActive(false);
+
         lapsText = lapsTextUI;
 
         //lapsTextGo.SetActive(false);

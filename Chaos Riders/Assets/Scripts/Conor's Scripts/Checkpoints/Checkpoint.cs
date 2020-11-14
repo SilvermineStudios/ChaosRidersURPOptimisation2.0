@@ -54,10 +54,10 @@ public class Checkpoint : MonoBehaviour
 
 
         //only let the player cross the line if they have collected the first check point then gone through the rest of the checkpoints
-        if (other.gameObject.tag == "FinishLine" && canCrossFinish && currentCheckpoint == 0)
+        if (other.gameObject.tag == "FinishLine" && canCrossFinish && currentCheckpoint == 0 && currentLap < amountOfLaps)
         {
             canCrossFinish = false;
-            currentLap++;
+            currentLap ++;
             Debug.Log("Crossed");
         }
     }
@@ -81,9 +81,22 @@ public class Checkpoint : MonoBehaviour
 
         //update currentlap
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer)
+        {
             LapCounter.lapsText.text = "Lap " + currentLap + " / " + amountOfLaps;
+            if(currentLap == amountOfLaps && canCrossFinish && currentCheckpoint == 0)
+            {
+                LapCounter.FinishLine.SetActive(true);
+            }
+        }
+
         if (!IsThisMultiplayer.Instance.multiplayer)
+        {
             LapCounter.lapsText.text = "Lap " + currentLap + " / " + amountOfLaps;
+            if (currentLap == amountOfLaps && canCrossFinish && currentCheckpoint == 0)
+            {
+                LapCounter.FinishLine.SetActive(true);
+            }
+        }
     }
 
 
