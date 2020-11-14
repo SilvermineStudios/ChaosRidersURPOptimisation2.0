@@ -6,7 +6,7 @@ using TMPro;
 
 public class Checkpoint : MonoBehaviour
 {
-    public int amountOfLaps = 3;
+    private int amountOfLaps;
     [SerializeField] private int currentLap = 1;
 
     [SerializeField] private bool canCrossFinish = false; //remove from inspector <--------------------------------------------------
@@ -21,6 +21,8 @@ public class Checkpoint : MonoBehaviour
 
     private void Start()
     {
+        amountOfLaps = LapCounter.AmountOfLaps;
+
         //pv = GetComponent<PhotonView>();
         checkpoints = CheckpointManager.checkPoints;
 
@@ -54,11 +56,19 @@ public class Checkpoint : MonoBehaviour
 
 
         //only let the player cross the line if they have collected the first check point then gone through the rest of the checkpoints
-        if (other.gameObject.tag == "FinishLine" && canCrossFinish && currentCheckpoint == 0 && currentLap < amountOfLaps)
+        if (other.gameObject.tag == "StartLine" && canCrossFinish && currentCheckpoint == 0 && currentLap < amountOfLaps)
         {
             canCrossFinish = false;
             currentLap ++;
             Debug.Log("Crossed");
+        }
+
+        if(other.gameObject.tag == "FinishLine")// && !FinishLine.GameWon)
+        {
+            LapCounter.YouWinText.SetActive(true);
+            FinishLine.GameWon = true;
+            Debug.Log("YOU WIN");
+            
         }
     }
 

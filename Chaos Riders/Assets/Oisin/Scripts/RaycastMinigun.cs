@@ -35,10 +35,10 @@ public class RaycastMinigun : MonoBehaviour
     {       
         //if (!pv.IsMine && IsThisMultiplayer.Instance.multiplayer) { return; }
 
-        if (pv.IsMine && healthScript.isDead)
-        {
-            return;
-        }
+        //if (pv.IsMine && healthScript.isDead)
+        //{
+            //return;
+        //}
 
         //new
         if(pv.IsMine && IsThisMultiplayer.Instance.multiplayer)
