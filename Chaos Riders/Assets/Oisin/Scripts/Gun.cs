@@ -25,7 +25,7 @@ public class Gun : MonoBehaviour
     {
         if (!pv.IsMine && IsThisMultiplayer.Instance.multiplayer) { return; }
 
-        if(pv.IsMine && healthScript.isDead)
+        if(pv.IsMine && healthScript.isDead) //CONSOLE ERROR
         {
             return;
         }
