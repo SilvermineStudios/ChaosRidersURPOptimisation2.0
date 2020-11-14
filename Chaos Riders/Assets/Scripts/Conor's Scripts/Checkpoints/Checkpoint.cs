@@ -71,17 +71,18 @@ public class Checkpoint : MonoBehaviour
 
     private void Update()
     {
-        OnlyDisplayNextCheckpoint();
-
-        //only let the player cross the finish line if they have gone throug the first check point
-        if (currentCheckpoint == 1)
-        {
-            canCrossFinish = true;
-        }
-
         //update currentlap
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer)
         {
+            OnlyDisplayNextCheckpoint();
+
+            //only let the player cross the finish line if they have gone throug the first check point
+            if (currentCheckpoint == 1)
+            {
+                canCrossFinish = true;
+            }
+
+
             LapCounter.lapsText.text = "Lap " + currentLap + " / " + amountOfLaps;
             if(currentLap == amountOfLaps && canCrossFinish && currentCheckpoint == 0)
             {
@@ -91,6 +92,15 @@ public class Checkpoint : MonoBehaviour
 
         if (!IsThisMultiplayer.Instance.multiplayer)
         {
+            OnlyDisplayNextCheckpoint();
+
+            //only let the player cross the finish line if they have gone throug the first check point
+            if (currentCheckpoint == 1)
+            {
+                canCrossFinish = true;
+            }
+
+
             LapCounter.lapsText.text = "Lap " + currentLap + " / " + amountOfLaps;
             if (currentLap == amountOfLaps && canCrossFinish && currentCheckpoint == 0)
             {
