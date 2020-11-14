@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class PlayerSpawner : MonoBehaviourPunCallbacks
 {
+    [SerializeField] private bool spawnGunnerFirst = false;
+
     [SerializeField]private float spawnTimer = 8.5f; //have this variable match the length of time the camera animation is
 
     public List<Transform> gunSpawnPoints = new List<Transform>();
@@ -148,17 +150,19 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
     [PunRPC]
     void RPC_SpawnCar(Vector3 spawnPos, Quaternion spawnRot)
     {
-        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Shooter"), spawnPos, spawnRot, 0);
-
+        if (!spawnGunnerFirst)
+            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "CarAvatar"), spawnPos, spawnRot, 0); //correct one for this function
+        else
+            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Shooter"), spawnPos, spawnRot, 0);
     }
 
 
     [PunRPC]
     void RPC_SpawnShooter(Vector3 spawnPos, Quaternion spawnRot)
     {
-        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "CarAvatar"), spawnPos, spawnRot, 0);
+        if(!spawnGunnerFirst)
+            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Shooter"), spawnPos, spawnRot, 0); //correct one for this function
+        else
+            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "CarAvatar"), spawnPos, spawnRot, 0);
     }
-
-
-
 }

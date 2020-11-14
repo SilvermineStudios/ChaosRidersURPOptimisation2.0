@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class Checkpoint : MonoBehaviour
 {
@@ -10,8 +11,11 @@ public class Checkpoint : MonoBehaviour
 
     [SerializeField] private bool canCollect = true;
 
+    [SerializeField] private PhotonView pv;
+
     private void Start()
     {
+        //pv = GetComponent<PhotonView>();
         checkpoints = CheckpointManager.checkPoints;
 
         OnlyDisplayNextCheckpoint();
@@ -19,17 +23,27 @@ public class Checkpoint : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Checkpoint")// && canCollect)
+        if (other.gameObject.tag == "Checkpoint")
         {
-            other.gameObject.SetActive(false);
-            //canCollect = false;
+            if(pv.IsMine && IsThisMultiplayer.Instance.multiplayer)
+            {
+                other.gameObject.SetActive(false);
 
-            //OnlyDisplayNextCheckpoint();
+                if (currentCheckpoint == checkpoints.Length) //if the car is at the last waypoint
+                    currentCheckpoint = 0; //make the next waypoint the first waypoint
+                else
+                    currentCheckpoint += 1;//if the current waypoint is not the last waypoint in the list then go to the next waypoint in the list
+            }
 
-            if (currentCheckpoint == checkpoints.Length) //if the car is at the last waypoint
-                currentCheckpoint = 0; //make the next waypoint the first waypoint
-            else
-                currentCheckpoint += 1;//if the current waypoint is not the last waypoint in the list then go to the next waypoint in the list
+            if(!IsThisMultiplayer.Instance.multiplayer)
+            {
+                other.gameObject.SetActive(false);
+
+                if (currentCheckpoint == checkpoints.Length) //if the car is at the last waypoint
+                    currentCheckpoint = 0; //make the next waypoint the first waypoint
+                else
+                    currentCheckpoint += 1;//if the current waypoint is not the last waypoint in the list then go to the next waypoint in the list
+            }
         }
     }
 
