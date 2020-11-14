@@ -11,7 +11,6 @@ public class CarControllerMultiplayer : MonoBehaviour
     #region Variables
     private PhotonView pv;
     [SerializeField] private GameObject playerCamera;
-    [SerializeField] private bool multiplayer = true;
 
     // Add all wheels of the car here, so brake and steering forces can be applied to them.
     public WheelMultiplayer[] wheels;

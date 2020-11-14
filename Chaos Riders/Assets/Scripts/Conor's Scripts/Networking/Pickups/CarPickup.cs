@@ -43,13 +43,13 @@ public class CarPickup : MonoBehaviour
 
     private IEnumerator InvincibleTimer(float time)
     {
-        Debug.Log("Invincible");
+        //Debug.Log("Invincible");
         PickupManager.invincibleUI.SetActive(true);
 
         yield return new WaitForSeconds(time);
 
         PickupManager.invincibleUI.SetActive(false);
-        Debug.Log("Not Invincible");
+        //Debug.Log("Not Invincible");
     }
 
     ///////////////////////////////////////////////////
@@ -58,13 +58,13 @@ public class CarPickup : MonoBehaviour
         dt.nitro = true;
 
 
-        Debug.Log("Speed boost");
+        //Debug.Log("Speed boost");
         PickupManager.speedUI.SetActive(true);
 
         yield return new WaitForSeconds(time);
 
         PickupManager.speedUI.SetActive(false);
-        Debug.Log("Normal speed");
+        //Debug.Log("Normal speed");
 
         dt.nitro = false;
     }

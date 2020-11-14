@@ -5,7 +5,9 @@ using Photon.Pun;
 public class RaycastMinigun : MonoBehaviour
 {
     public GameObject spawnpoint,barrel;
+
     GameObject car;
+
     public GameObject pointer;
     public float timeSinceLastBullet, fireRate;
     public PhotonView pv;
@@ -22,7 +24,8 @@ public class RaycastMinigun : MonoBehaviour
     private void Start()
     {
         car = GetComponentInParent<MoveTurretPosition>().car;
-        pv = transform.parent.parent.parent.GetComponent<PhotonView>();
+
+        pv = GetComponent<PhotonView>();
         timeSinceLastBullet = fireRate;
         speaker = GetComponent<AudioSource>();
         lr = GetComponentInChildren<LineRenderer>();
@@ -30,13 +33,56 @@ public class RaycastMinigun : MonoBehaviour
 
     void Update()
     {       
-        if (!pv.IsMine && IsThisMultiplayer.Instance.multiplayer) { return; }
+        //if (!pv.IsMine && IsThisMultiplayer.Instance.multiplayer) { return; }
 
         if (pv.IsMine && healthScript.isDead)
         {
             return;
         }
 
+        //new
+        if(pv.IsMine && IsThisMultiplayer.Instance.multiplayer)
+        {
+            if (Input.GetAxis("RT") > 0.01f || Input.GetButton("Fire1"))
+            {
+                if (timeSinceLastBullet > fireRate)
+                {
+                    fireBullet();
+                    timeSinceLastBullet = 0;
+                }
+                else
+                {
+                    timeSinceLastBullet += Time.deltaTime;
+                }
+            }
+            else
+            {
+                timeSinceLastBullet = fireRate;
+                lr.enabled = false;
+            }
+        }
+        else if (!IsThisMultiplayer.Instance.multiplayer)
+        {
+            if (Input.GetAxis("RT") > 0.01f || Input.GetButton("Fire1"))
+            {
+                if (timeSinceLastBullet > fireRate)
+                {
+                    fireBullet();
+                    timeSinceLastBullet = 0;
+                }
+                else
+                {
+                    timeSinceLastBullet += Time.deltaTime;
+                }
+            }
+            else
+            {
+                timeSinceLastBullet = fireRate;
+                lr.enabled = false;
+            }
+        }
+
+        /* old
         if ((Input.GetAxis("RT") > 0.01f || Input.GetButton("Fire1")) && (pv.IsMine || !IsThisMultiplayer.Instance.multiplayer))
         {
             if (timeSinceLastBullet > fireRate)
@@ -54,6 +100,7 @@ public class RaycastMinigun : MonoBehaviour
             timeSinceLastBullet = fireRate;
             lr.enabled = false;
         }
+        */
     }
 
     Vector3 raycastDir;

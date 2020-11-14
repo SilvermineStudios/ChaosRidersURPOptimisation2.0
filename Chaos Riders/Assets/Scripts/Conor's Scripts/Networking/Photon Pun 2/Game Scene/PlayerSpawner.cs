@@ -10,7 +10,7 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
 {
     [SerializeField] private bool spawnGunnerFirst = false;
 
-    [SerializeField]private float spawnTimer = 8.5f; //have this variable match the length of time the camera animation is
+    [SerializeField] private float spawnTimer = 8.5f; //have this variable match the length of time the camera animation is
 
     public List<Transform> gunSpawnPoints = new List<Transform>();
     public List<GameObject> gunners = new List<GameObject>();
