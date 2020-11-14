@@ -23,7 +23,7 @@ public class CarPickup : MonoBehaviour
     private void Update()
     {
         //player can speedboost by pressing the w key when they have one
-        if (hasSpeedBoost && (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetButtonDown("A")))
+        if (hasSpeedBoost && (Input.GetKeyDown(KeyCode.Space)))// || Input.GetButtonDown("A")))
         {
             hasSpeedBoost = false;
             StartCoroutine(SpeedBoostTimer(PickupManager.speedBoostTime));

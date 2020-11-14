@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using TMPro;
 
 public class Checkpoint : MonoBehaviour
 {
+    public int amountOfLaps = 3;
+    [SerializeField] private int currentLap = 1;
+
     [SerializeField] private bool canCrossFinish = false; //remove from inspector <--------------------------------------------------
 
     //script for what happens when a player drives through a checkpoint
@@ -53,6 +57,7 @@ public class Checkpoint : MonoBehaviour
         if (other.gameObject.tag == "FinishLine" && canCrossFinish && currentCheckpoint == 0)
         {
             canCrossFinish = false;
+            currentLap++;
             Debug.Log("Crossed");
         }
     }
@@ -73,6 +78,12 @@ public class Checkpoint : MonoBehaviour
         {
             canCrossFinish = true;
         }
+
+        //update currentlap
+        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer)
+            LapCounter.lapsText.text = "Lap " + currentLap + " / " + amountOfLaps;
+        if (!IsThisMultiplayer.Instance.multiplayer)
+            LapCounter.lapsText.text = "Lap " + currentLap + " / " + amountOfLaps;
     }
 
 

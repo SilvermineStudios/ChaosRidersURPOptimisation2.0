@@ -171,6 +171,13 @@ public class CarControllerMultiplayer : MonoBehaviour
 
     private bool BreakPedal()
     {
+        //new
+        if (Input.GetKey(KeyCode.Space))
+            return true;
+        else
+            return false;
+
+        /* old
         if (Input.GetAxis("LT") > 0.1f || Input.GetKey(KeyCode.S))
         {
             return true;
@@ -179,6 +186,16 @@ public class CarControllerMultiplayer : MonoBehaviour
         {
             return false;
         }
+        */
+    }
+
+
+    private bool ReverseKey()
+    {
+        if (Input.GetAxis("LT") > 0.1f || Input.GetKey(KeyCode.S))
+            return true;
+        else
+            return false;
     }
 
     //all of the stuff that was in update is now here
@@ -241,6 +258,7 @@ public class CarControllerMultiplayer : MonoBehaviour
 
         bool accelKey = GasPedal();
         bool brakeKey = BreakPedal();
+        bool reverseKey = ReverseKey();
 
         if (drivetrain.automatic && drivetrain.gear == 0)
         {
@@ -250,7 +268,6 @@ public class CarControllerMultiplayer : MonoBehaviour
 
         if (accelKey)
         {
-
             if (drivetrain.slipRatio < 0.10f)
             {
                 throttle += Time.deltaTime / throttleTime;
@@ -281,6 +298,12 @@ public class CarControllerMultiplayer : MonoBehaviour
             {
                 throttle -= Time.deltaTime / throttleReleaseTimeTraction;
             }
+        }
+         ///new reverse <----------------------------------------------------------------------------------
+        if(reverseKey)
+        {
+            Debug.Log("Reversing");
+            //drivetrain.torqueRPM *= -1;
         }
 
         throttle = Mathf.Clamp01(throttle);
@@ -314,7 +337,7 @@ public class CarControllerMultiplayer : MonoBehaviour
         throttleInput = Mathf.Clamp(throttleInput, -1, 1);
 
         // Handbrake
-        handbrake = (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.JoystickButton2)) ? 1f : 0f;
+        handbrake = (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.JoystickButton2)) ? 1f : 0f;
 
         // Gear shifting
         float shiftThrottleFactor = Mathf.Clamp01((Time.time - lastShiftTime) / shiftSpeed);
