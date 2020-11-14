@@ -5,7 +5,7 @@ using Photon.Pun;
 
 public class Checkpoint : MonoBehaviour
 {
-    [SerializeField] private bool canCrossFinish = false;
+    [SerializeField] private bool canCrossFinish = false; //remove from inspector <--------------------------------------------------
 
     //script for what happens when a player drives through a checkpoint
     [SerializeField] private GameObject[] checkpoints;
