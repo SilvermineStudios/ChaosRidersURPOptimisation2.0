@@ -7,7 +7,7 @@ using Photon.Realtime;
 public class CarPickup : MonoBehaviour
 {
     private GameObject go;
-
+    Health healthScript;
     [SerializeField] private bool hasSpeedBoost = false;
     private PhotonView pv;
 
@@ -15,6 +15,7 @@ public class CarPickup : MonoBehaviour
 
     void Start()
     {
+        healthScript = GetComponent<Health>();
         go = this.GetComponent<GameObject>();
         pv = GetComponent<PhotonView>();
         dt = GetComponent<DriveTrainMultiplayer>();
@@ -44,11 +45,13 @@ public class CarPickup : MonoBehaviour
     private IEnumerator InvincibleTimer(float time)
     {
         //Debug.Log("Invincible");
+        healthScript.isProtected = true;
         PickupManager.invincibleUI.SetActive(true);
 
         yield return new WaitForSeconds(time);
 
         PickupManager.invincibleUI.SetActive(false);
+        healthScript.isProtected = false;
         //Debug.Log("Not Invincible");
     }
 

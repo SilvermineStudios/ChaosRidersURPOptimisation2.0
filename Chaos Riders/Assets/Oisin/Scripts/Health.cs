@@ -9,13 +9,15 @@ public class Health : MonoBehaviour
     [SerializeField] float health;
     [SerializeField] float lastHit;
 
+    public bool isProtected;
+
     Slider healthbar;
     [SerializeField] GameObject deathParticles;
 
     
     public bool isDead { get { return dead; } private set { isDead = dead; } }
 
-    bool dead;
+    public bool dead;
 
     void Start()
     {
@@ -64,8 +66,10 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(float[] DamagetoTake)
     {
-        health -= DamagetoTake[0];
-        lastHit = DamagetoTake[1];
-
+        if (!isProtected)
+        {
+            health -= DamagetoTake[0];
+            lastHit = DamagetoTake[1];
+        }
     }
 }
