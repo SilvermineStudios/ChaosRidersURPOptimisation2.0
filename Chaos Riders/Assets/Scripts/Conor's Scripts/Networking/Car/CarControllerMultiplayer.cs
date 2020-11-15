@@ -176,7 +176,7 @@ public class CarControllerMultiplayer : MonoBehaviour
     private bool BreakPedal()
     {
         //new
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space) || Input.GetButton("A"))
             return true;
         else
             return false;
