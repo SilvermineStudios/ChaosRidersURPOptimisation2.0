@@ -20,8 +20,11 @@ public class MoveTurretPosition : MonoBehaviour
     private PlayerSpawner ps;
     private bool canConnect = true;
 
+    private TurretTester turretTester;
+
     private void OnEnable()
     {
+        turretTester = GetComponent<TurretTester>();
         ps = FindObjectOfType<PlayerSpawner>();
         ps.gunners.Add(this.gameObject);
     }
@@ -83,6 +86,7 @@ public class MoveTurretPosition : MonoBehaviour
         {
             canConnect = false;
             car = other.gameObject;
+            car.GetComponent<CarControllerMultiplayer>().ShooterAttached = turretTester;
             FakeParent = other.gameObject.transform;
         }
     }

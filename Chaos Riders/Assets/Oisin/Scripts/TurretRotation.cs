@@ -3,8 +3,6 @@ using Photon.Pun;
 using Photon.Realtime;
 
 
-namespace Turrets
-{
     public class TurretRotation : MonoBehaviour
     {
 
@@ -150,4 +148,3 @@ namespace Turrets
                 Debug.DrawRay(turretBase.position, turretBase.forward * 100.0f);
         }
     }
-}

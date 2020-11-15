@@ -1,44 +1,49 @@
 ﻿using UnityEngine;
-using Turrets;
 using Photon.Pun;
-namespace TurretDemo
-{
+
     public class TurretTester : MonoBehaviour
     {
-        public TurretRotation[] turret;
-        public Vector3 targetPos;
-        public Transform targetTransform;
+    TurretRotation turret;
 
-        private PhotonView pv;
+    [HideInInspector]
+    public Vector3 targetPos;
+    public Transform targetTransform;
 
-        
-        public bool turretsIdle = false;
-
-        private void Start()
-        {
-            pv = GetComponent<PhotonView>();
-        }
-
-        private void Update()
-        {
-            if(!pv.IsMine && IsThisMultiplayer.Instance.multiplayer) { return; }
+    private PhotonView pv;
 
 
-            // When a transform is assigned, pass that to the turret. If not,
-            // just pass in whatever this is looking at.
-            targetPos = transform.TransformPoint(Vector3.forward * 200.0f);
-            foreach (TurretRotation tur in turret)
-            {
-                if (targetTransform == null)
-                    tur.SetAimpoint(targetPos);
-                else
-                    tur.SetAimpoint(targetTransform.position);
+    private Vector3 oriPos;
+      
 
-                //tur.SetIdle(turretsIdle);
-            }
-        }
+    private void Start()
+    {
+        oriPos = targetTransform.localPosition;
+        pv = GetComponent<PhotonView>();
+        turret = GetComponent<TurretRotation>();
+    }
 
+    private void Update()
+    {
+        if(!pv.IsMine && IsThisMultiplayer.Instance.multiplayer) { return; }
+
+
+        // When a transform is assigned, pass that to the turret. If not,
+        // just pass in whatever this is looking at.
+        targetPos = transform.TransformPoint(Vector3.forward * 200.0f);
+
+        if (targetTransform == null)
+            turret.SetAimpoint(targetPos);
+        else
+            turret.SetAimpoint(targetTransform.position);
 
 
     }
+
+    public void ResetPos()
+    {
+        targetTransform.localPosition = oriPos;
+        turret.SetAimpoint(targetTransform.position);
+    }
+
+
 }

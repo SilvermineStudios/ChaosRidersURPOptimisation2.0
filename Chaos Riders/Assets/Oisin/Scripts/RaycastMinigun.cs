@@ -6,7 +6,7 @@ public class RaycastMinigun : MonoBehaviour
 {
     public GameObject spawnpoint,barrel;
 
-    GameObject car;
+    GameObject car, carCollision;
 
     public GameObject pointer;
     public float timeSinceLastBullet, fireRate;
@@ -24,8 +24,8 @@ public class RaycastMinigun : MonoBehaviour
 
     private void Start()
     {
-        car = GetComponentInParent<MoveTurretPosition>().car;
-
+        
+        
         pv = GetComponent<PhotonView>();
         timeSinceLastBullet = fireRate;
         speaker = GetComponent<AudioSource>();
@@ -34,6 +34,13 @@ public class RaycastMinigun : MonoBehaviour
 
     void Update()
     {       
+        if(car == null)
+        {
+            car = GetComponentInParent<MoveTurretPosition>().car;
+            carCollision = GetComponentInParent<MoveTurretPosition>().car.transform.GetChild(0).gameObject;
+            //carCollision = car.transform.GetChild(0).gameObject;
+        }
+
         //if (!pv.IsMine && IsThisMultiplayer.Instance.multiplayer) { return; }
 
         //if (pv.IsMine && healthScript.isDead)
@@ -113,13 +120,16 @@ public class RaycastMinigun : MonoBehaviour
 
         if (Physics.Raycast(spawnpoint.transform.position, raycastDir, out hit, Mathf.Infinity, layerMask))
         {
-            if (hit.transform.gameObject.layer == 10 && hit.transform.gameObject != car)
+            if (hit.transform.gameObject.layer == 10 && hit.transform.gameObject != car && hit.transform.gameObject != carCollision)
             {
                 float[] DamagetoTake = new float[2];
                 DamagetoTake[0] = minigunDamage;
                 DamagetoTake[1] = playerNumber;
                 hit.transform.gameObject.SendMessage("TakeDamage", DamagetoTake);
                 Debug.Log("Did Hit");
+                Debug.Log(hit.transform.gameObject);
+                Debug.Log(car);
+
             }
             else
             {

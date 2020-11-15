@@ -42,6 +42,11 @@ public class CarControllerMultiplayer : MonoBehaviour
     [HideInInspector]
     public float handbrake;
 
+
+    //Shooter
+    public TurretTester ShooterAttached;
+
+
     // cached Drivetrain reference
     DriveTrainMultiplayer drivetrain;
 
@@ -402,6 +407,11 @@ public class CarControllerMultiplayer : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z);
             transform.rotation = Quaternion.Euler(0, transform.localRotation.y, 0);
+
+            if(ShooterAttached != null)
+            {
+                ShooterAttached.ResetPos();
+            }
         }
 
 
