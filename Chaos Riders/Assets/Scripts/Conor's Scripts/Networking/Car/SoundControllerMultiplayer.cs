@@ -8,6 +8,8 @@ using Photon.Pun;
 [RequireComponent(typeof(CarControllerMultiplayer))]
 public class SoundControllerMultiplayer : MonoBehaviour
 {
+    [SerializeField] private float volume = 0.1f;
+
     public AudioClip engine1;
     //public AudioClip engine2;
     public AudioClip skid;
@@ -39,7 +41,7 @@ public class SoundControllerMultiplayer : MonoBehaviour
         go.AddComponent(typeof(AudioSource));
         go.GetComponent<AudioSource>().clip = clip;
         go.GetComponent<AudioSource>().loop = true;
-        go.GetComponent<AudioSource>().volume = 0.20f;
+        go.GetComponent<AudioSource>().volume = volume;
         go.GetComponent<AudioSource>().spatialBlend = 1f;
         go.GetComponent<AudioSource>().dopplerLevel = 0f;
         go.GetComponent<AudioSource>().Play();
@@ -55,7 +57,7 @@ public class SoundControllerMultiplayer : MonoBehaviour
         go.AddComponent(typeof(AudioSource));
         go.GetComponent<AudioSource>().clip = clip;
         go.GetComponent<AudioSource>().loop = false;
-        go.GetComponent<AudioSource>().volume = 0.75f;
+        go.GetComponent<AudioSource>().volume = volume + 0.2f;
         go.GetComponent<AudioSource>().spatialBlend = 1f;
         go.GetComponent<AudioSource>().dopplerLevel = 0f;
         return go.GetComponent<AudioSource>();
