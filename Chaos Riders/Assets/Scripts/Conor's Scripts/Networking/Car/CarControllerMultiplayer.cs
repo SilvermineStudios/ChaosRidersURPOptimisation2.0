@@ -158,7 +158,11 @@ public class CarControllerMultiplayer : MonoBehaviour
 
     private bool GasPedal()
     {
-        if (Input.GetAxis("RT") > 0.1f || Input.GetKey(KeyCode.W))
+        if(ReverseKey())
+        {
+            return true;
+        }
+        else if (Input.GetAxis("RT") > 0.1f || Input.GetKey(KeyCode.W))
         {
             return true;
         }
@@ -212,7 +216,7 @@ public class CarControllerMultiplayer : MonoBehaviour
 
 
         // Steering
-        Vector3 carDir = transform.forward;
+        Vector3 carDir = transform.forward ;
         float fVelo = GetComponent<Rigidbody>().velocity.magnitude;
         Vector3 veloDir = GetComponent<Rigidbody>().velocity * (1 / fVelo);
         float angle = -Mathf.Asin(Mathf.Clamp(Vector3.Cross(veloDir, carDir).y, -1, 1));
@@ -303,11 +307,9 @@ public class CarControllerMultiplayer : MonoBehaviour
         ///new reverse <----------------------------------------------------------------------------------
         if (reverseKey)
         {
+
             drivetrain.reverse = true;
-            Debug.Log("Reversing");
-            //drivetrain.torqueRPM *= -1;
-            //drivetrain.powerRPM *= -1;
-            //drivetrain.engineInertia *= -1;
+            
         }
         else
         {
@@ -411,5 +413,11 @@ public class CarControllerMultiplayer : MonoBehaviour
                 tractionControl = true;
             }
         }
+
+
+        
     }
+
+
+
 }
