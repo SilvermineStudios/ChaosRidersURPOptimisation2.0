@@ -9,7 +9,7 @@ public class DriveTrainMultiplayer : MonoBehaviour
 {
     #region Variables
 
-    public bool reverse = false;
+    public bool reverseButtonPressed = false;
 
     private PhotonView pv;
 
@@ -163,208 +163,12 @@ public class DriveTrainMultiplayer : MonoBehaviour
     {
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer)
         {
-            if (reverse)
-            {
-                float ratio2 = gearRatios[0] * finalDriveRatio;
-            }
-            else
-            {
-                float ratio2 = gearRatios[gear] * finalDriveRatio;
-            }
-            float ratio = ratio2;
-            float inertia = engineInertia * Sqr(ratio);
-            float engineFrictionTorque = engineBaseFriction + rpm * engineRPMFriction;
-            float engineTorque = (CalcEngineTorque() + Mathf.Abs(engineFrictionTorque)) * throttle;
-
-            slipRatio = 0.0f;
-
-
-            if (ratio == 0 || (clutch == 1 && (int)(GetComponent<Rigidbody>().velocity.magnitude * 3.6f) > 5))
-            {
-
-                // Neutral gear - just rev up engine
-                float engineAngularAcceleration = (engineTorque - engineFrictionTorque) / engineInertia;
-                engineAngularVelo += engineAngularAcceleration * Time.deltaTime;
-
-                //if ((int)GetComponent<Rigidbody>().velocity.magnitude * 3.6f == 0 && engineAngularVelo < 0f)
-                //engineAngularVelo = 0f;
-
-                // Apply torque to car body
-                //GetComponent<Rigidbody>().AddTorque(-engineOrientation * engineTorque * 2.5f);
-
-            }
-
-            else
-            {
-                float drivetrainFraction = 1.0f / poweredWheels.Length;
-                float averageAngularVelo = 0;
-                foreach (WheelMultiplayer w in poweredWheels)
-                    averageAngularVelo += w.angularVelocity * drivetrainFraction;
-
-                float engineAngularAcceleration = (engineTorque - engineFrictionTorque) / engineInertia;
-
-
-                // Apply torque to wheels
-                foreach (WheelMultiplayer w in poweredWheels)
-                {
-                    float lockingTorque = (averageAngularVelo - w.angularVelocity) * differentialLockCoefficient;
-                    w.drivetrainInertia = inertia * drivetrainFraction;
-                    w.driveFrictionTorque = engineFrictionTorque * Mathf.Abs(ratio) * drivetrainFraction;
-                    w.driveTorque = engineTorque * ratio * drivetrainFraction + lockingTorque;
-                    slipRatio += w.slipRatio * drivetrainFraction;
-                }
-
-                engineAngularVelo = averageAngularVelo * ratio;
-
-            }
-
-            // update state
-            slipRatio *= Mathf.Sign(ratio);
-            rpm = engineAngularVelo * (60.0f / (2 * Mathf.PI));
-            rpm = Mathf.Clamp(rpm, 0f, maxRPM + minRPM); //limit excess rpm
-
-            // very simple simulation of clutch - just pretend we are at a higher rpm.
-            float minClutchRPM = minRPM;
-            if (gear != 1)
-            {
-                //steering wheel with pedals
-                minClutchRPM += throttle * (maxRPM - minRPM) * clutch;
-            }
-            else if (gear == 2)
-            {
-                //keyboard
-                minClutchRPM += throttle * 4200f;
-            }
-
-            if (rpm < minClutchRPM)
-            {
-                rpm = minClutchRPM;
-            }
-
-            /*
-            // shake car on low speeds
-            if (gear > 1 && (int)(GetComponent<Rigidbody>().velocity.magnitude * 3.6f) <= 20)
-            {
-                GetComponent<Rigidbody>().AddTorque(-engineOrientation * engineTorque * 2.5f);
-            }
-            */
-
-            if (rpm >= powerRPM * (0.5f + 0.5f * throttleInput) && !shiftedRecently)
-            {
-                //ShiftUp();
-            }
-            else if (rpm <= maxRPM * (0.25f + 0.4f * throttleInput) && gear > 2 && !shiftedRecently)
-            {
-                ShiftDown();
-            }
-            if (throttleInput < 0 && rpm <= minRPM)
-            {
-                gear = (gear == 0 ? 2 : 0);
-            }
+            UpdateCar();
         }
         else if (!IsThisMultiplayer.Instance.multiplayer)
         {
-            if (gear <= -1) { gear = -1; }
-            float ratio = gearRatios[gear] * finalDriveRatio;
-
-            float inertia = engineInertia * Sqr(ratio);
-            float engineFrictionTorque = engineBaseFriction + rpm * engineRPMFriction;
-            float engineTorque = (CalcEngineTorque() + Mathf.Abs(engineFrictionTorque)) * throttle;
-
-            slipRatio = 0.0f;
-
-
-            if (ratio == 0 || (clutch == 1 && (int)(GetComponent<Rigidbody>().velocity.magnitude * 3.6f) > 5))
-            {
-
-                // Neutral gear - just rev up engine
-                float engineAngularAcceleration = (engineTorque - engineFrictionTorque) / engineInertia;
-                engineAngularVelo += engineAngularAcceleration * Time.deltaTime;
-
-                //if ((int)GetComponent<Rigidbody>().velocity.magnitude * 3.6f == 0 && engineAngularVelo < 0f)
-                //engineAngularVelo = 0f;
-
-                // Apply torque to car body
-                //GetComponent<Rigidbody>().AddTorque(-engineOrientation * engineTorque * 2.5f);
-
-            }
-
-            else
-            {
-                float drivetrainFraction = 1.0f / poweredWheels.Length;
-                float averageAngularVelo = 0;
-                foreach (WheelMultiplayer w in poweredWheels)
-                    averageAngularVelo += w.angularVelocity * drivetrainFraction;
-
-                float engineAngularAcceleration = (engineTorque - engineFrictionTorque) / engineInertia;
-
-
-                // Apply torque to wheels
-                foreach (WheelMultiplayer w in poweredWheels) //<--------------------------------------------------------------------------------------
-                {
-                    float lockingTorque = (averageAngularVelo - w.angularVelocity) * differentialLockCoefficient;
-                    w.drivetrainInertia = inertia * drivetrainFraction;
-                    w.driveFrictionTorque = engineFrictionTorque * Mathf.Abs(ratio) * drivetrainFraction;
-                    w.driveTorque = engineTorque * ratio * drivetrainFraction + lockingTorque;
-                    slipRatio += w.slipRatio * drivetrainFraction;
-                }
-
-                engineAngularVelo = averageAngularVelo * ratio;
-
-            }
-
-            // update state
-            slipRatio *= Mathf.Sign(ratio);
-            rpm = engineAngularVelo * (60.0f / (2 * Mathf.PI));
-            rpm = Mathf.Clamp(rpm, 0f, maxRPM + minRPM); //limit excess rpm
-
-            // very simple simulation of clutch - just pretend we are at a higher rpm.
-            float minClutchRPM = minRPM;
-            if (gear != 1)
-            {
-                //steering wheel with pedals
-                minClutchRPM += throttle * (maxRPM - minRPM) * clutch;
-            }
-            else if (gear == 2)
-            {
-                //keyboard
-                minClutchRPM += throttle * 4200f;
-            }
-
-            if (rpm < minClutchRPM)
-            {
-                rpm = minClutchRPM;
-            }
-
-            /*
-            // shake car on low speeds
-            if (gear > 1 && (int)(GetComponent<Rigidbody>().velocity.magnitude * 3.6f) <= 20)
-            {
-                GetComponent<Rigidbody>().AddTorque(-engineOrientation * engineTorque * 2.5f);
-            }
-            */
-
-            if (rpm >= powerRPM * (0.5f + 0.5f * throttleInput) && !shiftedRecently)
-            {
-                ShiftUp();
-
-            }
-            else if (rpm <= maxRPM * (0.25f + 0.4f * throttleInput) && gear > 2 && !shiftedRecently)
-            {
-                ShiftDown();
-            }
-            if (throttleInput < 0 && rpm <= minRPM)
-            {
-                gear = (gear == 0 ? 2 : 0);
-            }
-            if (reverse)
-            {
-                ShiftReverse();
-            }
+            UpdateCar();
         }
-
-
-
     }
 
     public bool shiftedRecently;
@@ -374,7 +178,7 @@ public class DriveTrainMultiplayer : MonoBehaviour
 
         shiftedRecently = true;
         counter = offset;
-        if (gear < gearRatios.Length - 1 && !reverse)
+        if (gear < gearRatios.Length - 1 && !reverseButtonPressed)
         {
             gear++;
             GetComponent<SoundControllerMultiplayer>().playBOV();
@@ -399,7 +203,14 @@ public class DriveTrainMultiplayer : MonoBehaviour
         counter = offset;
         gear = 0;
         GetComponent<SoundControllerMultiplayer>().playShiftDown();
+    }
 
+    public void ShiftFirst()
+    {
+        //shiftedRecently = true;
+        //counter = offset;
+        gear = 2;
+        //GetComponent<SoundControllerMultiplayer>().playShiftUp();
     }
 
 
@@ -411,5 +222,104 @@ public class DriveTrainMultiplayer : MonoBehaviour
         //automatic = GUILayout.Toggle(automatic, "Automatic Transmission");
     }
 
+    private void UpdateCar()
+    {
+        if (gear <= -1) { gear = -1; }
+        float ratio = gearRatios[gear] * finalDriveRatio;
 
+        float inertia = engineInertia * Sqr(ratio);
+        float engineFrictionTorque = engineBaseFriction + rpm * engineRPMFriction;
+        float engineTorque = (CalcEngineTorque() + Mathf.Abs(engineFrictionTorque)) * throttle;
+
+        slipRatio = 0.0f;
+
+
+        if (ratio == 0 || (clutch == 1 && (int)(GetComponent<Rigidbody>().velocity.magnitude * 3.6f) > 5))
+        {
+
+            // Neutral gear - just rev up engine
+            float engineAngularAcceleration = (engineTorque - engineFrictionTorque) / engineInertia;
+            engineAngularVelo += engineAngularAcceleration * Time.deltaTime;
+
+            //if ((int)GetComponent<Rigidbody>().velocity.magnitude * 3.6f == 0 && engineAngularVelo < 0f)
+            //engineAngularVelo = 0f;
+
+            // Apply torque to car body
+            //GetComponent<Rigidbody>().AddTorque(-engineOrientation * engineTorque * 2.5f);
+
+        }
+
+        else
+        {
+            float drivetrainFraction = 1.0f / poweredWheels.Length;
+            float averageAngularVelo = 0;
+            foreach (WheelMultiplayer w in poweredWheels)
+                averageAngularVelo += w.angularVelocity * drivetrainFraction;
+
+            float engineAngularAcceleration = (engineTorque - engineFrictionTorque) / engineInertia;
+
+
+            // Apply torque to wheels
+            foreach (WheelMultiplayer w in poweredWheels) //<--------------------------------------------------------------------------------------
+            {
+                float lockingTorque = (averageAngularVelo - w.angularVelocity) * differentialLockCoefficient;
+                w.drivetrainInertia = inertia * drivetrainFraction;
+                w.driveFrictionTorque = engineFrictionTorque * Mathf.Abs(ratio) * drivetrainFraction;
+                w.driveTorque = engineTorque * ratio * drivetrainFraction + lockingTorque;
+                slipRatio += w.slipRatio * drivetrainFraction;
+            }
+
+            engineAngularVelo = averageAngularVelo * ratio;
+
+        }
+
+        // update state
+        slipRatio *= Mathf.Sign(ratio);
+        rpm = engineAngularVelo * (60.0f / (2 * Mathf.PI));
+        rpm = Mathf.Clamp(rpm, 0f, maxRPM + minRPM); //limit excess rpm
+
+        // very simple simulation of clutch - just pretend we are at a higher rpm.
+        float minClutchRPM = minRPM;
+        if (gear != 1)
+        {
+            //steering wheel with pedals
+            minClutchRPM += throttle * (maxRPM - minRPM) * clutch;
+        }
+        else if (gear == 2)
+        {
+            //keyboard
+            minClutchRPM += throttle * 4200f;
+        }
+
+        if (rpm < minClutchRPM)
+        {
+            rpm = minClutchRPM;
+        }
+
+        /*
+        // shake car on low speeds
+        if (gear > 1 && (int)(GetComponent<Rigidbody>().velocity.magnitude * 3.6f) <= 20)
+        {
+            GetComponent<Rigidbody>().AddTorque(-engineOrientation * engineTorque * 2.5f);
+        }
+        */
+
+        if (rpm >= powerRPM * (0.5f + 0.5f * throttleInput) && !shiftedRecently)
+        {
+            ShiftUp();
+
+        }
+        else if (rpm <= maxRPM * (0.25f + 0.4f * throttleInput) && gear > 2 && !shiftedRecently)
+        {
+            ShiftDown();
+        }
+        if (throttleInput < 0 && rpm <= minRPM)
+        {
+            gear = (gear == 0 ? 2 : 0);
+        }
+        if (reverseButtonPressed)
+        {
+            ShiftReverse();
+        }
+    }
 }

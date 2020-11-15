@@ -9,7 +9,7 @@ using Photon.Pun;
 public class CarControllerMultiplayer : MonoBehaviour
 {
     #region Variables
-    [SerializeField] private bool reversing = false;
+    public bool reversing = false;
 
     private PhotonView pv;
     [SerializeField] private GameObject playerCamera;
@@ -138,16 +138,6 @@ public class CarControllerMultiplayer : MonoBehaviour
 
     void Update()
     {
-        if(drivetrain.gear == 0)
-        {
-            reversing = true;
-        }
-        if(drivetrain.gear >= 1)
-        {
-            //reversing = false;
-        }
-
-
         if(healthScript.isDead)
         {
             GetComponent<Rigidbody>().drag = 5;
@@ -194,17 +184,6 @@ public class CarControllerMultiplayer : MonoBehaviour
             return true;
         else
             return false;
-
-        /* old
-        if (Input.GetAxis("LT") > 0.1f || Input.GetKey(KeyCode.S))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-        */
     }
 
 
@@ -219,6 +198,20 @@ public class CarControllerMultiplayer : MonoBehaviour
     //all of the stuff that was in update is now here
     private void PlayerUpdate()
     {
+        if (drivetrain.gear == 0)
+        {
+            reversing = true;
+        }
+
+
+        if(Input.GetAxis("RT") > 0.1f || Input.GetKey(KeyCode.W))
+        {
+            if (reversing && !drivetrain.reverseButtonPressed)
+            {
+                drivetrain.ShiftFirst();
+            }
+        }
+
         if (drivetrain.gear <= 3 || drivetrain.nitro)
         {
             GetComponent<Rigidbody>().angularDrag = 0.1f;
@@ -321,13 +314,11 @@ public class CarControllerMultiplayer : MonoBehaviour
         ///new reverse <----------------------------------------------------------------------------------
         if (reverseKey)
         {
-
-            drivetrain.reverse = true;
-            
+            drivetrain.reverseButtonPressed = true;
         }
         else
         {
-            drivetrain.reverse = false;
+            drivetrain.reverseButtonPressed = false;
         }
             
 
@@ -427,11 +418,5 @@ public class CarControllerMultiplayer : MonoBehaviour
                 tractionControl = true;
             }
         }
-
-
-        
     }
-
-
-
 }

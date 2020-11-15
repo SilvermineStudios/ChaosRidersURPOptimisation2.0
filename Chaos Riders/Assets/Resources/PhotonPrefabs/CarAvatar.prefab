@@ -2848,7 +2848,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 922fdf26e80229d40ae1372c84b5cbaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reverse: 0
+  reverseButtonPressed: 0
   poweredWheels:
   - {fileID: 3823546921867807082}
   - {fileID: 5572355197658371225}
@@ -2870,7 +2870,6 @@ MonoBehaviour:
   engineInertia: 0.18
   engineBaseFriction: 30
   engineRPMFriction: 0.02
-  engineOrientation: {x: 1, y: 0, z: 1}
   differentialLockCoefficient: 100
   nitro: 0
   nitroBoost: 2.5
@@ -2894,6 +2893,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 074770724b785ac4eac64a8e34feec61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  reversing: 0
   playerCamera: {fileID: 1883999533}
   wheels:
   - {fileID: 667031931}
@@ -3165,8 +3165,8 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 0.711
+  m_PlayOnAwake: 0
+  m_Volume: 0.798
   m_Pitch: 1
   Loop: 0
   Mute: 0
