@@ -13,6 +13,7 @@ public class RaycastMinigun : MonoBehaviour
     public PhotonView pv;
     private AudioSource speaker;
     public AudioClip gunShot;
+    [SerializeField] private float volume = 0.3f;
     public Health healthScript;
     public float minigunDamage;
     [SerializeField] float playerNumber = 1;
@@ -131,7 +132,7 @@ public class RaycastMinigun : MonoBehaviour
         lr.SetPosition(0, spawnpoint.transform.position);
         lr.SetPosition(1, hit.point);
 
-        speaker.PlayOneShot(gunShot);
+        speaker.PlayOneShot(gunShot, volume);
     }
 
 
