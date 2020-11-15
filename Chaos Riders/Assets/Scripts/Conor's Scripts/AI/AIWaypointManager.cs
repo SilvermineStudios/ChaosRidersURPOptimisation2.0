@@ -9,7 +9,7 @@ public class AIWaypointManager : MonoBehaviour
     public Transform[] waypoints;
 
 
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
         Gizmos.color = lineColour;
 
@@ -40,11 +40,6 @@ public class AIWaypointManager : MonoBehaviour
             Gizmos.DrawLine(previosWaypoint, currentWaypoint);
             Gizmos.DrawSphere(currentWaypoint, sphereRadius);
         }
-    }
-
-    private void OnDrawGizmos()
-    {
-        
     }
     private void DrawLinesAndBalls()
     {

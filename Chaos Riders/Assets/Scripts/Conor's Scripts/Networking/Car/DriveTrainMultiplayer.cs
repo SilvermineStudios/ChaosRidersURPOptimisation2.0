@@ -117,11 +117,6 @@ public class DriveTrainMultiplayer : MonoBehaviour
             result *= nitroBoost;
         }
 
-        if(reverse) //<----------------------------------------------------------------------------------------------------
-        {
-            result *= -1;
-        }
-
 
         return result;
     }
@@ -298,7 +293,7 @@ public class DriveTrainMultiplayer : MonoBehaviour
                     float lockingTorque = (averageAngularVelo - w.angularVelocity) * differentialLockCoefficient;
                     w.drivetrainInertia = inertia * drivetrainFraction;
                     w.driveFrictionTorque = engineFrictionTorque * Mathf.Abs(ratio) * drivetrainFraction;
-                    w.driveTorque = engineTorque * ratio * drivetrainFraction + lockingTorque;
+                    w.driveTorque = engineTorque * ratio * drivetrainFraction + lockingTorque; 
                     slipRatio += w.slipRatio * drivetrainFraction;
                 }
 

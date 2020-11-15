@@ -6,6 +6,9 @@ using TMPro;
 
 public class Checkpoint : MonoBehaviour
 {
+    [SerializeField] private AudioClip soundEffect;
+    private AudioSource audioS;
+
     private int amountOfLaps;
     [SerializeField] private int currentLap = 1;
 
@@ -21,6 +24,8 @@ public class Checkpoint : MonoBehaviour
 
     private void Start()
     {
+        audioS = GetComponent<AudioSource>();
+
         amountOfLaps = LapCounter.AmountOfLaps;
 
         //pv = GetComponent<PhotonView>();
@@ -35,6 +40,8 @@ public class Checkpoint : MonoBehaviour
         {
             if(pv.IsMine && IsThisMultiplayer.Instance.multiplayer)
             {
+                audioS.PlayOneShot(soundEffect, 0.2f);
+
                 other.gameObject.SetActive(false);
 
                 if (currentCheckpoint == checkpoints.Length) //if the car is at the last waypoint
@@ -45,6 +52,8 @@ public class Checkpoint : MonoBehaviour
 
             if(!IsThisMultiplayer.Instance.multiplayer)
             {
+                audioS.PlayOneShot(soundEffect, 0.2f);
+
                 other.gameObject.SetActive(false);
 
                 if (currentCheckpoint == checkpoints.Length) //if the car is at the last waypoint
@@ -68,7 +77,6 @@ public class Checkpoint : MonoBehaviour
             LapCounter.YouWinText.SetActive(true);
             FinishLine.GameWon = true;
             Debug.Log("YOU WIN");
-            
         }
     }
 
