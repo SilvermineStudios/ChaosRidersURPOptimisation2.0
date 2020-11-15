@@ -9,6 +9,8 @@ public class DriveTrainMultiplayer : MonoBehaviour
 {
     #region Variables
 
+    public bool reverse = false;
+
     private PhotonView pv;
 
     // All the wheels the drivetrain should power
@@ -115,6 +117,11 @@ public class DriveTrainMultiplayer : MonoBehaviour
             result *= nitroBoost;
         }
 
+        if(reverse) //<----------------------------------------------------------------------------------------------------
+        {
+            result *= -1;
+        }
+
 
         return result;
     }
@@ -174,11 +181,11 @@ public class DriveTrainMultiplayer : MonoBehaviour
                 float engineAngularAcceleration = (engineTorque - engineFrictionTorque) / engineInertia;
                 engineAngularVelo += engineAngularAcceleration * Time.deltaTime;
 
-                if ((int)GetComponent<Rigidbody>().velocity.magnitude * 3.6f == 0 && engineAngularVelo < 0f)
-                    engineAngularVelo = 0f;
+                //if ((int)GetComponent<Rigidbody>().velocity.magnitude * 3.6f == 0 && engineAngularVelo < 0f)
+                    //engineAngularVelo = 0f;
 
                 // Apply torque to car body
-                GetComponent<Rigidbody>().AddTorque(-engineOrientation * engineTorque * 2.5f);
+                //GetComponent<Rigidbody>().AddTorque(-engineOrientation * engineTorque * 2.5f);
 
             }
 
@@ -229,13 +236,13 @@ public class DriveTrainMultiplayer : MonoBehaviour
                 rpm = minClutchRPM;
             }
 
-
+            /*
             // shake car on low speeds
             if (gear > 1 && (int)(GetComponent<Rigidbody>().velocity.magnitude * 3.6f) <= 20)
             {
                 GetComponent<Rigidbody>().AddTorque(-engineOrientation * engineTorque * 2.5f);
             }
-
+            */
 
             if (rpm >= powerRPM * (0.5f + 0.5f * throttleInput) && !shiftedRecently)
             {
@@ -267,11 +274,11 @@ public class DriveTrainMultiplayer : MonoBehaviour
                 float engineAngularAcceleration = (engineTorque - engineFrictionTorque) / engineInertia;
                 engineAngularVelo += engineAngularAcceleration * Time.deltaTime;
 
-                if ((int)GetComponent<Rigidbody>().velocity.magnitude * 3.6f == 0 && engineAngularVelo < 0f)
-                    engineAngularVelo = 0f;
+                //if ((int)GetComponent<Rigidbody>().velocity.magnitude * 3.6f == 0 && engineAngularVelo < 0f)
+                    //engineAngularVelo = 0f;
 
                 // Apply torque to car body
-                GetComponent<Rigidbody>().AddTorque(-engineOrientation * engineTorque * 2.5f);
+                //GetComponent<Rigidbody>().AddTorque(-engineOrientation * engineTorque * 2.5f);
 
             }
 
@@ -286,7 +293,7 @@ public class DriveTrainMultiplayer : MonoBehaviour
 
 
                 // Apply torque to wheels
-                foreach (WheelMultiplayer w in poweredWheels)
+                foreach (WheelMultiplayer w in poweredWheels) //<--------------------------------------------------------------------------------------
                 {
                     float lockingTorque = (averageAngularVelo - w.angularVelocity) * differentialLockCoefficient;
                     w.drivetrainInertia = inertia * drivetrainFraction;
@@ -322,13 +329,13 @@ public class DriveTrainMultiplayer : MonoBehaviour
                 rpm = minClutchRPM;
             }
 
-
+            /*
             // shake car on low speeds
             if (gear > 1 && (int)(GetComponent<Rigidbody>().velocity.magnitude * 3.6f) <= 20)
             {
                 GetComponent<Rigidbody>().AddTorque(-engineOrientation * engineTorque * 2.5f);
             }
-
+            */
 
             if (rpm >= powerRPM * (0.5f + 0.5f * throttleInput) && !shiftedRecently)
             {

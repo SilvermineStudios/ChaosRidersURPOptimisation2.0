@@ -264,6 +264,7 @@ public class CarControllerMultiplayer : MonoBehaviour
         {
             accelKey = BreakPedal();
             brakeKey = GasPedal();
+            reverseKey = ReverseKey();
         }
 
         if (accelKey)
@@ -299,12 +300,20 @@ public class CarControllerMultiplayer : MonoBehaviour
                 throttle -= Time.deltaTime / throttleReleaseTimeTraction;
             }
         }
-         ///new reverse <----------------------------------------------------------------------------------
-        if(reverseKey)
+        ///new reverse <----------------------------------------------------------------------------------
+        if (reverseKey)
         {
+            drivetrain.reverse = true;
             Debug.Log("Reversing");
             //drivetrain.torqueRPM *= -1;
+            //drivetrain.powerRPM *= -1;
+            //drivetrain.engineInertia *= -1;
         }
+        else
+        {
+            drivetrain.reverse = false;
+        }
+            
 
         throttle = Mathf.Clamp01(throttle);
 
