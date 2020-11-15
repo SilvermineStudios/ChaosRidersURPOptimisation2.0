@@ -9,6 +9,8 @@ using Photon.Pun;
 public class CarControllerMultiplayer : MonoBehaviour
 {
     #region Variables
+    [SerializeField] private bool reversing = false;
+
     private PhotonView pv;
     [SerializeField] private GameObject playerCamera;
 
@@ -136,6 +138,16 @@ public class CarControllerMultiplayer : MonoBehaviour
 
     void Update()
     {
+        if(drivetrain.gear == 0)
+        {
+            reversing = true;
+        }
+        if(drivetrain.gear >= 1)
+        {
+            //reversing = false;
+        }
+
+
         if(healthScript.isDead)
         {
             GetComponent<Rigidbody>().drag = 5;
@@ -160,10 +172,12 @@ public class CarControllerMultiplayer : MonoBehaviour
     {
         if(ReverseKey())
         {
+            reversing = true;
             return true;
         }
         else if (Input.GetAxis("RT") > 0.1f || Input.GetKey(KeyCode.W))
         {
+            reversing = false;
             return true;
         }
         else
