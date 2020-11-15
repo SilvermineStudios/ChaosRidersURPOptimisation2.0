@@ -49,7 +49,7 @@ public class DriveTrainMultiplayer : MonoBehaviour
 
     // Engine orientation (typically either Vector3.forward or Vector3.right). 
     // This determines how the car body moves as the engine revs up.	
-    public Vector3 engineOrientation = Vector3.right;
+    //public Vector3 engineOrientation = Vector3.right;
 
     // Coefficient determining how muchg torque is transfered between the wheels when they move at 
     // different speeds, to simulate differential locking.
@@ -73,7 +73,7 @@ public class DriveTrainMultiplayer : MonoBehaviour
     public bool automatic = true;
 
     // state
-    public int gear = 2;
+    public int gear = 0;
     public float rpm;
     public float slipRatio = 0.0f;
     float engineAngularVelo;
@@ -117,10 +117,6 @@ public class DriveTrainMultiplayer : MonoBehaviour
             result *= nitroBoost;
         }
 
-        if(reverse) //<----------------------------------------------------------------------------------------------------
-        {
-            result *= -1;
-        }
 
 
         return result;
@@ -161,12 +157,21 @@ public class DriveTrainMultiplayer : MonoBehaviour
         }
     }
 
+    float ratio2;
     
     void FixedUpdate()
     {
-        if(pv.IsMine && IsThisMultiplayer.Instance.multiplayer)
+        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer)
         {
-            float ratio = gearRatios[gear] * finalDriveRatio;
+            if (reverse)
+            {
+                float ratio2 = gearRatios[0] * finalDriveRatio;
+            }
+            else
+            {
+                float ratio2 = gearRatios[gear] * finalDriveRatio;
+            }
+            float ratio = ratio2;
             float inertia = engineInertia * Sqr(ratio);
             float engineFrictionTorque = engineBaseFriction + rpm * engineRPMFriction;
             float engineTorque = (CalcEngineTorque() + Mathf.Abs(engineFrictionTorque)) * throttle;
@@ -182,7 +187,7 @@ public class DriveTrainMultiplayer : MonoBehaviour
                 engineAngularVelo += engineAngularAcceleration * Time.deltaTime;
 
                 //if ((int)GetComponent<Rigidbody>().velocity.magnitude * 3.6f == 0 && engineAngularVelo < 0f)
-                    //engineAngularVelo = 0f;
+                //engineAngularVelo = 0f;
 
                 // Apply torque to car body
                 //GetComponent<Rigidbody>().AddTorque(-engineOrientation * engineTorque * 2.5f);
@@ -246,7 +251,7 @@ public class DriveTrainMultiplayer : MonoBehaviour
 
             if (rpm >= powerRPM * (0.5f + 0.5f * throttleInput) && !shiftedRecently)
             {
-                ShiftUp();
+                //ShiftUp();
             }
             else if (rpm <= maxRPM * (0.25f + 0.4f * throttleInput) && gear > 2 && !shiftedRecently)
             {
@@ -257,9 +262,11 @@ public class DriveTrainMultiplayer : MonoBehaviour
                 gear = (gear == 0 ? 2 : 0);
             }
         }
-        else if(!IsThisMultiplayer.Instance.multiplayer)
+        else if (!IsThisMultiplayer.Instance.multiplayer)
         {
+            if (gear <= -1) { gear = -1; }
             float ratio = gearRatios[gear] * finalDriveRatio;
+
             float inertia = engineInertia * Sqr(ratio);
             float engineFrictionTorque = engineBaseFriction + rpm * engineRPMFriction;
             float engineTorque = (CalcEngineTorque() + Mathf.Abs(engineFrictionTorque)) * throttle;
@@ -275,7 +282,7 @@ public class DriveTrainMultiplayer : MonoBehaviour
                 engineAngularVelo += engineAngularAcceleration * Time.deltaTime;
 
                 //if ((int)GetComponent<Rigidbody>().velocity.magnitude * 3.6f == 0 && engineAngularVelo < 0f)
-                    //engineAngularVelo = 0f;
+                //engineAngularVelo = 0f;
 
                 // Apply torque to car body
                 //GetComponent<Rigidbody>().AddTorque(-engineOrientation * engineTorque * 2.5f);
@@ -340,6 +347,7 @@ public class DriveTrainMultiplayer : MonoBehaviour
             if (rpm >= powerRPM * (0.5f + 0.5f * throttleInput) && !shiftedRecently)
             {
                 ShiftUp();
+
             }
             else if (rpm <= maxRPM * (0.25f + 0.4f * throttleInput) && gear > 2 && !shiftedRecently)
             {
@@ -349,7 +357,14 @@ public class DriveTrainMultiplayer : MonoBehaviour
             {
                 gear = (gear == 0 ? 2 : 0);
             }
+            if (reverse)
+            {
+                ShiftReverse();
+            }
         }
+
+
+        
     }
 
     public bool shiftedRecently;
@@ -359,7 +374,7 @@ public class DriveTrainMultiplayer : MonoBehaviour
 
         shiftedRecently = true;
         counter = offset;
-        if (gear < gearRatios.Length - 1)
+        if (gear < gearRatios.Length - 1 && !reverse)
         {
             gear++;
             GetComponent<SoundControllerMultiplayer>().playBOV();
@@ -371,13 +386,21 @@ public class DriveTrainMultiplayer : MonoBehaviour
     {
         shiftedRecently = true;
         counter = offset;
-        if (gear > 0)
+        if (gear >= 0)
         {
             gear--;
             GetComponent<SoundControllerMultiplayer>().playShiftDown();
         }
     }
 
+    public void ShiftReverse()
+    {
+        shiftedRecently = true;
+        counter = offset;
+        gear = 0;
+        GetComponent<SoundControllerMultiplayer>().playShiftDown();
+        
+    }
 
 
     // Debug GUI.
