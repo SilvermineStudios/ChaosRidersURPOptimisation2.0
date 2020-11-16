@@ -1824,6 +1824,7 @@ GameObject:
   - component: {fileID: 4029253875945408200}
   - component: {fileID: 8245151395735145407}
   - component: {fileID: 1394158404870961956}
+  - component: {fileID: 1635319434427569317}
   m_Layer: 10
   m_Name: AI Car
   m_TagString: Player
@@ -1875,7 +1876,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2011213230151948855}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9d6532e1d2a565d48a623f2c53384a43, type: 3}
   m_Name: 
@@ -1931,7 +1932,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 0
   lastHit: 0
+  isProtected: 0
   deathParticles: {fileID: 3181313618017907242}
+  dead: 0
+--- !u!114 &1635319434427569317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011213230151948855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
 --- !u!1 &2040200205363631557
 GameObject:
   m_ObjectHideFlags: 0
