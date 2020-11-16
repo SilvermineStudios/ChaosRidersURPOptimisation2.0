@@ -4,6 +4,8 @@ using UnityEngine;
 using Photon.Pun;
 public class RaycastMinigun : MonoBehaviour
 {
+    private bool carConnected = false;
+
     public GameObject spawnpoint,barrel;
 
     GameObject car, carCollision;
@@ -34,11 +36,17 @@ public class RaycastMinigun : MonoBehaviour
 
     void Update()
     {       
-        if(car == null)
+        if(car == null && !carConnected)
         {
             car = GetComponentInParent<MoveTurretPosition>().car;
-            carCollision = GetComponentInParent<MoveTurretPosition>().car.transform.GetChild(0).gameObject;
+            carCollision = GetComponentInParent<MoveTurretPosition>().car.transform.GetChild(0).gameObject; 
             //carCollision = car.transform.GetChild(0).gameObject;
+            //carCollision = car;
+        }
+
+        if(car != null) //<--------------------------------------------------------------------------------------NEW STOPS ERRORS IF CAR DISCONNECTS    
+        {
+            carConnected = true;
         }
 
         //if (!pv.IsMine && IsThisMultiplayer.Instance.multiplayer) { return; }
