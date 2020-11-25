@@ -14,6 +14,7 @@ public class AbiliyCooldowns : MonoBehaviour
 
     private void Start()
     {
+        //set the bars = 0 at the begining
         grenadeChargeBar.GetComponent<Image>().fillAmount = 0;
         grenadeOverChargeBar.GetComponent<Image>().fillAmount = 0;
         nitroGuzzlerChargeBar.GetComponent<Image>().fillAmount = 0;
