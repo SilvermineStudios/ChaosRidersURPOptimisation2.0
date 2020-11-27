@@ -31,15 +31,15 @@ public class dumb : MonoBehaviour
         
     }
 
-    void FixedUpdate()
+    void Update()
     {
         if (!pv.IsMine && IsThisMultiplayer.Instance.multiplayer) { return; }
 
         
         if(pv.IsMine || !IsThisMultiplayer.Instance.multiplayer)
         {
-            target.transform.RotateAround(transform.position, Vector3.up, Input.GetAxis("Horizontal") * Hspeed * Time.deltaTime);
-            target.transform.Translate(new Vector3(0, Input.GetAxis("Vertical") * Vspeed, 0));
+            target.transform.RotateAround(transform.position, Vector3.up, Input.GetAxis("Mouse X") * Hspeed * Time.deltaTime);
+            target.transform.Translate(new Vector3(0, Input.GetAxis("Mouse Y") * Vspeed, 0));
             if (target.transform.position.y > 3.5f)
             {
                 target.transform.position = new Vector3(target.transform.position.x, 3.5f, target.transform.position.z);

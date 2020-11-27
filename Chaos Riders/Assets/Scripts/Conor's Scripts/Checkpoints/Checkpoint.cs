@@ -141,4 +141,5 @@ public class Checkpoint : MonoBehaviour
         if (currentCheckpoint == checkpoints.Length - 1) //if the car is at the last waypoint
             currentCheckpoint = 0; //make the next waypoint the first waypoint
     }
+
 }
