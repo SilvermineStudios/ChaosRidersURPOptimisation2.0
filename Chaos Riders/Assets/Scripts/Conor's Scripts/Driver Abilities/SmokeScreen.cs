@@ -15,7 +15,7 @@ public class SmokeScreen : MonoBehaviour
     
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetKeyDown(KeyCode.Space) && AbiliyCooldowns.canUseSmoke)
         {
             smokeParticleSystem.Play();
         }
