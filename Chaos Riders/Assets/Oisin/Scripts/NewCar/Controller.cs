@@ -5,12 +5,15 @@ using UnityEngine;
 public class Controller : MonoBehaviour
 {
     [SerializeField] private WheelCollider[] wheelColliders = new WheelCollider[4];
-    [SerializeField] private GameObject[] m_WheelMeshes = new GameObject[4];
+    [SerializeField] private GameObject[] wheelMeshes = new GameObject[4];
+    [SerializeField] private Vector3 centerOfMass;
     [Range(0, 1)] [SerializeField] private float steerHelper;
     [Range(0, 1)] [SerializeField] private float tractionControl;
     [SerializeField] private float fullTorqueOverAllWheels;
     [SerializeField] private float brakeTorque;
     [SerializeField] private float reverseTorque;
+    [SerializeField] private float topspeed;
+    [SerializeField] private float downforce;
 
 
     public float maxSteerAngle = 30;
@@ -28,6 +31,7 @@ public class Controller : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        rb.centerOfMass = centerOfMass;
         currentTorque = fullTorqueOverAllWheels - (tractionControl * fullTorqueOverAllWheels);
     }
 
@@ -57,9 +61,19 @@ public class Controller : MonoBehaviour
     {
         float thrustTorque = verticalInput * (currentTorque / 4f);
 
+        if(boost)
+        {
+            thrustTorque = verticalInput * 5000 * (currentTorque / 4f);
+            topspeed = 10000f;
+        }
+        else
+        {
+            topspeed = 100f;
+        }
+
         for (int i = 0; i < 4; i++)
         {
-            wheelColliders[i].motorTorque = -thrustTorque;
+            wheelColliders[i].motorTorque = thrustTorque;
         }
         
 
@@ -72,9 +86,51 @@ public class Controller : MonoBehaviour
             else if (verticalInput > 0)
             {
                 wheelColliders[i].brakeTorque = 0f;
-                wheelColliders[i].motorTorque = reverseTorque * verticalInput;
+                wheelColliders[i].motorTorque = -reverseTorque * verticalInput;
             }
         }
+    }
+
+    private void TractionControl()
+    {
+        WheelHit wheelHit;
+        // loop through all wheels
+        for (int i = 0; i < 4; i++)
+        {
+            wheelColliders[i].GetGroundHit(out wheelHit);
+
+            AdjustTorque(wheelHit.forwardSlip);
+        }
+        
+    }
+
+    float slipLimit = 0.3f;
+
+    private void AdjustTorque(float forwardSlip)
+    {
+        if (forwardSlip >= slipLimit && currentTorque >= 0)
+        {
+            currentTorque -= 10 * tractionControl;
+        }
+        else
+        {
+            currentTorque += 10 * tractionControl;
+            if (currentTorque > fullTorqueOverAllWheels)
+            {
+                currentTorque = fullTorqueOverAllWheels;
+            }
+        }
+    }
+
+
+    private void CapSpeed()
+    {
+        float speed = rb.velocity.magnitude;
+
+        speed *= 2.23693629f;
+        if (speed > topspeed)
+            rb.velocity = (topspeed / 2.23693629f) * rb.velocity.normalized;
+
     }
 
     private void UpdateWheelPoses()
@@ -99,7 +155,16 @@ public class Controller : MonoBehaviour
         Steer();
         HelpSteer();
         Accelerate();
+        AddDownForce();
+        TractionControl();
+        CapSpeed();
         //UpdateWheelPoses();
+    }
+
+    private void AddDownForce()
+    {
+        wheelColliders[0].attachedRigidbody.AddForce(-transform.up * downforce * wheelColliders[0].attachedRigidbody.velocity.magnitude);
+
     }
 
 
