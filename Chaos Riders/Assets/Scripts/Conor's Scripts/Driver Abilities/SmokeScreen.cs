@@ -19,8 +19,8 @@ public class SmokeScreen : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Space) && AbiliyCooldowns.canUseSmoke)
         {
             Instantiate(smokeGameObject, smokeSpawn.transform.position, smokeSpawn.transform.rotation);
-            //smokeGameObject.GetComponent<ParticleSystem>().Play();
-            //smokeParticleSystem.Play();
+            AbiliyCooldowns.resetEquipment = true;
+            AbiliyCooldowns.equipmentCharge.fillAmount = 0;
         }
     }
 }
