@@ -48,36 +48,28 @@ public class CarPickup : MonoBehaviour
             StartCoroutine(InvincibleTimer(PickupManager.InvincibleTime));
     }
 
+    #region Puwerup Courotines
     private IEnumerator InvincibleTimer(float time)
     {
         armourUiImage.SetActive(true);
-        //Debug.Log("Invincible");
         healthScript.isProtected = true;
-        PickupManager.invincibleUI.SetActive(true);
 
         yield return new WaitForSeconds(time);
 
-        PickupManager.invincibleUI.SetActive(false);
         healthScript.isProtected = false;
-        //Debug.Log("Not Invincible");
         armourUiImage.SetActive(false);
     }
 
-    ///////////////////////////////////////////////////
+    
     private IEnumerator SpeedBoostTimer(float time)
     {
         dt.nitro = true;
         nitroUiImage.SetActive(true);
 
-        //Debug.Log("Speed boost");
-        PickupManager.speedUI.SetActive(true);
-
         yield return new WaitForSeconds(time);
-
-        PickupManager.speedUI.SetActive(false);
-        //Debug.Log("Normal speed");
 
         dt.nitro = false;
         nitroUiImage.SetActive(false);
     }
+    #endregion
 }

@@ -17,6 +17,7 @@ public class Checkpoint : MonoBehaviour
     //script for what happens when a player drives through a checkpoint
     [SerializeField] private GameObject[] checkpoints;
     [SerializeField] private float currentCheckpoint = 0f;
+    [SerializeField] private GameObject youWinText;
 
     [SerializeField] private bool canCollect = true;
 
@@ -24,6 +25,9 @@ public class Checkpoint : MonoBehaviour
 
     private void Start()
     {
+        //youWinText.SetActive(false);
+        CarUIManager.youWinText.SetActive(false);
+
         audioS = GetComponent<AudioSource>();
 
         amountOfLaps = LapCounter.AmountOfLaps;
@@ -74,7 +78,7 @@ public class Checkpoint : MonoBehaviour
 
         if(other.gameObject.tag == "FinishLine")// && !FinishLine.GameWon)
         {
-            LapCounter.YouWinText.SetActive(true);
+            CarUIManager.youWinText.SetActive(true);
             FinishLine.GameWon = true;
             Debug.Log("YOU WIN");
         }
@@ -101,7 +105,7 @@ public class Checkpoint : MonoBehaviour
             }
 
 
-            LapCounter.lapsText.text = "Lap " + currentLap + " / " + amountOfLaps;
+            CarUIManager.lapsText.text = "Lap " + currentLap + " / " + amountOfLaps;
             if(currentLap == amountOfLaps && canCrossFinish && currentCheckpoint == 0)
             {
                 LapCounter.FinishLine.SetActive(true);
@@ -119,7 +123,7 @@ public class Checkpoint : MonoBehaviour
             }
 
 
-            LapCounter.lapsText.text = "Lap " + currentLap + " / " + amountOfLaps;
+            CarUIManager.lapsText.text = "Lap " + currentLap + " / " + amountOfLaps;
             if (currentLap == amountOfLaps && canCrossFinish && currentCheckpoint == 0)
             {
                 LapCounter.FinishLine.SetActive(true);
