@@ -129,8 +129,9 @@ public class Controller : MonoBehaviour
 
         speed *= 2.23693629f;
         if (speed > topspeed)
-            rb.velocity = (topspeed / 2.23693629f) * rb.velocity.normalized;
-
+        {
+            rb.velocity = topspeed / 2.23693629f * rb.velocity.normalized;
+        }
     }
 
     private void UpdateWheelPoses()
