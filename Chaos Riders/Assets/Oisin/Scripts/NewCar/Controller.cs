@@ -5,10 +5,10 @@ using UnityEngine;
 public class Controller : MonoBehaviour
 {
     [SerializeField] private WheelCollider[] wheelColliders = new WheelCollider[4];
-    [SerializeField] private GameObject[] wheelMeshes = new GameObject[4];
+    [SerializeField] private Transform[] wheelMeshes = new Transform[4];
     [SerializeField] private Vector3 centerOfMass;
     [Range(0, 1)] [SerializeField] private float steerHelper;
-    [Range(0, 1)] [SerializeField] private float tractionControl;
+    [SerializeField] private float tractionControl = 1;
     [SerializeField] private float fullTorqueOverAllWheels;
     [SerializeField] private float brakeTorque;
     [SerializeField] private float reverseTorque;
@@ -68,7 +68,7 @@ public class Controller : MonoBehaviour
         }
         else
         {
-            topspeed = 100f;
+            topspeed = 120f;
         }
 
         for (int i = 0; i < 4; i++)
@@ -135,18 +135,21 @@ public class Controller : MonoBehaviour
 
     private void UpdateWheelPoses()
     {
-
+        for(int i = 0; i< 4; i++)
+        {
+            UpdateWheelPose(wheelColliders[i], wheelMeshes[i]);
+        }
     }
 
-    private void UpdateWheelPose(WheelCollider _collider, Transform _transform)
+    private void UpdateWheelPose(WheelCollider collider, Transform transform)
     {
-        Vector3 _pos = _transform.position;
-        Quaternion _quat = _transform.rotation;
+        Vector3 pos = transform.position;
+        Quaternion quat = transform.rotation;
 
-        _collider.GetWorldPose(out _pos, out _quat);
+        collider.GetWorldPose(out pos, out quat);
 
-        _transform.position = _pos;
-        _transform.rotation = _quat;
+        transform.position = pos;
+        transform.rotation = quat;
     }
 
     private void FixedUpdate()
@@ -158,13 +161,12 @@ public class Controller : MonoBehaviour
         AddDownForce();
         TractionControl();
         CapSpeed();
-        //UpdateWheelPoses();
+        UpdateWheelPoses();
     }
 
     private void AddDownForce()
     {
-        wheelColliders[0].attachedRigidbody.AddForce(-transform.up * downforce * wheelColliders[0].attachedRigidbody.velocity.magnitude);
-
+       rb.AddForce(-transform.up * downforce * rb.velocity.magnitude);
     }
 
 
