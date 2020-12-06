@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 public class DriverAbilities : MonoBehaviour
 {
-    public GameObject driverCanvas; //Driver UI canvas
-    private Transform uiTransform; //Transform of the UI Canvas
 
     public GameObject smokeGameObjectPrefab, smokeSpawn;
 
@@ -21,16 +19,14 @@ public class DriverAbilities : MonoBehaviour
  
     void Start()
     {
-        uiTransform = driverCanvas.transform;
         pv = GetComponent<PhotonView>();
 
 
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
-            driverCanvas.SetActive(true); //activate the drivers UI canvas
             ResetAllBars(); //set all the bars to 0
             CheckIfCanUseEquipment(); //check if the player can use their equipment
-        } 
+        }
     }
 
     // Update is called once per frame

@@ -1,19 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 using Photon.Pun;
+using TMPro;
 
-public class CarUIManager : MonoBehaviour
+public class ShooterUIManager : MonoBehaviour
 {
     private PhotonView pv;
-    public GameObject driverCanvas; //Driver UI canvas
+    public GameObject gunnerCanvas; //Driver UI canvas
 
     [SerializeField] private GameObject youWinTextGo;
     public static GameObject youWinText;
 
-    
+
     [SerializeField] private TMP_Text lapsTextUI;
     public static TMP_Text lapsText;
 
@@ -21,31 +20,27 @@ public class CarUIManager : MonoBehaviour
     [SerializeField] private GameObject minimapCam;
     public static GameObject minimapCamera;
 
-    void Awake()
+
+    private void Awake()
     {
+        pv = GetComponent<PhotonView>();
         youWinText = youWinTextGo;
         lapsText = lapsTextUI;
         minimapCamera = minimapCam;
-        pv = GetComponent<PhotonView>();
     }
 
-    private void Start()
+    void Start()
     {
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
-            driverCanvas.SetActive(true);
-            minimapCam.SetActive(true); //activate the minimap camera if it belongs to you
-        } 
+            gunnerCanvas.SetActive(true); //activate the gunners UI canvas
+            minimapCam.SetActive(true);
+        }
         else if (!pv.IsMine && IsThisMultiplayer.Instance.multiplayer)
         {
-            driverCanvas.SetActive(false);
-            minimapCam.SetActive(false); //disable all the minimap cameras that dont belong to you
+            gunnerCanvas.SetActive(false); //deactivate all the UI canvas' that dont belong to you
+            minimapCam.SetActive(false);
         }
             
-    }
-
-    void Update()
-    {
-        
     }
 }
