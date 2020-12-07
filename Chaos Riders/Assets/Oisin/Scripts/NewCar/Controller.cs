@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
+
 
 public class Controller : MonoBehaviour
 {
@@ -15,6 +17,7 @@ public class Controller : MonoBehaviour
     [SerializeField] private float topspeed;
     [SerializeField] private float downforce;
 
+    private CinemachineVirtualCamera cineCamera;
 
     public float maxSteerAngle = 30;
     public float motorForce = 50;
@@ -30,6 +33,7 @@ public class Controller : MonoBehaviour
 
     private void Start()
     {
+        cineCamera = gameObject.transform.GetChild(1).gameObject.GetComponent<CinemachineVirtualCamera>();
         rb = GetComponent<Rigidbody>();
         rb.centerOfMass = centerOfMass;
         currentTorque = fullTorqueOverAllWheels - (tractionControl * fullTorqueOverAllWheels);
@@ -58,12 +62,14 @@ public class Controller : MonoBehaviour
     }
     
     private void Accelerate()
-    {
-        float thrustTorque = verticalInput * (currentTorque / 4f);
+    {  
+
+        
+        float thrustTorque = -verticalInput * (currentTorque / 4f);
 
         if(boost)
         {
-            thrustTorque = verticalInput * 5000 * (currentTorque / 4f);
+            thrustTorque = -verticalInput * 5000 * (currentTorque / 4f);
             topspeed = 10000f;
         }
         else
@@ -76,25 +82,11 @@ public class Controller : MonoBehaviour
             wheelColliders[i].motorTorque = thrustTorque;
         }
         
-
-        for (int i = 0; i < 4; i++)
-        {
-            if (currentSpeed > 5 && Vector3.Angle(transform.forward, rb.velocity) < 50f)
-            {
-                wheelColliders[i].brakeTorque = brakeTorque * verticalInput;
-            }
-            else if (verticalInput > 0)
-            {
-                wheelColliders[i].brakeTorque = 0f;
-                wheelColliders[i].motorTorque = -reverseTorque * verticalInput;
-            }
-        }
     }
 
     private void TractionControl()
     {
         WheelHit wheelHit;
-        // loop through all wheels
         for (int i = 0; i < 4; i++)
         {
             wheelColliders[i].GetGroundHit(out wheelHit);
@@ -163,7 +155,19 @@ public class Controller : MonoBehaviour
         TractionControl();
         CapSpeed();
         UpdateWheelPoses();
+        ChangeFOV();
     }
+
+    private void ChangeFOV()
+    {
+        //Debug.Log(currentSpeed);
+        if(currentSpeed > cineCamera.m_Lens.FieldOfView)
+        {
+            cineCamera.m_Lens.FieldOfView = Mathf.Lerp(cineCamera.m_Lens.FieldOfView, currentSpeed, Time.deltaTime);
+        }
+
+    }
+
 
     private void AddDownForce()
     {
