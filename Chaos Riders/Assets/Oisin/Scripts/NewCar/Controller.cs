@@ -18,7 +18,7 @@ public class Controller : MonoBehaviour
     [SerializeField] private float downforce;
 
     private CinemachineVirtualCamera cineCamera;
-
+    public Skidmarks skidmarksController;
     public float maxSteerAngle = 30;
     public float motorForce = 50;
     private float horizontalInput;
@@ -30,9 +30,24 @@ public class Controller : MonoBehaviour
     float steerAngle;
     private float currentTorque;
     public float currentSpeed { get { return rb.velocity.magnitude * 2.23693629f; } }
+    Skidmarks skidFL, skidFR, skidBL, skidBR;
+
+
+    private void Awake()
+    {
+        skidmarksController = FindObjectOfType<Skidmarks>();
+    }
 
     private void Start()
     {
+
+        skidFL = FindObjectOfType(typeof(Skidmarks)) as Skidmarks;
+        skidFR = FindObjectOfType(typeof(Skidmarks)) as Skidmarks;
+        skidBL = FindObjectOfType(typeof(Skidmarks)) as Skidmarks;
+        skidBR = FindObjectOfType(typeof(Skidmarks)) as Skidmarks;
+        
+
+        
         cineCamera = gameObject.transform.GetChild(1).gameObject.GetComponent<CinemachineVirtualCamera>();
         rb = GetComponent<Rigidbody>();
         rb.centerOfMass = centerOfMass;
@@ -155,8 +170,39 @@ public class Controller : MonoBehaviour
         TractionControl();
         CapSpeed();
         UpdateWheelPoses();
+        Skid();
         ChangeFOV();
     }
+
+    public Skidmarks[] skidmarks;
+    public int[] lastSkid;
+
+    private void Skid()
+    {
+        WheelHit wheelHit;
+        for(int i = 0; i<4;i++)
+        {
+            wheelColliders[i].GetGroundHit(out wheelHit);
+            Debug.Log(1);
+
+            if (skidmarks[i] != null)
+            {
+                Debug.Log(2);
+
+                //lastSkid = skid.AddSkidMark(hit.point, hit.normal, Mathf.Abs(slipRatio) - 0.2f, lastSkid);wheelHit.forwardSlip > slipLimit &&
+                //Debug.Log(2222);
+                Vector3 skidPoint = new Vector3(wheelColliders[i].transform.position.x, wheelHit.point.y, wheelColliders[i].transform.position.z) + (rb.velocity * Time.deltaTime);
+                lastSkid[i] = skidmarksController.AddSkidMark(skidPoint, wheelHit.normal, 0.5f, lastSkid[i]);
+            }
+            else
+            {
+                Debug.Log(3);
+                lastSkid[i] = -1;
+            }
+            
+        }
+    }
+    //int lastSkid = -1;
 
     private void ChangeFOV()
     {

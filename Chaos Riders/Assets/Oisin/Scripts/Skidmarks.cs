@@ -35,6 +35,8 @@ public class Skidmarks : MonoBehaviour
     MeshRenderer mr;
     MeshFilter mf;
 
+
+
     Vector3[] vertices;
     Vector3[] normals;
     Vector4[] tangents;
@@ -49,6 +51,12 @@ public class Skidmarks : MonoBehaviour
 
     protected void Start()
     {
+        if(transform.position != Vector3.zero)
+        {
+            transform.position = Vector3.zero;
+        }
+
+
         skidmarks = new MarkSection[MAX_MARKS];
         for (int i = 0; i < MAX_MARKS; i++)
         {

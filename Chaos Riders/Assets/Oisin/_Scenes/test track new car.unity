@@ -1560,7 +1560,7 @@ Transform:
   m_LocalScale: {x: 0.75000006, y: 0.75, z: 0.75000006}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &347896916
 MonoBehaviour:
@@ -2774,7 +2774,7 @@ Transform:
   - {fileID: 1447096305}
   - {fileID: 422694324}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &759186297
 GameObject:
@@ -4342,7 +4342,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 96.98548
+  field of view: 112.3498
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -4367,7 +4367,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1155110777}
-  m_LocalRotation: {x: -8.2185203e-16, y: 0.9928329, z: 0.11951119, w: 5.344635e-15}
+  m_LocalRotation: {x: -0.000000007198537, y: 0.9832694, z: 0.18215747, w: 0.000000038857046}
   m_LocalPosition: {x: -108.69, y: 2.6599998, z: 144.23}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -5049,7 +5049,7 @@ RectTransform:
   - {fileID: 1384409759}
   - {fileID: 1272952788}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -5734,6 +5734,17 @@ Transform:
   m_Father: {fileID: 284389270}
   m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 10.98, z: 0}
+--- !u!114 &1415142938 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8722989434118966684, guid: 81e86443324667347895802121ba752e, type: 3}
+  m_PrefabInstance: {fileID: 1730779774}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 324cb6a35df75f045a579e2892029209, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1418964774
 GameObject:
   m_ObjectHideFlags: 0
@@ -6169,9 +6180,16 @@ MonoBehaviour:
   reverseTorque: 500
   topspeed: 150
   downforce: 200
+  skidmarksController: {fileID: 0}
   maxSteerAngle: 40
   motorForce: 1200
   boost: 0
+  skidmarks:
+  - {fileID: 1415142938}
+  - {fileID: 1415142938}
+  - {fileID: 1415142938}
+  - {fileID: 1415142938}
+  lastSkid: ffffffffffffffffffffffffffffffff
 --- !u!54 &1482398447
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6988,7 +7006,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8722989434118966685, guid: 81e86443324667347895802121ba752e, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 8722989434118966685, guid: 81e86443324667347895802121ba752e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -7000,6 +7018,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8722989434118966685, guid: 81e86443324667347895802121ba752e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8722989434118966685, guid: 81e86443324667347895802121ba752e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8722989434118966685, guid: 81e86443324667347895802121ba752e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8722989434118966685, guid: 81e86443324667347895802121ba752e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8722989434118966685, guid: 81e86443324667347895802121ba752e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8722989434118966685, guid: 81e86443324667347895802121ba752e, type: 3}
+      propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2090611328824587637, guid: 2a9a5cd4e524e0b4db31f61e19a16979, type: 3}
@@ -7272,7 +7310,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 1482398445}
   m_Follow: {fileID: 1482398445}
   m_Lens:
-    FieldOfView: 96.98548
+    FieldOfView: 112.3498
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
@@ -7293,7 +7331,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1860039444}
-  m_LocalRotation: {x: -8.2185203e-16, y: 0.9928329, z: 0.11951119, w: 5.344635e-15}
+  m_LocalRotation: {x: -0.000000007198537, y: 0.9832694, z: 0.18215747, w: 0.000000038857046}
   m_LocalPosition: {x: 0, y: 1.5499998, z: 5.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -7710,7 +7748,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1968913611
 GameObject:
@@ -8395,7 +8433,7 @@ Transform:
   - {fileID: 1976624990}
   - {fileID: 284389270}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2109867050
 MonoBehaviour:
@@ -37969,7 +38007,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1303323392935430974, guid: c250b34bfcf5e654887d12d1b3397375, type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1303323392935430974, guid: c250b34bfcf5e654887d12d1b3397375, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -42249,9 +42287,12 @@ MonoBehaviour:
   reverseTorque: 0
   topspeed: 0
   downforce: 0
+  skidmarksController: {fileID: 0}
   maxSteerAngle: 30
   motorForce: 700
   boost: 0
+  skidmarks: []
+  lastSkid: 
 --- !u!65 &3665268805232271544
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -45807,7 +45848,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1886421453482511209, guid: 5d4753233c620994ea5740d9f34d0256, type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1886421453482511209, guid: 5d4753233c620994ea5740d9f34d0256, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
