@@ -10,7 +10,7 @@ public class Controller : MonoBehaviour
     [SerializeField] private Transform[] wheelMeshes = new Transform[4];
     [SerializeField] private Vector3 centerOfMass;
     [Range(0, 1)] [SerializeField] private float steerHelper;
-    [SerializeField] private float tractionControl = 1;
+    [SerializeField] private float tractionControl = 0;
     [SerializeField] private float fullTorqueOverAllWheels;
     [SerializeField] private float brakeTorque;
     [SerializeField] private float reverseTorque;
@@ -31,7 +31,8 @@ public class Controller : MonoBehaviour
     private float currentTorque;
     public float currentSpeed { get { return rb.velocity.magnitude * 2.23693629f; } }
     Skidmarks skidFL, skidFR, skidBL, skidBR;
-
+    float slipLimit = 0.3f;
+    float skidLimit = 0.5f;
 
     private void Awake()
     {
@@ -111,7 +112,7 @@ public class Controller : MonoBehaviour
         
     }
 
-    float slipLimit = 0.3f;
+    
 
     private void AdjustTorque(float forwardSlip)
     {
@@ -167,10 +168,10 @@ public class Controller : MonoBehaviour
         HelpSteer();
         Accelerate();
         AddDownForce();
+        Skid();
         TractionControl();
         CapSpeed();
         UpdateWheelPoses();
-        Skid();
         ChangeFOV();
     }
 
@@ -183,20 +184,19 @@ public class Controller : MonoBehaviour
         for(int i = 0; i<4;i++)
         {
             wheelColliders[i].GetGroundHit(out wheelHit);
-            Debug.Log(1);
+            Debug.Log(wheelHit.sidewaysSlip);
 
-            if (skidmarks[i] != null)
+            if (((wheelHit.forwardSlip > skidLimit || wheelHit.forwardSlip < -skidLimit) || (wheelHit.sidewaysSlip > skidLimit || wheelHit.sidewaysSlip < -skidLimit)) && skidmarks[i] != null)
             {
-                Debug.Log(2);
+                
 
-                //lastSkid = skid.AddSkidMark(hit.point, hit.normal, Mathf.Abs(slipRatio) - 0.2f, lastSkid);wheelHit.forwardSlip > slipLimit &&
+                //lastSkid = skid.AddSkidMark(hit.point, hit.normal, Mathf.Abs(slipRatio) - 0.2f, lastSkid);
                 //Debug.Log(2222);
                 Vector3 skidPoint = new Vector3(wheelColliders[i].transform.position.x, wheelHit.point.y, wheelColliders[i].transform.position.z) + (rb.velocity * Time.deltaTime);
                 lastSkid[i] = skidmarksController.AddSkidMark(skidPoint, wheelHit.normal, 0.5f, lastSkid[i]);
             }
             else
             {
-                Debug.Log(3);
                 lastSkid[i] = -1;
             }
             
