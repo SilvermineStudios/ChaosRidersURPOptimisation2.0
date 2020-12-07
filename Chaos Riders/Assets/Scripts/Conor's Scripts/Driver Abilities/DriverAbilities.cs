@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.UI;
+using Photon.Realtime;
+using System.IO;
 
 public class DriverAbilities : MonoBehaviour
 {
@@ -40,7 +42,9 @@ public class DriverAbilities : MonoBehaviour
             //if you use the equipment
             if (Input.GetKeyDown(KeyCode.Space) && canUseEquipment)
             {
-                Instantiate(smokeGameObjectPrefab, smokeSpawn.transform.position, smokeSpawn.transform.rotation);
+                //Instantiate(smokeGameObjectPrefab, smokeSpawn.transform.position, smokeSpawn.transform.rotation);
+                //pv.RPC("RPC_SpawnSmokeGrenade", smokeSpawn.transform.position, smokeSpawn.transform.rotation);
+                PhotonNetwork.Instantiate("Smoke Particle", smokeSpawn.transform.position, smokeSpawn.transform.rotation, 0);
                 equipmentChargeAmount = 0;
             }
         }
@@ -105,5 +109,11 @@ public class DriverAbilities : MonoBehaviour
                 abilityOverChargeBar.GetComponent<Image>().fillAmount = abilityOverChargeAmount / 100;
             }
         }
+    }
+
+    [PunRPC]
+    void RPC_SpawnSmokeGrenade(Vector3 spawnPos, Quaternion spawnRot)
+    {
+        PhotonNetwork.Instantiate(Path.Combine("Prefabs", "Conors Prefabs", "Car Abilities", "Smoke Particle"), spawnPos, spawnRot, 0); 
     }
 }
