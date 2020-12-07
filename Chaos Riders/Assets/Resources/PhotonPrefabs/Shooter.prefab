@@ -3228,6 +3228,7 @@ GameObject:
   - component: {fileID: 2008431484}
   - component: {fileID: 6343066884632140409}
   - component: {fileID: 2693542890972190787}
+  - component: {fileID: 3236380849238242975}
   m_Layer: 0
   m_Name: Shooter
   m_TagString: shooter
@@ -3311,6 +3312,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: -5707058284350358157}
+  - {fileID: 3236380849238242975}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -3544,6 +3546,22 @@ MonoBehaviour:
   youWinTextGo: {fileID: 3669879772722519492}
   lapsTextUI: {fileID: 8359443130648624206}
   minimapCam: {fileID: 457296204}
+--- !u!114 &3236380849238242975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8912298972765249336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 1
+  m_TeleportEnabled: 0
+  m_TeleportIfDistanceGreaterThan: 3
 --- !u!1 &8912298972904598191
 GameObject:
   m_ObjectHideFlags: 0
