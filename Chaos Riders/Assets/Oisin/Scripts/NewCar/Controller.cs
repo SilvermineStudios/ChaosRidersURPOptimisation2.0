@@ -16,19 +16,19 @@ public class Controller : MonoBehaviour
     [SerializeField] private float reverseTorque;
     [SerializeField] private float topspeed;
     [SerializeField] private float downforce;
+    [SerializeField] float maxSteerAngle = 30;
 
     private CinemachineVirtualCamera cineCamera;
-    public Skidmarks skidmarksController;
-    public float maxSteerAngle = 30;
+    Skidmarks skidmarksController;
     private float horizontalInput;
     private float verticalInput;
     private float steeringAngle;
-    public bool boost;
+    [SerializeField] bool boost;
     Rigidbody rb;
     float oldRot;
     float steerAngle;
     private float currentTorque;
-    public float currentSpeed { get { return rb.velocity.magnitude * 2.23693629f; } }
+    public float currentSpeed { get { return rb.velocity.magnitude * 2.23693629f; } private set { } }
     float slipLimit = 0.3f;
     float skidLimit = 0.5f;
     Skidmarks[] skidmarks = new Skidmarks[4];
@@ -56,7 +56,7 @@ public class Controller : MonoBehaviour
     }
 
 
-    public void GetInput()
+    private void GetInput()
     {
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
@@ -201,9 +201,16 @@ public class Controller : MonoBehaviour
     private void ChangeFOV()
     {
         //Debug.Log(currentSpeed);
-        if(currentSpeed > cineCamera.m_Lens.FieldOfView)
+        if(currentSpeed > cineCamera.m_Lens.FieldOfView )
         {
-            cineCamera.m_Lens.FieldOfView = Mathf.Lerp(cineCamera.m_Lens.FieldOfView, currentSpeed, Time.deltaTime);
+            if (currentSpeed < 120)
+            {
+                cineCamera.m_Lens.FieldOfView = Mathf.Lerp(cineCamera.m_Lens.FieldOfView, currentSpeed, Time.deltaTime);
+            }
+        }
+        else
+        {
+            cineCamera.m_Lens.FieldOfView = Mathf.Lerp(cineCamera.m_Lens.FieldOfView, 60, Time.deltaTime * 2);
         }
 
     }

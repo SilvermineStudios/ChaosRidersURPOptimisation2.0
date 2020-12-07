@@ -3609,8 +3609,8 @@ RectTransform:
   m_Father: {fileID: 1173923576}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3697,7 +3697,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1034873902
 Transform:
   m_ObjectHideFlags: 0
@@ -4093,7 +4093,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4342,7 +4342,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 118.8953
+  field of view: 60.00003
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -4367,7 +4367,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1155110777}
-  m_LocalRotation: {x: 0.000000002659124, y: 0.9771795, z: 0.21241505, w: -0.000000012232847}
+  m_LocalRotation: {x: 2.2162817e-11, y: 0.999995, z: 0.0031706046, w: -0.000000006990056}
   m_LocalPosition: {x: -108.69, y: 2.6599998, z: 144.23}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -5684,7 +5684,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_BindingMode: 2
   m_FollowOffset: {x: 0, y: 1.55, z: 5.5}
-  m_XDamping: 2
+  m_XDamping: 1.5
   m_YDamping: 0
   m_ZDamping: 0.5
   m_AngularDampingMode: 0
@@ -5734,17 +5734,6 @@ Transform:
   m_Father: {fileID: 284389270}
   m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 10.98, z: 0}
---- !u!114 &1415142938 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8722989434118966684, guid: 81e86443324667347895802121ba752e, type: 3}
-  m_PrefabInstance: {fileID: 1730779774}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 324cb6a35df75f045a579e2892029209, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1418964774
 GameObject:
   m_ObjectHideFlags: 0
@@ -6127,6 +6116,7 @@ GameObject:
   - component: {fileID: 1482398449}
   - component: {fileID: 1482398450}
   - component: {fileID: 1482398448}
+  - component: {fileID: 1482398451}
   m_Layer: 10
   m_Name: Braker
   m_TagString: Untagged
@@ -6180,16 +6170,8 @@ MonoBehaviour:
   reverseTorque: 500
   topspeed: 150
   downforce: 200
-  skidmarksController: {fileID: 0}
   maxSteerAngle: 40
-  motorForce: 1200
   boost: 0
-  skidmarks:
-  - {fileID: 1415142938}
-  - {fileID: 1415142938}
-  - {fileID: 1415142938}
-  - {fileID: 1415142938}
-  lastSkid: ffffffffffffffffffffffffffffffff
 --- !u!54 &1482398447
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6231,8 +6213,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.1261594, y: 1.2821845, z: 3.7055662}
-  m_Center: {x: -0.039937336, y: 0.6130809, z: -0.39186603}
+  m_Size: {x: 2.1261594, y: 1.2821851, z: 3.2655957}
+  m_Center: {x: -0.039937343, y: 0.6130802, z: -0.61185145}
 --- !u!65 &1482398450
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6244,8 +6226,22 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.1261594, y: 0.84550303, z: 4.8941073}
-  m_Center: {x: -0.039937336, y: 0.3947402, z: -0.98613286}
+  m_Size: {x: 2.1261594, y: 0.84550303, z: 4.2265625}
+  m_Center: {x: -0.039937377, y: 0.3947402, z: -1.1680145}
+--- !u!136 &1482398451
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1482398444}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2.07
+  m_Direction: 0
+  m_Center: {x: 0, y: 0.48, z: 1}
 --- !u!1 &1488782742
 GameObject:
   m_ObjectHideFlags: 0
@@ -7310,7 +7306,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 1482398445}
   m_Follow: {fileID: 1482398445}
   m_Lens:
-    FieldOfView: 118.8953
+    FieldOfView: 60.00003
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
@@ -7331,7 +7327,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1860039444}
-  m_LocalRotation: {x: 0.000000002659124, y: 0.9771795, z: 0.21241505, w: -0.000000012232847}
+  m_LocalRotation: {x: 2.2162817e-11, y: 0.999995, z: 0.0031706046, w: -0.000000006990056}
   m_LocalPosition: {x: 0, y: 1.5499998, z: 5.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -42287,12 +42283,8 @@ MonoBehaviour:
   reverseTorque: 0
   topspeed: 0
   downforce: 0
-  skidmarksController: {fileID: 0}
   maxSteerAngle: 30
-  motorForce: 700
   boost: 0
-  skidmarks: []
-  lastSkid: 
 --- !u!65 &3665268805232271544
 BoxCollider:
   m_ObjectHideFlags: 0
