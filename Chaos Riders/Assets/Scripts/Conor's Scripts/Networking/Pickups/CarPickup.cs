@@ -9,6 +9,8 @@ public class CarPickup : MonoBehaviour
     private GameObject go;
     Health healthScript;
     [SerializeField] private bool hasSpeedBoost = false;
+    [SerializeField] private GameObject nitroUiImage, armourUiImage;
+
     private PhotonView pv;
 
     private DriveTrainMultiplayer dt;
@@ -17,13 +19,17 @@ public class CarPickup : MonoBehaviour
     {
         healthScript = GetComponent<Health>();
         go = this.GetComponent<GameObject>();
+
+        nitroUiImage.SetActive(false);
+        armourUiImage.SetActive(false);
+
         pv = GetComponent<PhotonView>();
         dt = GetComponent<DriveTrainMultiplayer>();
     }
 
     private void Update()
     {
-        //player can speedboost by pressing the w key when they have one
+        //player can speedboost by pressing the space bar when they have one
         if (hasSpeedBoost && (Input.GetKeyDown(KeyCode.Space)))// || Input.GetButtonDown("A")))
         {
             hasSpeedBoost = false;
@@ -42,33 +48,28 @@ public class CarPickup : MonoBehaviour
             StartCoroutine(InvincibleTimer(PickupManager.InvincibleTime));
     }
 
+    #region Puwerup Courotines
     private IEnumerator InvincibleTimer(float time)
     {
-        //Debug.Log("Invincible");
+        armourUiImage.SetActive(true);
         healthScript.isProtected = true;
-        PickupManager.invincibleUI.SetActive(true);
 
         yield return new WaitForSeconds(time);
 
-        PickupManager.invincibleUI.SetActive(false);
         healthScript.isProtected = false;
-        //Debug.Log("Not Invincible");
+        armourUiImage.SetActive(false);
     }
 
-    ///////////////////////////////////////////////////
+    
     private IEnumerator SpeedBoostTimer(float time)
     {
         dt.nitro = true;
-
-
-        //Debug.Log("Speed boost");
-        PickupManager.speedUI.SetActive(true);
+        nitroUiImage.SetActive(true);
 
         yield return new WaitForSeconds(time);
 
-        PickupManager.speedUI.SetActive(false);
-        //Debug.Log("Normal speed");
-
         dt.nitro = false;
+        nitroUiImage.SetActive(false);
     }
+    #endregion
 }

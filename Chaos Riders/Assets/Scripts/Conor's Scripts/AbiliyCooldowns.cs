@@ -7,41 +7,62 @@ public class AbiliyCooldowns : MonoBehaviour
 {
     [SerializeField] private bool useOverCharge = true;
 
-    public Transform grenadeChargeBar, grenadeOverChargeBar;
-    public Transform nitroGuzzlerChargeBar, nitroGuzzlerOverChargeBar;
+    [SerializeField] private Transform equipmentChargeBar, equipmentOverChargeBar;
+    public static Image equipmentCharge;
+    [SerializeField] private Transform abilityChargeBar, abilityOverChargeBar;
 
-    [SerializeField] private float standardChargeAmount, overchargeAmount;
+    [SerializeField] private float equipmentChargeAmount, equipmentOverchargeAmount, abilityChargeAmount, abilityOverChargeAmount;
     [SerializeField] private float speed;
 
-    public static bool canUseSmoke = false;
+    public static bool canUseSmoke = false, resetEquipment = false;
+    public bool resetE = false;
 
 
     private void Start()
     {
+        equipmentCharge = equipmentChargeBar.GetComponent<Image>();
+
         //set the bars = 0 at the begining
-        grenadeChargeBar.GetComponent<Image>().fillAmount = 0;
-        grenadeOverChargeBar.GetComponent<Image>().fillAmount = 0;
-        nitroGuzzlerChargeBar.GetComponent<Image>().fillAmount = 0;
-        nitroGuzzlerOverChargeBar.GetComponent<Image>().fillAmount = 0;
+        equipmentCharge.fillAmount = 0;
+        equipmentOverChargeBar.GetComponent<Image>().fillAmount = 0;
+        abilityChargeBar.GetComponent<Image>().fillAmount = 0;
+        abilityOverChargeBar.GetComponent<Image>().fillAmount = 0;
     }
 
     void Update()
     {
+        resetE = resetEquipment;
+
         ChargeBars();
         CheckIfCanUseSmoke();
         //Debug.Log(canUseSmoke);
+
+        //Debug.Log(resetEquipment);
+
+        if(resetE)
+        {
+            //resetEquipment = false;
+            //equipmentChargeAmount = 0;
+            //ResetEquipment();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) && resetEquipment)
+        {
+            //resetEquipment = false;
+            //Debug.Log("Test");
+            //equipmentCharge.fillAmount = 0;
+            //equipmentChargeAmount = 0;
+        }
     }
 
-    private void UseGrenade()
+    private void ResetEquipment()
     {
-        canUseSmoke = false;
-        grenadeChargeBar.GetComponent<Image>().fillAmount = 0;
-        grenadeOverChargeBar.GetComponent<Image>().fillAmount = 0;
+        equipmentChargeAmount = 0;
     }
 
     private void CheckIfCanUseSmoke()
     {
-        if (grenadeChargeBar.GetComponent<Image>().fillAmount == 1)
+        if (equipmentCharge.fillAmount == 1)
         {
             canUseSmoke = true;
         }
@@ -52,38 +73,38 @@ public class AbiliyCooldowns : MonoBehaviour
     private void ChargeBars()
     {
         //if the grenade bar isnt full add to it
-        if (grenadeChargeBar.GetComponent<Image>().fillAmount < 1)
+        if (equipmentCharge.fillAmount < 1)
         {
-            standardChargeAmount += speed * Time.deltaTime;
-            grenadeChargeBar.GetComponent<Image>().fillAmount = standardChargeAmount / 100;
+            equipmentChargeAmount += speed * Time.deltaTime;
+            equipmentCharge.fillAmount = equipmentChargeAmount / 100;
         }
 
         if(useOverCharge)
         {
             //if the grenade bar is full add to the overcharge bar
-            if (grenadeChargeBar.GetComponent<Image>().fillAmount == 1)
+            if (equipmentCharge.fillAmount == 1)
             {
-                overchargeAmount += speed * Time.deltaTime;
-                grenadeOverChargeBar.GetComponent<Image>().fillAmount = overchargeAmount / 100;
+                equipmentOverchargeAmount += speed * Time.deltaTime;
+                equipmentOverChargeBar.GetComponent<Image>().fillAmount = equipmentOverchargeAmount / 100;
             }
         }
         
 
 
         //if the nitroguzzler bar isnt full add to it
-        if (nitroGuzzlerChargeBar.GetComponent<Image>().fillAmount < 1)
+        if (abilityChargeBar.GetComponent<Image>().fillAmount < 1)
         {
-            standardChargeAmount += speed * Time.deltaTime;
-            nitroGuzzlerChargeBar.GetComponent<Image>().fillAmount = standardChargeAmount / 100;
+            abilityChargeAmount += speed * Time.deltaTime;
+            abilityChargeBar.GetComponent<Image>().fillAmount = abilityChargeAmount / 100;
         }
 
         if(useOverCharge)
         {
             //if the nitroguzzler bar is full add to the overcharge bar
-            if (nitroGuzzlerChargeBar.GetComponent<Image>().fillAmount == 1)
+            if (abilityChargeBar.GetComponent<Image>().fillAmount == 1)
             {
-                overchargeAmount += speed * Time.deltaTime;
-                nitroGuzzlerOverChargeBar.GetComponent<Image>().fillAmount = overchargeAmount / 100;
+                abilityOverChargeAmount += speed * Time.deltaTime;
+                abilityOverChargeBar.GetComponent<Image>().fillAmount = abilityOverChargeAmount / 100;
             }
         }
     }
