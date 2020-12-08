@@ -41,6 +41,9 @@ public class Controller : MonoBehaviour
     Skidmarks[] skidmarks = new Skidmarks[4];
     int[] lastSkid = new int[4];
     CinemachineTransposer cineCamTransposer;
+    WheelFrictionCurve drift;
+    WheelFrictionCurve normal;
+    float num = 0.002f;
 
     private void Awake()
     {
@@ -290,7 +293,7 @@ public class Controller : MonoBehaviour
 
     }
 
-    public float num;
+   
 
     // Debug GUI.
     void OnGUI()
@@ -308,8 +311,7 @@ public class Controller : MonoBehaviour
        rb.AddForce(-transform.up * downforce * rb.velocity.magnitude);
     }
 
-    WheelFrictionCurve drift;
-    WheelFrictionCurve normal;
+   
 
     private void Drift()
     {
