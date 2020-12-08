@@ -12,12 +12,18 @@ public class Controller : MonoBehaviour
     [Range(0, 1)] [SerializeField] private float steerHelper;
     [SerializeField] private float tractionControl = 0;
     [SerializeField] private float fullTorqueOverAllWheels;
+    [SerializeField] private float boostFullTorqueOverAllWheels;
     [SerializeField] private float brakeTorque;
     [SerializeField] private float reverseTorque;
-    [SerializeField] private float topspeed;
+    [SerializeField] private float topSpeed;
+    [SerializeField] private float boostSpeed;
     [SerializeField] private float downforce;
     [SerializeField] float maxSteerAngle = 30;
-
+    [SerializeField] float maxFOV;
+    [SerializeField] float boostFOV;
+    [SerializeField] private Vector3 stationaryCamOffset;
+    [SerializeField] private Vector3 movingCamOffset;
+    [SerializeField] private Vector3 boostCamOffset;
     private CinemachineVirtualCamera cineCamera;
     Skidmarks skidmarksController;
     private float horizontalInput;
@@ -28,12 +34,13 @@ public class Controller : MonoBehaviour
     float oldRot;
     float steerAngle;
     private float currentTorque;
+    private float boostTorque;
     public float currentSpeed { get { return rb.velocity.magnitude * 2.23693629f; } private set { } }
     float slipLimit = 0.3f;
     float skidLimit = 0.5f;
     Skidmarks[] skidmarks = new Skidmarks[4];
     int[] lastSkid = new int[4];
-
+    CinemachineTransposer cineCamTransposer;
 
     private void Awake()
     {
@@ -50,9 +57,12 @@ public class Controller : MonoBehaviour
 
 
         cineCamera = gameObject.transform.GetChild(1).gameObject.GetComponent<CinemachineVirtualCamera>();
+        cineCamTransposer = cineCamera.GetCinemachineComponent<CinemachineTransposer>();
+        cineCamTransposer.m_FollowOffset = stationaryCamOffset;
         rb = GetComponent<Rigidbody>();
         rb.centerOfMass = centerOfMass;
         currentTorque = fullTorqueOverAllWheels - (tractionControl * fullTorqueOverAllWheels);
+        boostTorque = boostFullTorqueOverAllWheels;
     }
 
 
@@ -78,26 +88,26 @@ public class Controller : MonoBehaviour
     }
     
     private void Accelerate()
-    {  
+    {
+        float thrustTorque;
 
-        
-        float thrustTorque = -verticalInput * (currentTorque / 4f);
-
-        if(boost)
+        if (boost)
         {
-            thrustTorque = -verticalInput * 5000 * (currentTorque / 4f);
-            topspeed = 10000f;
+            thrustTorque = -verticalInput * (boostTorque / 4f);
         }
         else
         {
-            topspeed = 120f;
+            thrustTorque = -verticalInput * (currentTorque / 4f);
         }
+
 
         for (int i = 0; i < 4; i++)
         {
             wheelColliders[i].motorTorque = thrustTorque;
         }
         
+
+
     }
 
     private void TractionControl()
@@ -116,16 +126,34 @@ public class Controller : MonoBehaviour
 
     private void AdjustTorque(float forwardSlip)
     {
-        if (forwardSlip >= slipLimit && currentTorque >= 0)
+        if(boost)
         {
-            currentTorque -= 10 * tractionControl;
+            if (forwardSlip >= slipLimit && boostTorque >= 0)
+            {
+                boostTorque -= 10 * tractionControl;
+            }
+            else
+            {
+                boostTorque += 10 * tractionControl;
+                if (boostTorque > boostFullTorqueOverAllWheels)
+                {
+                    boostTorque = boostFullTorqueOverAllWheels;
+                }
+            }
         }
         else
         {
-            currentTorque += 10 * tractionControl;
-            if (currentTorque > fullTorqueOverAllWheels)
+            if (forwardSlip >= slipLimit && currentTorque >= 0)
             {
-                currentTorque = fullTorqueOverAllWheels;
+                currentTorque -= 10 * tractionControl;
+            }
+            else
+            {
+                currentTorque += 10 * tractionControl;
+                if (currentTorque > fullTorqueOverAllWheels)
+                {
+                    currentTorque = fullTorqueOverAllWheels;
+                }
             }
         }
     }
@@ -136,10 +164,21 @@ public class Controller : MonoBehaviour
         float speed = rb.velocity.magnitude;
 
         speed *= 2.23693629f;
-        if (speed > topspeed)
+        if (boost)
         {
-            rb.velocity = topspeed / 2.23693629f * rb.velocity.normalized;
+            if (speed > boostSpeed)
+            {
+                rb.velocity = boostSpeed / 2.23693629f * rb.velocity.normalized;
+            }
         }
+        else
+        {
+            if (speed > topSpeed)
+            {
+                rb.velocity = topSpeed / 2.23693629f * rb.velocity.normalized;
+            }
+        }
+
     }
 
     private void UpdateWheelPoses()
@@ -173,6 +212,7 @@ public class Controller : MonoBehaviour
         CapSpeed();
         UpdateWheelPoses();
         ChangeFOV();
+
     }
 
     
@@ -203,16 +243,49 @@ public class Controller : MonoBehaviour
         //Debug.Log(currentSpeed);
         if(currentSpeed > cineCamera.m_Lens.FieldOfView )
         {
-            if (currentSpeed < 120)
+            cineCamera.m_Lens.FieldOfView = Mathf.Lerp(cineCamera.m_Lens.FieldOfView, currentSpeed, Time.deltaTime);
+
+
+            if (cineCamera.m_Lens.FieldOfView > maxFOV)
             {
-                cineCamera.m_Lens.FieldOfView = Mathf.Lerp(cineCamera.m_Lens.FieldOfView, currentSpeed, Time.deltaTime);
+                cineCamera.m_Lens.FieldOfView = maxFOV;
             }
+            
+        }
+        else if (currentSpeed < 40 && cineCamera.m_Lens.FieldOfView > 60)
+        {
+            cineCamera.m_Lens.FieldOfView = Mathf.Lerp(cineCamera.m_Lens.FieldOfView, 60, Time.deltaTime * 1.5f);
+        }
+        else if(currentSpeed < cineCamera.m_Lens.FieldOfView - 10)
+        {
+            cineCamera.m_Lens.FieldOfView = Mathf.Lerp(cineCamera.m_Lens.FieldOfView, 60, Time.deltaTime * 0.1f);
+        }
+
+        if(boost)
+        {
+            cineCamTransposer.m_FollowOffset = Vector3.Lerp(cineCamTransposer.m_FollowOffset, boostCamOffset, Time.deltaTime);
+        }
+        else if(currentSpeed < 50)
+        {
+            cineCamTransposer.m_FollowOffset = Vector3.Lerp(cineCamTransposer.m_FollowOffset, stationaryCamOffset, Time.deltaTime);
         }
         else
         {
-            cineCamera.m_Lens.FieldOfView = Mathf.Lerp(cineCamera.m_Lens.FieldOfView, 60, Time.deltaTime * 2);
+            cineCamTransposer.m_FollowOffset = Vector3.Lerp(cineCamTransposer.m_FollowOffset, movingCamOffset, currentSpeed * num * Time.deltaTime);
         }
 
+    }
+
+    public float num;
+
+    // Debug GUI.
+    void OnGUI()
+    {
+        GUILayout.Label("FOV: " + cineCamera.m_Lens.FieldOfView);
+        GUILayout.Label("Speed: " + currentSpeed);
+        GUILayout.Label("currentTorque: " + currentTorque);
+        GUILayout.Label("boostTorque: " + boostTorque);
+        
     }
 
 

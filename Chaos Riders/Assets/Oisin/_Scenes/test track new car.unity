@@ -4342,7 +4342,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 60.00073
+  field of view: 60.00004
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -4367,8 +4367,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1155110777}
-  m_LocalRotation: {x: -6.138806e-11, y: 0.999995, z: 0.0031724693, w: 0.000000019350145}
-  m_LocalPosition: {x: -108.69, y: 2.6599998, z: 144.23}
+  m_LocalRotation: {x: 1.9060395e-10, y: 0.99901783, z: -0.044310063, w: 0.0000000042973705}
+  m_LocalPosition: {x: -108.69, y: 2.6599998, z: 142.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -5683,7 +5683,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 2
-  m_FollowOffset: {x: 0, y: 1.55, z: 5.5}
+  m_FollowOffset: {x: 0, y: 1.55, z: 4}
   m_XDamping: 1.5
   m_YDamping: 0
   m_ZDamping: 0.5
@@ -6166,12 +6166,20 @@ MonoBehaviour:
   steerHelper: 0.662
   tractionControl: 1
   fullTorqueOverAllWheels: 2500
+  boostFullTorqueOverAllWheels: 7000
   brakeTorque: 20000
   reverseTorque: 500
-  topspeed: 150
+  topSpeed: 120
+  boostSpeed: 160
   downforce: 200
   maxSteerAngle: 40
+  maxFOV: 90
+  boostFOV: 0
+  stationaryCamOffset: {x: 0, y: 2, z: 6}
+  movingCamOffset: {x: 0, y: 1.55, z: 3}
+  boostCamOffset: {x: 0, y: 1.55, z: 5}
   boost: 0
+  num: 0.002
 --- !u!54 &1482398447
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -7306,7 +7314,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 1482398445}
   m_Follow: {fileID: 1482398445}
   m_Lens:
-    FieldOfView: 60.00073
+    FieldOfView: 60.00004
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
@@ -7327,8 +7335,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1860039444}
-  m_LocalRotation: {x: -6.138806e-11, y: 0.999995, z: 0.0031724693, w: 0.000000019350145}
-  m_LocalPosition: {x: 0, y: 1.5499998, z: 5.5}
+  m_LocalRotation: {x: 1.9060395e-10, y: 0.99901783, z: -0.044310063, w: 0.0000000042973705}
+  m_LocalPosition: {x: 0, y: 1.5499998, z: 4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1395311580}
@@ -42279,12 +42287,20 @@ MonoBehaviour:
   steerHelper: 0
   tractionControl: 0
   fullTorqueOverAllWheels: 0
+  boostFullTorqueOverAllWheels: 0
   brakeTorque: 0
   reverseTorque: 0
-  topspeed: 0
+  topSpeed: 0
+  boostSpeed: 0
   downforce: 0
   maxSteerAngle: 30
+  maxFOV: 0
+  boostFOV: 0
+  stationaryCamOffset: {x: 0, y: 0, z: 0}
+  movingCamOffset: {x: 0, y: 0, z: 0}
+  boostCamOffset: {x: 0, y: 0, z: 0}
   boost: 0
+  num: 0
 --- !u!65 &3665268805232271544
 BoxCollider:
   m_ObjectHideFlags: 0
