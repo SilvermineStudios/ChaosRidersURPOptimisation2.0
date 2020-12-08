@@ -56,6 +56,19 @@ public class Controller : MonoBehaviour
         skidmarks[3] = skidmarksController;
 
 
+        drift.extremumSlip = 0.1f;
+        drift.extremumValue = 1;
+        drift.asymptoteSlip = 0.5f;
+        drift.asymptoteValue = 0.75f;
+        drift.stiffness = 0.8f;
+
+        normal.extremumSlip = 0.1f;
+        normal.extremumValue = 1;
+        normal.asymptoteSlip = 0.5f;
+        normal.asymptoteValue = 0.75f;
+        normal.stiffness = 1;
+
+
         cineCamera = gameObject.transform.GetChild(1).gameObject.GetComponent<CinemachineVirtualCamera>();
         cineCamTransposer = cineCamera.GetCinemachineComponent<CinemachineTransposer>();
         cineCamTransposer.m_FollowOffset = stationaryCamOffset;
@@ -203,12 +216,13 @@ public class Controller : MonoBehaviour
     private void FixedUpdate()
     {
         GetInput();
-        Steer();
-        HelpSteer();
         Accelerate();
         AddDownForce();
         Skid();
+        Drift();
         TractionControl();
+        Steer();
+        HelpSteer();
         CapSpeed();
         UpdateWheelPoses();
         ChangeFOV();
@@ -293,6 +307,29 @@ public class Controller : MonoBehaviour
     {
        rb.AddForce(-transform.up * downforce * rb.velocity.magnitude);
     }
+
+    WheelFrictionCurve drift;
+    WheelFrictionCurve normal;
+
+    private void Drift()
+    {
+        
+        if (Input.GetKey(KeyCode.Space))
+        {
+            
+            wheelColliders[2].sidewaysFriction = drift;
+            wheelColliders[3].sidewaysFriction = drift;
+            steerHelper = 1;
+        }
+        else
+        {
+
+            wheelColliders[2].sidewaysFriction = normal;
+            wheelColliders[3].sidewaysFriction = normal;
+            steerHelper = 0.662f;
+        }
+    }
+
 
 
     private void HelpSteer()
