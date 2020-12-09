@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.SceneManagement;
 
 public class Pause : MonoBehaviour
 {
     [SerializeField] private GameObject PauseMenu; //Pause Menu Gameobject 
     [SerializeField] private KeyCode pauseMenuButton1, pauseMenuButton2;
     [SerializeField] private bool paused = false;
+    [SerializeField] private int LobbySceneIndex = 0;
     private PhotonView pv;
 
     void Awake()
@@ -40,7 +42,8 @@ public class Pause : MonoBehaviour
     {
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
-            //Debug.Log("Leave Race");
+            PhotonNetwork.Disconnect();
+            SceneManager.LoadScene(LobbySceneIndex);
         }
     }
 
@@ -48,7 +51,7 @@ public class Pause : MonoBehaviour
     {
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
-            //Debug.Log("Quit Game");
+            PhotonNetwork.Disconnect();
             Application.Quit();        
         }
     }
