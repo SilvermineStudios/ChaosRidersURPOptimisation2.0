@@ -27,20 +27,26 @@ public class Pause : MonoBehaviour
     {
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
-            //set paused = true / false
-            if(Input.GetKey(pauseMenuButton1) || Input.GetKey(pauseMenuButton2))
+            if(Input.GetKeyDown(pauseMenuButton1) || Input.GetKeyDown(pauseMenuButton2))
             {
-                if (paused)
-                    paused = false;
-                if (!paused)
-                    paused = true;
+                PauseButton();
+                paused = !paused;
             }
+        }
+    }
 
-
-            if (paused)
-                PauseMenu.SetActive(true);
-            else
-                PauseMenu.SetActive(false);
+    void PauseButton()
+    {
+        if(paused)
+        {
+            PauseMenu.SetActive(true);
+            paused = true;
+        }
+        
+        if(!paused)
+        {
+            PauseMenu.SetActive(false);
+            paused = false;
         }
     }
 }
