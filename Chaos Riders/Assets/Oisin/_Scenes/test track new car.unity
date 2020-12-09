@@ -4496,7 +4496,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1155110777}
-  m_LocalRotation: {x: -1.9060398e-10, y: 0.99901783, z: -0.044310063, w: -0.000000004297371}
+  m_LocalRotation: {x: 1.9060395e-10, y: 0.99901783, z: -0.044310063, w: 0.0000000042973705}
   m_LocalPosition: {x: -108.69, y: 2.6599998, z: 142.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -7607,7 +7607,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1860039444}
-  m_LocalRotation: {x: -1.9060398e-10, y: 0.99901783, z: -0.044310063, w: -0.000000004297371}
+  m_LocalRotation: {x: 1.9060395e-10, y: 0.99901783, z: -0.044310063, w: 0.0000000042973705}
   m_LocalPosition: {x: 0, y: 1.5499998, z: 4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -39530,8 +39530,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1140376526549929193}
-  - component: {fileID: 1793164337275246853}
-  - component: {fileID: 1793164337275246854}
   m_Layer: 10
   m_Name: AI Ford Mustang GT
   m_TagString: Untagged
@@ -39539,59 +39537,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1793164337275246853
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1793164337275246850}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ea65b38d485c374caa584a03f1de571, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_CarDriveType: 2
-  m_WheelColliders:
-  - {fileID: 4023521507992115009}
-  - {fileID: 6297353489485835072}
-  - {fileID: 4047943692088399119}
-  - {fileID: 5059900828642576060}
-  m_WheelMeshes:
-  - {fileID: 7126073827775428135}
-  - {fileID: 6734386229056192619}
-  - {fileID: 231411672388080573}
-  - {fileID: 7742483669479824635}
-  m_WheelEffects:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  m_CentreOfMassOffset: {x: 0, y: 0.22, z: 1.75}
-  m_MaximumSteerAngle: 25
-  m_SteerHelper: 0.676
-  m_TractionControl: 1
-  m_FullTorqueOverAllWheels: 1500
-  m_ReverseTorque: 500
-  m_MaxHandbrakeTorque: 100000000
-  m_Downforce: 100
-  m_SpeedType: 0
-  m_Topspeed: 100
-  m_RevRangeBoundary: 1
-  m_SlipLimit: 0.3
-  m_BrakeTorque: 20000
---- !u!114 &1793164337275246854
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1793164337275246850}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96468c245ae8e0d4f8f1c7a7b8b0542e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1808307005488187925
 Transform:
   m_ObjectHideFlags: 0
