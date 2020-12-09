@@ -448,7 +448,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1247,8 +1247,8 @@ RectTransform:
   m_Father: {fileID: 1615515756}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -5681,7 +5681,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3509820878897759768
 Transform:
   m_ObjectHideFlags: 0
@@ -6176,8 +6176,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c4093c9a1edda546a252a93184abd0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smokeGameObjectPrefab: {fileID: 1978103956446385477, guid: 0eb6a8bce0882da459843e64b04c919a, type: 3}
   smokeSpawn: {fileID: 1387377788}
+  smokeGameObject: {fileID: 1978103956446385477, guid: e11d2f9a7e78e6641a0735645eb780ff, type: 3}
+  abilityKeyCode: 113
+  equipmentKeyCode: 101
   equipmentChargeBar: {fileID: 814077387}
   equipmentOverChargeBar: {fileID: 1775949660}
   abilityChargeBar: {fileID: 1705681956}
@@ -6186,9 +6188,11 @@ MonoBehaviour:
   equipmentOverchargeAmount: 0
   abilityChargeAmount: 0
   abilityOverChargeAmount: 0
-  speed: 30
+  equipmentChargeSpeed: 8
+  abilityChargeSpeed: 2
   useOverCharge: 0
   canUseEquipment: 0
+  canUseAbility: 0
 --- !u!114 &3078111332893963293
 MonoBehaviour:
   m_ObjectHideFlags: 0
