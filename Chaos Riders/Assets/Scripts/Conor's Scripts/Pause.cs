@@ -13,14 +13,7 @@ public class Pause : MonoBehaviour
     void Awake()
     {
         pv = GetComponent<PhotonView>();
-    }
-
-    void Start()
-    {
-        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
-        {
-            PauseMenu.SetActive(false);
-        }
+        PauseMenu.SetActive(false); //deactivate pause menu
     }
 
     void Update()
@@ -29,24 +22,34 @@ public class Pause : MonoBehaviour
         {
             if(Input.GetKeyDown(pauseMenuButton1) || Input.GetKeyDown(pauseMenuButton2))
             {
-                PauseButton();
                 paused = !paused;
+
+                if (paused)
+                {
+                    PauseMenu.SetActive(true);
+                }
+                else
+                {
+                    PauseMenu.SetActive(false);
+                }
             }
         }
     }
 
-    void PauseButton()
+    public void LeaveRace()
     {
-        if(paused)
+        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
-            PauseMenu.SetActive(true);
-            paused = true;
+            //Debug.Log("Leave Race");
         }
-        
-        if(!paused)
+    }
+
+    public void QuitGame()
+    {
+        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
-            PauseMenu.SetActive(false);
-            paused = false;
+            //Debug.Log("Quit Game");
+            Application.Quit();        
         }
     }
 }
