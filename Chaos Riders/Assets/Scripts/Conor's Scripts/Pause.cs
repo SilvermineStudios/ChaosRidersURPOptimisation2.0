@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class Pause : MonoBehaviour
 {
-    [SerializeField] private GameObject PauseMenu; //Pause Menu Gameobject 
+    [SerializeField] private GameObject PauseMenu, audioSettingsPanel, mainPauseMenuPanel; //Pause Menu Gameobject 
     [SerializeField] private KeyCode pauseMenuButton1, pauseMenuButton2;
     [SerializeField] private bool paused = false;
     [SerializeField] private int LobbySceneIndex = 0;
@@ -22,13 +22,16 @@ public class Pause : MonoBehaviour
     {
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
+            //check if the pause buttons are pressed
             if(Input.GetKeyDown(pauseMenuButton1) || Input.GetKeyDown(pauseMenuButton2))
             {
-                paused = !paused;
+                paused = !paused; //flip if the game is paused when the pause buttons are pressed 
+
 
                 if (paused)
                 {
                     PauseMenu.SetActive(true);
+                    BackButton(); //deactivate all the other settings pages and bring up the front of the pause menu everytime you reopen it
                 }
                 else
                 {
@@ -38,21 +41,40 @@ public class Pause : MonoBehaviour
         }
     }
 
-    public void LeaveRace()
+    #region Buttons
+    public void LeaveRaceButton()
     {
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
-            PhotonNetwork.Disconnect();
-            SceneManager.LoadScene(LobbySceneIndex);
+            PhotonNetwork.Disconnect(); //disconnect the player from the photon network before removing them from the game
+            SceneManager.LoadScene(LobbySceneIndex); //return to the custom matchmaking lobby
         }
     }
 
-    public void QuitGame()
+    public void QuitGameButton()
     {
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
-            PhotonNetwork.Disconnect();
-            Application.Quit();        
+            PhotonNetwork.Disconnect(); //disconnect the player from the photon network before removing them from the game
+            Application.Quit(); //close the game for the player         
         }
     }
+
+    public void AudioSettingsButton()
+    {
+        mainPauseMenuPanel.SetActive(false); // disable the main pause menu panel 
+        audioSettingsPanel.SetActive(true); //enable the audio settings panel
+    }
+
+    public void BackButton()
+    {
+        mainPauseMenuPanel.SetActive(true); //enable the main pause menu panel 
+        audioSettingsPanel.SetActive(false); //disable the audio settings panel
+    }
+
+    public void ResumeGameButton()
+    {
+        PauseMenu.SetActive(false); //close the pause menu
+    }
+    #endregion
 }

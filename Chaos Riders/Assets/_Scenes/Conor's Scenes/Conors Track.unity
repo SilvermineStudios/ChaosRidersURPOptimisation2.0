@@ -5434,6 +5434,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2092070378}
     m_Modifications:
+    - target: {fileID: 66677290, guid: 2a9a5cd4e524e0b4db31f61e19a16979, type: 3}
+      propertyPath: m_Volume
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 504558589, guid: 2a9a5cd4e524e0b4db31f61e19a16979, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -5442,17 +5446,13 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1031273650, guid: 2a9a5cd4e524e0b4db31f61e19a16979, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
+    - target: {fileID: 2066799763888919151, guid: 2a9a5cd4e524e0b4db31f61e19a16979, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetSFXLevel
       objectReference: {fileID: 0}
-    - target: {fileID: 1031273650, guid: 2a9a5cd4e524e0b4db31f61e19a16979, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1031273650, guid: 2a9a5cd4e524e0b4db31f61e19a16979, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
+    - target: {fileID: 2066799763888919151, guid: 2a9a5cd4e524e0b4db31f61e19a16979, type: 3}
+      propertyPath: m_Value
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3509820878897759768, guid: 2a9a5cd4e524e0b4db31f61e19a16979, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5502,8 +5502,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: CarAvatar
       objectReference: {fileID: 0}
-    - target: {fileID: 3665268805338767731, guid: 2a9a5cd4e524e0b4db31f61e19a16979, type: 3}
-      propertyPath: m_IsActive
+    - target: {fileID: 4552196059427937871, guid: 2a9a5cd4e524e0b4db31f61e19a16979, type: 3}
+      propertyPath: mixerGroup
+      value: 
+      objectReference: {fileID: -4174368812676530031, guid: c5b7f6daef602b0478a2bc18598cb617, type: 2}
+    - target: {fileID: 7317532854027582230, guid: 2a9a5cd4e524e0b4db31f61e19a16979, type: 3}
+      propertyPath: m_Value
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7594932733184380221, guid: 2a9a5cd4e524e0b4db31f61e19a16979, type: 3}
