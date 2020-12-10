@@ -5088,10 +5088,10 @@ GameObject:
   - component: {fileID: 1407414512137103676}
   - component: {fileID: 1407414512137103677}
   - component: {fileID: 1407414512137103674}
-  - component: {fileID: 1407414512137103675}
   - component: {fileID: 4477362338368450644}
   - component: {fileID: 3718443551745826043}
   - component: {fileID: 2587023993015831525}
+  - component: {fileID: 8296368093936665066}
   m_Layer: 10
   m_Name: Mustang 2
   m_TagString: Untagged
@@ -5174,23 +5174,6 @@ MonoBehaviour:
   waypointManager: {fileID: 0}
   waypoints: []
   centerOfMass: {x: 0, y: -0.2, z: 2}
---- !u!114 &1407414512137103675
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1407414512137103672}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8abb6b87053e7140ab06b8c1c924e94, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 0
-  lastHit: 0
-  isProtected: 0
-  deathParticles: {fileID: 1407414511457995377}
-  dead: 0
 --- !u!114 &4477362338368450644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5246,6 +5229,23 @@ MonoBehaviour:
   m_SynchronizeAngularVelocity: 1
   m_TeleportEnabled: 0
   m_TeleportIfDistanceGreaterThan: 3
+--- !u!114 &8296368093936665066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407414512137103672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: febe6d505073b4a45ac2738d786df0b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 0
+  lastHit: 0
+  isProtected: 0
+  deathParticles: {fileID: 1407414511457995377}
+  dead: 0
 --- !u!1 &1407414512161380209
 GameObject:
   m_ObjectHideFlags: 0

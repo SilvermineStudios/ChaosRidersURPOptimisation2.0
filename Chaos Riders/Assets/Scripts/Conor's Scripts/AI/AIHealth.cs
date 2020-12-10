@@ -3,14 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
-public class Health : MonoBehaviour
+public class AIHealth : MonoBehaviour
 {
-    [SerializeField] private Transform healthBarUi; 
-
     public float health;
-    private float healthNormalized;
-    private float startHealth;
     [SerializeField] float lastHit;
 
     public bool isProtected;
@@ -18,15 +13,14 @@ public class Health : MonoBehaviour
     Slider healthbar;
     [SerializeField] GameObject deathParticles;
 
-    
+
     public bool isDead { get { return dead; } private set { isDead = dead; } }
 
     public bool dead;
 
     void Start()
     {
-        health = 500;
-        startHealth = health;
+        health = 100;
         healthbar = GetComponentInChildren<Slider>();
     }
 
@@ -34,16 +28,13 @@ public class Health : MonoBehaviour
 
     void Update()
     {
-        healthNormalized = (health / startHealth);
-        SetHealthBarUiSize(healthNormalized);
-
         healthbar.value = health;
 
-        if(health <= 0 && !dead)
+        if (health <= 0 && !dead)
         {
             dead = true;
         }
-        if(dead)
+        if (dead)
         {
             Die();
         }
@@ -55,7 +46,7 @@ public class Health : MonoBehaviour
     void Die()
     {
         deathParticles.SetActive(true);
-        
+
         if (timeSinceDeath > deathTimer)
         {
             dead = false;
@@ -66,7 +57,7 @@ public class Health : MonoBehaviour
         else
         {
             timeSinceDeath += Time.deltaTime;
-        }  
+        }
     }
 
 
@@ -77,10 +68,5 @@ public class Health : MonoBehaviour
             health -= DamagetoTake[0];
             lastHit = DamagetoTake[1];
         }
-    }
-
-    private void SetHealthBarUiSize(float sizeNormalized)
-    {
-        healthBarUi.localScale = new Vector3(1f, sizeNormalized);
     }
 }
