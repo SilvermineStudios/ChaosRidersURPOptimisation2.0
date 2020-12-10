@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class SmokeScreen : MonoBehaviour
 {
-    [SerializeField] private ParticleSystem smokeParticleSystem;
+    public GameObject smokeGameObject;
+    public GameObject smokeSpawn;
 
 
     void Start()
     {
-        smokeParticleSystem.Stop();
+
     }
 
     
@@ -17,7 +18,9 @@ public class SmokeScreen : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space) && AbiliyCooldowns.canUseSmoke)
         {
-            smokeParticleSystem.Play();
+            Instantiate(smokeGameObject, smokeSpawn.transform.position, smokeSpawn.transform.rotation);
+            AbiliyCooldowns.resetEquipment = true;
+            AbiliyCooldowns.equipmentCharge.fillAmount = 0;
         }
     }
 }

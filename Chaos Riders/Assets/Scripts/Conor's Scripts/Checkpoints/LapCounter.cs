@@ -15,15 +15,15 @@ public class LapCounter : MonoBehaviour
     public static GameObject FinishLine;
     [SerializeField] private GameObject finishLine;
 
-    public static GameObject YouWinText;
+    //public static GameObject YouWinText;
     [SerializeField] private GameObject youWinText;
 
     
 
     void Awake()
     {
-        YouWinText = youWinText;
-        YouWinText.SetActive(false);
+        //YouWinText = youWinText;
+        //YouWinText.SetActive(false);
 
         AmountOfLaps = amountOfLaps;
 

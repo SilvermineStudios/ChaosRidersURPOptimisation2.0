@@ -20,10 +20,5 @@ public class FinishLine : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         GameWon = true;
-
-        if (other.gameObject.tag == "car" && other.gameObject.tag == "shooter")
-        {
-            //Debug.Log("");
-        }
     }
 }
