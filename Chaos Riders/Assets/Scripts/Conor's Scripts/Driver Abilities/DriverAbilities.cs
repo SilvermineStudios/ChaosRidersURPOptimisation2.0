@@ -18,11 +18,13 @@ public class DriverAbilities : MonoBehaviour
     [SerializeField] private bool canUseEquipment = false, canUseAbility = false;
 
     private PhotonView pv; //my Photon View
- 
+
+    private Controller carController; //my Car Controller
+
     void Start()
     {
         pv = GetComponent<PhotonView>();
-
+        carController = GetComponent<Controller>();
 
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
@@ -57,11 +59,35 @@ public class DriverAbilities : MonoBehaviour
             if (Input.GetKeyDown(abilityKeyCode) && canUseAbility)
             {
                 //<----------------------------------------------------------------------------------------------------------------------------PUT THE ABILITY STUFF HERE
+                
+                StartCoroutine(UseBrakerAbility());
 
                 abilityChargeAmount = 0; //reset the cooldownbar after the ability is used
             }
         }
     }
+
+    private IEnumerator UseBrakerAbility()
+    {
+        Debug.Log(1);
+        //brake
+        carController.ApplyBrake(30000000);
+
+        yield return new WaitForSeconds(1.5f);
+        Debug.Log(2);
+        carController.ReleaseBrake();
+
+        //speed
+
+        carController.boost = true;
+
+        yield return new WaitForSeconds(5.5f);
+        Debug.Log(3);
+        carController.boost = false;
+    }
+
+
+
 
     //sets all bars to 0
     private void ResetAllBars()

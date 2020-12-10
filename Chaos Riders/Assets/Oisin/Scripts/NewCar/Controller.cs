@@ -29,7 +29,9 @@ public class Controller : MonoBehaviour
     private float horizontalInput;
     private float verticalInput;
     private float steeringAngle;
-    [SerializeField] bool boost;
+    public bool boost;
+    public bool brake, braking;
+
     Rigidbody rb;
     float oldRot;
     float steerAngle;
@@ -58,6 +60,7 @@ public class Controller : MonoBehaviour
         skidmarks[2] = skidmarksController;
         skidmarks[3] = skidmarksController;
 
+        /*
 
         drift.extremumSlip = 0.1f;
         drift.extremumValue = 1;
@@ -71,6 +74,7 @@ public class Controller : MonoBehaviour
         normal.asymptoteValue = 0.75f;
         normal.stiffness = 1;
 
+        */
 
         cineCamera = gameObject.transform.GetChild(1).gameObject.GetComponent<CinemachineVirtualCamera>();
         cineCamTransposer = cineCamera.GetCinemachineComponent<CinemachineTransposer>();
@@ -81,12 +85,31 @@ public class Controller : MonoBehaviour
         boostTorque = boostFullTorqueOverAllWheels;
     }
 
+    private void FixedUpdate()
+    {
+        GetInput();
+        Brake();
+        Accelerate();
+        AddDownForce();
+        Skid();
+        //Drift();
+        TractionControl();
+        Steer();
+        HelpSteer();
+        CapSpeed();
+        UpdateWheelPoses();
+        ChangeFOV();
+
+    }
+
+
 
     private void GetInput()
     {
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
-        boost = Input.GetKey(KeyCode.LeftShift);
+        //brake = Input.GetKey(KeyCode.T);
+        //boost = Input.GetKey(KeyCode.LeftShift);
     }
 
     private void Steer()
@@ -105,6 +128,14 @@ public class Controller : MonoBehaviour
     
     private void Accelerate()
     {
+        if(wheelColliders[0].brakeTorque > 0 && !braking)
+        {
+            foreach(WheelCollider wheel in wheelColliders)
+            {
+                wheel.brakeTorque = 0;
+            }
+        }
+
         float thrustTorque;
 
         if (boost)
@@ -116,14 +147,13 @@ public class Controller : MonoBehaviour
             thrustTorque = -verticalInput * (currentTorque / 4f);
         }
 
-
-        for (int i = 0; i < 4; i++)
+        if (wheelColliders[0].brakeTorque == 0)
         {
-            wheelColliders[i].motorTorque = thrustTorque;
+            for (int i = 0; i < 4; i++)
+            {
+                wheelColliders[i].motorTorque = thrustTorque;
+            }
         }
-        
-
-
     }
 
     private void TractionControl()
@@ -139,6 +169,37 @@ public class Controller : MonoBehaviour
     }
 
     
+
+    private void Brake()
+    {
+        if(brake && !braking)
+        {
+            ApplyBrake(brakeTorque);
+        }
+        else if(!brake && !braking)
+        {
+            ReleaseBrake();
+        }
+    }
+    
+    public void ApplyBrake(float brakeAmount)
+    {
+        braking = true;
+        foreach (WheelCollider wheel in wheelColliders)
+        {
+            wheel.brakeTorque = brakeAmount;
+        }
+    }
+
+    public void ReleaseBrake()
+    {
+        braking = false;
+        foreach (WheelCollider wheel in wheelColliders)
+        {
+            wheel.brakeTorque = 0;
+        }
+    }
+
 
     private void AdjustTorque(float forwardSlip)
     {
@@ -216,21 +277,7 @@ public class Controller : MonoBehaviour
         transform.rotation = quat;
     }
 
-    private void FixedUpdate()
-    {
-        GetInput();
-        Accelerate();
-        AddDownForce();
-        Skid();
-        Drift();
-        TractionControl();
-        Steer();
-        HelpSteer();
-        CapSpeed();
-        UpdateWheelPoses();
-        ChangeFOV();
 
-    }
 
     
 
@@ -302,6 +349,7 @@ public class Controller : MonoBehaviour
         GUILayout.Label("Speed: " + currentSpeed);
         GUILayout.Label("currentTorque: " + currentTorque);
         GUILayout.Label("boostTorque: " + boostTorque);
+        GUILayout.Label("brakeTorque: " + wheelColliders[0].brakeTorque);
         
     }
 
