@@ -26,17 +26,17 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 12713959}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.000010614809}
   m_LocalScale: {x: 0.413297, y: 0.413297, z: 0.413297}
   m_Children: []
   m_Father: {fileID: 1840892682}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 176.37103, y: -139.61665}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: -335.99994, y: 129.29993}
   m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 1, y: 0}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &12713962
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -92,7 +92,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &50403606
 RectTransform:
   m_ObjectHideFlags: 0
@@ -982,7 +982,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &592335574
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2864,17 +2864,17 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1345635538}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.27899525, y: 0.36319602, z: 0.27899525}
+  m_LocalPosition: {x: 0, y: 0, z: -0.000000082928}
+  m_LocalScale: {x: 0.31426024, y: 0.409104, z: 0.31426024}
   m_Children: []
   m_Father: {fileID: 1840892682}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 206.37097, y: -142.61667}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: -294.76, y: 129}
   m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 1, y: 0}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &1345635541
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4030,7 +4030,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 4
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -5755,7 +5755,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1877867672973202263}
   - component: {fileID: 7317532854027582230}
-  - component: {fileID: 7330084999802037205}
   m_Layer: 5
   m_Name: 'Music Volume Slider '
   m_TagString: Untagged
@@ -5835,8 +5834,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7330084999802037205}
-        m_TargetAssemblyTypeName: SetVolume, Assembly-CSharp
+      - m_Target: {fileID: 1468879414}
+        m_TargetAssemblyTypeName: Pause, Assembly-CSharp
         m_MethodName: SetMusicLevel
         m_Mode: 0
         m_Arguments:
@@ -5847,19 +5846,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &7330084999802037205
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1693787568194306737}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0af9f3330d5ce6249a8b7f622be0a9e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mixer: {fileID: 24100000, guid: c5b7f6daef602b0478a2bc18598cb617, type: 2}
 --- !u!1 &1721072720540922527
 GameObject:
   m_ObjectHideFlags: 0
@@ -8088,6 +8074,7 @@ MonoBehaviour:
   pauseMenuButton2: 27
   paused: 0
   LobbySceneIndex: 0
+  mixer: {fileID: 24100000, guid: c5b7f6daef602b0478a2bc18598cb617, type: 2}
 --- !u!1 &3668515497105935749
 GameObject:
   m_ObjectHideFlags: 0
@@ -9971,7 +9958,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1675614343304850795}
   - component: {fileID: 3510385849761796011}
-  - component: {fileID: 2092889228}
   m_Layer: 5
   m_Name: Master Volume Slider
   m_TagString: Untagged
@@ -10051,8 +10037,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2092889228}
-        m_TargetAssemblyTypeName: SetVolume, Assembly-CSharp
+      - m_Target: {fileID: 1468879414}
+        m_TargetAssemblyTypeName: Pause, Assembly-CSharp
         m_MethodName: SetMasterLevel
         m_Mode: 0
         m_Arguments:
@@ -10063,19 +10049,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &2092889228
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5236878194896183361}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0af9f3330d5ce6249a8b7f622be0a9e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mixer: {fileID: 24100000, guid: c5b7f6daef602b0478a2bc18598cb617, type: 2}
 --- !u!1 &5279577346658736625
 GameObject:
   m_ObjectHideFlags: 0
@@ -10670,7 +10643,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7081048588774319328}
   - component: {fileID: 2066799763888919151}
-  - component: {fileID: 2019079932}
   m_Layer: 5
   m_Name: 'SFX Volume Slider  '
   m_TagString: Untagged
@@ -10750,8 +10722,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2019079932}
-        m_TargetAssemblyTypeName: SetVolume, Assembly-CSharp
+      - m_Target: {fileID: 1468879414}
+        m_TargetAssemblyTypeName: Pause, Assembly-CSharp
         m_MethodName: SetSFXLevel
         m_Mode: 0
         m_Arguments:
@@ -10762,19 +10734,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &2019079932
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5633778082612293112}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0af9f3330d5ce6249a8b7f622be0a9e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mixer: {fileID: 24100000, guid: c5b7f6daef602b0478a2bc18598cb617, type: 2}
 --- !u!1 &5687205421185606772
 GameObject:
   m_ObjectHideFlags: 0

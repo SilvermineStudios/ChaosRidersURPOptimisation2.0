@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
 
 public class Pause : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class Pause : MonoBehaviour
     [SerializeField] private bool paused = false;
     [SerializeField] private int LobbySceneIndex = 0;
     private PhotonView pv;
+    public AudioMixer mixer;
 
     void Awake()
     {
@@ -62,19 +64,48 @@ public class Pause : MonoBehaviour
 
     public void AudioSettingsButton()
     {
-        mainPauseMenuPanel.SetActive(false); // disable the main pause menu panel 
-        audioSettingsPanel.SetActive(true); //enable the audio settings panel
+        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
+        {
+            mainPauseMenuPanel.SetActive(false); // disable the main pause menu panel 
+            audioSettingsPanel.SetActive(true); //enable the audio settings panel
+        }
     }
 
     public void BackButton()
     {
-        mainPauseMenuPanel.SetActive(true); //enable the main pause menu panel 
-        audioSettingsPanel.SetActive(false); //disable the audio settings panel
+        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
+        {
+            mainPauseMenuPanel.SetActive(true); //enable the main pause menu panel 
+            audioSettingsPanel.SetActive(false); //disable the audio settings panel
+        }
     }
 
     public void ResumeGameButton()
     {
-        PauseMenu.SetActive(false); //close the pause menu
+        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
+        {
+            PauseMenu.SetActive(false); //close the pause menu
+        }   
+    }
+    #endregion
+
+    #region Sliders
+    public void SetMasterLevel(float sliderValue)
+    {
+        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
+            mixer.SetFloat("Master", Mathf.Log10(sliderValue) * 20);
+    }
+
+    public void SetMusicLevel(float sliderValue)
+    {
+        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
+            mixer.SetFloat("Music", Mathf.Log10(sliderValue) * 20);
+    }
+
+    public void SetSFXLevel(float sliderValue)
+    {
+        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
+            mixer.SetFloat("SFX", Mathf.Log10(sliderValue) * 20);
     }
     #endregion
 }
