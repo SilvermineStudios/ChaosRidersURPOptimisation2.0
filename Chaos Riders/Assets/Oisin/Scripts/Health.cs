@@ -6,7 +6,11 @@ using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] float health;
+    [SerializeField] private Transform healthBarUi; 
+
+    public float health;
+    private float healthNormalized;
+    private float startHealth;
     [SerializeField] float lastHit;
 
     public bool isProtected;
@@ -21,16 +25,17 @@ public class Health : MonoBehaviour
 
     void Start()
     {
-
-        health = 100;
+        startHealth = health;
         healthbar = GetComponentInChildren<Slider>();
-
     }
 
 
 
     void Update()
     {
+        healthNormalized = (health / startHealth);
+        SetHealthBarUiSize(healthNormalized);
+
         healthbar.value = health;
 
         if(health <= 0 && !dead)
@@ -71,5 +76,10 @@ public class Health : MonoBehaviour
             health -= DamagetoTake[0];
             lastHit = DamagetoTake[1];
         }
+    }
+
+    private void SetHealthBarUiSize(float sizeNormalized)
+    {
+        healthBarUi.localScale = new Vector3(1f, sizeNormalized);
     }
 }

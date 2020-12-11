@@ -19,7 +19,7 @@ public class AICarController : MonoBehaviour
 
     [SerializeField] private Vector3 centerOfMass;
 
-    private Health healthScript;
+    private AIHealth healthScript;
 
 
     private void Awake()
@@ -33,7 +33,7 @@ public class AICarController : MonoBehaviour
         waypoints = waypointManager.waypoints;
 
         GetComponent<Rigidbody>().centerOfMass = centerOfMass;
-        healthScript = GetComponent<Health>();
+        healthScript = GetComponent<AIHealth>();
     }
 
     private void FixedUpdate()

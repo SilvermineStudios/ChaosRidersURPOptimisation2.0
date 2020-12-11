@@ -26,8 +26,6 @@ public class RaycastMinigun : MonoBehaviour
 
     private void Start()
     {
-        
-        
         pv = GetComponent<PhotonView>();
         timeSinceLastBullet = fireRate;
         speaker = GetComponent<AudioSource>();
