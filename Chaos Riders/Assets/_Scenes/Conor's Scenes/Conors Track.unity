@@ -5436,16 +5436,20 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 504558589, guid: 2a9a5cd4e524e0b4db31f61e19a16979, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 504558589, guid: 2a9a5cd4e524e0b4db31f61e19a16979, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 641978815, guid: 2a9a5cd4e524e0b4db31f61e19a16979, type: 3}
       propertyPath: healthBarUi
       value: 
       objectReference: {fileID: 1879046205}
+    - target: {fileID: 641978815, guid: 2a9a5cd4e524e0b4db31f61e19a16979, type: 3}
+      propertyPath: health
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 1031273650, guid: 2a9a5cd4e524e0b4db31f61e19a16979, type: 3}
       propertyPath: m_AnchorMin.x
       value: 1
@@ -5536,7 +5540,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3665268805338767731, guid: 2a9a5cd4e524e0b4db31f61e19a16979, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7594932733184380221, guid: 2a9a5cd4e524e0b4db31f61e19a16979, type: 3}
       propertyPath: viewIdField
@@ -17878,7 +17882,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf91c4f9d80737340b1e69cfe0e588e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ThisIsMultiplayer: 1
+  ThisIsMultiplayer: 0
 --- !u!1 &2129532550
 GameObject:
   m_ObjectHideFlags: 0

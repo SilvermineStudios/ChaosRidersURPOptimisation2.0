@@ -25,7 +25,6 @@ public class Health : MonoBehaviour
 
     void Start()
     {
-        health = 500;
         startHealth = health;
         healthbar = GetComponentInChildren<Slider>();
     }
