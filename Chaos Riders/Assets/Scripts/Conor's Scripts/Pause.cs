@@ -9,7 +9,7 @@ public class Pause : MonoBehaviour
 {
     [SerializeField] private GameObject PauseMenu, audioSettingsPanel, mainPauseMenuPanel; //Pause Menu Gameobject 
     [SerializeField] private KeyCode pauseMenuButton1, pauseMenuButton2;
-    [SerializeField] private bool paused = false;
+    public bool paused = false;
     [SerializeField] private int LobbySceneIndex = 0;
     private PhotonView pv;
     public AudioMixer mixer;
@@ -85,6 +85,7 @@ public class Pause : MonoBehaviour
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
             PauseMenu.SetActive(false); //close the pause menu
+            paused = false;
         }   
     }
     #endregion

@@ -6,8 +6,6 @@ using TMPro;
 
 public class Checkpoint : MonoBehaviour
 {
-    [SerializeField] private bool isGunner = false;
-
     [SerializeField] private AudioClip soundEffect;
     private AudioSource audioS;
 
@@ -24,7 +22,7 @@ public class Checkpoint : MonoBehaviour
 
     [SerializeField] private bool canCollect = true;
 
-    [SerializeField] private PhotonView pv;
+    private PhotonView pv;
 
     private void Awake()
     {

@@ -28,7 +28,6 @@ public class AttachHealth : MonoBehaviour
             hasShooter = true;
 
             shooter.GetComponentInChildren<RaycastMinigun>().healthScript = healthScript; //CONSOLE ERROR
-            
         }
     }
 }
