@@ -6,11 +6,14 @@ using TMPro;
 
 public class Checkpoint : MonoBehaviour
 {
+    [SerializeField] private bool isGunner = false;
+
     [SerializeField] private AudioClip soundEffect;
     private AudioSource audioS;
 
     private int amountOfLaps;
     [SerializeField] private int currentLap = 1;
+    [SerializeField] private TMP_Text lapsText;
 
     [SerializeField] private bool canCrossFinish = false; //remove from inspector <--------------------------------------------------
 
@@ -23,20 +26,49 @@ public class Checkpoint : MonoBehaviour
 
     [SerializeField] private PhotonView pv;
 
+    private void Awake()
+    {
+        pv = GetComponent<PhotonView>();
+    }
+
     private void Start()
     {
-        //youWinText.SetActive(false);
-        CarUIManager.youWinText.SetActive(false);
+        youWinText.SetActive(false);
+        //CarUIManager.youWinText.SetActive(false);
 
         audioS = GetComponent<AudioSource>();
 
         amountOfLaps = LapCounter.AmountOfLaps;
 
-        //pv = GetComponent<PhotonView>();
         checkpoints = CheckpointManager.checkPoints;
 
         OnlyDisplayNextCheckpoint();
     }
+
+
+    private void Update()
+    {
+        //update currentlap
+        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
+        {
+            OnlyDisplayNextCheckpoint();
+
+            //only let the player cross the finish line if they have gone throug the first check point
+            if (currentCheckpoint == 1)
+            {
+                canCrossFinish = true;
+            }
+
+
+            //CarUIManager.lapsText.text = "Lap " + currentLap + " / " + amountOfLaps;
+            lapsText.text = "Lap " + currentLap + " / " + amountOfLaps;
+            if (currentLap == amountOfLaps && canCrossFinish && currentCheckpoint == 0)
+            {
+                LapCounter.FinishLine.SetActive(true);
+            }
+        }
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -68,7 +100,8 @@ public class Checkpoint : MonoBehaviour
 
             if (other.gameObject.tag == "FinishLine")// && !FinishLine.GameWon)
             {
-                CarUIManager.youWinText.SetActive(true);
+                //CarUIManager.youWinText.SetActive(true);
+                youWinText.SetActive(true);
                 FinishLine.GameWon = true;
                 Debug.Log("YOU WIN");
             }
@@ -82,27 +115,7 @@ public class Checkpoint : MonoBehaviour
 
 
 
-    private void Update()
-    {
-        //update currentlap
-        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
-        {
-            OnlyDisplayNextCheckpoint();
-
-            //only let the player cross the finish line if they have gone throug the first check point
-            if (currentCheckpoint == 1)
-            {
-                canCrossFinish = true;
-            }
-
-
-            CarUIManager.lapsText.text = "Lap " + currentLap + " / " + amountOfLaps;
-            if(currentLap == amountOfLaps && canCrossFinish && currentCheckpoint == 0)
-            {
-                LapCounter.FinishLine.SetActive(true);
-            }
-        }
-    }
+    
 
 
     void OnlyDisplayNextCheckpoint()

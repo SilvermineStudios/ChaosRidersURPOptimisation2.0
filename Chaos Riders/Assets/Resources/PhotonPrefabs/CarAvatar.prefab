@@ -793,7 +793,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2102,8 +2102,8 @@ RectTransform:
   m_Father: {fileID: 1615515756}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -7526,7 +7526,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3509820878897759768
 Transform:
   m_ObjectHideFlags: 0
@@ -7891,12 +7891,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60098c4ae8c3c524ea0933609487c06c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isGunner: 0
   soundEffect: {fileID: 8300000, guid: ed476ad4a6f78b64382ce8cd8d9c2f2f, type: 3}
   currentLap: 1
+  lapsText: {fileID: 1863176190}
   canCrossFinish: 0
   checkpoints: []
   currentCheckpoint: 0
-  youWinText: {fileID: 0}
+  youWinText: {fileID: 1719049183}
   canCollect: 1
   pv: {fileID: 7594932733184380221}
 --- !u!82 &66677290
