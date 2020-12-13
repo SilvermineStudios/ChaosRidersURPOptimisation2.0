@@ -48,7 +48,7 @@ public class Controller : MonoBehaviour
     WheelFrictionCurve drift;
     WheelFrictionCurve normal;
     float num = 0.002f;
-
+    public TurretTester ShooterAttached;
 
 
     private void Awake()
@@ -118,6 +118,21 @@ public class Controller : MonoBehaviour
             UpdateWheelPoses();
             ChangeFOV();
             //Spedo();
+        }
+    }
+
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z);
+            transform.rotation = Quaternion.Euler(0, transform.localRotation.y, 0);
+
+            if (ShooterAttached != null)
+            {
+                ShooterAttached.ResetPos();
+            }
         }
     }
 
