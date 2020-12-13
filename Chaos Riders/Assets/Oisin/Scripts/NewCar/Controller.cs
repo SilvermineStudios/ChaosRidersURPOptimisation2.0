@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
-
+using Photon.Pun;
 
 public class Controller : MonoBehaviour
 {
@@ -32,6 +32,8 @@ public class Controller : MonoBehaviour
     public bool boost;
     public bool brake, braking;
 
+    PhotonView pv;
+    Health healthScript;
     Rigidbody rb;
     float oldRot;
     float steerAngle;
@@ -47,6 +49,8 @@ public class Controller : MonoBehaviour
     WheelFrictionCurve normal;
     float num = 0.002f;
 
+
+
     private void Awake()
     {
         skidmarksController = FindObjectOfType<Skidmarks>();
@@ -54,6 +58,8 @@ public class Controller : MonoBehaviour
 
     private void Start()
     {
+        pv = GetComponent<PhotonView>();
+        healthScript = GetComponent<Health>();
 
         skidmarks[0] = skidmarksController;
         skidmarks[1] = skidmarksController;
@@ -87,19 +93,32 @@ public class Controller : MonoBehaviour
 
     private void FixedUpdate()
     {
-        GetInput();
-        Brake();
-        Accelerate();
-        AddDownForce();
-        Skid();
-        //Drift();
-        TractionControl();
-        Steer();
-        HelpSteer();
-        CapSpeed();
-        UpdateWheelPoses();
-        ChangeFOV();
-        Spedo();
+        if (healthScript.isDead)
+        {
+            GetComponent<Rigidbody>().drag = 5;
+            return;
+        }
+        else
+        {
+            GetComponent<Rigidbody>().drag = 0;
+        }
+
+        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
+        {
+            GetInput();
+            Brake();
+            Accelerate();
+            AddDownForce();
+            Skid();
+            //Drift();
+            TractionControl();
+            Steer();
+            HelpSteer();
+            CapSpeed();
+            UpdateWheelPoses();
+            ChangeFOV();
+            //Spedo();
+        }
     }
 
     float timer;
@@ -154,7 +173,8 @@ public class Controller : MonoBehaviour
     
     private void Accelerate()
     {
-        if(wheelColliders[0].brakeTorque > 0 && !braking)
+        //rb.drag = 0;
+        if (wheelColliders[0].brakeTorque > 0 && !braking)
         {
             foreach(WheelCollider wheel in wheelColliders)
             {
@@ -175,7 +195,10 @@ public class Controller : MonoBehaviour
         else 
         {
             thrustTorque = -verticalInput * (currentTorque / 4f);
-            //rb.velocity = new Vector3(rb.velocity.x * 0.5f, rb.velocity.y, rb.velocity.z * 0.5f);
+            if (verticalInput == 0)
+            {
+               // rb.drag = 5;
+            }
         }
 
         if (wheelColliders[0].brakeTorque == 0 && currentSpeed < topSpeed - 5)
