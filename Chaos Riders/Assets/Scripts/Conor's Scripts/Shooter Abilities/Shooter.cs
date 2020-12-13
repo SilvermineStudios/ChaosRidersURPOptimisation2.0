@@ -13,6 +13,12 @@ public class Shooter : MonoBehaviour
     [SerializeField] float playerNumber = 1;
     public bool connectCar = false;
 
+
+
+    //shooting
+    [SerializeField] private float damage = 10f;
+    [SerializeField] private float range = 100f;
+
     [SerializeField] private KeyCode shootButton = KeyCode.Mouse0; 
     [SerializeField] private float amountOfAmmoForCooldownBar = 1000;
     private float startAmmo; //the amount of ammo for the cooldown bar at the start of the game
@@ -66,7 +72,7 @@ public class Shooter : MonoBehaviour
             {
                 muzzleFlash.Play();
                 amountOfAmmoForCooldownBar--;
-                FireBullet();
+                Shoot();
             }
 
             //if you are not shooting and the ammo isnt full
@@ -94,7 +100,16 @@ public class Shooter : MonoBehaviour
        coolDownBarUi.localScale = new Vector3(sizeNormalized, 1f); //scale the ui cooldown bar to match the ammo count
     }
 
-    
+    private void Shoot()
+    {
+        RaycastHit hit; //gets the information on whats hit
+        if (Physics.Raycast(bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.forward, out hit, range))
+        {
+            Debug.Log("You Hit The: " + hit.transform.name);
+        }
+    }
+
+    /*
     Vector3 raycastDir;
     void FireBullet()
     {
@@ -120,14 +135,6 @@ public class Shooter : MonoBehaviour
                 Debug.Log("Did not Hit");
             }
         }
-
-        /*
-        lr.enabled = true;
-        lr.SetPosition(0, spawnpoint.transform.position);
-        lr.SetPosition(1, hit.point);
-
-        speaker.PlayOneShot(gunShot, volume);
-        */
     }
-    
+    */
 }
