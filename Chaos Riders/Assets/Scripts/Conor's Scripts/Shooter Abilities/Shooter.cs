@@ -5,6 +5,14 @@ using Photon.Pun;
 
 public class Shooter : MonoBehaviour
 {
+    [SerializeField] private GameObject pointer;
+    [SerializeField] private GameObject bulletSpawnPoint;
+    [SerializeField] private GameObject car, carCollision;
+    [SerializeField] private LayerMask layerMask;
+    [SerializeField] private float minigunDamage;
+    [SerializeField] float playerNumber = 1;
+    public bool connectCar = false;
+
     [SerializeField] private KeyCode shootButton = KeyCode.Mouse0; 
     [SerializeField] private float amountOfAmmoForCooldownBar = 1000;
     private float startAmmo; //the amount of ammo for the cooldown bar at the start of the game
@@ -36,6 +44,16 @@ public class Shooter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if(connectCar)
+        {
+            connectCar = false;
+            car = GetComponentInParent<MoveTurretPosition>().car;
+            carCollision = GetComponentInParent<MoveTurretPosition>().car.transform.GetChild(0).gameObject;
+        }
+
+
+
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
             RotateGunBarrel();
@@ -48,6 +66,7 @@ public class Shooter : MonoBehaviour
             {
                 muzzleFlash.Play();
                 amountOfAmmoForCooldownBar--;
+                FireBullet();
             }
 
             //if you are not shooting and the ammo isnt full
@@ -74,4 +93,41 @@ public class Shooter : MonoBehaviour
     {
        coolDownBarUi.localScale = new Vector3(sizeNormalized, 1f); //scale the ui cooldown bar to match the ammo count
     }
+
+    
+    Vector3 raycastDir;
+    void FireBullet()
+    {
+        RaycastHit hit;
+        raycastDir = pointer.transform.position - transform.position;
+
+
+        if (Physics.Raycast(bulletSpawnPoint.transform.position, raycastDir, out hit, Mathf.Infinity, layerMask))
+        {
+            if (hit.transform.gameObject.layer == 10 && hit.transform.gameObject != car && hit.transform.gameObject != carCollision)
+            {
+                float[] DamagetoTake = new float[2];
+                DamagetoTake[0] = minigunDamage;
+                DamagetoTake[1] = playerNumber;
+                hit.transform.gameObject.SendMessage("TakeDamage", DamagetoTake);
+                Debug.Log("Did Hit");
+                Debug.Log(hit.transform.gameObject);
+                Debug.Log(car);
+
+            }
+            else
+            {
+                Debug.Log("Did not Hit");
+            }
+        }
+
+        /*
+        lr.enabled = true;
+        lr.SetPosition(0, spawnpoint.transform.position);
+        lr.SetPosition(1, hit.point);
+
+        speaker.PlayOneShot(gunShot, volume);
+        */
+    }
+    
 }

@@ -22,6 +22,8 @@ public class MoveTurretPosition : MonoBehaviour
 
     private TurretTester turretTester;
 
+    private Shooter shooterScript;
+
     private void OnEnable()
     {
         turretTester = GetComponent<TurretTester>();
@@ -32,6 +34,7 @@ public class MoveTurretPosition : MonoBehaviour
     private void Awake()
     {
         //pv.GetComponent<PhotonView>();
+        shooterScript = GetComponent<Shooter>();
     }
 
     private void Start()
@@ -88,6 +91,7 @@ public class MoveTurretPosition : MonoBehaviour
             car = other.gameObject;
             car.GetComponent<CarControllerMultiplayer>().ShooterAttached = turretTester;
             FakeParent = other.gameObject.transform;
+            shooterScript.connectCar = true;
         }
     }
 }
