@@ -99,16 +99,42 @@ public class Controller : MonoBehaviour
         CapSpeed();
         UpdateWheelPoses();
         ChangeFOV();
-
+        Spedo();
     }
 
+    float timer;
+    private void Spedo()
+    {
+        if(currentSpeed < 1 )
+        {
+            timer = Time.time;
+            
+        }
+        
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log(Time.time - timer);
+    }
 
 
     private void GetInput()
     {
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
-        //brake = Input.GetKey(KeyCode.T);
+        if(!braking)
+        {
+            brake = Input.GetKey(KeyCode.T);
+            Debug.Log(98989898989898989);
+        }
+        if(Input.GetKeyUp(KeyCode.T))
+        {
+            brake = false;
+            ReleaseBrake();
+            Debug.Log(234234324);
+        }
+
         //boost = Input.GetKey(KeyCode.LeftShift);
     }
 
@@ -116,7 +142,7 @@ public class Controller : MonoBehaviour
     {
         if(horizontalInput != 0)
         {
-            steeringAngle = maxSteerAngle * horizontalInput;
+            steeringAngle = maxSteerAngle * horizontalInput * 0.75f;
         }
         else
         {
@@ -142,12 +168,17 @@ public class Controller : MonoBehaviour
         {
             thrustTorque = -verticalInput * (boostTorque / 4f);
         }
-        else
+        else if (currentSpeed > 10 && verticalInput == 0)
+        {
+            thrustTorque = 0.5f * (currentTorque / 4f);
+        }
+        else 
         {
             thrustTorque = -verticalInput * (currentTorque / 4f);
+            //rb.velocity = new Vector3(rb.velocity.x * 0.5f, rb.velocity.y, rb.velocity.z * 0.5f);
         }
 
-        if (wheelColliders[0].brakeTorque == 0)
+        if (wheelColliders[0].brakeTorque == 0 && currentSpeed < topSpeed - 5)
         {
             for (int i = 0; i < 4; i++)
             {
