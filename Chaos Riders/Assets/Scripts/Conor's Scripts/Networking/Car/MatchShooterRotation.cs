@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class MatchShooterRotation : MonoBehaviour
 {
+    //new refs
+    [SerializeField] private Transform carGunBarrel, shooterGunBarrel;
+
     //CAR TURRET REFS
     [SerializeField] private Transform carModelHolder;
     [SerializeField] private Transform carTurretBase, carTurretBarrels;
 
     //SHOOTER PLAYER REFS
     private GameObject shooter;
-    private Transform shooterT, modelHolder;
+    [SerializeField] private Transform shooterT, modelHolder;
     private Transform turretBase, turretBarrels;
     private bool assignT = false;
     [SerializeField] private bool hasShooter = false;
@@ -20,8 +23,7 @@ public class MatchShooterRotation : MonoBehaviour
     void AssingTransforms()//getting the shooter players transforms
     {
         modelHolder = shooterT.Find("Model Holder");
-        turretBase = modelHolder.Find("Base");
-        turretBarrels = turretBase.Find("Target");
+        shooterGunBarrel = modelHolder.Find("Gun Barrel");
     }
 
     void Update()
@@ -35,8 +37,7 @@ public class MatchShooterRotation : MonoBehaviour
                 AssingTransforms();
             }
 
-            carTurretBase.transform.rotation = turretBase.transform.rotation; /////////////make the car turret base rotation be the same as the shooter turret base rotation
-            carTurretBarrels.transform.rotation = turretBarrels.transform.rotation;/////////////make the car turret barrel rotation be the same as the shooter turret barrel rotation
+            carGunBarrel.rotation = shooterGunBarrel.rotation;
         }
     }
 

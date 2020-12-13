@@ -12,7 +12,7 @@ public class MakeCarTurretInvisable : MonoBehaviour
 
     private MoveTurretPosition mtp;
     private GameObject car;
-    private Transform carTurret;
+    [SerializeField] private Transform carTurret;
 
     private MeshRenderer[] meshRenderers;
     private int gunMeshCount = 4; //ammo, barrel, stand, platform
@@ -33,7 +33,7 @@ public class MakeCarTurretInvisable : MonoBehaviour
         {
             canAssign = false;
             car = mtp.car; ////////////////////////////////////////////////////////////STOP FROM LOOPING  <--- <--- <--- <--- <---
-            carTurret = car.transform.Find("ShooterAttach");
+            carTurret = car.transform.Find("ShooterAttach1");
             meshRenderers = carTurret.GetComponentsInChildren<MeshRenderer>();
 
             if (pv.IsMine)
