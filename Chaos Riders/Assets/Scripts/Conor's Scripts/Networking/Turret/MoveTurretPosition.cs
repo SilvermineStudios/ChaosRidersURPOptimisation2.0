@@ -6,7 +6,8 @@ using Photon.Realtime;
 
 public class MoveTurretPosition : MonoBehaviour
 {
-    [SerializeField] private Transform gunstand;
+    [SerializeField] private bool multiplayer = false;
+    //private PhotonView pv;
 
     public GameObject car;
     private Transform carGunPos; 
@@ -20,7 +21,7 @@ public class MoveTurretPosition : MonoBehaviour
     private bool canConnect = true;
 
     private TurretTester turretTester;
-
+    PhotonView pv;
     private Shooter shooterScript;
 
     private void OnEnable()
@@ -38,6 +39,7 @@ public class MoveTurretPosition : MonoBehaviour
 
     private void Start()
     {
+        pv = GetComponent<PhotonView>();
         if (FakeParent != null)
         {
             SetFakeParent(FakeParent);
@@ -49,21 +51,23 @@ public class MoveTurretPosition : MonoBehaviour
         if (FakeParent == null)
             return;
 
+        pv.RPC("move", RpcTarget.All);
+
+        /*
+        var targetPos = carGunPos.position;
+        var targetRot = car.transform.rotation;
+        e
+        this.transform.position = RotatePointAroundPivot(targetPos, targetPos, targetRot);
+        this.transform.localRotation = targetRot;
+        */
+    }
+
+    [PunRPC]
+    void move()
+    {
         carGunPos = car.GetComponent<MultiplayerCarPrefabs>().gunSpawnPoint;
 
         transform.position = carGunPos.transform.position;
-        
-        
-        //var targetPos = carGunPos.position;
-        var targetRot = car.transform.rotation;
-
-        targetRot.x = 0;
-        targetRot.z = 0;
-
-        //this.transform.position = RotatePointAroundPivot(targetPos, targetPos, targetRot);
-        //this.transform.localRotation = targetRot;
-
-        gunstand.localRotation = targetRot;
     }
 
     public void SetFakeParent(Transform parent)
