@@ -9,7 +9,7 @@ public class MoveTurretPosition : MonoBehaviour
     [SerializeField] private Transform gunstand;
 
     public GameObject car;
-    private Transform carGunPos; 
+    private Transform carGunPos, carGunStandPosition; 
 
     private Transform FakeParent;
 
@@ -50,6 +50,7 @@ public class MoveTurretPosition : MonoBehaviour
             return;
 
         carGunPos = car.GetComponent<MultiplayerCarPrefabs>().gunSpawnPoint;
+        carGunStandPosition = car.GetComponent<MultiplayerCarPrefabs>().gunstand;
 
         transform.position = carGunPos.transform.position;
         
@@ -57,13 +58,14 @@ public class MoveTurretPosition : MonoBehaviour
         //var targetPos = carGunPos.position;
         var targetRot = car.transform.rotation;
 
-        targetRot.x = 0;
-        targetRot.z = 0;
+        //targetRot.x = 0;
+        //targetRot.z = 0;
 
         //this.transform.position = RotatePointAroundPivot(targetPos, targetPos, targetRot);
         //this.transform.localRotation = targetRot;
 
         gunstand.localRotation = targetRot;
+        gunstand.transform.position = carGunStandPosition.transform.position;
     }
 
     public void SetFakeParent(Transform parent)
