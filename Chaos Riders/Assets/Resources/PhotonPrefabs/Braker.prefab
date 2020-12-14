@@ -12629,7 +12629,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caa46fc6af4581d4a933bcbaacb3648f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  player: {fileID: 4468230371053281715}
 --- !u!1 &4468230370936977541
 GameObject:
   m_ObjectHideFlags: 0
@@ -13199,8 +13199,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasSpeedBoost: 0
-  nitroUiImage: {fileID: 0}
-  armourUiImage: {fileID: 0}
+  nitroUiImage: {fileID: 602698599034186575}
+  armourUiImage: {fileID: 602698599855018106}
 --- !u!114 &4468230371053281696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13226,9 +13226,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21062ba24017c4242b095b77d75fe1bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  carGunBarrel: {fileID: 0}
+  shooterGunBarrel: {fileID: 0}
   carModelHolder: {fileID: 2708564453673870792}
   carTurretBase: {fileID: 2708564454517900531}
   carTurretBarrels: {fileID: 2708564454446770521}
+  shooterT: {fileID: 0}
+  modelHolder: {fileID: 0}
   hasShooter: 0
 --- !u!114 &4468230371053281698
 MonoBehaviour:
@@ -13257,12 +13261,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundEffect: {fileID: 8300000, guid: ed476ad4a6f78b64382ce8cd8d9c2f2f, type: 3}
   currentLap: 1
+  lapsText: {fileID: 602698599364746070}
   canCrossFinish: 0
   checkpoints: []
   currentCheckpoint: 0
   youWinText: {fileID: 602698599481577335}
   canCollect: 1
-  pv: {fileID: 4468230371053281704}
 --- !u!82 &4468230371053281700
 AudioSource:
   m_ObjectHideFlags: 0
@@ -13374,7 +13378,7 @@ MonoBehaviour:
   driverCanvas: {fileID: 602698599621805935}
   youWinTextGo: {fileID: 602698599481577335}
   lapsTextUI: {fileID: 602698599364746070}
-  minimapCam: {fileID: 0}
+  minimapCam: {fileID: 4468230370896880361}
 --- !u!114 &4468230371053281702
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13942,8 +13946,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4468230371967256650}
-  m_LocalRotation: {x: -1.9060398e-10, y: 0.99901783, z: -0.044310063, w: -0.000000004297371}
-  m_LocalPosition: {x: 0, y: 1.5499998, z: 4}
+  m_LocalRotation: {x: -0, y: 0.99901783, z: -0.044310052, w: 1e-45}
+  m_LocalPosition: {x: 0, y: 1.5499997, z: 4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4468230370936977538}
