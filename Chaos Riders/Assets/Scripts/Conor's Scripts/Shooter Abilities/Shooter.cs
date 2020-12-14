@@ -73,7 +73,7 @@ public class Shooter : MonoBehaviour
             //if you are shooting and have ammo
             if (Input.GetKey(shootButton) && amountOfAmmoForCooldownBar > 0)
             {
-                muzzleFlash.Play();
+                
                 amountOfAmmoForCooldownBar--;
                 pv.RPC("Shoot", RpcTarget.All);
             }
@@ -106,6 +106,8 @@ public class Shooter : MonoBehaviour
     [PunRPC]
     void Shoot()
     {
+        muzzleFlash.Play();
+
         RaycastHit hit; //gets the information on whats hit
         if (Physics.Raycast(bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.forward, out hit, range))
         {
