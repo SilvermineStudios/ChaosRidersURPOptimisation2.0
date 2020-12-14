@@ -6,8 +6,7 @@ using Photon.Realtime;
 
 public class MoveTurretPosition : MonoBehaviour
 {
-    [SerializeField] private bool multiplayer = false;
-    //private PhotonView pv;
+    [SerializeField] private Transform gunstand;
 
     public GameObject car;
     private Transform carGunPos; 
@@ -53,14 +52,18 @@ public class MoveTurretPosition : MonoBehaviour
         carGunPos = car.GetComponent<MultiplayerCarPrefabs>().gunSpawnPoint;
 
         transform.position = carGunPos.transform.position;
-
-        /*
-        var targetPos = carGunPos.position;
+        
+        
+        //var targetPos = carGunPos.position;
         var targetRot = car.transform.rotation;
 
-        this.transform.position = RotatePointAroundPivot(targetPos, targetPos, targetRot);
-        this.transform.localRotation = targetRot;
-        */
+        targetRot.x = 0;
+        targetRot.z = 0;
+
+        //this.transform.position = RotatePointAroundPivot(targetPos, targetPos, targetRot);
+        //this.transform.localRotation = targetRot;
+
+        gunstand.localRotation = targetRot;
     }
 
     public void SetFakeParent(Transform parent)
