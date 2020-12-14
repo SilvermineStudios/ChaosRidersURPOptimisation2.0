@@ -23,6 +23,8 @@ public class MoveTurretPosition : MonoBehaviour
 
     private Shooter shooterScript;
 
+    PhotonView pv;
+
     private void OnEnable()
     {
         turretTester = GetComponent<TurretTester>();
@@ -38,6 +40,7 @@ public class MoveTurretPosition : MonoBehaviour
 
     private void Start()
     {
+        pv = GetComponent<PhotonView>();
         if (FakeParent != null)
         {
             SetFakeParent(FakeParent);
@@ -49,12 +52,18 @@ public class MoveTurretPosition : MonoBehaviour
         if (FakeParent == null)
             return;
 
+        pv.RPC("AttachToFakeParent", RpcTarget.All);
+    }
+
+    [PunRPC]
+    void AttachToFakeParent()
+    {
         carGunPos = car.GetComponent<MultiplayerCarPrefabs>().gunSpawnPoint;
         carGunStandPosition = car.GetComponent<MultiplayerCarPrefabs>().gunstand;
 
         transform.position = carGunPos.transform.position;
-        
-        
+
+
         //var targetPos = carGunPos.position;
         var targetRot = car.transform.rotation;
 
@@ -67,6 +76,7 @@ public class MoveTurretPosition : MonoBehaviour
         gunstand.localRotation = targetRot;
         gunstand.transform.position = carGunStandPosition.transform.position;
     }
+
 
     public void SetFakeParent(Transform parent)
     {
