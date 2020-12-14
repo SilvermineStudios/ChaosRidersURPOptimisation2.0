@@ -51,8 +51,15 @@ public class MoveTurretPosition : MonoBehaviour
     {
         if (FakeParent == null)
             return;
-
-        pv.RPC("AttachToFakeParent", RpcTarget.All);
+        if (IsThisMultiplayer.Instance.multiplayer)
+        {
+            pv.RPC("AttachToFakeParent", RpcTarget.All);
+        }
+        else
+        {
+            AttachToFakeParent();
+        }
+        
     }
 
     [PunRPC]
