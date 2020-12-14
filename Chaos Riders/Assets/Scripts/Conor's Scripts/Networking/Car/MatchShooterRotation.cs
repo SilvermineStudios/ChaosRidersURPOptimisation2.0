@@ -4,19 +4,17 @@ using UnityEngine;
 
 public class MatchShooterRotation : MonoBehaviour
 {
-    //new refs
-    [SerializeField] private Transform carGunBarrel, shooterGunBarrel;
+    //car refs
+    [SerializeField] private Transform carGunBarrel;
+    
 
-    //CAR TURRET REFS
-    [SerializeField] private Transform carModelHolder;
-    [SerializeField] private Transform carTurretBase, carTurretBarrels;
 
     //SHOOTER PLAYER REFS
     private GameObject shooter;
-    [SerializeField] private Transform shooterT, modelHolder;
-    private Transform turretBase, turretBarrels;
+    private Transform shooterT, modelHolder;
+    private Transform shooterGunBarrel;
     private bool assignT = false;
-    [SerializeField] private bool hasShooter = false;
+    private bool hasShooter = false;
     private bool canConnect = true;
 
     
