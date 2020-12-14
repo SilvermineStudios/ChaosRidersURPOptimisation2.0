@@ -52,11 +52,15 @@ public class MoveTurretPosition : MonoBehaviour
 
         carGunPos = car.GetComponent<MultiplayerCarPrefabs>().gunSpawnPoint;
 
+        transform.position = carGunPos.transform.position;
+
+        /*
         var targetPos = carGunPos.position;
         var targetRot = car.transform.rotation;
 
         this.transform.position = RotatePointAroundPivot(targetPos, targetPos, targetRot);
         this.transform.localRotation = targetRot;
+        */
     }
 
     public void SetFakeParent(Transform parent)

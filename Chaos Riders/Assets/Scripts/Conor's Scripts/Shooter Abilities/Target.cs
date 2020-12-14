@@ -18,6 +18,21 @@ public class Target : MonoBehaviour
             healthScript = GetComponent<Health>();
     }
 
+    private void OnGUI()
+    {
+        GUILayout.Label(" ");
+        GUILayout.Label(" ");
+        GUILayout.Label(" ");
+        GUILayout.Label(" ");
+        GUILayout.Label(" ");
+        GUILayout.Label(" ");
+        GUILayout.Label(" ");
+        GUILayout.Label(" ");
+        GUILayout.Label(" ");
+        GUILayout.Label(" ");
+        GUILayout.Label("Health: " + health);
+    }
+
     void Update()
     {
         //TakeDamage(1);

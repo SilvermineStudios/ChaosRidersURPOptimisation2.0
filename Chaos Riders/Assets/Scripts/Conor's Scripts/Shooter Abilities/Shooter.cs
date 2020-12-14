@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Cinemachine;
 
 public class Shooter : MonoBehaviour
 {
@@ -74,7 +75,7 @@ public class Shooter : MonoBehaviour
             {
                 muzzleFlash.Play();
                 amountOfAmmoForCooldownBar--;
-                Shoot();
+                pv.RPC("Shoot", RpcTarget.All);
             }
 
             //if you are not shooting and the ammo isnt full
@@ -102,7 +103,8 @@ public class Shooter : MonoBehaviour
        coolDownBarUi.localScale = new Vector3(sizeNormalized, 1f); //scale the ui cooldown bar to match the ammo count
     }
 
-    private void Shoot()
+    [PunRPC]
+    void Shoot()
     {
         RaycastHit hit; //gets the information on whats hit
         if (Physics.Raycast(bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.forward, out hit, range))
