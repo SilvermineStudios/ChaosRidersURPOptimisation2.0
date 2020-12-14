@@ -1827,6 +1827,7 @@ GameObject:
   - component: {fileID: 2053218935}
   - component: {fileID: 2053218936}
   - component: {fileID: 7466595670723712435}
+  - component: {fileID: 157449244}
   m_Layer: 10
   m_Name: AI Car
   m_TagString: Player
@@ -1992,6 +1993,20 @@ MonoBehaviour:
   isProtected: 0
   deathParticles: {fileID: 3181313618017907242}
   dead: 0
+--- !u!114 &157449244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011213230151948855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd27fdd01875ad84092561a7a6869cf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ai: 1
+  health: 0
 --- !u!1 &2040200205363631557
 GameObject:
   m_ObjectHideFlags: 0
@@ -3182,6 +3197,8 @@ GameObject:
   - component: {fileID: 879314595472462347}
   - component: {fileID: 5347377544226623359}
   - component: {fileID: 7509936769286619957}
+  - component: {fileID: 2063572380}
+  - component: {fileID: 2063572381}
   m_Layer: 10
   m_Name: Fill
   m_TagString: Untagged
@@ -3246,6 +3263,44 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2063572380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4757655844705097412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+--- !u!114 &2063572381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4757655844705097412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  observableSearch: 2
+  Synchronization: 3
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 2063572380}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &4760274570308295997
 GameObject:
   m_ObjectHideFlags: 0
