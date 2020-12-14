@@ -4318,7 +4318,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1925145247
 Transform:
   m_ObjectHideFlags: 0
@@ -7844,10 +7844,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21062ba24017c4242b095b77d75fe1bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  carModelHolder: {fileID: 1808468802675540914}
-  carTurretBase: {fileID: 6414724552089723647}
-  carTurretBarrels: {fileID: 7941085227068484589}
-  hasShooter: 0
+  carGunBarrel: {fileID: 0}
 --- !u!114 &641978814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7891,7 +7888,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60098c4ae8c3c524ea0933609487c06c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isGunner: 0
   soundEffect: {fileID: 8300000, guid: ed476ad4a6f78b64382ce8cd8d9c2f2f, type: 3}
   currentLap: 1
   lapsText: {fileID: 1863176190}
@@ -7900,7 +7896,6 @@ MonoBehaviour:
   currentCheckpoint: 0
   youWinText: {fileID: 1719049183}
   canCollect: 1
-  pv: {fileID: 7594932733184380221}
 --- !u!82 &66677290
 AudioSource:
   m_ObjectHideFlags: 0

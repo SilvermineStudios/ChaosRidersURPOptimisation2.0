@@ -6084,7 +6084,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 4468230371053281702}
         m_TargetAssemblyTypeName: Pause, Assembly-CSharp
         m_MethodName: QuitGameButton
         m_Mode: 1
@@ -7112,7 +7112,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 4468230371053281702}
         m_TargetAssemblyTypeName: Pause, Assembly-CSharp
         m_MethodName: LeaveRaceButton
         m_Mode: 1
@@ -9449,7 +9449,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 4468230371053281702}
         m_TargetAssemblyTypeName: Pause, Assembly-CSharp
         m_MethodName: ResumeGameButton
         m_Mode: 1
@@ -10873,7 +10873,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 4468230371053281702}
         m_TargetAssemblyTypeName: Pause, Assembly-CSharp
         m_MethodName: SetMusicLevel
         m_Mode: 0
@@ -17258,6 +17258,7 @@ GameObject:
   - component: {fileID: 4468230371053281702}
   - component: {fileID: 1020644581}
   - component: {fileID: 1037744771541710732}
+  - component: {fileID: 1585499640}
   m_Layer: 10
   m_Name: Braker
   m_TagString: car
@@ -17777,6 +17778,19 @@ MonoBehaviour:
   cameras:
   - {fileID: 4468230371967256650}
   - {fileID: 4468230370896880361}
+--- !u!114 &1585499640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4468230371053281714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2deb249e0cde9254d860462c59c379bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectsToDisableIfNotYours: []
 --- !u!1 &4468230371168109689
 GameObject:
   m_ObjectHideFlags: 0
@@ -18310,6 +18324,7 @@ GameObject:
   - component: {fileID: 4468230371967256648}
   - component: {fileID: 4468230371967256651}
   - component: {fileID: 4468230371967256649}
+  - component: {fileID: 1119109355}
   m_Layer: 0
   m_Name: CinemachineVirtualCamera
   m_TagString: Untagged
@@ -18397,6 +18412,14 @@ MonoBehaviour:
   m_Damping: 1
   m_DampingWhenOccluded: 1
   m_OptimalTargetDistance: 0
+--- !u!81 &1119109355
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4468230371967256650}
+  m_Enabled: 1
 --- !u!1 &4468230371967685041
 GameObject:
   m_ObjectHideFlags: 0
@@ -28351,7 +28374,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 4468230371053281702}
         m_TargetAssemblyTypeName: Pause, Assembly-CSharp
         m_MethodName: SetMasterLevel
         m_Mode: 0
@@ -28733,7 +28756,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 4468230371053281702}
         m_TargetAssemblyTypeName: Pause, Assembly-CSharp
         m_MethodName: BackButton
         m_Mode: 1
@@ -28872,7 +28895,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 4468230371053281702}
         m_TargetAssemblyTypeName: Pause, Assembly-CSharp
         m_MethodName: SetSFXLevel
         m_Mode: 0
@@ -30792,7 +30815,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 4468230371053281702}
         m_TargetAssemblyTypeName: Pause, Assembly-CSharp
         m_MethodName: AudioSettingsButton
         m_Mode: 1

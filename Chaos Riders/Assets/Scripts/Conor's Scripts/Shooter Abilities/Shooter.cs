@@ -31,6 +31,8 @@ public class Shooter : MonoBehaviour
 
     [SerializeField] private ParticleSystem muzzleFlash;
 
+    [SerializeField] private float minRotationHeight = -20f, maxRotationHeight = 20f;
+
     private PhotonView pv;
 
     private void Awake()
@@ -90,7 +92,7 @@ public class Shooter : MonoBehaviour
         //xAngle = Mathf.Clamp(xAngle, 0, 180); //use this if you want to clamp the rotation. second var = min angle, third var = max angle
 
         yAngle += Input.GetAxis("Mouse Y") * verticalRotationSpeed * -Time.deltaTime;
-        //yAngle = Mathf.Clamp(yAngle, 0, 180); //use this if you want to clamp the rotation. second var = min angle, third var = max angle
+        yAngle = Mathf.Clamp(yAngle, minRotationHeight, maxRotationHeight); //use this if you want to clamp the rotation. second var = min angle, third var = max angle
 
         gunBarrel.localRotation = Quaternion.Euler(yAngle, xAngle, 0);
     }
