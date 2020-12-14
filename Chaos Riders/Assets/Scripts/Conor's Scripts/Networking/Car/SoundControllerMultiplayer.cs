@@ -5,8 +5,7 @@ using Photon.Pun;
 using UnityEngine.Audio;
 
 // Simple class to controll sounds of the car, based on engine throttle and RPM, and skid velocity.
-[RequireComponent(typeof(DriveTrainMultiplayer))]
-[RequireComponent(typeof(CarControllerMultiplayer))]
+
 public class SoundControllerMultiplayer : MonoBehaviour
 {
     public AudioMixerGroup mixerGroup; //NEW <---------------------------------------------------------------------------------------

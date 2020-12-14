@@ -89,7 +89,7 @@ public class MoveTurretPosition : MonoBehaviour
         {
             canConnect = false;
             car = other.gameObject;
-            car.GetComponent<CarControllerMultiplayer>().ShooterAttached = turretTester;
+            car.GetComponent<Controller>().ShooterAttached = turretTester;
             FakeParent = other.gameObject.transform;
             shooterScript.connectCar = true;
         }

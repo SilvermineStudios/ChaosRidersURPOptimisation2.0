@@ -161,7 +161,7 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
     void RPC_SpawnCar(Vector3 spawnPos, Quaternion spawnRot)
     {
         //if (!spawnGunnerFirst)
-            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "CarAvatar"), spawnPos, spawnRot, 0); //correct one for this function
+            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Braker"), spawnPos, spawnRot, 0); //correct one for this function
         //else
             //PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Shooter"), spawnPos, spawnRot, 0);
     }
