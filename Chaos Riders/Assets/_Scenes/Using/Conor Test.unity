@@ -7232,11 +7232,6 @@ Transform:
   m_Father: {fileID: 1605575214}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 116.05, z: 0}
---- !u!224 &782570286 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 8713241798449801682, guid: 2a0127179681d564699c69930481b9be, type: 3}
-  m_PrefabInstance: {fileID: 7634238392520716269}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &787287726
 GameObject:
   m_ObjectHideFlags: 0
@@ -9762,33 +9757,13 @@ PrefabInstance:
       propertyPath: viewIdField
       value: 14
       objectReference: {fileID: 0}
-    - target: {fileID: 4468230370524273125, guid: c50582e8a03590b43b5875b514a6a8a7, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4468230370524273125, guid: c50582e8a03590b43b5875b514a6a8a7, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4468230370524273125, guid: c50582e8a03590b43b5875b514a6a8a7, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4468230371053281704, guid: c50582e8a03590b43b5875b514a6a8a7, type: 3}
       propertyPath: viewIdField
       value: 15
       objectReference: {fileID: 0}
-    - target: {fileID: 4468230371053281705, guid: c50582e8a03590b43b5875b514a6a8a7, type: 3}
-      propertyPath: health
-      value: 200
-      objectReference: {fileID: 0}
     - target: {fileID: 4468230371053281714, guid: c50582e8a03590b43b5875b514a6a8a7, type: 3}
       propertyPath: m_Name
       value: Braker
-      objectReference: {fileID: 0}
-    - target: {fileID: 4468230371053281714, guid: c50582e8a03590b43b5875b514a6a8a7, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4468230371053281715, guid: c50582e8a03590b43b5875b514a6a8a7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9844,11 +9819,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4468230371967256648, guid: c50582e8a03590b43b5875b514a6a8a7, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 7.683494e-10
+      value: -7.6834933e-10
       objectReference: {fileID: 0}
     - target: {fileID: 4468230371967256648, guid: c50582e8a03590b43b5875b514a6a8a7, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.000000017323254
+      value: -0.000000017323252
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c50582e8a03590b43b5875b514a6a8a7, type: 3}
@@ -9930,7 +9905,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1155110777}
-  m_LocalRotation: {x: 7.683494e-10, y: 0.99901783, z: -0.04431008, w: 0.000000017323254}
+  m_LocalRotation: {x: -7.6834933e-10, y: 0.99901783, z: -0.04431008, w: -0.000000017323252}
   m_LocalPosition: {x: -81.1, y: 2.35, z: 67.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -18448,6 +18423,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4477362338368450644, guid: c7d771049c583ed4d8583216cccd3132, type: 3}
+      propertyPath: viewIdField
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7d771049c583ed4d8583216cccd3132, type: 3}
 --- !u!1001 &1449818629166335184
@@ -18457,6 +18436,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2092070378}
     m_Modifications:
+    - target: {fileID: 2053218934, guid: 4fef911cd4b7a114bb4c2b67b8861e47, type: 3}
+      propertyPath: viewIdField
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 879314595472462347, guid: 4fef911cd4b7a114bb4c2b67b8861e47, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -18856,17 +18839,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1791419875, guid: 2a0127179681d564699c69930481b9be, type: 3}
-      propertyPath: myHealthBarUi
-      value: 
-      objectReference: {fileID: 782570286}
     - target: {fileID: 3108852170001021686, guid: 2a0127179681d564699c69930481b9be, type: 3}
       propertyPath: viewIdField
       value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 5264274888602784303, guid: 2a0127179681d564699c69930481b9be, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 344
       objectReference: {fileID: 0}
     - target: {fileID: 7634238392520716272, guid: 2a0127179681d564699c69930481b9be, type: 3}
       propertyPath: viewIdField
