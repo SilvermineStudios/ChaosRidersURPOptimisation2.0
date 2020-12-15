@@ -161,7 +161,7 @@ public class Shooter : MonoBehaviour
             }
 
             GameObject impactGo = PhotonNetwork.Instantiate("Impact Particle Effect", hit.point, Quaternion.LookRotation(hit.normal), 0);
-            impactGo.transform.parent = impactEffectHolder;
+            //impactGo.transform.parent = impactEffectHolder;
             //PhotonNetwork.Destroy(impactGo);
         }
     }
