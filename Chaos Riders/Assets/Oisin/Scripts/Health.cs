@@ -6,7 +6,8 @@ using Photon.Pun;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] private Transform healthBarUi; 
+    public Transform healthBarUi;
+    public GameObject myHealthBar;
 
     public float health;
     private float healthNormalized;
@@ -24,11 +25,20 @@ public class Health : MonoBehaviour
     bool dead, respawning;
     PhotonView pv;
 
-    void Start()
+    void Awake()
     {
         pv = GetComponent<PhotonView>();
+    }
+
+    void Start()
+    {
         startHealth = health;
         healthbar = GetComponentInChildren<Slider>();
+
+        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
+        {
+            myHealthBar.SetActive(false);
+        }
     }
 
 
