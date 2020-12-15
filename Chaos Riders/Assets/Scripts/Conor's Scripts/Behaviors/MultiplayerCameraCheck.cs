@@ -33,7 +33,5 @@ public class MultiplayerCameraCheck : MonoBehaviour
                 }
             }
         }
-        else
-            return;
     }
 }

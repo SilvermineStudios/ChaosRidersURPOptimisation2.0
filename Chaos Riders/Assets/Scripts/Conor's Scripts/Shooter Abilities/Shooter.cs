@@ -12,7 +12,8 @@ public class Shooter : MonoBehaviour
     [SerializeField] private float barrelRotationStartSpeed = 100f, barrelRotationMaxSpeed = 800f;
 
     [SerializeField] private GameObject bulletSpawnPoint;
-    [SerializeField] private GameObject car, carCollision;
+    public GameObject car;
+    private GameObject carCollision;
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private float minigunDamage;
     [SerializeField] float playerNumber = 1;
@@ -34,8 +35,11 @@ public class Shooter : MonoBehaviour
     private float xAngle, yAngle; //angle of rotation for the gun axis
 
     [SerializeField] private ParticleSystem muzzleFlash;
+    public GameObject impactEffect;
 
     [SerializeField] private float minRotationHeight = -20f, maxRotationHeight = 20f;
+
+    [SerializeField] private Transform impactEffectHolder;
 
     private PhotonView pv;
 
@@ -148,13 +152,17 @@ public class Shooter : MonoBehaviour
         RaycastHit hit; //gets the information on whats hit
         if (Physics.Raycast(bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.forward, out hit, range))
         {
-            Debug.Log("You Hit The: " + hit.transform.name);
+            //Debug.Log("You Hit The: " + hit.transform.name);
 
             Target target = hit.transform.GetComponent<Target>();
-            if(target != null)
+            if(target != null && target.gameObject != car)
             {
                 target.TakeDamage(damage);
             }
+
+            GameObject impactGo = PhotonNetwork.Instantiate("Impact Particle Effect", hit.point, Quaternion.LookRotation(hit.normal), 0);
+            impactGo.transform.parent = impactEffectHolder;
+            //PhotonNetwork.Destroy(impactGo);
         }
     }
 
@@ -165,13 +173,23 @@ public class Shooter : MonoBehaviour
         RaycastHit hit; //gets the information on whats hit
         if (Physics.Raycast(bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.forward, out hit, range))
         {
-            Debug.Log("You Hit The: " + hit.transform.name);
+            //Debug.Log("You Hit The: " + hit.transform.name);
 
             Target target = hit.transform.GetComponent<Target>();
-            if (target != null)
+            if (target != null && target.gameObject != car)
             {
                 target.TakeDamage(damage);
             }
+
+            GameObject impactGo = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+            impactGo.transform.parent = impactEffectHolder;
+            //Destroy(impactGo, 1);
         }
+    }
+
+    private IEnumerator DeleteImpactEffect(float time)
+    {
+        yield return new WaitForSeconds(time);
+
     }
 }
