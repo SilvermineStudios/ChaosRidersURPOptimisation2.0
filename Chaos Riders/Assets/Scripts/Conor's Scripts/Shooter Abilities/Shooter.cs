@@ -6,15 +6,17 @@ using Cinemachine;
 
 public class Shooter : MonoBehaviour
 {
+    //z rotation positive ++
+    [SerializeField] private Transform barrelToRotate;
+    private float barrelRotationSpeed;
+    [SerializeField] private float barrelRotationStartSpeed = 100f, barrelRotationMaxSpeed = 800f;
+
     [SerializeField] private GameObject bulletSpawnPoint;
     [SerializeField] private GameObject car, carCollision;
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private float minigunDamage;
     [SerializeField] float playerNumber = 1;
     public bool connectCar = false;
-
-    [SerializeField] private Transform playerCam;
-
 
 
     //shooting
@@ -41,6 +43,8 @@ public class Shooter : MonoBehaviour
     {
         pv = GetComponent<PhotonView>();
         startAmmo = amountOfAmmoForCooldownBar;
+
+        barrelRotationSpeed = barrelRotationStartSpeed;
     }
 
     void Start()
@@ -54,6 +58,7 @@ public class Shooter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        RotateGunBarrel();
 
         if(connectCar)
         {
@@ -66,7 +71,7 @@ public class Shooter : MonoBehaviour
         //online shooting
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer)
         {
-            RotateGunBarrel();
+            FollowMouse();
 
             ammoNormalized = amountOfAmmoForCooldownBar / startAmmo; //normalized the ammo value to be between 0 and 1 for the cooldown bar scale
             CoolDownBar(ammoNormalized); //scale the size of the cooldown bar to match the ammo count
@@ -76,7 +81,10 @@ public class Shooter : MonoBehaviour
             {
                 amountOfAmmoForCooldownBar--;
                 pv.RPC("Shoot", RpcTarget.All);
+                barrelRotationSpeed = barrelRotationMaxSpeed;
             }
+            else
+                barrelRotationSpeed = barrelRotationStartSpeed;
 
             //if you are not shooting and the ammo isnt full
             if (amountOfAmmoForCooldownBar < startAmmo && !Input.GetKey(shootButton))
@@ -88,7 +96,7 @@ public class Shooter : MonoBehaviour
         //offline Shooting
         if(!IsThisMultiplayer.Instance.multiplayer)
         {
-            RotateGunBarrel();
+            FollowMouse();
 
             ammoNormalized = amountOfAmmoForCooldownBar / startAmmo; //normalized the ammo value to be between 0 and 1 for the cooldown bar scale
             CoolDownBar(ammoNormalized); //scale the size of the cooldown bar to match the ammo count
@@ -98,7 +106,10 @@ public class Shooter : MonoBehaviour
             {
                 amountOfAmmoForCooldownBar--;
                 OfflineShoot();
+                barrelRotationSpeed = barrelRotationMaxSpeed;
             }
+            else
+                barrelRotationSpeed = barrelRotationStartSpeed;
 
             //if you are not shooting and the ammo isnt full
             if (amountOfAmmoForCooldownBar < startAmmo && !Input.GetKey(shootButton))
@@ -109,6 +120,11 @@ public class Shooter : MonoBehaviour
     }
 
     private void RotateGunBarrel()
+    {
+        barrelToRotate.Rotate(0, 0, barrelRotationSpeed * Time.deltaTime);
+    }
+
+    private void FollowMouse()
     {
         xAngle += Input.GetAxis("Mouse X") * horizontalRotationSpeed * Time.deltaTime;
         //xAngle = Mathf.Clamp(xAngle, 0, 180); //use this if you want to clamp the rotation. second var = min angle, third var = max angle
