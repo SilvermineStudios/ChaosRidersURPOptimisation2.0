@@ -5092,6 +5092,7 @@ GameObject:
   - component: {fileID: 3718443551745826043}
   - component: {fileID: 2587023993015831525}
   - component: {fileID: 8296368093936665066}
+  - component: {fileID: 1166782067}
   m_Layer: 10
   m_Name: Mustang 2
   m_TagString: Untagged
@@ -5241,11 +5242,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: febe6d505073b4a45ac2738d786df0b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
+  health: 100
   lastHit: 0
   isProtected: 0
   deathParticles: {fileID: 1407414511457995377}
   dead: 0
+--- !u!114 &1166782067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407414512137103672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd27fdd01875ad84092561a7a6869cf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ai: 1
+  health: 0
 --- !u!1 &1407414512161380209
 GameObject:
   m_ObjectHideFlags: 0
