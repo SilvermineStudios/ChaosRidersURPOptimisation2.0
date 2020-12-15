@@ -6,7 +6,7 @@ using Photon.Pun;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] private Transform healthBarUi;
+    public Transform healthBarUi;
     public GameObject myHealthBar;
 
     public float health;
