@@ -9778,6 +9778,10 @@ PrefabInstance:
       propertyPath: viewIdField
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 4468230371053281705, guid: c50582e8a03590b43b5875b514a6a8a7, type: 3}
+      propertyPath: health
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 4468230371053281714, guid: c50582e8a03590b43b5875b514a6a8a7, type: 3}
       propertyPath: m_Name
       value: Braker
@@ -9840,11 +9844,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4468230371967256648, guid: c50582e8a03590b43b5875b514a6a8a7, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -7.6834933e-10
+      value: 7.683494e-10
       objectReference: {fileID: 0}
     - target: {fileID: 4468230371967256648, guid: c50582e8a03590b43b5875b514a6a8a7, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.000000017323252
+      value: 0.000000017323254
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c50582e8a03590b43b5875b514a6a8a7, type: 3}
@@ -9899,9 +9903,9 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60
+  near clip plane: 0.1
+  far clip plane: 5000
+  field of view: 60.00004
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -9926,8 +9930,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1155110777}
-  m_LocalRotation: {x: 0.012566066, y: 0, z: 0, w: 0.9999211}
-  m_LocalPosition: {x: -81.39101, y: 2.9139998, z: 32.412}
+  m_LocalRotation: {x: 7.683494e-10, y: 0.99901783, z: -0.04431008, w: 0.000000017323254}
+  m_LocalPosition: {x: -81.1, y: 2.35, z: 67.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -18444,10 +18448,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4477362338368450644, guid: c7d771049c583ed4d8583216cccd3132, type: 3}
-      propertyPath: viewIdField
-      value: 3
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7d771049c583ed4d8583216cccd3132, type: 3}
 --- !u!1001 &1449818629166335184
@@ -18457,10 +18457,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2092070378}
     m_Modifications:
-    - target: {fileID: 2053218934, guid: 4fef911cd4b7a114bb4c2b67b8861e47, type: 3}
-      propertyPath: viewIdField
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 879314595472462347, guid: 4fef911cd4b7a114bb4c2b67b8861e47, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
