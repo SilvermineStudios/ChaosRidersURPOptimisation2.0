@@ -6,13 +6,14 @@ using Cinemachine;
 
 public class Shooter : MonoBehaviour
 {
-    [SerializeField] private GameObject pointer;
     [SerializeField] private GameObject bulletSpawnPoint;
     [SerializeField] private GameObject car, carCollision;
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private float minigunDamage;
     [SerializeField] float playerNumber = 1;
     public bool connectCar = false;
+
+    [SerializeField] private Transform playerCam;
 
 
 
@@ -62,8 +63,8 @@ public class Shooter : MonoBehaviour
         }
 
 
-
-        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
+        //online shooting
+        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer)
         {
             RotateGunBarrel();
 
@@ -73,7 +74,6 @@ public class Shooter : MonoBehaviour
             //if you are shooting and have ammo
             if (Input.GetKey(shootButton) && amountOfAmmoForCooldownBar > 0)
             {
-                
                 amountOfAmmoForCooldownBar--;
                 pv.RPC("Shoot", RpcTarget.All);
             }
@@ -83,7 +83,28 @@ public class Shooter : MonoBehaviour
             {
                 amountOfAmmoForCooldownBar++;
             }
-                
+        }
+
+        //offline Shooting
+        if(!IsThisMultiplayer.Instance.multiplayer)
+        {
+            RotateGunBarrel();
+
+            ammoNormalized = amountOfAmmoForCooldownBar / startAmmo; //normalized the ammo value to be between 0 and 1 for the cooldown bar scale
+            CoolDownBar(ammoNormalized); //scale the size of the cooldown bar to match the ammo count
+
+            //if you are shooting and have ammo
+            if (Input.GetKey(shootButton) && amountOfAmmoForCooldownBar > 0)
+            {
+                amountOfAmmoForCooldownBar--;
+                OfflineShoot();
+            }
+
+            //if you are not shooting and the ammo isnt full
+            if (amountOfAmmoForCooldownBar < startAmmo && !Input.GetKey(shootButton))
+            {
+                amountOfAmmoForCooldownBar++;
+            }
         }
     }
 
@@ -121,32 +142,20 @@ public class Shooter : MonoBehaviour
         }
     }
 
-    /*
-    Vector3 raycastDir;
-    void FireBullet()
+    void OfflineShoot()
     {
-        RaycastHit hit;
-        raycastDir = pointer.transform.position - transform.position;
+        muzzleFlash.Play();
 
-
-        if (Physics.Raycast(bulletSpawnPoint.transform.position, raycastDir, out hit, Mathf.Infinity, layerMask))
+        RaycastHit hit; //gets the information on whats hit
+        if (Physics.Raycast(bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.forward, out hit, range))
         {
-            if (hit.transform.gameObject.layer == 10 && hit.transform.gameObject != car && hit.transform.gameObject != carCollision)
-            {
-                float[] DamagetoTake = new float[2];
-                DamagetoTake[0] = minigunDamage;
-                DamagetoTake[1] = playerNumber;
-                hit.transform.gameObject.SendMessage("TakeDamage", DamagetoTake);
-                Debug.Log("Did Hit");
-                Debug.Log(hit.transform.gameObject);
-                Debug.Log(car);
+            Debug.Log("You Hit The: " + hit.transform.name);
 
-            }
-            else
+            Target target = hit.transform.GetComponent<Target>();
+            if (target != null)
             {
-                Debug.Log("Did not Hit");
+                target.TakeDamage(damage);
             }
         }
     }
-    */
 }
