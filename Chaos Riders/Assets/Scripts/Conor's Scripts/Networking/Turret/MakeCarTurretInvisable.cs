@@ -5,9 +5,14 @@ using Photon.Pun;
 
 public class MakeCarTurretInvisable : MonoBehaviour
 {
+    //each car has a turret on the back
+    //this script makes the cars default turret invisable to the shooter
+    //this is done so the there doesnt appear to be as much lag
+    //the cars turret mimics the rotation of the shooter 
+
     private MoveTurretPosition mtp;
     private GameObject car;
-    private Transform carTurret;
+    [SerializeField] private Transform carTurret;
 
     private MeshRenderer[] meshRenderers;
     private int gunMeshCount = 4; //ammo, barrel, stand, platform

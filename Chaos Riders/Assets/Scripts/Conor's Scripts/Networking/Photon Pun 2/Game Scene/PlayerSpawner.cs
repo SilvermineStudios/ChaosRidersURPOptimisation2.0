@@ -8,7 +8,8 @@ using UnityEngine.UI;
 
 public class PlayerSpawner : MonoBehaviourPunCallbacks
 {
-    [SerializeField] private bool spawnGunnerFirst = false;
+    [SerializeField] float gunnerSpawnDelay = 1f;
+    //[SerializeField] private bool spawnGunnerFirst = false;
     [SerializeField] private bool spawnShootersNow = false;
 
     [SerializeField] private float spawnTimer = 8.5f; //have this variable match the length of time the camera animation is
@@ -38,12 +39,7 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
         }
     }
 
-    private IEnumerator TimerToSpawnCars(float time)
-    {
-        yield return new WaitForSeconds(time);
-
-        SpawnCars();
-    }
+    
 
 
 
@@ -91,6 +87,48 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
     }
 
 
+    public void SpawnShooters()
+    {
+        if (gunSpawnPoints.Count > 0 && canSpawnShooters)
+        {
+            if (PhotonNetwork.PlayerList.Length == 2 || PhotonNetwork.PlayerList.Length == 3) //////////////////////////////////////////////////////2 or 3 players
+            {
+                photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[1], gunSpawnPoints[0].position, gunSpawnPoints[0].rotation);
+            }
+
+            if (PhotonNetwork.PlayerList.Length == 4 || PhotonNetwork.PlayerList.Length == 5) //////////////////////////////////////////////////////4 or 5 players
+            {
+                photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[1], gunSpawnPoints[0].position, gunSpawnPoints[0].rotation);
+                photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[3], gunSpawnPoints[1].position, gunSpawnPoints[1].rotation);
+            }
+
+            if (PhotonNetwork.PlayerList.Length == 6 || PhotonNetwork.PlayerList.Length == 7) //////////////////////////////////////////////////////6 or 7 players
+            {
+                photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[1], gunSpawnPoints[0].position, gunSpawnPoints[0].rotation);
+                photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[3], gunSpawnPoints[1].position, gunSpawnPoints[1].rotation);
+                photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[5], gunSpawnPoints[2].position, gunSpawnPoints[2].rotation);
+            }
+
+            if (PhotonNetwork.PlayerList.Length == 8 || PhotonNetwork.PlayerList.Length == 9) //////////////////////////////////////////////////////6 or 7 players
+            {
+                photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[1], gunSpawnPoints[0].position, gunSpawnPoints[0].rotation);
+                photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[3], gunSpawnPoints[1].position, gunSpawnPoints[1].rotation);
+                photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[5], gunSpawnPoints[2].position, gunSpawnPoints[2].rotation);
+                photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[7], gunSpawnPoints[3].position, gunSpawnPoints[3].rotation);
+            }
+
+            if (PhotonNetwork.PlayerList.Length == 10) /////////////////////////////////////////////////////////////////////////////////////////////10 players
+            {
+                photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[1], gunSpawnPoints[0].position, gunSpawnPoints[0].rotation);
+                photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[3], gunSpawnPoints[1].position, gunSpawnPoints[1].rotation);
+                photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[5], gunSpawnPoints[2].position, gunSpawnPoints[2].rotation);
+                photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[7], gunSpawnPoints[3].position, gunSpawnPoints[3].rotation);
+                photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[9], gunSpawnPoints[4].position, gunSpawnPoints[4].rotation);
+            }
+        }
+    }
+
+
     private void Update()
     {
         if (!IsThisMultiplayer.Instance.multiplayer) { return; }
@@ -103,47 +141,11 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
 
 
         //spawn gunners
-        if(spawnShootersNow) //<------------------------------------------------------------------------------Add spawn shooter first check
+        if(spawnShootersNow && startSpawningGunners) //<------------------------------------------------------------------------------Add spawn shooter first check
         {
-            if (gunSpawnPoints.Count > 0 && canSpawnShooters)
-            {
-                canSpawnShooters = false;
-                if (PhotonNetwork.PlayerList.Length == 2 || PhotonNetwork.PlayerList.Length == 3) //////////////////////////////////////////////////////2 or 3 players
-                {
-                    photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[1], gunSpawnPoints[0].position, gunSpawnPoints[0].rotation);
-                }
-
-                if (PhotonNetwork.PlayerList.Length == 4 || PhotonNetwork.PlayerList.Length == 5) //////////////////////////////////////////////////////4 or 5 players
-                {
-                    photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[1], gunSpawnPoints[0].position, gunSpawnPoints[0].rotation);
-                    photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[3], gunSpawnPoints[1].position, gunSpawnPoints[1].rotation);
-                }
-
-                if (PhotonNetwork.PlayerList.Length == 6 || PhotonNetwork.PlayerList.Length == 7) //////////////////////////////////////////////////////6 or 7 players
-                {
-                    photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[1], gunSpawnPoints[0].position, gunSpawnPoints[0].rotation);
-                    photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[3], gunSpawnPoints[1].position, gunSpawnPoints[1].rotation);
-                    photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[5], gunSpawnPoints[2].position, gunSpawnPoints[2].rotation);
-                }
-
-                if (PhotonNetwork.PlayerList.Length == 8 || PhotonNetwork.PlayerList.Length == 9) //////////////////////////////////////////////////////6 or 7 players
-                {
-                    photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[1], gunSpawnPoints[0].position, gunSpawnPoints[0].rotation);
-                    photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[3], gunSpawnPoints[1].position, gunSpawnPoints[1].rotation);
-                    photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[5], gunSpawnPoints[2].position, gunSpawnPoints[2].rotation);
-                    photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[7], gunSpawnPoints[3].position, gunSpawnPoints[3].rotation);
-                }
-
-                if (PhotonNetwork.PlayerList.Length == 10) /////////////////////////////////////////////////////////////////////////////////////////////10 players
-                {
-                    photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[1], gunSpawnPoints[0].position, gunSpawnPoints[0].rotation);
-                    photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[3], gunSpawnPoints[1].position, gunSpawnPoints[1].rotation);
-                    photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[5], gunSpawnPoints[2].position, gunSpawnPoints[2].rotation);
-                    photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[7], gunSpawnPoints[3].position, gunSpawnPoints[3].rotation);
-                    photonView.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[9], gunSpawnPoints[4].position, gunSpawnPoints[4].rotation);
-                }
-            }
-        }    }
+            //SpawnShooters();
+        }    
+    }
 
     void AssignCarSpawnPointsToArray()
     {
@@ -158,19 +160,34 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
     [PunRPC]
     void RPC_SpawnCar(Vector3 spawnPos, Quaternion spawnRot)
     {
-        if (!spawnGunnerFirst)
-            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "CarAvatar"), spawnPos, spawnRot, 0); //correct one for this function
-        else
-            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Shooter"), spawnPos, spawnRot, 0);
+        //if (!spawnGunnerFirst)
+            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Braker"), spawnPos, spawnRot, 0); //correct one for this function
+        //else
+            //PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Shooter"), spawnPos, spawnRot, 0);
     }
 
 
     [PunRPC]
     void RPC_SpawnShooter(Vector3 spawnPos, Quaternion spawnRot)
     {
-        if(!spawnGunnerFirst)
-            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Shooter"), spawnPos, spawnRot, 0); //correct one for this function
-        else
-            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "CarAvatar"), spawnPos, spawnRot, 0);
+        //if(!spawnGunnerFirst)
+            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Shooter2"), spawnPos, spawnRot, 0); //correct one for this function
+        //else
+            //PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "CarAvatar"), spawnPos, spawnRot, 0);
+    }
+
+    private IEnumerator TimerToSpawnCars(float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        SpawnCars();
+        StartCoroutine(TimerToSpawnGunners(gunnerSpawnDelay));
+    }
+
+    private IEnumerator TimerToSpawnGunners(float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        SpawnShooters();
     }
 }

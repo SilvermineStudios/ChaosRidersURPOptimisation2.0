@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MultiplayerCarPrefabs : MonoBehaviour
 {
-    public Transform gunSpawnPoint;
+    public Transform gunSpawnPoint, gunstand;
 
     private PlayerSpawner ps;
 

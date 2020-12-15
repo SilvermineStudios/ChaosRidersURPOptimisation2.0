@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using Photon.Pun;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] float health;
+    [SerializeField] private Transform healthBarUi; 
+
+    public float health;
+    private float healthNormalized;
+    private float startHealth;
     [SerializeField] float lastHit;
 
     public bool isProtected;
@@ -17,50 +21,62 @@ public class Health : MonoBehaviour
     
     public bool isDead { get { return dead; } private set { isDead = dead; } }
 
-    public bool dead;
+    bool dead, respawning;
+    PhotonView pv;
 
     void Start()
     {
-
-        health = 100;
+        pv = GetComponent<PhotonView>();
+        startHealth = health;
         healthbar = GetComponentInChildren<Slider>();
-
     }
 
 
 
     void Update()
     {
+        healthNormalized = (health / startHealth);
+        SetHealthBarUiSize(healthNormalized);
+
         healthbar.value = health;
 
         if(health <= 0 && !dead)
         {
             dead = true;
         }
-        if(dead)
+        if(dead && !respawning)
         {
-            Die();
+            pv.RPC("Die", RpcTarget.All);
+            respawning = true;
         }
-
+        if(respawning)
+        {
+            if (timeSinceDeath > deathTimer)
+            {
+                dead = false;
+                health = 100;
+                pv.RPC("Respawn", RpcTarget.All);
+                timeSinceDeath = 0;
+            }
+            else
+            {
+                timeSinceDeath += Time.deltaTime;
+            }
+        }
     }
 
     float timeSinceDeath, deathTimer = 5;
 
+    [PunRPC]
     void Die()
     {
         deathParticles.SetActive(true);
-        
-        if (timeSinceDeath > deathTimer)
-        {
-            dead = false;
-            health = 100;
-            deathParticles.SetActive(false);
-            timeSinceDeath = 0;
-        }
-        else
-        {
-            timeSinceDeath += Time.deltaTime;
-        }  
+    }
+
+    [PunRPC]
+    void Respawn()
+    {
+        deathParticles.SetActive(false);
     }
 
 
@@ -72,4 +88,12 @@ public class Health : MonoBehaviour
             lastHit = DamagetoTake[1];
         }
     }
+
+    private void SetHealthBarUiSize(float sizeNormalized)
+    {
+        healthBarUi.localScale = new Vector3(1f, sizeNormalized);
+    }
+
+
+
 }

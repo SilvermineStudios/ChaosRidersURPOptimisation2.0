@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.Audio;
 
 // Simple class to controll sounds of the car, based on engine throttle and RPM, and skid velocity.
-[RequireComponent(typeof(DriveTrainMultiplayer))]
-[RequireComponent(typeof(CarControllerMultiplayer))]
+
 public class SoundControllerMultiplayer : MonoBehaviour
 {
+    public AudioMixerGroup mixerGroup; //NEW <---------------------------------------------------------------------------------------
+
     [SerializeField] private float volume = 0.1f;
 
     public AudioClip engine1;
@@ -44,6 +46,9 @@ public class SoundControllerMultiplayer : MonoBehaviour
         go.GetComponent<AudioSource>().volume = volume;
         go.GetComponent<AudioSource>().spatialBlend = 1f;
         go.GetComponent<AudioSource>().dopplerLevel = 0f;
+
+        go.GetComponent<AudioSource>().outputAudioMixerGroup = mixerGroup; //NEW <---------------------------------------------------------------------------------------
+
         go.GetComponent<AudioSource>().Play();
         return go.GetComponent<AudioSource>();
     }
@@ -60,6 +65,9 @@ public class SoundControllerMultiplayer : MonoBehaviour
         go.GetComponent<AudioSource>().volume = volume + 0.2f;
         go.GetComponent<AudioSource>().spatialBlend = 1f;
         go.GetComponent<AudioSource>().dopplerLevel = 0f;
+
+        go.GetComponent<AudioSource>().outputAudioMixerGroup = mixerGroup; //NEW <---------------------------------------------------------------------------------------
+
         return go.GetComponent<AudioSource>();
     }
 
