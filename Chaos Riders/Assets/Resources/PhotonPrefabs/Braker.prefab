@@ -44,7 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 593660bcae334c346a5ffb1c38ecb508, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  meshRenderers: []
+  makeInvisable: 1
+  meshRenderers:
+  - {fileID: 1060387598}
+  - {fileID: 1783994380}
+  - {fileID: 1309151962}
+  - {fileID: 686677305}
 --- !u!1 &686677303
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,7 +97,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 686677303}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -409,7 +414,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1060387596}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -494,7 +499,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1309151960}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -583,7 +588,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 1327968797}
-  viewIdField: 0
+  viewIdField: 14
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &1327968797
@@ -680,7 +685,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1783994378}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -17500,8 +17505,6 @@ GameObject:
   - component: {fileID: 4468230371053281374}
   - component: {fileID: 4468230371053281697}
   - component: {fileID: 4468230371053281696}
-  - component: {fileID: 4468230371053281699}
-  - component: {fileID: 4468230371053281698}
   - component: {fileID: 4468230371053281701}
   - component: {fileID: 4468230371053281700}
   - component: {fileID: 4468230371053281703}
@@ -17733,7 +17736,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 4468230371053281370}
   - {fileID: 4468230371053281373}
-  viewIdField: 0
+  viewIdField: 15
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &4468230371053281370
@@ -17822,32 +17825,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunSpawnPoint: {fileID: 890423855}
   gunstand: {fileID: 977055096}
---- !u!114 &4468230371053281699
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4468230371053281714}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21062ba24017c4242b095b77d75fe1bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  carGunBarrel: {fileID: 0}
---- !u!114 &4468230371053281698
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4468230371053281714}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db062fd53be27614f9bd083eb0ceb5da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hasShooter: 0
 --- !u!114 &4468230371053281701
 MonoBehaviour:
   m_ObjectHideFlags: 0

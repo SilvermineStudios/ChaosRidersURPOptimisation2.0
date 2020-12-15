@@ -410,7 +410,7 @@ public class Controller : MonoBehaviour
     }
 
    
-
+    /*
     // Debug GUI.
     void OnGUI()
     {
@@ -421,7 +421,7 @@ public class Controller : MonoBehaviour
         GUILayout.Label("brakeTorque: " + wheelColliders[0].brakeTorque);
         
     }
-
+    */
 
     private void AddDownForce()
     {

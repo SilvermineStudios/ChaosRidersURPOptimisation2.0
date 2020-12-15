@@ -17,7 +17,7 @@ public class Target : MonoBehaviour
         else
             healthScript = GetComponent<Health>();
     }
-
+    /*
     private void OnGUI()
     {
         GUILayout.Label(" ");
@@ -32,7 +32,7 @@ public class Target : MonoBehaviour
         GUILayout.Label(" ");
         GUILayout.Label("Health: " + health);
     }
-
+    */
     void Update()
     {
         //TakeDamage(1);

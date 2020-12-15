@@ -339,8 +339,10 @@ GameObject:
   - component: {fileID: 1682963324}
   - component: {fileID: 1682963326}
   - component: {fileID: 1682963325}
+  - component: {fileID: 3108852170001021686}
+  - component: {fileID: 3332013116374403200}
   m_Layer: 0
-  m_Name: Shooting tube (1)
+  m_Name: Rotating Barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -410,6 +412,44 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3108852170001021686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1682963323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  observableSearch: 2
+  Synchronization: 3
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 3332013116374403200}
+  viewIdField: 11
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &3332013116374403200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1682963323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
 --- !u!1 &1801839463
 GameObject:
   m_ObjectHideFlags: 0
@@ -2874,7 +2914,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 7634238392520716271}
-  viewIdField: 0
+  viewIdField: 13
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &7634238392520716271
@@ -9365,8 +9405,6 @@ GameObject:
   - component: {fileID: 7634238392847830461}
   - component: {fileID: 7634238392847830454}
   - component: {fileID: 7634238392847830453}
-  - component: {fileID: 7634238392847830455}
-  - component: {fileID: 7634238392847830452}
   - component: {fileID: 7634238392847830458}
   - component: {fileID: 7634238392847830449}
   - component: {fileID: 6363141367679138889}
@@ -9450,7 +9488,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 7634238392847830457}
-  viewIdField: 0
+  viewIdField: 12
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &7634238392847830457
@@ -9649,32 +9687,6 @@ MonoBehaviour:
   currentCheckpoint: 0
   youWinText: {fileID: 7634238392000496514}
   canCollect: 1
---- !u!114 &7634238392847830455
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7634238392847830435}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86a0fb2db96015a4684db2c1e1087333, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  carTurret: {fileID: 0}
---- !u!114 &7634238392847830452
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7634238392847830435}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44e994cd748128d449c6c54314d260ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  meshRenderers: []
 --- !u!114 &7634238392847830458
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9729,9 +9741,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2deb249e0cde9254d860462c59c379bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectsToDisableIfNotYours:
-  - {fileID: 0}
-  - {fileID: 1105803715}
+  objectsToDisableIfNotYours: []
 --- !u!1 &7634238392854081156
 GameObject:
   m_ObjectHideFlags: 0
