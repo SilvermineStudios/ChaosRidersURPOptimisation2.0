@@ -20,7 +20,6 @@ public class AIHealth : MonoBehaviour
 
     void Start()
     {
-        health = 100;
         healthbar = GetComponentInChildren<Slider>();
     }
 
