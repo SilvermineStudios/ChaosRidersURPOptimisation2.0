@@ -6,9 +6,9 @@ public class AICarController : MonoBehaviour
 {
     [SerializeField] private float downforce = 800f;
     private Rigidbody rb;
-    [SerializeField] private float maxMotorTorque = 80f; // maximum torque that can be applied to the wheels
+    [SerializeField] private float maxMotorTorque = 1000f; // maximum torque that can be applied to the wheels
     [SerializeField] private float currentSpeed; //cars current speed
-    [SerializeField] private float maxSpeed = 100f; //maximum speed the car can achieve
+    [SerializeField] private float maxSpeed = 2000f; //maximum speed the car can achieve
     [SerializeField] private float maxSteerAngle = 45f; //maximum angle the wheels can rotate +/-
 
     [SerializeField] private int currentWaypoint = 0; //the current waypoin the car is moving towards
