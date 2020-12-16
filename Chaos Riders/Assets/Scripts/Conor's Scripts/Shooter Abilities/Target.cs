@@ -35,20 +35,26 @@ public class Target : MonoBehaviour
     */
     void Update()
     {
-        //TakeDamage(1);
-
         if (ai)
         {
             health = aiHealthScript.health;
+            if (health < 0)
+                health = 0;
         }
         else
         {
             health = healthScript.health;
+            if (health < 0)
+                health = 0;
         }
     }
 
     public void TakeDamage(float amount)
     {
+        //if the amount of damage being dealt is more than the health set the amount of damage = to the health
+        if (amount > health)
+            amount = health;
+
         if (health > 0)
         {
             if (ai)

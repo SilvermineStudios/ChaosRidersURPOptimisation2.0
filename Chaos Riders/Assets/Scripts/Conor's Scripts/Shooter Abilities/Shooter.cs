@@ -12,7 +12,8 @@ public class Shooter : MonoBehaviour
     [SerializeField] private Transform barrelToRotate;
     private float barrelRotationSpeed;
     [SerializeField] private float barrelRotationStartSpeed = 100f, barrelRotationMaxSpeed = 800f;
-
+    [SerializeField] private float maxDeviation;
+    [SerializeField] private CinemachineVirtualCamera cineCamera;
     [SerializeField] private GameObject bulletSpawnPoint;
     public GameObject car;
     private GameObject carCollision;
@@ -35,6 +36,7 @@ public class Shooter : MonoBehaviour
     [SerializeField] private KeyCode RPGButton = KeyCode.Tab;
     [SerializeField] private float amountOfAmmoForCooldownBar = 1000;
     [SerializeField] private float amountOfAmmoForRPG = 10;
+    private float startAmountOfAmmoForRPG;
     private float startAmmo; //the amount of ammo for the cooldown bar at the start of the game
     private float ammoNormalized; //normalized the ammo value to be between 0 and 1 for the cooldown bar scale
     [SerializeField] private Transform coolDownBarUi; //ui bar that shows the cooldown of the minigun
@@ -56,6 +58,7 @@ public class Shooter : MonoBehaviour
     {
         pv = GetComponent<PhotonView>();
         startAmmo = amountOfAmmoForCooldownBar;
+        startAmountOfAmmoForRPG = amountOfAmmoForRPG;
 
         barrelRotationSpeed = barrelRotationStartSpeed;
     }
@@ -84,12 +87,21 @@ public class Shooter : MonoBehaviour
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
             FollowMouse();
+            
+            if(car.GetComponent<CarPickup>().hasRPG)
+                RPG = true;
+
+            if(amountOfAmmoForRPG <= 0 && car.GetComponent<CarPickup>().hasRPG)
+            {
+                RPG = false;
+                car.GetComponent<CarPickup>().hasRPG = false;
+                amountOfAmmoForRPG = startAmountOfAmmoForRPG;
+            }
         }
 
         //online shooting
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer)
         {
-
             if (!RPG)
             {
                 pv.RPC("HideRPG", RpcTarget.All);
@@ -232,8 +244,10 @@ public class Shooter : MonoBehaviour
     {
         muzzleFlash.Play();
 
+        Vector3 direction = Spread(maxDeviation);
+
         RaycastHit hit; //gets the information on whats hit
-        if (Physics.Raycast(bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.forward, out hit, range))
+        if (Physics.Raycast(cineCamera.transform.position, direction, out hit, range))
         {
             //Debug.Log("You Hit The: " + hit.transform.name);
 
@@ -241,6 +255,7 @@ public class Shooter : MonoBehaviour
             if(target != null && target.gameObject != car)
             {
                 target.TakeDamage(damage);
+                //<-------------------------------------------------------------------------------------HIT MARKER STUFFS
             }
 
             GameObject impactGo = PhotonNetwork.Instantiate("Impact Particle Effect", hit.point, Quaternion.LookRotation(hit.normal), 0);
@@ -249,15 +264,26 @@ public class Shooter : MonoBehaviour
         }
     }
 
+    Vector3 Spread(float maxDeviation)
+    {
+        Vector3 forwardVector = cineCamera.transform.forward;
+        float deviation = Random.Range(0f, maxDeviation);
+        float angle = Random.Range(0f, 360f);
+        forwardVector = Quaternion.AngleAxis(deviation, cineCamera.transform.up) * forwardVector;
+        forwardVector = Quaternion.AngleAxis(angle, cineCamera.transform.forward) * forwardVector;
+        //forwardVector = cineCamera.transform.rotation * forwardVector;
+        return forwardVector;
+    }
+
     void OfflineShoot()
     {
         muzzleFlash.Play();
 
-        RaycastHit hit; //gets the information on whats hit
-        if (Physics.Raycast(bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.forward, out hit, range))
-        {
-            //Debug.Log("You Hit The: " + hit.transform.name);
+        Vector3 direction = Spread(maxDeviation);
 
+        RaycastHit hit; //gets the information on whats hit
+        if (Physics.Raycast(cineCamera.transform.position, direction, out hit, range))
+        {
             Target target = hit.transform.GetComponent<Target>();
             if (target != null && target.gameObject != car)
             {

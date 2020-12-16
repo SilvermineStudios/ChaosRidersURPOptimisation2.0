@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class AIHealth : MonoBehaviour
 {
     public float health;
+    private float startHealth;
     [SerializeField] float lastHit;
 
     public bool isProtected;
@@ -17,6 +18,11 @@ public class AIHealth : MonoBehaviour
     public bool isDead { get { return dead; } private set { isDead = dead; } }
 
     public bool dead;
+
+    private void Awake()
+    {
+        startHealth = health;
+    }
 
     void Start()
     {
@@ -49,7 +55,7 @@ public class AIHealth : MonoBehaviour
         if (timeSinceDeath > deathTimer)
         {
             dead = false;
-            health = 100;
+            health = startHealth;
             deathParticles.SetActive(false);
             timeSinceDeath = 0;
         }
