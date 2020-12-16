@@ -111,6 +111,50 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &513496765
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 513496766}
+  - component: {fileID: 513496767}
+  m_Layer: 2
+  m_Name: Collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &513496766
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 513496765}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7634238392847830459}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &513496767
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 513496765}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.4527384, y: 5.6807833, z: 3.4286551}
+  m_Center: {x: -0.22636677, y: -2.3403907, z: 0.77099514}
 --- !u!1 &670548074
 GameObject:
   m_ObjectHideFlags: 0
@@ -493,7 +537,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 3332013116374403200}
-  viewIdField: 0
+  viewIdField: 14
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &3332013116374403200
@@ -3626,7 +3670,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 7634238392520716271}
-  viewIdField: 0
+  viewIdField: 15
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &7634238392520716271
@@ -9994,6 +10038,7 @@ Transform:
   - {fileID: 7634238391841590507}
   - {fileID: 7634238393232956385}
   - {fileID: 322621240}
+  - {fileID: 513496766}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 200, z: 0}
@@ -10013,6 +10058,7 @@ MonoBehaviour:
   barrelRotationStartSpeed: 100
   barrelRotationMaxSpeed: 800
   maxDeviation: 0
+  cineCamera: {fileID: 5207396787800693346}
   bulletSpawnPoint: {fileID: 7634238392448286943}
   car: {fileID: 0}
   layerMask:
@@ -10061,7 +10107,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 7634238392847830457}
-  viewIdField: 0
+  viewIdField: 16
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &7634238392847830457
@@ -10236,7 +10282,7 @@ BoxCollider:
   m_GameObject: {fileID: 7634238392847830435}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1.4527384, y: 5.6807833, z: 3.4286551}
   m_Center: {x: -0.22636677, y: -2.3403907, z: 0.77099514}
