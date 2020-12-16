@@ -10,6 +10,7 @@ public class CarPickup : MonoBehaviour
     Health healthScript;
     [SerializeField] private bool hasSpeedBoost = false;
     public bool hasRPG = false;
+    [SerializeField] private GameObject shooter;
     [SerializeField] private GameObject nitroUiImage, armourUiImage;
 
     private PhotonView pv;
@@ -30,6 +31,13 @@ public class CarPickup : MonoBehaviour
 
     private void Update()
     {
+        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
+        {
+            shooter = GetComponent<Controller>().Shooter;
+            //if (!shooter.GetComponent<Shooter>().RPG)
+                //hasRPG = false;
+        }
+
         //player can speedboost by pressing the space bar when they have one
         if (hasSpeedBoost && (Input.GetKeyDown(KeyCode.Space)))// || Input.GetButtonDown("A")))
         {
@@ -40,17 +48,19 @@ public class CarPickup : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //if the player picked up a speed pickup
-        if (other.CompareTag("SpeedPickUp") && pv.IsMine || other.CompareTag("SpeedPickUp") && !IsThisMultiplayer.Instance.multiplayer) //the or is for testing when not in multiplayer
-            hasSpeedBoost = true;
+        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
+        {
+            //if the player picked up a speed pickup
+            if (other.CompareTag("SpeedPickUp")) //the or is for testing when not in multiplayer
+                hasSpeedBoost = true;
 
-        //if the player picked up the invincible pickup
-        if (other.CompareTag("InvinciblePickUp") && pv.IsMine || other.CompareTag("InvinciblePickUp") && !IsThisMultiplayer.Instance.multiplayer) //the or is for testing when not in multiplayer
-            StartCoroutine(InvincibleTimer(PickupManager.InvincibleTime));
+            //if the player picked up the invincible pickup
+            if (other.CompareTag("InvinciblePickUp")) //the or is for testing when not in multiplayer
+                StartCoroutine(InvincibleTimer(PickupManager.InvincibleTime));
 
-        if (other.CompareTag("RPGPickup") && pv.IsMine || other.CompareTag("RPGPickup") && !IsThisMultiplayer.Instance.multiplayer)
-            hasRPG = true;
-            
+            if (other.CompareTag("RPGPickup") && !hasRPG)
+                hasRPG = true;
+        }
     }
 
     #region Puwerup Courotines

@@ -50,6 +50,7 @@ public class Controller : MonoBehaviour
     WheelFrictionCurve normal;
     float num = 0.002f;
     public TurretTester ShooterAttached;
+    public GameObject Shooter;
 
 
     private void Awake()
@@ -503,5 +504,11 @@ public class Controller : MonoBehaviour
         oldRot = transform.eulerAngles.y;
     }
 
-    
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "shooter")
+        {
+            Shooter = other.gameObject;
+        }
+    }
 }

@@ -36,6 +36,7 @@ public class Shooter : MonoBehaviour
     [SerializeField] private KeyCode RPGButton = KeyCode.Tab;
     [SerializeField] private float amountOfAmmoForCooldownBar = 1000;
     [SerializeField] private float amountOfAmmoForRPG = 10;
+    private float startAmountOfAmmoForRPG;
     private float startAmmo; //the amount of ammo for the cooldown bar at the start of the game
     private float ammoNormalized; //normalized the ammo value to be between 0 and 1 for the cooldown bar scale
     [SerializeField] private Transform coolDownBarUi; //ui bar that shows the cooldown of the minigun
@@ -57,6 +58,7 @@ public class Shooter : MonoBehaviour
     {
         pv = GetComponent<PhotonView>();
         startAmmo = amountOfAmmoForCooldownBar;
+        startAmountOfAmmoForRPG = amountOfAmmoForRPG;
 
         barrelRotationSpeed = barrelRotationStartSpeed;
     }
@@ -89,18 +91,17 @@ public class Shooter : MonoBehaviour
             if(car.GetComponent<CarPickup>().hasRPG)
                 RPG = true;
 
-            if(amountOfAmmoForRPG <= 0)
+            if(amountOfAmmoForRPG <= 0 && car.GetComponent<CarPickup>().hasRPG)
             {
                 RPG = false;
                 car.GetComponent<CarPickup>().hasRPG = false;
+                amountOfAmmoForRPG = startAmountOfAmmoForRPG;
             }
-            
         }
 
         //online shooting
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer)
         {
-
             if (!RPG)
             {
                 pv.RPC("HideRPG", RpcTarget.All);
