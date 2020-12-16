@@ -72,7 +72,7 @@ public class Shooter : MonoBehaviour
     void Update()
     {
         RotateGunBarrel();
-        FollowMouse();
+        
         rpgcount.text = amountOfAmmoForRPG + " / 10";
         if (connectCar)
         {
@@ -81,6 +81,10 @@ public class Shooter : MonoBehaviour
             carCollision = GetComponentInParent<MoveTurretPosition>().car.transform.GetChild(0).gameObject;
         }
 
+        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
+        {
+            FollowMouse();
+        }
 
         //online shooting
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer)
