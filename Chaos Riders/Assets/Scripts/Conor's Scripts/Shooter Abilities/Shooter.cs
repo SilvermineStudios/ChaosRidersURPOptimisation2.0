@@ -85,6 +85,16 @@ public class Shooter : MonoBehaviour
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
             FollowMouse();
+            
+            if(car.GetComponent<CarPickup>().hasRPG)
+                RPG = true;
+
+            if(amountOfAmmoForRPG <= 0)
+            {
+                RPG = false;
+                car.GetComponent<CarPickup>().hasRPG = false;
+            }
+            
         }
 
         //online shooting
