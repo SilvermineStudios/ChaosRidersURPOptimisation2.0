@@ -73,7 +73,7 @@ public class Shooter : MonoBehaviour
     {
         RotateGunBarrel();
         FollowMouse();
-        rpgcount.text = amountOfAmmoForRPG + "/ 10";
+        rpgcount.text = amountOfAmmoForRPG + " / 10";
         if (connectCar)
         {
             connectCar = false;
