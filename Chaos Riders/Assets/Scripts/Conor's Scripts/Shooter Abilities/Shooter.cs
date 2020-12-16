@@ -256,8 +256,6 @@ public class Shooter : MonoBehaviour
         RaycastHit hit; //gets the information on whats hit
         if (Physics.Raycast(bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.forward, out hit, range))
         {
-            //Debug.Log("You Hit The: " + hit.transform.name);
-
             Target target = hit.transform.GetComponent<Target>();
             if (target != null && target.gameObject != car)
             {
