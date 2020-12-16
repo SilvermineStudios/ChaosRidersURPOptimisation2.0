@@ -41,7 +41,8 @@ public class Controller : MonoBehaviour
     private float boostTorque;
     public float currentSpeed { get { return rb.velocity.magnitude * 2.23693629f; } private set { } }
     float slipLimit = 0.3f;
-    float skidLimit = 0.5f;
+    [SerializeField ]float forwardSkidLimit = 0.5f;
+    [SerializeField ]float sideSkidLimit = 0.5f;
     Skidmarks[] skidmarks = new Skidmarks[4];
     int[] lastSkid = new int[4];
     CinemachineTransposer cineCamTransposer;
@@ -193,7 +194,7 @@ public class Controller : MonoBehaviour
         }
         else if (currentSpeed > 10 && verticalInput == 0)
         {
-            thrustTorque = 0.5f * (currentTorque  / 4f * a);
+            thrustTorque = -verticalInput * (currentTorque  / 4f * a);
         }
         else 
         {
@@ -392,7 +393,7 @@ public class Controller : MonoBehaviour
             wheelColliders[i].GetGroundHit(out wheelHit);
             //Debug.Log(wheelHit.sidewaysSlip);
 
-            if (((wheelHit.forwardSlip > skidLimit || wheelHit.forwardSlip < -skidLimit) || (wheelHit.sidewaysSlip > skidLimit || wheelHit.sidewaysSlip < -skidLimit)) && skidmarks[i] != null)
+            if (((wheelHit.forwardSlip > forwardSkidLimit || wheelHit.forwardSlip < -forwardSkidLimit) || (wheelHit.sidewaysSlip > sideSkidLimit || wheelHit.sidewaysSlip < -sideSkidLimit)) && skidmarks[i] != null)
             {
                 Vector3 skidPoint = new Vector3(wheelColliders[i].transform.position.x, wheelHit.point.y, wheelColliders[i].transform.position.z) + (rb.velocity * Time.deltaTime);
                 lastSkid[i] = skidmarksController.AddSkidMark(skidPoint, wheelHit.normal, 0.5f, lastSkid[i]);
