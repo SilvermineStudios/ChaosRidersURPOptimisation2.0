@@ -52,6 +52,8 @@ public class Shooter : MonoBehaviour
 
     void Start()
     {
+       
+
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
 
@@ -69,6 +71,7 @@ public class Shooter : MonoBehaviour
             carCollision = GetComponentInParent<MoveTurretPosition>().car.transform.GetChild(0).gameObject;
         }
 
+        rpgcount.text = amountOfAmmoForRPG + "/ 10";
 
         //online shooting
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer)
@@ -105,7 +108,6 @@ public class Shooter : MonoBehaviour
                 if (Input.GetKeyDown(shootButton) && amountOfAmmoForRPG > 0)
                 {
                     amountOfAmmoForRPG--;
-                    rpgcount.text = amountOfAmmoForRPG + "/ 10";
                     ShootRPG();
                 }
                 if (Input.GetKeyDown(RPGButton))
@@ -151,7 +153,6 @@ public class Shooter : MonoBehaviour
                 if(Input.GetKeyDown(shootButton) && amountOfAmmoForRPG > 0)
                 {
                     amountOfAmmoForRPG--;
-                    rpgcount.text = amountOfAmmoForRPG + "/ 10";
                     OfflineShootRPG();
                 }
                 if(Input.GetKeyDown(RPGButton))
