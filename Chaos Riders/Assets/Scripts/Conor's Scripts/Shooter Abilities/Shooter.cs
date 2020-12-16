@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Cinemachine;
+using System.IO;
+using UnityEngine.UI;
+using TMPro;
 
 public class Shooter : MonoBehaviour
 {
@@ -12,17 +15,21 @@ public class Shooter : MonoBehaviour
     [SerializeField] private float minigunDamage;
     [SerializeField] float playerNumber = 1;
     public bool connectCar = false;
-
+    [SerializeField] GameObject rpgGo;
+    [SerializeField] GameObject rocketspawn;
+    [SerializeField] GameObject rocket;
     [SerializeField] private Transform playerCam;
-
-
+    public TMP_Text rpgcount;
+    public bool RPG;
 
     //shooting
     [SerializeField] private float damage = 10f;
     [SerializeField] private float range = 100f;
 
     [SerializeField] private KeyCode shootButton = KeyCode.Mouse0; 
+    [SerializeField] private KeyCode RPGButton = KeyCode.Tab; 
     [SerializeField] private float amountOfAmmoForCooldownBar = 1000;
+    [SerializeField] private float amountOfAmmoForRPG = 10;
     private float startAmmo; //the amount of ammo for the cooldown bar at the start of the game
     private float ammoNormalized; //normalized the ammo value to be between 0 and 1 for the cooldown bar scale
     [SerializeField] private Transform coolDownBarUi; //ui bar that shows the cooldown of the minigun
@@ -66,46 +73,105 @@ public class Shooter : MonoBehaviour
         //online shooting
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer)
         {
-            RotateGunBarrel();
-
-            ammoNormalized = amountOfAmmoForCooldownBar / startAmmo; //normalized the ammo value to be between 0 and 1 for the cooldown bar scale
-            CoolDownBar(ammoNormalized); //scale the size of the cooldown bar to match the ammo count
-
-            //if you are shooting and have ammo
-            if (Input.GetKey(shootButton) && amountOfAmmoForCooldownBar > 0)
+            if (!RPG)
             {
-                amountOfAmmoForCooldownBar--;
-                pv.RPC("Shoot", RpcTarget.All);
-            }
+                pv.RPC("HideRPG", RpcTarget.All);
+                RotateGunBarrel();
 
-            //if you are not shooting and the ammo isnt full
-            if (amountOfAmmoForCooldownBar < startAmmo && !Input.GetKey(shootButton))
-            {
-                amountOfAmmoForCooldownBar++;
+                ammoNormalized = amountOfAmmoForCooldownBar / startAmmo; //normalized the ammo value to be between 0 and 1 for the cooldown bar scale
+                CoolDownBar(ammoNormalized); //scale the size of the cooldown bar to match the ammo count
+
+                //if you are shooting and have ammo
+                if (Input.GetKey(shootButton) && amountOfAmmoForCooldownBar > 0)
+                {
+                    amountOfAmmoForCooldownBar--;
+                    pv.RPC("Shoot", RpcTarget.All);
+                }
+
+                //if you are not shooting and the ammo isnt full
+                if (amountOfAmmoForCooldownBar < startAmmo && !Input.GetKey(shootButton))
+                {
+                    amountOfAmmoForCooldownBar++;
+                }
+                if (Input.GetKeyDown(RPGButton))
+                {
+                    RPG = true;
+                }
             }
+            else
+            {
+                pv.RPC("ShowRPG", RpcTarget.All);
+                RotateGunBarrel();
+                if (Input.GetKeyDown(shootButton) && amountOfAmmoForRPG > 0)
+                {
+                    amountOfAmmoForRPG--;
+                    rpgcount.text = amountOfAmmoForRPG + "/ 10";
+                    ShootRPG();
+                }
+                if (Input.GetKeyDown(RPGButton))
+                {
+                    RPG = false;
+                }
+            }
+        
         }
 
         //offline Shooting
         if(!IsThisMultiplayer.Instance.multiplayer)
         {
-            RotateGunBarrel();
-
-            ammoNormalized = amountOfAmmoForCooldownBar / startAmmo; //normalized the ammo value to be between 0 and 1 for the cooldown bar scale
-            CoolDownBar(ammoNormalized); //scale the size of the cooldown bar to match the ammo count
-
-            //if you are shooting and have ammo
-            if (Input.GetKey(shootButton) && amountOfAmmoForCooldownBar > 0)
+            if (!RPG)
             {
-                amountOfAmmoForCooldownBar--;
-                OfflineShoot();
+                rpgGo.SetActive(false);
+                RotateGunBarrel();
+
+                ammoNormalized = amountOfAmmoForCooldownBar / startAmmo; //normalized the ammo value to be between 0 and 1 for the cooldown bar scale
+                CoolDownBar(ammoNormalized); //scale the size of the cooldown bar to match the ammo count
+
+                //if you are shooting and have ammo
+                if (Input.GetKey(shootButton) && amountOfAmmoForCooldownBar > 0)
+                {
+                    amountOfAmmoForCooldownBar--;
+                    OfflineShoot();
+                }
+
+                //if you are not shooting and the ammo isnt full
+                if (amountOfAmmoForCooldownBar < startAmmo && !Input.GetKey(shootButton))
+                {
+                    amountOfAmmoForCooldownBar++;
+                }
+                if (Input.GetKeyDown(RPGButton))
+                {
+                    RPG = true;
+                }
             }
-
-            //if you are not shooting and the ammo isnt full
-            if (amountOfAmmoForCooldownBar < startAmmo && !Input.GetKey(shootButton))
+            else
             {
-                amountOfAmmoForCooldownBar++;
+                rpgGo.SetActive(true);
+                RotateGunBarrel();
+                if(Input.GetKeyDown(shootButton) && amountOfAmmoForRPG > 0)
+                {
+                    amountOfAmmoForRPG--;
+                    rpgcount.text = amountOfAmmoForRPG + "/ 10";
+                    OfflineShootRPG();
+                }
+                if(Input.GetKeyDown(RPGButton))
+                {
+                    RPG = false;
+                }
             }
         }
+    }
+
+    [PunRPC]
+    void ShowRPG()
+    {
+        rpgGo.SetActive(true);
+    }
+
+    [PunRPC]
+    void HideRPG()
+    {
+        rpgGo.SetActive(false);
     }
 
     private void RotateGunBarrel()
@@ -118,6 +184,8 @@ public class Shooter : MonoBehaviour
 
         gunBarrel.localRotation = Quaternion.Euler(yAngle, xAngle, 0);
     }
+
+
 
     private void CoolDownBar(float sizeNormalized)
     {
@@ -142,6 +210,8 @@ public class Shooter : MonoBehaviour
         }
     }
 
+
+
     void OfflineShoot()
     {
         muzzleFlash.Play();
@@ -157,5 +227,19 @@ public class Shooter : MonoBehaviour
                 target.TakeDamage(damage);
             }
         }
+    }
+
+
+    void OfflineShootRPG()
+    {
+        GameObject grenade = Instantiate(rocket,rocketspawn.transform.position, rpgGo.transform.rotation);
+        grenade.GetComponent<Rigidbody>().AddForce(rpgGo.transform.transform.forward * 100, ForceMode.Impulse);
+    }
+
+    [PunRPC]
+    void ShootRPG()
+    {
+        GameObject grenade = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Grenade"), rocketspawn.transform.position, rpgGo.transform.rotation, 0);
+        grenade.GetComponent<Rigidbody>().AddForce(rpgGo.transform.transform.forward * 100, ForceMode.Impulse);
     }
 }

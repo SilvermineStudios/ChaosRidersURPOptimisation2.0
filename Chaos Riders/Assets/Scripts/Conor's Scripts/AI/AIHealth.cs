@@ -61,12 +61,12 @@ public class AIHealth : MonoBehaviour
     }
 
 
-    public void TakeDamage(float[] DamagetoTake)
+    public void TakeDamage(float DamagetoTake)
     {
         if (!isProtected)
         {
-            health -= DamagetoTake[0];
-            lastHit = DamagetoTake[1];
+            health -= DamagetoTake;
+
         }
     }
 }
