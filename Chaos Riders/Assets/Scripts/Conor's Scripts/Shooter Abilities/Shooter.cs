@@ -255,6 +255,7 @@ public class Shooter : MonoBehaviour
             if(target != null && target.gameObject != car)
             {
                 target.TakeDamage(damage);
+                //<-------------------------------------------------------------------------------------HIT MARKER STUFFS
             }
 
             GameObject impactGo = PhotonNetwork.Instantiate("Impact Particle Effect", hit.point, Quaternion.LookRotation(hit.normal), 0);
