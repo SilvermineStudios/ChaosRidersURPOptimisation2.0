@@ -7,6 +7,7 @@ using System.IO;
 using UnityEngine.UI;
 using TMPro;
 
+
 public class NewShooter : MonoBehaviour
 {
     [SerializeField] private GameObject bulletSpawnPoint;
