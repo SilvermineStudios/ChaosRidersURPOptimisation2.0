@@ -9,6 +9,7 @@ public class CarPickup : MonoBehaviour
     private GameObject go;
     Health healthScript;
     [SerializeField] private bool hasSpeedBoost = false;
+    public bool hasRPG = false;
     [SerializeField] private GameObject nitroUiImage, armourUiImage;
 
     private PhotonView pv;
@@ -46,6 +47,10 @@ public class CarPickup : MonoBehaviour
         //if the player picked up the invincible pickup
         if (other.CompareTag("InvinciblePickUp") && pv.IsMine || other.CompareTag("InvinciblePickUp") && !IsThisMultiplayer.Instance.multiplayer) //the or is for testing when not in multiplayer
             StartCoroutine(InvincibleTimer(PickupManager.InvincibleTime));
+
+        if (other.CompareTag("RPGPickup") && pv.IsMine || other.CompareTag("RPGPickup") && !IsThisMultiplayer.Instance.multiplayer)
+            hasRPG = true;
+            
     }
 
     #region Puwerup Courotines
