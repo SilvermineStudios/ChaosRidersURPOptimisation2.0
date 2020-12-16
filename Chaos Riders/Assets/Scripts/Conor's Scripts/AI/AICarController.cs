@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class AICarController : MonoBehaviour
 {
+    [SerializeField] private float downforce = 800f;
+    private Rigidbody rb;
     [SerializeField] private float maxMotorTorque = 80f; // maximum torque that can be applied to the wheels
     [SerializeField] private float currentSpeed; //cars current speed
     [SerializeField] private float maxSpeed = 100f; //maximum speed the car can achieve
@@ -25,6 +27,7 @@ public class AICarController : MonoBehaviour
     private void Awake()
     {
         waypointManager = FindObjectOfType<AIWaypointManager>(); //find the waypoint manager
+        rb = GetComponent<Rigidbody>();
     }
 
     void Start()
@@ -44,8 +47,13 @@ public class AICarController : MonoBehaviour
         ApplySteer();
         Drive();
         CheckWaypointDistance();
+        AddDownForce();
     }
 
+    private void AddDownForce()
+    {
+        rb.AddForce(-transform.up * downforce * rb.velocity.magnitude);
+    }
 
     private void Die()
     {
