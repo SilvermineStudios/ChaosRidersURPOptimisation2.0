@@ -12,6 +12,7 @@ public class Shooter : MonoBehaviour
     [SerializeField] private Transform barrelToRotate;
     private float barrelRotationSpeed;
     [SerializeField] private float barrelRotationStartSpeed = 100f, barrelRotationMaxSpeed = 800f;
+    [SerializeField] private float maxDeviation;
 
     [SerializeField] private GameObject bulletSpawnPoint;
     public GameObject car;
@@ -231,9 +232,9 @@ public class Shooter : MonoBehaviour
     void Shoot()
     {
         muzzleFlash.Play();
-
+        Vector3 direction = Spread(maxDeviation);
         RaycastHit hit; //gets the information on whats hit
-        if (Physics.Raycast(bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.forward, out hit, range))
+        if (Physics.Raycast(bulletSpawnPoint.transform.position, direction, out hit, range))
         {
             //Debug.Log("You Hit The: " + hit.transform.name);
 
@@ -249,12 +250,25 @@ public class Shooter : MonoBehaviour
         }
     }
 
+    Vector3 Spread(float maxDeviation)
+    {
+        Vector3 forwardVector = Vector3.forward;
+        float deviation = Random.Range(0f, maxDeviation);
+        float angle = Random.Range(0f, 360f);
+        forwardVector = Quaternion.AngleAxis(deviation, Vector3.up) * forwardVector;
+        forwardVector = Quaternion.AngleAxis(angle, Vector3.forward) * forwardVector;
+        forwardVector = bulletSpawnPoint.transform.rotation * forwardVector;
+        return forwardVector;
+    }
+
+
     void OfflineShoot()
     {
         muzzleFlash.Play();
+        Vector3 direction = Spread(maxDeviation);
 
         RaycastHit hit; //gets the information on whats hit
-        if (Physics.Raycast(bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.forward, out hit, range))
+        if (Physics.Raycast(bulletSpawnPoint.transform.position, direction, out hit, range))
         {
             Target target = hit.transform.GetComponent<Target>();
             if (target != null && target.gameObject != car)
