@@ -18,6 +18,7 @@ public class RPGPickup : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if(other.tag != "car")
         if (!pickedUp)
         {
             pickedUp = true;

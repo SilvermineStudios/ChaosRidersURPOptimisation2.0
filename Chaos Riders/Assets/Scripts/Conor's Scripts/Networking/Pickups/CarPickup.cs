@@ -61,6 +61,20 @@ public class CarPickup : MonoBehaviour
             if (other.CompareTag("RPGPickup") && !hasRPG)
                 hasRPG = true;
         }
+
+        if(pv.IsMine && IsThisMultiplayer.Instance.multiplayer)
+        {
+            if (other.CompareTag("RPGPickup") && !hasRPG)
+            {
+                pv.RPC("RPG", RpcTarget.All);
+            }
+        }
+    }
+
+    [PunRPC]
+    void RPG()
+    {
+        hasRPG = true;
     }
 
     #region Puwerup Courotines
