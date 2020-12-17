@@ -6,6 +6,8 @@ using Photon.Pun;
 
 public class Controller : MonoBehaviour
 {
+    [SerializeField] private bool displayGui = false;
+
     [SerializeField] private WheelCollider[] wheelColliders = new WheelCollider[4];
     [SerializeField] private Transform[] wheelMeshes = new Transform[4];
     [SerializeField] private Vector3 centerOfMass;
@@ -262,17 +264,18 @@ public class Controller : MonoBehaviour
     // Debug GUI.
     void OnGUI()
     {
-        GUILayout.Label("FOV: " + cineCamera.m_Lens.FieldOfView);
-        GUILayout.Label("Speed: " + currentSpeed);
-        GUILayout.Label("currentTorque: " + currentTorque);
-        GUILayout.Label("boostTorque: " + boostTorque);
-        GUILayout.Label("brakeTorque: " + wheelColliders[0].brakeTorque);
-        GUILayout.Label("rpm: " + wheelColliders[0].rpm);
-        GUILayout.Label("rb vel: " + rb.velocity.magnitude);
-        GUILayout.Label("rpm slip in radians per second: " + wheelColliders[0].rpm * 0.10472f * wheelColliders[0].radius);
-        GUILayout.Label("stiffeness " + wheelColliders[0].forwardFriction.stiffness);
-
-
+        if(displayGui)
+        {
+            GUILayout.Label("FOV: " + cineCamera.m_Lens.FieldOfView);
+            GUILayout.Label("Speed: " + currentSpeed);
+            GUILayout.Label("currentTorque: " + currentTorque);
+            GUILayout.Label("boostTorque: " + boostTorque);
+            GUILayout.Label("brakeTorque: " + wheelColliders[0].brakeTorque);
+            GUILayout.Label("rpm: " + wheelColliders[0].rpm);
+            GUILayout.Label("rb vel: " + rb.velocity.magnitude);
+            GUILayout.Label("rpm slip in radians per second: " + wheelColliders[0].rpm * 0.10472f * wheelColliders[0].radius);
+            GUILayout.Label("stiffeness " + wheelColliders[0].forwardFriction.stiffness);
+        }
     }
 
     private void Brake()
