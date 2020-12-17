@@ -45,6 +45,9 @@ public class Health : MonoBehaviour
 
     void Update()
     {
+        if (health < 0)
+            health = 0;
+
         healthNormalized = (health / startHealth);
         SetHealthBarUiSize(healthNormalized);
 
@@ -64,7 +67,7 @@ public class Health : MonoBehaviour
             if (timeSinceDeath > deathTimer)
             {
                 dead = false;
-                health = 100;
+                health = startHealth;
                 pv.RPC("Respawn", RpcTarget.All);
                 timeSinceDeath = 0;
             }

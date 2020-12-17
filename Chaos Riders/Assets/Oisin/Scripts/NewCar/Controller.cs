@@ -6,6 +6,8 @@ using Photon.Pun;
 
 public class Controller : MonoBehaviour
 {
+    [SerializeField] private bool displayGui = false;
+
     [SerializeField] private WheelCollider[] wheelColliders = new WheelCollider[4];
     [SerializeField] private Transform[] wheelMeshes = new Transform[4];
     [SerializeField] private Vector3 centerOfMass;
@@ -41,7 +43,8 @@ public class Controller : MonoBehaviour
     private float boostTorque;
     public float currentSpeed { get { return rb.velocity.magnitude * 2.23693629f; } private set { } }
     float slipLimit = 0.3f;
-    float skidLimit = 0.5f;
+    [SerializeField ]float forwardSkidLimit = 0.5f;
+    [SerializeField ]float sideSkidLimit = 0.5f;
     Skidmarks[] skidmarks = new Skidmarks[4];
     int[] lastSkid = new int[4];
     CinemachineTransposer cineCamTransposer;
@@ -49,6 +52,7 @@ public class Controller : MonoBehaviour
     WheelFrictionCurve normal;
     float num = 0.002f;
     public TurretTester ShooterAttached;
+    public GameObject Shooter;
 
 
     private void Awake()
@@ -66,21 +70,14 @@ public class Controller : MonoBehaviour
         skidmarks[2] = skidmarksController;
         skidmarks[3] = skidmarksController;
 
-        /*
 
-        drift.extremumSlip = 0.1f;
-        drift.extremumValue = 1;
-        drift.asymptoteSlip = 0.5f;
-        drift.asymptoteValue = 0.75f;
-        drift.stiffness = 0.8f;
-
-        normal.extremumSlip = 0.1f;
+        normal.extremumSlip = 0.2f;
         normal.extremumValue = 1;
-        normal.asymptoteSlip = 0.5f;
-        normal.asymptoteValue = 0.75f;
+        normal.asymptoteSlip = 0.8f;
+        normal.asymptoteValue = 0.5f;
         normal.stiffness = 1;
 
-        */
+        
 
         cineCamera = gameObject.transform.GetChild(1).gameObject.GetComponent<CinemachineVirtualCamera>();
         cineCamTransposer = cineCamera.GetCinemachineComponent<CinemachineTransposer>();
@@ -104,9 +101,9 @@ public class Controller : MonoBehaviour
         }
 
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
-        {
-            GetInput();
+        { 
             Brake();
+            AdjustStiffness();
             Accelerate();
             AddDownForce();
             Skid();
@@ -117,16 +114,16 @@ public class Controller : MonoBehaviour
             CapSpeed();
             UpdateWheelPoses();
             ChangeFOV();
-            //Spedo();
         }
     }
 
 
     private void Update()
     {
+        GetInput();
         if (Input.GetKeyDown(KeyCode.R))
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z);
+            transform.position = new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z - 1f);
             transform.rotation = Quaternion.Euler(0, transform.localRotation.y, 0);
 
             if (ShooterAttached != null)
@@ -134,22 +131,6 @@ public class Controller : MonoBehaviour
                 ShooterAttached.ResetPos();
             }
         }
-    }
-
-    float timer;
-    private void Spedo()
-    {
-        if(currentSpeed < 1 )
-        {
-            timer = Time.time;
-            
-        }
-        
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log(Time.time - timer);
     }
 
 
@@ -160,13 +141,13 @@ public class Controller : MonoBehaviour
         if(!braking)
         {
             brake = Input.GetKey(KeyCode.T);
-            Debug.Log(98989898989898989);
+            //Debug.Log(98989898989898989);
         }
         if(Input.GetKeyUp(KeyCode.T))
         {
             brake = false;
             ReleaseBrake();
-            Debug.Log(234234324);
+            //Debug.Log(234234324);
         }
 
         //boost = Input.GetKey(KeyCode.LeftShift);
@@ -188,6 +169,17 @@ public class Controller : MonoBehaviour
     
     private void Accelerate()
     {
+        if(verticalInput > 0)
+        {
+            //Debug.Log(1);
+        }
+        else
+        {
+            //Debug.Log(2);
+        }
+
+
+
         //rb.drag = 0;
         if (wheelColliders[0].brakeTorque > 0 && !braking)
         {
@@ -205,17 +197,14 @@ public class Controller : MonoBehaviour
         }
         else if (currentSpeed > 10 && verticalInput == 0)
         {
-            thrustTorque = 0.5f * (currentTorque / 4f);
+            thrustTorque = -verticalInput * (currentTorque  / 4f * a);
         }
         else 
         {
-            thrustTorque = -verticalInput * (currentTorque / 4f);
-            if (verticalInput == 0)
-            {
-               // rb.drag = 5;
-            }
+            thrustTorque = -verticalInput * (currentTorque  / 4f * a);
+            
         }
-
+        //Debug.Log(thrustTorque);
         if (wheelColliders[0].brakeTorque == 0 && currentSpeed < topSpeed - 5)
         {
             for (int i = 0; i < 4; i++)
@@ -223,7 +212,42 @@ public class Controller : MonoBehaviour
                 wheelColliders[i].motorTorque = thrustTorque;
             }
         }
+
+
+        if(rb.velocity.magnitude > topSpeed)
+        {
+            Debug.Log(12313);
+        }
     }
+    float a;
+
+    private void AdjustStiffness()
+    {
+        float speed = rb.velocity.magnitude;
+        a = currentSpeed / topSpeed;
+        a = 1 - a;
+        
+        normal.stiffness = a;
+
+        if(verticalInput < 0)
+        {
+            normal.stiffness = 1;
+            rb.drag = 0.5f;
+            if(currentSpeed >= 100)
+            {
+                normal.stiffness = 2;
+            }
+        }
+        else
+        {
+            rb.drag = 0.05f;
+        }
+        foreach (WheelCollider wheel in wheelColliders)
+        {
+            wheel.forwardFriction = normal;
+        }
+    }
+
 
     private void TractionControl()
     {
@@ -237,7 +261,22 @@ public class Controller : MonoBehaviour
         
     }
 
-    
+    // Debug GUI.
+    void OnGUI()
+    {
+        if(displayGui)
+        {
+            GUILayout.Label("FOV: " + cineCamera.m_Lens.FieldOfView);
+            GUILayout.Label("Speed: " + currentSpeed);
+            GUILayout.Label("currentTorque: " + currentTorque);
+            GUILayout.Label("boostTorque: " + boostTorque);
+            GUILayout.Label("brakeTorque: " + wheelColliders[0].brakeTorque);
+            GUILayout.Label("rpm: " + wheelColliders[0].rpm);
+            GUILayout.Label("rb vel: " + rb.velocity.magnitude);
+            GUILayout.Label("rpm slip in radians per second: " + wheelColliders[0].rpm * 0.10472f * wheelColliders[0].radius);
+            GUILayout.Label("stiffeness " + wheelColliders[0].forwardFriction.stiffness);
+        }
+    }
 
     private void Brake()
     {
@@ -358,7 +397,7 @@ public class Controller : MonoBehaviour
             wheelColliders[i].GetGroundHit(out wheelHit);
             //Debug.Log(wheelHit.sidewaysSlip);
 
-            if (((wheelHit.forwardSlip > skidLimit || wheelHit.forwardSlip < -skidLimit) || (wheelHit.sidewaysSlip > skidLimit || wheelHit.sidewaysSlip < -skidLimit)) && skidmarks[i] != null)
+            if (((wheelHit.forwardSlip > forwardSkidLimit || wheelHit.forwardSlip < -forwardSkidLimit) || (wheelHit.sidewaysSlip > sideSkidLimit || wheelHit.sidewaysSlip < -sideSkidLimit)) && skidmarks[i] != null)
             {
                 Vector3 skidPoint = new Vector3(wheelColliders[i].transform.position.x, wheelHit.point.y, wheelColliders[i].transform.position.z) + (rb.velocity * Time.deltaTime);
                 lastSkid[i] = skidmarksController.AddSkidMark(skidPoint, wheelHit.normal, 0.5f, lastSkid[i]);
@@ -410,18 +449,9 @@ public class Controller : MonoBehaviour
     }
 
    
-    /*
-    // Debug GUI.
-    void OnGUI()
-    {
-        GUILayout.Label("FOV: " + cineCamera.m_Lens.FieldOfView);
-        GUILayout.Label("Speed: " + currentSpeed);
-        GUILayout.Label("currentTorque: " + currentTorque);
-        GUILayout.Label("boostTorque: " + boostTorque);
-        GUILayout.Label("brakeTorque: " + wheelColliders[0].brakeTorque);
-        
-    }
-    */
+    
+
+    
 
     private void AddDownForce()
     {
@@ -477,5 +507,11 @@ public class Controller : MonoBehaviour
         oldRot = transform.eulerAngles.y;
     }
 
-    
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "shooter")
+        {
+            Shooter = other.gameObject;
+        }
+    }
 }
