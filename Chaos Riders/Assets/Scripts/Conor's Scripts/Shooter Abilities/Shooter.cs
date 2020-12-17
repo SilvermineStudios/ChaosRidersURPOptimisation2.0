@@ -26,7 +26,7 @@ public class Shooter : MonoBehaviour
     [SerializeField] GameObject rocket;
     [SerializeField] TMP_Text rpgcount;
     public bool RPG;
-
+    [SerializeField] private bool pickedUpRPG = false;
 
     //shooting
     [SerializeField] private float damage = 10f;
@@ -74,20 +74,30 @@ public class Shooter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        RotateGunBarrel();
-        
-        rpgcount.text = amountOfAmmoForRPG + " / 10";
-        if (connectCar)
-        {
-            connectCar = false;
-            car = GetComponentInParent<MoveTurretPosition>().car;
-            carCollision = GetComponentInParent<MoveTurretPosition>().car.transform.GetChild(0).gameObject;
-        }
-
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
+            //RPG = GetComponent<ShooterPickup>().hasRPG;
+            //pickedUpRPG = GetComponent<ShooterPickup>().hasRPG;
+
+            RotateGunBarrel();
             FollowMouse();
-            
+
+            //stops the cooldown bar for the minigun if the RPG is active
+            if(!RPG)
+            {
+                CooldownBarValues();
+                ammoNormalized = amountOfAmmoForCooldownBar / startAmmo; //normalized the ammo value to be between 0 and 1 for the cooldown bar scale
+                CoolDownBar(ammoNormalized); //scale the size of the cooldown bar to match the ammo count
+            }
+
+            rpgcount.text = amountOfAmmoForRPG + " / " + startAmountOfAmmoForRPG;
+            if (connectCar)
+            {
+                connectCar = false;
+                car = GetComponentInParent<MoveTurretPosition>().car;
+                carCollision = GetComponentInParent<MoveTurretPosition>().car.transform.GetChild(0).gameObject;
+            }
+
             if(car.GetComponent<CarPickup>().hasRPG)
                 RPG = true;
 
@@ -102,34 +112,41 @@ public class Shooter : MonoBehaviour
         //online shooting
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer)
         {
+            //if you are shooting and have ammo (MINIGUN)
+            if (Input.GetKey(shootButton) && amountOfAmmoForCooldownBar > 0)
+                pv.RPC("Shoot", RpcTarget.All);
+
+            
+            if(!RPG)
+            {
+                pv.RPC("HideRPG", RpcTarget.All);
+            }
+            
+            if(RPG)
+            {
+                pv.RPC("ShowRPG", RpcTarget.All);
+                if (Input.GetKeyDown(shootButton) && amountOfAmmoForRPG > 0)
+                {
+                    amountOfAmmoForRPG--;
+                    ShootRPG();
+                }
+                if (amountOfAmmoForRPG <= 0)
+                {
+                    RPG = false;
+                    this.GetComponent<ShooterPickup>().hasRPG = false;
+                    amountOfAmmoForRPG = startAmountOfAmmoForRPG;
+                }
+            }
+            
+
+            /*
             if (!RPG)
             {
                 pv.RPC("HideRPG", RpcTarget.All);
-                
-
-                ammoNormalized = amountOfAmmoForCooldownBar / startAmmo; //normalized the ammo value to be between 0 and 1 for the cooldown bar scale
-                CoolDownBar(ammoNormalized); //scale the size of the cooldown bar to match the ammo count
-
-                //if you are shooting and have ammo
-                if (Input.GetKey(shootButton) && amountOfAmmoForCooldownBar > 0)
-                {
-                    amountOfAmmoForCooldownBar--;
-                    pv.RPC("Shoot", RpcTarget.All);
-                    barrelRotationSpeed = barrelRotationMaxSpeed;
-                }
-                else
-                    barrelRotationSpeed = barrelRotationStartSpeed;
-
-                //if you are not shooting and the ammo isnt full
-                if (amountOfAmmoForCooldownBar < startAmmo && !Input.GetKey(shootButton))
-                {
-                    amountOfAmmoForCooldownBar++;
-                }
-                if (Input.GetKeyDown(RPGButton))
+                if (Input.GetKeyDown(RPGButton)) // || car.GetComponent<CarPickup>().hasRPG)
                 {
                     RPG = true;
                 }
-
             }
             else
             {
@@ -144,34 +161,20 @@ public class Shooter : MonoBehaviour
                     RPG = false;
                 }
             }
+            */
         }
 
         //offline Shooting
         if(!IsThisMultiplayer.Instance.multiplayer)
         {
+            //if you are shooting and have ammo
+            if (Input.GetKey(shootButton) && amountOfAmmoForCooldownBar > 0)
+                OfflineShoot();
+
             if (!RPG)
             {
                 rpgGo.SetActive(false);
                 
-
-                ammoNormalized = amountOfAmmoForCooldownBar / startAmmo; //normalized the ammo value to be between 0 and 1 for the cooldown bar scale
-                CoolDownBar(ammoNormalized); //scale the size of the cooldown bar to match the ammo count
-
-                //if you are shooting and have ammo
-                if (Input.GetKey(shootButton) && amountOfAmmoForCooldownBar > 0)
-                {
-                    amountOfAmmoForCooldownBar--;
-                    OfflineShoot();
-                    barrelRotationSpeed = barrelRotationMaxSpeed;
-                }
-                else
-                    barrelRotationSpeed = barrelRotationStartSpeed;
-
-                //if you are not shooting and the ammo isnt full
-                if (amountOfAmmoForCooldownBar < startAmmo && !Input.GetKey(shootButton))
-                {
-                    amountOfAmmoForCooldownBar++;
-                }
                 if (Input.GetKeyDown(RPGButton))
                 {
                     RPG = true;
@@ -237,6 +240,24 @@ public class Shooter : MonoBehaviour
     private void CoolDownBar(float sizeNormalized)
     {
        coolDownBarUi.localScale = new Vector3(sizeNormalized, 1f); //scale the ui cooldown bar to match the ammo count
+    }
+
+    void CooldownBarValues()
+    {
+        //if you are shooting and have ammo
+        if (Input.GetKey(shootButton) && amountOfAmmoForCooldownBar > 0)
+        {
+            amountOfAmmoForCooldownBar--;
+            barrelRotationSpeed = barrelRotationMaxSpeed;
+        }
+        else
+            barrelRotationSpeed = barrelRotationStartSpeed;
+
+        //if you are not shooting and the ammo isnt full
+        if (amountOfAmmoForCooldownBar < startAmmo && !Input.GetKey(shootButton))
+        {
+            amountOfAmmoForCooldownBar++;
+        }
     }
 
     [PunRPC]
