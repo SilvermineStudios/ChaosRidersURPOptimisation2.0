@@ -292,7 +292,6 @@ public class Shooter : MonoBehaviour
         float angle = Random.Range(0f, 360f);
         forwardVector = Quaternion.AngleAxis(deviation, cineCamera.transform.up) * forwardVector;
         forwardVector = Quaternion.AngleAxis(angle, cineCamera.transform.forward) * forwardVector;
-        //forwardVector = cineCamera.transform.rotation * forwardVector;
         return forwardVector;
     }
 
