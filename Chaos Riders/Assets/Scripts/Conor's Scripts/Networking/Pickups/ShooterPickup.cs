@@ -5,10 +5,14 @@ using Photon.Pun;
 
 public class ShooterPickup : MonoBehaviour
 {
+    private PhotonView pv;
+
     public bool hasRPG = false;
     bool rpgOn = false;
-    private PhotonView pv;
     [SerializeField] private GameObject rpgUI;
+    [SerializeField] private GameObject gunbarrelHolder;
+    [SerializeField] private MeshRenderer[] gunPartsToMakeInvisible;
+
 
     private void Awake()
     {
@@ -18,12 +22,27 @@ public class ShooterPickup : MonoBehaviour
 
     private void Update()
     {
+        gunPartsToMakeInvisible = gunbarrelHolder.GetComponentsInChildren<MeshRenderer>();
+
         //use this to make the rocket launcher active and inactive
         rpgOn = GetComponent<Shooter>().RPG;
         if (rpgOn)
+        {
             rpgUI.SetActive(true);
+            foreach (MeshRenderer mr in gunPartsToMakeInvisible)
+            {
+                mr.enabled = false;
+            }
+        }
         else
+        {
             rpgUI.SetActive(false);
+            foreach (MeshRenderer mr in gunPartsToMakeInvisible)
+            {
+                mr.enabled = true;
+            }
+        }
+            
     }
 
     private void OnTriggerEnter(Collider other)
