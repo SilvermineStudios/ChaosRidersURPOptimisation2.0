@@ -22,27 +22,67 @@ public class ShooterPickup : MonoBehaviour
 
     private void Update()
     {
-        gunPartsToMakeInvisible = gunbarrelHolder.GetComponentsInChildren<MeshRenderer>();
+        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
+        {
+            gunPartsToMakeInvisible = gunbarrelHolder.GetComponentsInChildren<MeshRenderer>();
 
-        //use this to make the rocket launcher active and inactive
-        rpgOn = GetComponent<Shooter>().RPG;
-        if (rpgOn)
+            //use this to make the rocket launcher active and inactive
+            rpgOn = GetComponent<Shooter>().RPG;
+        }
+
+        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer)
         {
-            rpgUI.SetActive(true);
-            foreach (MeshRenderer mr in gunPartsToMakeInvisible)
+            if (rpgOn)
             {
-                mr.enabled = false;
+                rpgUI.SetActive(true);
+                pv.RPC("MakeMinigunInvisible", RpcTarget.All);
+            }
+            else
+            {
+                rpgUI.SetActive(false);
+                pv.RPC("MakeMinigunVisible", RpcTarget.All);
             }
         }
-        else
+
+        
+        if (!IsThisMultiplayer.Instance.multiplayer)
         {
-            rpgUI.SetActive(false);
-            foreach (MeshRenderer mr in gunPartsToMakeInvisible)
+            if (rpgOn)
             {
-                mr.enabled = true;
+                rpgUI.SetActive(true);
+                foreach (MeshRenderer mr in gunPartsToMakeInvisible)
+                {
+                    mr.enabled = false;
+                }
+            }
+            else
+            {
+                rpgUI.SetActive(false);
+                foreach (MeshRenderer mr in gunPartsToMakeInvisible)
+                {
+                    mr.enabled = true;
+                }
             }
         }
-            
+        
+    }
+
+    [PunRPC]
+    void MakeMinigunInvisible()
+    {
+        foreach (MeshRenderer mr in gunPartsToMakeInvisible)
+        {
+            mr.enabled = false;
+        }
+    }
+
+    [PunRPC]
+    void MakeMinigunVisible()
+    {
+        foreach (MeshRenderer mr in gunPartsToMakeInvisible)
+        {
+            mr.enabled = true;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
