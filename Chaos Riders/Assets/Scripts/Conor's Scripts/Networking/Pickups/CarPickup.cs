@@ -8,10 +8,18 @@ public class CarPickup : MonoBehaviour
 {
     private GameObject go;
     Health healthScript;
-    [SerializeField] private bool hasSpeedBoost = false;
+    [SerializeField] private bool hasSpeedBoost = false, hasInvincibilityPickup = false;
+    private bool hasPickup = false;
     public bool hasRPG = false;
     [SerializeField] private GameObject shooter;
     [SerializeField] private GameObject nitroUiImage, armourUiImage;
+
+    //CoolDown Bars
+    [SerializeField] private Transform nitroCooldownBar, invincibleCooldownBar;
+    [SerializeField] private float nitroTimerNormalized, invincibleTimerNormalized;
+    [SerializeField] private float nitroStartTimer, invincibleStartTimer;
+    [SerializeField] private float nitroCurrentTimer, invincibleCurrentTimer;
+    [SerializeField] private bool nitroTimerCountDown = false, invincibleTimerCountDown = false;
 
     private PhotonView pv;
     private Controller carController;
@@ -26,6 +34,9 @@ public class CarPickup : MonoBehaviour
         armourUiImage.SetActive(false);
 
         pv = GetComponent<PhotonView>();
+
+        nitroStartTimer = PickupManager.speedBoostTime;
+        invincibleStartTimer = PickupManager.InvincibleTime;
     }
 
     private void Update()
@@ -35,14 +46,41 @@ public class CarPickup : MonoBehaviour
         {
             shooter = GetComponent<Controller>().Shooter;
             //if (!shooter.GetComponent<Shooter>().RPG)
-                //hasRPG = false;
-        }
+            //hasRPG = false;
 
-        //player can speedboost by pressing the space bar when they have one
-        if (hasSpeedBoost && (Input.GetKeyDown(KeyCode.Space)))// || Input.GetButtonDown("A")))
-        {
-            hasSpeedBoost = false;
-            StartCoroutine(SpeedBoostTimer(PickupManager.speedBoostTime));
+            if (hasSpeedBoost || hasInvincibilityPickup) //<---------------------------------------------------------Add all types of pickup bools here as more are added
+                hasPickup = true;
+            else
+                hasPickup = false;
+
+            //player can speedboost by pressing the space bar when they have one
+            if (hasSpeedBoost && (Input.GetKeyDown(KeyCode.Space)))// || Input.GetButtonDown("A")))
+            {
+                hasSpeedBoost = false;
+                StartCoroutine(SpeedBoostTimer(PickupManager.speedBoostTime));
+            }
+
+            //player can activate invincibility by pressing the space bar when they have one
+            if (hasInvincibilityPickup && (Input.GetKeyDown(KeyCode.Space)))// || Input.GetButtonDown("A")))
+            {
+                hasInvincibilityPickup = false;
+                StartCoroutine(InvincibleTimer(PickupManager.InvincibleTime));
+            }
+
+            if (nitroTimerCountDown && nitroCurrentTimer > 0)
+            {
+                nitroCurrentTimer -= 1 * Time.deltaTime;
+                nitroTimerNormalized = nitroCurrentTimer / nitroStartTimer;
+                CoolDownBar(nitroTimerNormalized, nitroCooldownBar);
+            }
+
+            if (invincibleTimerCountDown && invincibleCurrentTimer > 0)
+            {
+                invincibleCurrentTimer -= 1 * Time.deltaTime;
+                invincibleTimerNormalized = invincibleCurrentTimer / invincibleStartTimer;
+                CoolDownBar(invincibleTimerNormalized, invincibleCooldownBar);
+            }
+                
         }
     }
 
@@ -51,12 +89,23 @@ public class CarPickup : MonoBehaviour
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
             //if the player picked up a speed pickup
-            if (other.CompareTag("SpeedPickUp")) //the or is for testing when not in multiplayer
+            if (other.CompareTag("SpeedPickUp") && !hasPickup)
+            {
                 hasSpeedBoost = true;
+                nitroCurrentTimer = nitroStartTimer;
+                nitroUiImage.SetActive(true);
+                nitroCooldownBar.localScale = new Vector3(1f, 1f, 1f);
+            }
 
             //if the player picked up the invincible pickup
-            if (other.CompareTag("InvinciblePickUp")) //the or is for testing when not in multiplayer
-                StartCoroutine(InvincibleTimer(PickupManager.InvincibleTime));
+            if (other.CompareTag("InvinciblePickUp") && !hasPickup)
+            {
+                hasInvincibilityPickup = true;
+                invincibleCurrentTimer = invincibleStartTimer;
+                armourUiImage.SetActive(true);
+                invincibleCooldownBar.localScale = new Vector3(1f, 1f, 1f);
+            }
+                
 
             if (other.CompareTag("RPGPickup") && !hasRPG)
                 hasRPG = true;
@@ -77,26 +126,39 @@ public class CarPickup : MonoBehaviour
         hasRPG = true;
     }
 
+    private void CoolDownBar(float sizeNormalized, Transform transform)
+    {
+        transform.localScale = new Vector3(sizeNormalized, 1f); //scale the ui cooldown bar to match the ammo count
+    }
+
     #region Puwerup Courotines
     private IEnumerator InvincibleTimer(float time)
     {
-        armourUiImage.SetActive(true);
+        //armourUiImage.SetActive(true);
         healthScript.isProtected = true;
+        invincibleTimerCountDown = true;
+        
+        
 
         yield return new WaitForSeconds(time);
 
         healthScript.isProtected = false;
         armourUiImage.SetActive(false);
+        invincibleTimerCountDown = false;
     }
 
     
     private IEnumerator SpeedBoostTimer(float time)
     {
-        nitroUiImage.SetActive(true);
+        //nitroUiImage.SetActive(true);
         carController.boost = true;
+        nitroTimerCountDown = true;
+
         yield return new WaitForSeconds(time);
+
         carController.boost = false;
         nitroUiImage.SetActive(false);
+        nitroTimerCountDown = false;
     }
     #endregion
 }
