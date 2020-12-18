@@ -14,11 +14,11 @@ public class CarPickup : MonoBehaviour
     [SerializeField] private GameObject nitroUiImage, armourUiImage;
 
     private PhotonView pv;
-
-    private DriveTrainMultiplayer dt;
+    private Controller carController;
 
     void Start()
     {
+        carController = GetComponent<Controller>();
         healthScript = GetComponent<Health>();
         go = this.GetComponent<GameObject>();
 
@@ -26,11 +26,11 @@ public class CarPickup : MonoBehaviour
         armourUiImage.SetActive(false);
 
         pv = GetComponent<PhotonView>();
-        dt = GetComponent<DriveTrainMultiplayer>();
     }
 
     private void Update()
     {
+        Debug.Log(PickupManager.speedBoostTime);
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
             shooter = GetComponent<Controller>().Shooter;
@@ -92,12 +92,10 @@ public class CarPickup : MonoBehaviour
     
     private IEnumerator SpeedBoostTimer(float time)
     {
-        dt.nitro = true;
         nitroUiImage.SetActive(true);
-
+        carController.boost = true;
         yield return new WaitForSeconds(time);
-
-        dt.nitro = false;
+        carController.boost = false;
         nitroUiImage.SetActive(false);
     }
     #endregion
