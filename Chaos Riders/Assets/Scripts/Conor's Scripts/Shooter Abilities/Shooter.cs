@@ -13,6 +13,7 @@ public class Shooter : MonoBehaviour
     private float barrelRotationSpeed;
     [SerializeField] private float barrelRotationStartSpeed = 100f, barrelRotationMaxSpeed = 800f;
     [SerializeField] private float maxDeviation;
+    private float currentSpread = 0;
     [SerializeField] private CinemachineVirtualCamera cineCamera;
     [SerializeField] private GameObject bulletSpawnPoint;
     public GameObject car;
@@ -114,10 +115,21 @@ public class Shooter : MonoBehaviour
         {
             //if you are shooting and have ammo (MINIGUN)
             if (Input.GetKey(shootButton) && amountOfAmmoForCooldownBar > 0)
+            {  
+                if (currentSpread < maxDeviation)
+                {
+                    currentSpread += 0.01f;
+                }
                 pv.RPC("Shoot", RpcTarget.All);
-
-            
-            if(!RPG)
+            }
+            else
+            {
+                if (currentSpread > 0)
+                {
+                    currentSpread -= 0.02f;
+                }
+            }
+        if (!RPG)
             {
                 pv.RPC("HideRPG", RpcTarget.All);
             }
@@ -138,39 +150,28 @@ public class Shooter : MonoBehaviour
                 }
             }
             
-
-            /*
-            if (!RPG)
-            {
-                pv.RPC("HideRPG", RpcTarget.All);
-                if (Input.GetKeyDown(RPGButton)) // || car.GetComponent<CarPickup>().hasRPG)
-                {
-                    RPG = true;
-                }
-            }
-            else
-            {
-                pv.RPC("ShowRPG", RpcTarget.All);
-                if (Input.GetKeyDown(shootButton) && amountOfAmmoForRPG > 0)
-                {
-                    amountOfAmmoForRPG--;
-                    ShootRPG();
-                }
-                if (Input.GetKeyDown(RPGButton))
-                {
-                    RPG = false;
-                }
-            }
-            */
         }
-
+        
+        
         //offline Shooting
-        if(!IsThisMultiplayer.Instance.multiplayer)
+        if (!IsThisMultiplayer.Instance.multiplayer)
         {
             //if you are shooting and have ammo
             if (Input.GetKey(shootButton) && amountOfAmmoForCooldownBar > 0)
+            {
+                if(currentSpread < maxDeviation)
+                {
+                    currentSpread += 0.01f;
+                }
                 OfflineShoot();
-
+            }
+            else
+            {
+                if(currentSpread > 0)
+                {
+                    currentSpread -= 0.02f;
+                }
+            }
             if (!RPG)
             {
                 rpgGo.SetActive(false);
@@ -260,12 +261,15 @@ public class Shooter : MonoBehaviour
         }
     }
 
+    
+
+
     [PunRPC]
     void Shoot()
     {
         muzzleFlash.Play();
 
-        Vector3 direction = Spread(maxDeviation);
+        Vector3 direction = Spread(currentSpread);
 
         RaycastHit hit; //gets the information on whats hit
         if (Physics.Raycast(cineCamera.transform.position, direction, out hit, range))
@@ -299,7 +303,7 @@ public class Shooter : MonoBehaviour
     {
         muzzleFlash.Play();
 
-        Vector3 direction = Spread(maxDeviation);
+        Vector3 direction = Spread(currentSpread);
 
         RaycastHit hit; //gets the information on whats hit
         if (Physics.Raycast(cineCamera.transform.position, direction, out hit, range))
