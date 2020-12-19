@@ -5,6 +5,7 @@ using UnityEngine;
 public class Target : MonoBehaviour
 {
     [SerializeField] private bool ai = false;
+    [SerializeField] private bool invincible = false;
     private AIHealth aiHealthScript;
     private Health healthScript;
 
@@ -17,6 +18,7 @@ public class Target : MonoBehaviour
         else
             healthScript = GetComponent<Health>();
     }
+
     /*
     private void OnGUI()
     {
@@ -33,6 +35,7 @@ public class Target : MonoBehaviour
         GUILayout.Label("Health: " + health);
     }
     */
+
     void Update()
     {
         if (ai)

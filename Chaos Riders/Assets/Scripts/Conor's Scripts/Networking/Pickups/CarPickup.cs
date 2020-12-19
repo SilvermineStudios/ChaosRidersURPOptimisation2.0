@@ -8,7 +8,7 @@ public class CarPickup : MonoBehaviour
 {
     private GameObject go;
     Health healthScript;
-    [SerializeField] private bool hasSpeedBoost = false, hasInvincibilityPickup = false;
+    [SerializeField] private bool hasSpeedBoost = false, hasInvincibilityPickup = false; //<-------------use this bool in target script
     private bool hasPickup = false;
     public bool hasRPG = false;
     [SerializeField] private GameObject shooter;
@@ -63,7 +63,7 @@ public class CarPickup : MonoBehaviour
             //player can activate invincibility by pressing the space bar when they have one
             if (hasInvincibilityPickup && (Input.GetKeyDown(KeyCode.Space)))// || Input.GetButtonDown("A")))
             {
-                hasInvincibilityPickup = false;
+                
                 StartCoroutine(InvincibleTimer(PickupManager.InvincibleTime));
             }
 
@@ -142,6 +142,7 @@ public class CarPickup : MonoBehaviour
 
         yield return new WaitForSeconds(time);
 
+        hasInvincibilityPickup = false;
         healthScript.isProtected = false;
         armourUiImage.SetActive(false);
         invincibleTimerCountDown = false;
