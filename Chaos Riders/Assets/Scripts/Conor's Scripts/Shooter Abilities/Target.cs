@@ -5,7 +5,7 @@ using UnityEngine;
 public class Target : MonoBehaviour
 {
     [SerializeField] private bool ai = false;
-    [SerializeField] private bool invincible = false;
+    public bool invincible = false;
     private AIHealth aiHealthScript;
     private Health healthScript;
 
@@ -60,11 +60,12 @@ public class Target : MonoBehaviour
 
         if (health > 0)
         {
-            if (ai)
+            if (ai && !invincible)
             {
                 aiHealthScript.health -= amount;
             }
-            else
+
+            if (!ai && !invincible)
             {
                 healthScript.health -= amount;
             }

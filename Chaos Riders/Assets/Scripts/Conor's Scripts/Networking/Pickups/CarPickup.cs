@@ -137,7 +137,7 @@ public class CarPickup : MonoBehaviour
         //armourUiImage.SetActive(true);
         healthScript.isProtected = true;
         invincibleTimerCountDown = true;
-        
+        this.GetComponent<Target>().invincible = true;
         
 
         yield return new WaitForSeconds(time);
@@ -146,6 +146,7 @@ public class CarPickup : MonoBehaviour
         healthScript.isProtected = false;
         armourUiImage.SetActive(false);
         invincibleTimerCountDown = false;
+        this.GetComponent<Target>().invincible = false;
     }
 
     
