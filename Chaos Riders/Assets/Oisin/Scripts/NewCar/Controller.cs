@@ -294,7 +294,13 @@ public class Controller : MonoBehaviour
         
         normal.stiffness = a;
 
-        if(verticalInput < 0)
+        if (verticalInput == 0)
+        {
+            normal.stiffness = 0.75f; ;
+            rb.drag = 0.2f;
+        }
+
+        else if (verticalInput < 0)
         {
             normal.stiffness = 1;
             rb.drag = 0.5f;
