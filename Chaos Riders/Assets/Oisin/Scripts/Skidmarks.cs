@@ -3,15 +3,10 @@ using System.Collections;
 
 public class Skidmarks : MonoBehaviour
 {
-    // INSPECTOR SETTINGS
-
-    // Material for the skidmarks to use
     [SerializeField]
     Material skidmarksMaterial;
 
-    // END INSPECTOR SETTINGS
 
-    // Variables for each mark created. Needed to generate the correct mesh.
     class MarkSection
     {
         public Vector3 Pos = Vector3.zero;
@@ -23,11 +18,11 @@ public class Skidmarks : MonoBehaviour
         public int LastIndex;
     };
 
-    const int MAX_MARKS = 4024; // Max number of marks total for everyone together
-    const float MARK_WIDTH = 0.35f; // Width of the skidmarks. Should match the width of the wheels
-    const float GROUND_OFFSET = 0.02f;    // Distance above surface in metres
-    const float MIN_DISTANCE = 1.0f; // Distance between points in metres. Bigger = more clunky, straight-line skidmarks
-    const float MIN_SQR_DISTANCE = MIN_DISTANCE * MIN_DISTANCE;
+    const int maxMarks = 4024; 
+    const float width = 0.35f; 
+    const float offset = 0.02f;    
+    const float minDist = 1.0f; 
+    const float minDistSqr = minDist * minDist;
 
     int markIndex;
     MarkSection[] skidmarks;
@@ -47,7 +42,6 @@ public class Skidmarks : MonoBehaviour
     bool updated;
     bool haveSetBounds;
 
-    // #### UNITY INTERNAL METHODS ####
 
     protected void Start()
     {
@@ -57,8 +51,8 @@ public class Skidmarks : MonoBehaviour
         }
 
 
-        skidmarks = new MarkSection[MAX_MARKS];
-        for (int i = 0; i < MAX_MARKS; i++)
+        skidmarks = new MarkSection[maxMarks];
+        for (int i = 0; i < maxMarks; i++)
         {
             skidmarks[i] = new MarkSection();
         }
@@ -78,25 +72,21 @@ public class Skidmarks : MonoBehaviour
         }
         mf.sharedMesh = marksMesh;
 
-        vertices = new Vector3[MAX_MARKS * 4];
-        normals = new Vector3[MAX_MARKS * 4];
-        tangents = new Vector4[MAX_MARKS * 4];
-        colors = new Color32[MAX_MARKS * 4];
-        uvs = new Vector2[MAX_MARKS * 4];
-        triangles = new int[MAX_MARKS * 6];
+        vertices = new Vector3[maxMarks * 4];
+        normals = new Vector3[maxMarks * 4];
+        tangents = new Vector4[maxMarks * 4];
+        colors = new Color32[maxMarks * 4];
+        uvs = new Vector2[maxMarks * 4];
+        triangles = new int[maxMarks * 6];
 
-        mr.castShadows = false;
         mr.receiveShadows = false;
         mr.material = skidmarksMaterial;
-        mr.useLightProbes = false;
     }
 
     protected void LateUpdate()
     {
         if (!updated) return;
         updated = false;
-
-        // Reassign the mesh if it's changed this frame
         marksMesh.vertices = vertices;
         marksMesh.normals = normals;
         marksMesh.tangents = tangents;
@@ -106,9 +96,6 @@ public class Skidmarks : MonoBehaviour
 
         if (!haveSetBounds)
         {
-            // Could use RecalculateBounds here each frame instead, but it uses about 0.1-0.2ms each time.
-            // Save time by just making the mesh bounds huge, so the skidmarks will always draw.
-            // Not sure why I only need to do this once, yet can't do it in Start (it resets to zero).
             marksMesh.bounds = new Bounds(new Vector3(0, 0, 0), new Vector3(10000, 10000, 10000));
             haveSetBounds = true;
         }
@@ -116,23 +103,19 @@ public class Skidmarks : MonoBehaviour
         mf.sharedMesh = marksMesh;
     }
 
-    // #### PUBLIC METHODS ####
 
-    // Function called by the wheels that is skidding. Gathers all the information needed to
-    // create the mesh later. Sets the intensity of the skidmark section b setting the alpha
-    // of the vertex color.
     public int AddSkidMark(Vector3 pos, Vector3 normal, float intensity, int lastIndex)
     {
         if (intensity > 1) intensity = 1.0f;
         else if (intensity < 0) return -1; if (lastIndex > 0)
         {
             float sqrDistance = (pos - skidmarks[lastIndex].Pos).sqrMagnitude;
-            if (sqrDistance < MIN_SQR_DISTANCE) return lastIndex;
+            if (sqrDistance < minDistSqr) return lastIndex;
         }
 
         MarkSection curSection = skidmarks[markIndex];
 
-        curSection.Pos = pos + normal * GROUND_OFFSET;
+        curSection.Pos = pos + normal * offset;
         curSection.Normal = normal;
         curSection.Intensity = (byte)(intensity * 255f);
         curSection.LastIndex = lastIndex;
@@ -143,35 +126,30 @@ public class Skidmarks : MonoBehaviour
             Vector3 dir = (curSection.Pos - lastSection.Pos);
             Vector3 xDir = Vector3.Cross(dir, normal).normalized;
 
-            curSection.Posl = curSection.Pos + xDir * MARK_WIDTH * 0.5f;
-            curSection.Posr = curSection.Pos - xDir * MARK_WIDTH * 0.5f;
+            curSection.Posl = curSection.Pos + xDir * width * 0.5f;
+            curSection.Posr = curSection.Pos - xDir * width * 0.5f;
             curSection.Tangent = new Vector4(xDir.x, xDir.y, xDir.z, 1);
 
             if (lastSection.LastIndex == -1)
             {
                 lastSection.Tangent = curSection.Tangent;
-                lastSection.Posl = curSection.Pos + xDir * MARK_WIDTH * 0.5f;
-                lastSection.Posr = curSection.Pos - xDir * MARK_WIDTH * 0.5f;
+                lastSection.Posl = curSection.Pos + xDir * width * 0.5f;
+                lastSection.Posr = curSection.Pos - xDir * width * 0.5f;
             }
         }
 
         UpdateSkidmarksMesh();
 
         int curIndex = markIndex;
-        // Update circular index
-        markIndex = ++markIndex % MAX_MARKS;
+        markIndex = ++markIndex % maxMarks;
 
         return curIndex;
     }
 
-    // #### PROTECTED/PRIVATE METHODS ####
-
-    // Update part of the mesh for the current markIndex
     void UpdateSkidmarksMesh()
     {
         MarkSection curr = skidmarks[markIndex];
 
-        // Nothing to connect to yet
         if (curr.LastIndex == -1) return;
 
         MarkSection last = skidmarks[curr.LastIndex];
