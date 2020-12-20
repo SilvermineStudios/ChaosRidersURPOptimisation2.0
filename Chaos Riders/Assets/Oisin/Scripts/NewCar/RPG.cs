@@ -69,6 +69,7 @@ public class RPG : MonoBehaviour
                 aiHealth.TakeDamage(damage);
             }
         }
+
         Destroy(gameObject);
     }
 
