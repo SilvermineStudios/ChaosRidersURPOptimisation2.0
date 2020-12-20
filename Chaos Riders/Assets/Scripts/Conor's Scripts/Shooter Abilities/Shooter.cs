@@ -193,7 +193,7 @@ public class Shooter : MonoBehaviour
                 
                 if (Input.GetKeyDown(RPGButton))
                 {
-                    RPG = true;
+                    //RPG = true;
                 }
             }
             else
@@ -206,15 +206,17 @@ public class Shooter : MonoBehaviour
                 }
                 if (Input.GetKeyDown(RPGButton))
                 {
-                    RPG = false;
+                    //RPG = false;
                 }
             }
+
+            
+        }
+        if (Input.GetKeyDown(RPGButton) && pickedUpRPG)
+        {
+            //RPG = !RPG;
         }
 
-        if(Input.GetKeyDown(RPGButton) && pickedUpRPG)
-        {
-            RPG = !RPG;
-        }
     }
 
     [PunRPC]
