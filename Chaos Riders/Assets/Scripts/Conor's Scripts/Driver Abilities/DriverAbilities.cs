@@ -18,14 +18,16 @@ public class DriverAbilities : MonoBehaviour
     [SerializeField] private bool canUseEquipment = false, canUseAbility = false;
 
     private PhotonView pv; //my Photon View
-
+    private Animator anim;
     private Controller carController; //my Car Controller
-
+    [SerializeField]private AudioSource speaker;
+    [SerializeField] AudioClip SmokeHiss;
     void Start()
     {
+        anim = GetComponentInChildren<Animator>();
         pv = GetComponent<PhotonView>();
         carController = GetComponent<Controller>();
-
+        
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
             ResetAllBars(); //set all the bars to 0
@@ -44,6 +46,7 @@ public class DriverAbilities : MonoBehaviour
             //if you use the equipment
             if (Input.GetKeyDown(equipmentKeyCode) && canUseEquipment)
             {
+                speaker.PlayOneShot(SmokeHiss);
                 //spawn the smoke grenade accross the network
                 if (IsThisMultiplayer.Instance.multiplayer)
                     PhotonNetwork.Instantiate("Smoke Particle", smokeSpawn.transform.position, smokeSpawn.transform.rotation, 0);
@@ -69,20 +72,18 @@ public class DriverAbilities : MonoBehaviour
 
     private IEnumerator UseBrakerAbility()
     {
-        Debug.Log(1);
+        anim.SetTrigger("BreakerTransTrigger");
         //brake
         carController.ApplyBrake(30000000);
 
         yield return new WaitForSeconds(1.5f);
-        Debug.Log(2);
         carController.ReleaseBrake();
-
+        anim.SetTrigger("LeaveBreakerTrigger");
         //speed
 
         carController.boost = true;
 
         yield return new WaitForSeconds(5.5f);
-        Debug.Log(3);
         carController.boost = false;
     }
 
