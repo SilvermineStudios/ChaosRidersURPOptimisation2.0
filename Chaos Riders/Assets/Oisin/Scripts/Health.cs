@@ -84,8 +84,7 @@ public class Health : MonoBehaviour
     void Die()
     {
         //deathParticles.SetActive(true);
-        GameObject go = PhotonNetwork.Instantiate("DeathExplosion", this.transform.position, this.transform.rotation, 0);
-        go.transform.parent = this.transform;
+        StartCoroutine(DeathCourotine(deathTimer));
     }
 
     [PunRPC]
@@ -115,5 +114,13 @@ public class Health : MonoBehaviour
     }
 
 
+    private IEnumerator DeathCourotine(float time)
+    {
+        GameObject go = PhotonNetwork.Instantiate("DeathExplosion", this.transform.position, this.transform.rotation, 0);
+        go.transform.parent = this.transform;
 
+        yield return new WaitForSeconds(time);
+
+        
+    }
 }
