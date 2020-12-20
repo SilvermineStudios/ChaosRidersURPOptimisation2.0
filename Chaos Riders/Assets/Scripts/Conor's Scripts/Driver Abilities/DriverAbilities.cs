@@ -20,7 +20,7 @@ public class DriverAbilities : MonoBehaviour
     private PhotonView pv; //my Photon View
     private Animator anim;
     private Controller carController; //my Car Controller
-    [SerializeField]private AudioSource speaker;
+    [SerializeField] private AudioSource speaker;
     [SerializeField] AudioClip SmokeHiss;
     void Start()
     {

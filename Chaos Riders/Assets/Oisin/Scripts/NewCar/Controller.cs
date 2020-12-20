@@ -480,6 +480,12 @@ public class Controller : MonoBehaviour
             {
                 Vector3 skidPoint = new Vector3(wheelColliders[i].transform.position.x, wheelHit.point.y, wheelColliders[i].transform.position.z) + (rb.velocity * Time.deltaTime);
                 lastSkid[i] = skidmarksController.AddSkidMark(skidPoint, wheelHit.normal, 0.5f, lastSkid[i]);
+                //amount += 0.25f;
+            }
+            else if (( (wheelHit.sidewaysSlip > sideSkidLimit || wheelHit.sidewaysSlip < -sideSkidLimit)) && skidmarks[i] != null)
+            {
+                Vector3 skidPoint = new Vector3(wheelColliders[i].transform.position.x, wheelHit.point.y, wheelColliders[i].transform.position.z) + (rb.velocity * Time.deltaTime);
+                lastSkid[i] = skidmarksController.AddSkidMark(skidPoint, wheelHit.normal, 0.5f, lastSkid[i]);
                 amount += 0.25f;
             }
             else
