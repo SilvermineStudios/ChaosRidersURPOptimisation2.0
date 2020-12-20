@@ -31,6 +31,10 @@ public class CarPickup : MonoBehaviour
 
     private void Update()
     {
+<<<<<<< Updated upstream
+=======
+        //Debug.Log(PickupManager.speedBoostTime);
+>>>>>>> Stashed changes
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
             shooter = GetComponent<Controller>().Shooter;

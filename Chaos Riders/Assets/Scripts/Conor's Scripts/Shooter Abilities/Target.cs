@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Target : MonoBehaviour
 {
+    
     [SerializeField] private bool ai = false;
     private AIHealth aiHealthScript;
     private Health healthScript;
