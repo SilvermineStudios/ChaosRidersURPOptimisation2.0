@@ -496,6 +496,10 @@ public class Controller : MonoBehaviour
             }
             
         }
+        if(braking)
+        {
+            amount = 0.75f;
+        }
         speakerSkid.volume = amount;
     }
 
