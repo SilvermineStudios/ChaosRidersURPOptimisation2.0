@@ -210,6 +210,11 @@ public class Shooter : MonoBehaviour
                 }
             }
         }
+
+        if(Input.GetKeyDown(RPGButton))
+        {
+            RPG = !RPG;
+        }
     }
 
     [PunRPC]
