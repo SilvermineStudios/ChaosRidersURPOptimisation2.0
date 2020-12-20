@@ -32,7 +32,6 @@ public class Shooter : MonoBehaviour
 
     //shooting
     [SerializeField] AudioClip RPGFire;
-    [SerializeField] private float damage = 10f;
     [SerializeField] private float range = 100f;
     [SerializeField] private AudioSource minigunSpeaker;
     [SerializeField] private AudioSource minigunSpeaker2;
@@ -323,7 +322,7 @@ public class Shooter : MonoBehaviour
             Target target = hit.transform.GetComponent<Target>();
             if(target != null && target.gameObject != car)
             {
-                target.TakeDamage(damage);
+                target.TakeDamage(minigunDamage);
                 //<-------------------------------------------------------------------------------------HIT MARKER STUFFS
             }
 
@@ -364,7 +363,7 @@ public class Shooter : MonoBehaviour
             Target target = hit.transform.GetComponent<Target>();
             if (target != null && target.gameObject != car)
             {
-                target.TakeDamage(damage);
+                target.TakeDamage(minigunDamage);
             }
 
             GameObject impactGo = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
