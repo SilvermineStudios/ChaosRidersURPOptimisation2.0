@@ -1884,7 +1884,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d6532e1d2a565d48a623f2c53384a43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxMotorTorque: 300
+  downforce: 800
+  maxMotorTorque: 600
   currentSpeed: 0
   maxSpeed: 2000
   maxSteerAngle: 45
@@ -1942,7 +1943,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 2053218935}
   - {fileID: 2053218936}
-  viewIdField: 0
+  viewIdField: 2
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &2053218935
@@ -2006,6 +2007,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ai: 1
+  invincible: 0
   health: 0
 --- !u!1 &2040200205363631557
 GameObject:
