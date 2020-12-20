@@ -51,7 +51,7 @@ public class Health : MonoBehaviour
         healthNormalized = (health / startHealth);
         SetHealthBarUiSize(healthNormalized);
 
-        healthbar.value = health;
+        pv.RPC("SetHealth", RpcTarget.All);
 
         if(health <= 0 && !dead)
         {
@@ -92,6 +92,11 @@ public class Health : MonoBehaviour
         deathParticles.SetActive(false);
     }
 
+    [PunRPC]
+    void SetHealth()
+    {
+        healthbar.value = healthNormalized;
+    }
 
     public void TakeDamage(float[] DamagetoTake)
     {

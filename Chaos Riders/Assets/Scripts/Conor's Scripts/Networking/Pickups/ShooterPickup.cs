@@ -33,12 +33,12 @@ public class ShooterPickup : MonoBehaviour
 
             if(hasRPG && rpgOn && Input.GetKeyDown(togglePickupButton))
             {
-                rpgOn = false;
+                //rpgOn = false;
             }
 
             if (hasRPG && !rpgOn && Input.GetKeyDown(togglePickupButton))
             {
-                rpgOn = true;
+                //rpgOn = true;
             }
         }
 
