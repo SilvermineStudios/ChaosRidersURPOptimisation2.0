@@ -30,6 +30,7 @@ public class Shooter : MonoBehaviour
     [SerializeField] private bool pickedUpRPG = false;
 
     //shooting
+    [SerializeField] AudioClip RPGFire;
     [SerializeField] private float damage = 10f;
     [SerializeField] private float range = 100f;
     [SerializeField] private AudioSource minigunSpeaker;
@@ -97,14 +98,17 @@ public class Shooter : MonoBehaviour
             //pickedUpRPG = GetComponent<ShooterPickup>().hasRPG;
 
             
-
+            /*
             //stops the cooldown bar for the minigun if the RPG is active
             if(!RPG)
             {
+                */
                 CooldownBarValues();
                 ammoNormalized = amountOfAmmoForCooldownBar / startAmmo; //normalized the ammo value to be between 0 and 1 for the cooldown bar scale
                 CoolDownBar(ammoNormalized); //scale the size of the cooldown bar to match the ammo count
-            }
+            //}
+
+
 
             rpgcount.text = amountOfAmmoForRPG + " / " + startAmountOfAmmoForRPG;
             
@@ -124,7 +128,7 @@ public class Shooter : MonoBehaviour
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer)
         {
             //if you are shooting and have ammo (MINIGUN)
-            if (Input.GetKey(shootButton) && amountOfAmmoForCooldownBar > 0)
+            if (Input.GetKey(shootButton) && amountOfAmmoForCooldownBar > 0 && !RPG)
             {
                 
                 if (Time.time >= fireCooldown + minigunFireRate)
@@ -155,7 +159,7 @@ public class Shooter : MonoBehaviour
                 if (Input.GetKeyDown(shootButton) && amountOfAmmoForRPG > 0)
                 {
                     amountOfAmmoForRPG--;
-                    ShootRPG();
+                    pv.RPC("ShootRPG", RpcTarget.All);
                 }
                 if (amountOfAmmoForRPG <= 0)
                 {
@@ -172,7 +176,7 @@ public class Shooter : MonoBehaviour
         if (!IsThisMultiplayer.Instance.multiplayer)
         {
             //if you are shooting and have ammo
-            if (Input.GetKey(shootButton) && amountOfAmmoForCooldownBar > 0)
+            if (Input.GetKey(shootButton) && amountOfAmmoForCooldownBar > 0 && !RPG)
             {
                 if (Time.time >= fireCooldown + minigunFireRate)
                 {
@@ -230,6 +234,7 @@ public class Shooter : MonoBehaviour
 
     void OfflineShootRPG()
     {
+        minigunSpeaker.PlayOneShot(RPGFire);
         GameObject grenade = Instantiate(rocket, rocketspawn.transform.position, rpgGo.transform.rotation);
         grenade.GetComponent<Rigidbody>().AddForce(rpgGo.transform.transform.forward * 100, ForceMode.Impulse);
     }
@@ -237,9 +242,12 @@ public class Shooter : MonoBehaviour
     [PunRPC]
     void ShootRPG()
     {
+        minigunSpeaker.PlayOneShot(RPGFire);
         GameObject grenade = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Grenade"), rocketspawn.transform.position, rpgGo.transform.rotation, 0);
         grenade.GetComponent<Rigidbody>().AddForce(rpgGo.transform.transform.forward * 100, ForceMode.Impulse);
     }
+
+    
 
     private void RotateGunBarrel()
     {
