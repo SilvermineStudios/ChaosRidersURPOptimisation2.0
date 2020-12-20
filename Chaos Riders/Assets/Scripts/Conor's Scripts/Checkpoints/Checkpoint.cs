@@ -34,7 +34,7 @@ public class Checkpoint : MonoBehaviour
         youWinText.SetActive(false);
         //CarUIManager.youWinText.SetActive(false);
 
-        audioS = GetComponent<AudioSource>();
+        //audioS = GetComponent<AudioSource>();
 
         amountOfLaps = LapCounter.AmountOfLaps;
 
