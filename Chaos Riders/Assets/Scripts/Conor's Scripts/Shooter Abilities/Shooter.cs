@@ -77,7 +77,10 @@ public class Shooter : MonoBehaviour
         }
     }
 
-    private void Update()
+
+
+    // Update is called once per frame
+    void Update()
     {
         RotateGunBarrel();
         FollowMouse();
@@ -88,12 +91,6 @@ public class Shooter : MonoBehaviour
             car = GetComponentInParent<MoveTurretPosition>().car;
             carCollision = GetComponentInParent<MoveTurretPosition>().car.transform.GetChild(0).gameObject;
         }
-    }
-
-
-    // Update is called once per frame
-    void FixedUpdate()
-    {
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
             //RPG = GetComponent<ShooterPickup>().hasRPG;
