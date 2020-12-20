@@ -97,6 +97,7 @@ public class Shooter : MonoBehaviour
             //RPG = GetComponent<ShooterPickup>().hasRPG;
             //pickedUpRPG = GetComponent<ShooterPickup>().hasRPG;
 
+
             
             /*
             //stops the cooldown bar for the minigun if the RPG is active

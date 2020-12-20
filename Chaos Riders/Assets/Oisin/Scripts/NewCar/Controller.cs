@@ -285,7 +285,7 @@ public class Controller : MonoBehaviour
     {
         if(braking)
         {
-            return;
+            //return;
         }
 
         float speed = rb.velocity.magnitude;
