@@ -95,7 +95,7 @@ public class Health : MonoBehaviour
     [PunRPC]
     void SetHealth()
     {
-        healthbar.value = health;
+        healthbar.value = healthNormalized;
     }
 
     public void TakeDamage(float[] DamagetoTake)
