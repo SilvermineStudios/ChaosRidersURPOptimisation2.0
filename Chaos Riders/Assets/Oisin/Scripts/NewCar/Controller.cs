@@ -500,6 +500,20 @@ public class Controller : MonoBehaviour
         {
             amount = 0.75f;
         }
+        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
+        {
+            pv.RPC("SetSkidVolume",  RpcTarget.All, amount);
+        }
+        else
+        {
+            speakerSkid.volume = amount;
+        }
+        
+    }
+    
+    [PunRPC]
+    void SetSkidVolume(float amount)
+    {
         speakerSkid.volume = amount;
     }
 
