@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class DriverAbilities : MonoBehaviour
 {
 
+
     public GameObject smokeSpawn, smokeGameObject;
 
     [SerializeField] private KeyCode abilityKeyCode = KeyCode.Q, equipmentKeyCode = KeyCode.E; //Create Keycode Variables for the buttons
@@ -75,7 +76,7 @@ public class DriverAbilities : MonoBehaviour
         anim.SetTrigger("BreakerTransTrigger");
         //brake
         carController.ApplyBrake(30000000);
-
+        
         yield return new WaitForSeconds(1.5f);
         carController.ReleaseBrake();
         anim.SetTrigger("LeaveBreakerTrigger");
