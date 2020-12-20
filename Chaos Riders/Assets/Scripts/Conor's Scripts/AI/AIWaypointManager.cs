@@ -9,7 +9,7 @@ public class AIWaypointManager : MonoBehaviour
     public Transform[] waypoints;
 
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = lineColour;
 

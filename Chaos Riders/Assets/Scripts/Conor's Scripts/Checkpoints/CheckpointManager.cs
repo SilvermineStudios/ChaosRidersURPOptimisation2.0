@@ -26,7 +26,7 @@ public class CheckpointManager : MonoBehaviour
         AddCarWaypoints();
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = lineColour;
 
