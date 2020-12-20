@@ -78,18 +78,20 @@ public class Health : MonoBehaviour
         }
     }
 
-    float timeSinceDeath, deathTimer = 5;
+    float timeSinceDeath, deathTimer = 6;
 
     [PunRPC]
     void Die()
     {
-        deathParticles.SetActive(true);
+        //deathParticles.SetActive(true);
+        GameObject go = PhotonNetwork.Instantiate("DeathExplosion", this.transform.position, this.transform.rotation, 0);
+        go.transform.parent = this.transform;
     }
 
     [PunRPC]
     void Respawn()
     {
-        deathParticles.SetActive(false);
+        //deathParticles.SetActive(false);
     }
 
     [PunRPC]
