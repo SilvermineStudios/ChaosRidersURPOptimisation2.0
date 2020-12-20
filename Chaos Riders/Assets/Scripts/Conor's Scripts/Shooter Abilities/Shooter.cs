@@ -83,31 +83,22 @@ public class Shooter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        RotateGunBarrel();
-        FollowMouse();
-
-        if (connectCar)
-        {
-            connectCar = false;
-            car = GetComponentInParent<MoveTurretPosition>().car;
-            carCollision = GetComponentInParent<MoveTurretPosition>().car.transform.GetChild(0).gameObject;
-        }
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
-            //RPG = GetComponent<ShooterPickup>().hasRPG;
-            //pickedUpRPG = GetComponent<ShooterPickup>().hasRPG;
+            RotateGunBarrel();
+            FollowMouse();
 
 
-            
-            /*
-            //stops the cooldown bar for the minigun if the RPG is active
-            if(!RPG)
+            if (connectCar)
             {
-                */
-                CooldownBarValues();
-                ammoNormalized = amountOfAmmoForCooldownBar / startAmmo; //normalized the ammo value to be between 0 and 1 for the cooldown bar scale
-                CoolDownBar(ammoNormalized); //scale the size of the cooldown bar to match the ammo count
-            //}
+                connectCar = false;
+                car = GetComponentInParent<MoveTurretPosition>().car;
+                carCollision = GetComponentInParent<MoveTurretPosition>().car.transform.GetChild(0).gameObject;
+            }
+
+            CooldownBarValues();
+            ammoNormalized = amountOfAmmoForCooldownBar / startAmmo; //normalized the ammo value to be between 0 and 1 for the cooldown bar scale
+            CoolDownBar(ammoNormalized); //scale the size of the cooldown bar to match the ammo count
 
 
 
