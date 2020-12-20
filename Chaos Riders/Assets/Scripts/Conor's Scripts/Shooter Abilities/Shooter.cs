@@ -5,6 +5,7 @@ using Photon.Pun;
 using Cinemachine;
 using TMPro;
 using System.IO;
+using UnityEngine.UI;
 
 public class Shooter : MonoBehaviour
 {
@@ -56,6 +57,8 @@ public class Shooter : MonoBehaviour
     [SerializeField] private float minRotationHeight = -20f, maxRotationHeight = 20f;
 
     [SerializeField] private Transform impactEffectHolder;
+    [SerializeField] Image hitmarker;
+
 
     private PhotonView pv;
     private float fireCooldown;
