@@ -7,7 +7,7 @@ using UnityEngine.Audio;
 
 public class Pause : MonoBehaviour
 {
-    [SerializeField] private GameObject PauseMenu, audioSettingsPanel, mainPauseMenuPanel; //Pause Menu Gameobject 
+    [SerializeField] private GameObject PauseMenu, audioSettingsPanel, mainPauseMenuPanel, controlsPanel; //Pause Menu Gameobject 
     [SerializeField] private KeyCode pauseMenuButton1, pauseMenuButton2;
     public bool paused = false;
     [SerializeField] private int LobbySceneIndex = 0;
@@ -71,12 +71,19 @@ public class Pause : MonoBehaviour
         }
     }
 
+    public void GameControlsButton()
+    {
+        mainPauseMenuPanel.SetActive(false); // disable the main pause menu panel 
+        controlsPanel.SetActive(true); //enable the controls panel
+    }
+
     public void BackButton()
     {
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
             mainPauseMenuPanel.SetActive(true); //enable the main pause menu panel 
             audioSettingsPanel.SetActive(false); //disable the audio settings panel
+            controlsPanel.SetActive(false); //disable the controls panel
         }
     }
 

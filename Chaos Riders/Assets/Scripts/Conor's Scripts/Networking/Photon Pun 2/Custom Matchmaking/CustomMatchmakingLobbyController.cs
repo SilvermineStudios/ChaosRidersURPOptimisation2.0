@@ -12,6 +12,7 @@ public class CustomMatchmakingLobbyController : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject lobbyConnectButton; //button used for joining lobby
     [SerializeField] private GameObject lobbyPanel; //panel for displaying lobby
     [SerializeField] private GameObject mainPanel; //panel for displaying main menu
+    [SerializeField] private GameObject controlsPanel; //panel for displaying game controls
 
     public TMP_InputField playerNameInput; //input field so player can change their NickName
 
@@ -22,6 +23,13 @@ public class CustomMatchmakingLobbyController : MonoBehaviourPunCallbacks
     [SerializeField] Transform roomsContainer; //container for holding all the room listings
     [SerializeField] GameObject roomListingPrefab; //prefab for displaying each room in the lobby
     #endregion
+
+    private void Awake()
+    {
+        mainPanel.SetActive(true);
+        lobbyPanel.SetActive(false);
+        controlsPanel.SetActive(false);
+    }
 
     public override void OnConnectedToMaster()
     {
@@ -134,5 +142,19 @@ public class CustomMatchmakingLobbyController : MonoBehaviourPunCallbacks
         mainPanel.SetActive(true);
         lobbyPanel.SetActive(false);
         PhotonNetwork.LeaveLobby();
+    }
+
+
+    public void ToControlsButton()
+    {
+        lobbyPanel.SetActive(false);
+        mainPanel.SetActive(false);
+        controlsPanel.SetActive(true);
+    }
+
+    public void BackFromControlsButton()
+    {
+        controlsPanel.SetActive(false);
+        mainPanel.SetActive(true);
     }
 }
