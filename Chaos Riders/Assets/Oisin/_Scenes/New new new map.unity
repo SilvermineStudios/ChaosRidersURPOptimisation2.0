@@ -11180,6 +11180,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 740856628, guid: c50582e8a03590b43b5875b514a6a8a7, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -4174368812676530031, guid: c5b7f6daef602b0478a2bc18598cb617, type: 2}
     - target: {fileID: 1327968798, guid: c50582e8a03590b43b5875b514a6a8a7, type: 3}
       propertyPath: viewIdField
       value: 16
@@ -11206,7 +11210,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4468230371053281714, guid: c50582e8a03590b43b5875b514a6a8a7, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4468230371053281715, guid: c50582e8a03590b43b5875b514a6a8a7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11254,11 +11258,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4468230371181064301, guid: c50582e8a03590b43b5875b514a6a8a7, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4468230371181064301, guid: c50582e8a03590b43b5875b514a6a8a7, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c50582e8a03590b43b5875b514a6a8a7, type: 3}
@@ -11990,8 +11994,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1155110777}
-  m_LocalRotation: {x: 0.012566066, y: 0, z: 0, w: 0.9999211}
-  m_LocalPosition: {x: -0.55100495, y: 2.274, z: -1.5079994}
+  m_LocalRotation: {x: 0, y: 0.99901783, z: -0.04431007, w: 0}
+  m_LocalPosition: {x: -108.69, y: 2.6599998, z: 95.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -18753,17 +18757,13 @@ PrefabInstance:
       propertyPath: car
       value: 
       objectReference: {fileID: 740856627}
-    - target: {fileID: 7634238392847830434, guid: 2a0127179681d564699c69930481b9be, type: 3}
-      propertyPath: RPG
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7634238392847830434, guid: 2a0127179681d564699c69930481b9be, type: 3}
-      propertyPath: pickedUpRPG
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7634238392847830435, guid: 2a0127179681d564699c69930481b9be, type: 3}
       propertyPath: m_Name
       value: Shooter2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7634238392847830435, guid: 2a0127179681d564699c69930481b9be, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7634238392847830456, guid: 2a0127179681d564699c69930481b9be, type: 3}
       propertyPath: viewIdField

@@ -15,7 +15,7 @@ public class CarPickup : MonoBehaviour
 
     private PhotonView pv;
 
-    private DriveTrainMultiplayer dt;
+    private Controller controller;
 
     void Start()
     {
@@ -26,7 +26,7 @@ public class CarPickup : MonoBehaviour
         armourUiImage.SetActive(false);
 
         pv = GetComponent<PhotonView>();
-        dt = GetComponent<DriveTrainMultiplayer>();
+        controller = GetComponent<Controller>();
     }
 
     private void Update()
@@ -92,12 +92,12 @@ public class CarPickup : MonoBehaviour
     
     private IEnumerator SpeedBoostTimer(float time)
     {
-        dt.nitro = true;
+        controller.boost = true;
         nitroUiImage.SetActive(true);
 
         yield return new WaitForSeconds(time);
 
-        dt.nitro = false;
+        controller.boost = false;
         nitroUiImage.SetActive(false);
     }
     #endregion
