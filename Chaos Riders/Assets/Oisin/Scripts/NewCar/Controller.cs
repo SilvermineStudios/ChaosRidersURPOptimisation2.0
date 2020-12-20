@@ -476,10 +476,11 @@ public class Controller : MonoBehaviour
             wheelColliders[i].GetGroundHit(out wheelHit);
             //Debug.Log(wheelHit.sidewaysSlip);
 
-            if (((wheelHit.forwardSlip > forwardSkidLimit || wheelHit.forwardSlip < -forwardSkidLimit) || (wheelHit.sidewaysSlip > sideSkidLimit || wheelHit.sidewaysSlip < -sideSkidLimit)) && skidmarks[i] != null)
+            if (((wheelHit.forwardSlip > forwardSkidLimit || wheelHit.forwardSlip < -forwardSkidLimit) && skidmarks[i] != null))
             {
-                Vector3 skidPoint = new Vector3(wheelColliders[i].transform.position.x, wheelHit.point.y, wheelColliders[i].transform.position.z) + (rb.velocity * Time.deltaTime);
-                lastSkid[i] = skidmarksController.AddSkidMark(skidPoint, wheelHit.normal, 0.5f, lastSkid[i]);
+                //Not quite ready yet, check back later
+                //Vector3 skidPoint = new Vector3(wheelColliders[i].transform.position.x, wheelHit.point.y, wheelColliders[i].transform.position.z) + (rb.velocity * Time.deltaTime);
+                //lastSkid[i] = skidmarksController.AddSkidMark(skidPoint, wheelHit.normal, 0.5f, lastSkid[i]);
                 //amount += 0.25f;
             }
             else if (( (wheelHit.sidewaysSlip > sideSkidLimit || wheelHit.sidewaysSlip < -sideSkidLimit)) && skidmarks[i] != null)
