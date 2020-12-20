@@ -287,7 +287,10 @@ public class Shooter : MonoBehaviour
         }
     }
 
-    
+    void Hitmarker()
+    {
+
+    }
 
 
     [PunRPC]
