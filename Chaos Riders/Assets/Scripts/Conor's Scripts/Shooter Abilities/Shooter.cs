@@ -143,10 +143,10 @@ public class Shooter : MonoBehaviour
                     currentSpread -= 0.02f;
                 }
             }
-        if (!RPG)
-            {
-                pv.RPC("HideRPG", RpcTarget.All);
-            }
+            if (!RPG)
+                {
+                    pv.RPC("HideRPG", RpcTarget.All);
+                }
             
             if(RPG)
             {
@@ -244,9 +244,12 @@ public class Shooter : MonoBehaviour
     [PunRPC]
     void ShootRPG()
     {
-        minigunSpeaker.PlayOneShot(RPGFire);
-        GameObject grenade = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Grenade"), rocketspawn.transform.position, rpgGo.transform.rotation, 0);
-        grenade.GetComponent<Rigidbody>().AddForce(rpgGo.transform.transform.forward * 100, ForceMode.Impulse);
+        if (pv.IsMine)
+        {
+            minigunSpeaker.PlayOneShot(RPGFire);
+            GameObject grenade = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Grenade"), rocketspawn.transform.position, rpgGo.transform.rotation, 0);
+            grenade.GetComponent<Rigidbody>().AddForce(rpgGo.transform.transform.forward * 100, ForceMode.Impulse);
+        }
     }
 
     
