@@ -83,7 +83,7 @@ public class Health : MonoBehaviour
     [PunRPC]
     void Die()
     {
-        deathParticles.SetActive(true);
+        //deathParticles.SetActive(true);
         GameObject go = PhotonNetwork.Instantiate("DeathExplosion", this.transform.position, this.transform.rotation, 0);
         go.transform.parent = this.transform;
     }
@@ -91,7 +91,7 @@ public class Health : MonoBehaviour
     [PunRPC]
     void Respawn()
     {
-        deathParticles.SetActive(false);
+        //deathParticles.SetActive(false);
     }
 
     [PunRPC]
