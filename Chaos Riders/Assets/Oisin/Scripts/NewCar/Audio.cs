@@ -107,7 +107,15 @@ public class Audio : MonoBehaviour
             if (engineSoundStyle == EngineAudioOptions.Simple)
             {
                 // for 1 channel engine sound, it's oh so simple:
-                m_HighAccel.pitch = pitch * pitchMultiplier * highPitchMultiplier;
+                if(m_CarController.boost)
+                {
+                    m_HighAccel.pitch = pitch * pitchMultiplier * highPitchMultiplier * 1.2f;
+                }
+                else
+                {
+                    m_HighAccel.pitch = pitch * pitchMultiplier * highPitchMultiplier;
+                }
+                
                 m_HighAccel.dopplerLevel = useDoppler ? dopplerLevel : 0;
                 //m_HighAccel.volume = 0.45f;
             }
