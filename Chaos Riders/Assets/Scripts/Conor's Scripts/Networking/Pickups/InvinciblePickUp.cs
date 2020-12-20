@@ -5,14 +5,14 @@ using UnityEngine;
 public class InvinciblePickUp : MonoBehaviour
 {
     public bool pickedUp = false;
-    private MeshRenderer myMesh;
+    private MeshRenderer[] meshRenderers;
 
     [SerializeField] private AudioClip pickUpSound;
     private AudioSource audioS;
 
     void Start()
     {
-        myMesh = GetComponent<MeshRenderer>();
+        meshRenderers = this.GetComponentsInChildren<MeshRenderer>();
         audioS = GetComponent<AudioSource>();
     }
 
@@ -21,7 +21,6 @@ public class InvinciblePickUp : MonoBehaviour
         if (!pickedUp)
         {
             pickedUp = true;
-            myMesh.enabled = false;
             audioS.PlayOneShot(pickUpSound);
 
             StartCoroutine(Timer(PickupManager.pickupRespawnTime));
@@ -31,10 +30,17 @@ public class InvinciblePickUp : MonoBehaviour
     private IEnumerator Timer(float time)
     {
         //invincible
+        foreach (MeshRenderer meshR in meshRenderers)
+        {
+            meshR.enabled = false;
+        }
 
         yield return new WaitForSeconds(time);
 
         pickedUp = false;
-        myMesh.enabled = true;
+        foreach (MeshRenderer meshR in meshRenderers)
+        {
+            meshR.enabled = true;
+        }
     }
 }

@@ -180,12 +180,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 670548074}
-  m_LocalRotation: {x: -0, y: 0.00000011920929, z: -0, w: 1}
-  m_LocalPosition: {x: 0.074, y: 0.17724782, z: 0.085}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 7634238392110369385}
-  m_RootOrder: 2
+  m_Father: {fileID: 6205042709698986915}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!33 &670548077
 MeshFilter:
@@ -350,7 +350,7 @@ Transform:
   m_Children:
   - {fileID: 543450652235032498}
   m_Father: {fileID: 7634238392110369385}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1105803715
 GameObject:
@@ -444,8 +444,8 @@ GameObject:
   - component: {fileID: 1682963324}
   - component: {fileID: 1682963326}
   - component: {fileID: 1682963325}
-  - component: {fileID: 3108852170001021686}
-  - component: {fileID: 3332013116374403200}
+  - component: {fileID: 6365413490110004830}
+  - component: {fileID: 5789528998435552910}
   m_Layer: 0
   m_Name: Rotating Barrel
   m_TagString: Untagged
@@ -460,12 +460,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1682963323}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.002, y: 0.2313, z: 0.2722}
+  m_LocalRotation: {x: -0, y: -0.00000011920929, z: -0, w: 1}
+  m_LocalPosition: {x: -0.072001144, y: 0.054052055, z: 0.18720151}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 7634238392110369385}
-  m_RootOrder: 3
+  m_Father: {fileID: 6205042709698986915}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1682963326
 MeshFilter:
@@ -517,7 +517,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &3108852170001021686
+--- !u!114 &6365413490110004830
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -536,11 +536,11 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
-  - {fileID: 3332013116374403200}
+  - {fileID: 5789528998435552910}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &3332013116374403200
+--- !u!114 &5789528998435552910
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1364,6 +1364,38 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &5937172025844165292
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6205042709698986915}
+  m_Layer: 0
+  m_Name: GunHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6205042709698986915
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5937172025844165292}
+  m_LocalRotation: {x: -0, y: 0.00000011920929, z: -0, w: 1}
+  m_LocalPosition: {x: 0.074, y: 0.17724782, z: 0.085}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 670548075}
+  - {fileID: 1682963324}
+  m_Father: {fileID: 7634238392110369385}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &6619225642580077343
 GameObject:
   m_ObjectHideFlags: 0
@@ -3771,8 +3803,7 @@ Transform:
   m_Children:
   - {fileID: 3318809557432660147}
   - {fileID: 7634238392448286942}
-  - {fileID: 670548075}
-  - {fileID: 1682963324}
+  - {fileID: 6205042709698986915}
   - {fileID: 1094957984}
   m_Father: {fileID: 7634238392505141231}
   m_RootOrder: 0
@@ -10521,6 +10552,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasRPG: 0
+  rpgUI: {fileID: 7634238393611303291}
+  gunbarrelHolder: {fileID: 5937172025844165292}
+  gunPartsToMakeInvisible: []
 --- !u!1 &7634238392854081156
 GameObject:
   m_ObjectHideFlags: 0

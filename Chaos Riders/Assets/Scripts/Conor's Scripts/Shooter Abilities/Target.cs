@@ -6,6 +6,7 @@ public class Target : MonoBehaviour
 {
     
     [SerializeField] private bool ai = false;
+    public bool invincible = false;
     private AIHealth aiHealthScript;
     private Health healthScript;
 
@@ -18,6 +19,7 @@ public class Target : MonoBehaviour
         else
             healthScript = GetComponent<Health>();
     }
+
     /*
     private void OnGUI()
     {
@@ -34,6 +36,7 @@ public class Target : MonoBehaviour
         GUILayout.Label("Health: " + health);
     }
     */
+
     void Update()
     {
         if (ai)
@@ -58,11 +61,12 @@ public class Target : MonoBehaviour
 
         if (health > 0)
         {
-            if (ai)
+            if (ai && !invincible)
             {
                 aiHealthScript.health -= amount;
             }
-            else
+
+            if (!ai && !invincible)
             {
                 healthScript.health -= amount;
             }
