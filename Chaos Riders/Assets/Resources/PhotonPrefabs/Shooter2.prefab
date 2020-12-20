@@ -12915,7 +12915,7 @@ Rigidbody:
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 3
 --- !u!82 &7634238392847830463
 AudioSource:
   m_ObjectHideFlags: 0
@@ -12925,7 +12925,7 @@ AudioSource:
   m_GameObject: {fileID: 7634238392847830435}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -4174368812676530031, guid: c5b7f6daef602b0478a2bc18598cb617, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -13060,8 +13060,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.4527384, y: 4.4620867, z: 1.2221792}
-  m_Center: {x: -0.22636676, y: -2.949739, z: -0.33224285}
+  m_Size: {x: 0.92871857, y: 4.6904297, z: 1.2795715}
+  m_Center: {x: 0.037418365, y: -2.8355675, z: 0.06991196}
 --- !u!114 &7634238392847830453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13075,7 +13075,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundEffect: {fileID: 8300000, guid: ed476ad4a6f78b64382ce8cd8d9c2f2f, type: 3}
-  audioS: {fileID: 0}
+  audioS: {fileID: 7634238392847830463}
   currentLap: 1
   lapsText: {fileID: 7634238393056702749}
   canCrossFinish: 0
