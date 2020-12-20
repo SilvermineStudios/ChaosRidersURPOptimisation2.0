@@ -138,6 +138,10 @@ public class Controller : MonoBehaviour
         
     }
 
+
+    //Stuff to feed to Audio Script, to be removed in alpha
+    //==================================================================================================
+
     private void CalculateRevs()
     {
         // calculate engine revs (for display / sound)
@@ -193,7 +197,9 @@ public class Controller : MonoBehaviour
         return 1 - (1 - factor) * (1 - factor);
     }
 
-    
+    //=========================================================================================================================
+
+
     private void GetInput()
     {
         horizontalInput = Input.GetAxis("Horizontal");
