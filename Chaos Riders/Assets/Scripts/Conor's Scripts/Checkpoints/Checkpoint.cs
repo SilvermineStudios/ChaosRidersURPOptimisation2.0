@@ -7,7 +7,7 @@ using TMPro;
 public class Checkpoint : MonoBehaviour
 {
     [SerializeField] private AudioClip soundEffect;
-    private AudioSource audioS;
+    [SerializeField] private AudioSource audioS;
 
     private int amountOfLaps;
     [SerializeField] private int currentLap = 1;
