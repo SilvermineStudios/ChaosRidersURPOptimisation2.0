@@ -5,7 +5,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using System.IO;
 
-public class PhotonPlayer : MonoBehaviour
+public class PhotonShooter : MonoBehaviour
 {
     private PhotonView pv;
     public GameObject myAvatar;
@@ -16,9 +16,9 @@ public class PhotonPlayer : MonoBehaviour
         int spawnPicker = Random.Range(0, PlayerSpawner.PS.carSpawnPoints.Length);
         Debug.Log("Car Spawn point = " + spawnPicker);
 
-        if(pv.IsMine)
+        if (pv.IsMine)
         {
-            myAvatar = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Braker"), 
+            myAvatar = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Shooter2"),
                 this.transform.position, this.transform.rotation, 0);
         }
     }
