@@ -7,7 +7,7 @@ using System.IO;
 
 public class PhotonDriver : MonoBehaviour
 {
-    private PhotonView pv;
+    public PhotonView pv;
     public GameObject myAvatar;
 
     private void Start()

@@ -7,7 +7,7 @@ using System.IO;
 
 public class PhotonShooter : MonoBehaviour
 {
-    private PhotonView pv;
+    public PhotonView pv;
     public GameObject myAvatar;
 
     private void Start()
@@ -22,4 +22,7 @@ public class PhotonShooter : MonoBehaviour
                 this.transform.position, this.transform.rotation, 0);
         }
     }
+
+    //[PunRPC]
+    //void RPC_GetTeam
 }
