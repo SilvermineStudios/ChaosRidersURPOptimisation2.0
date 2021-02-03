@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 7159750212379331629}
   - component: {fileID: 7517594372972836892}
   m_Layer: 0
-  m_Name: Shooter 1
+  m_Name: ShooterPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4072832254442721754
 Transform:
   m_ObjectHideFlags: 0
@@ -66,4 +66,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa1a3e35bdd5f524ebcff45c691b5454, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pv: {fileID: 7159750212379331629}
   myAvatar: {fileID: 0}

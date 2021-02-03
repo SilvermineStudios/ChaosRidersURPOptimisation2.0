@@ -6,11 +6,13 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.IO;
 
-//10.25
+//Photon Room https://www.youtube.com/watch?v=IsiWRD1Xh5g
 public class GameSetup : MonoBehaviour
 {
     public static GameSetup GS;
     public PhotonView pv;
+
+    private bool canSpawnPlayers = true;
 
     [SerializeField] private float spawnDelay = 5f;
     [SerializeField] private int menuSceneIndex = 0;
@@ -30,7 +32,7 @@ public class GameSetup : MonoBehaviour
         }
     }
 
-    private void Awake()
+    private void Start()
     {
         Debug.Log("Test");
 
@@ -38,83 +40,140 @@ public class GameSetup : MonoBehaviour
 
         if (pv.IsMine)
         {
-            pv.RPC("RPC_SpawnPlayers", RpcTarget.MasterClient); 
-        }
+            //pv.RPC("RPC_SpawnPlayers", RpcTarget.MasterClient); 
+            RPC_SpawnPlayers();
+        } 
     }
 
-    [PunRPC]
+    //[PunRPC]
     public void RPC_SpawnPlayers()
     {
-        if (PhotonNetwork.PlayerList.Length == 1)
+        if(canSpawnPlayers)
         {
-            //car 1
-            pv.RPC("RPC_SpawnPlayer", PhotonNetwork.PlayerList[0], spawnPoints[0].position, spawnPoints[0].rotation);
-        }
+            if (PhotonNetwork.PlayerList.Length == 1)
+            {
+                //car 1
+                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[0], spawnPoints[0].position, spawnPoints[0].rotation);
+            }
 
-        if (PhotonNetwork.PlayerList.Length == 2)
-        {
-            //car 1
-            pv.RPC("RPC_SpawnPlayer", PhotonNetwork.PlayerList[0], spawnPoints[0].position, spawnPoints[0].rotation);
-            pv.RPC("RPC_SpawnPlayer", PhotonNetwork.PlayerList[1], spawnPoints[0].position, spawnPoints[0].rotation);
-        }
+            if (PhotonNetwork.PlayerList.Length == 2)
+            {
+                //car 1
+                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[0], spawnPoints[0].position, spawnPoints[0].rotation);
+                pv.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[1], spawnPoints[0].position, spawnPoints[0].rotation);
+            }
 
-        if (PhotonNetwork.PlayerList.Length == 3)
-        {
-            //car 1
-            pv.RPC("RPC_SpawnPlayer", PhotonNetwork.PlayerList[0], spawnPoints[0].position, spawnPoints[0].rotation);
-            pv.RPC("RPC_SpawnPlayer", PhotonNetwork.PlayerList[1], spawnPoints[0].position, spawnPoints[0].rotation);
-            //car 2
-            pv.RPC("RPC_SpawnPlayer", PhotonNetwork.PlayerList[3], spawnPoints[1].position, spawnPoints[1].rotation);
-        }
+            if (PhotonNetwork.PlayerList.Length == 3)
+            {
+                //car 1
+                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[0], spawnPoints[0].position, spawnPoints[0].rotation);
+                pv.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[1], spawnPoints[0].position, spawnPoints[0].rotation);
+                //car 2
+                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[2], spawnPoints[1].position, spawnPoints[1].rotation);
+            }
 
-        if (PhotonNetwork.PlayerList.Length == 4)
-        {
-            //car 1
-            pv.RPC("RPC_SpawnPlayer", PhotonNetwork.PlayerList[0], spawnPoints[0].position, spawnPoints[0].rotation);
-            pv.RPC("RPC_SpawnPlayer", PhotonNetwork.PlayerList[1], spawnPoints[0].position, spawnPoints[0].rotation);
-            //car 2
-            pv.RPC("RPC_SpawnPlayer", PhotonNetwork.PlayerList[3], spawnPoints[1].position, spawnPoints[1].rotation);
-            pv.RPC("RPC_SpawnPlayer", PhotonNetwork.PlayerList[3], spawnPoints[1].position, spawnPoints[1].rotation);
-        }
+            if (PhotonNetwork.PlayerList.Length == 4)
+            {
+                //car 1
+                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[0], spawnPoints[0].position, spawnPoints[0].rotation);
+                pv.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[1], spawnPoints[0].position, spawnPoints[0].rotation);
+                //car 2
+                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[2], spawnPoints[1].position, spawnPoints[1].rotation);
+                pv.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[3], spawnPoints[1].position, spawnPoints[1].rotation);
+            }
 
-        if (PhotonNetwork.PlayerList.Length == 5)
-        {
-            //car 1
-            pv.RPC("RPC_SpawnPlayer", PhotonNetwork.PlayerList[0], spawnPoints[0].position, spawnPoints[0].rotation);
-            pv.RPC("RPC_SpawnPlayer", PhotonNetwork.PlayerList[1], spawnPoints[0].position, spawnPoints[0].rotation);
-            //car 2
-            pv.RPC("RPC_SpawnPlayer", PhotonNetwork.PlayerList[2], spawnPoints[1].position, spawnPoints[1].rotation);
-            pv.RPC("RPC_SpawnPlayer", PhotonNetwork.PlayerList[3], spawnPoints[1].position, spawnPoints[1].rotation);
-            //car 3
-            pv.RPC("RPC_SpawnPlayer", PhotonNetwork.PlayerList[4], spawnPoints[2].position, spawnPoints[2].rotation);
-        }
+            if (PhotonNetwork.PlayerList.Length == 5)
+            {
+                //car 1
+                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[0], spawnPoints[0].position, spawnPoints[0].rotation);
+                pv.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[1], spawnPoints[0].position, spawnPoints[0].rotation);
+                //car 2
+                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[2], spawnPoints[1].position, spawnPoints[1].rotation);
+                pv.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[3], spawnPoints[1].position, spawnPoints[1].rotation);
+                //car 3
+                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[4], spawnPoints[2].position, spawnPoints[2].rotation);
+            }
 
-        if (PhotonNetwork.PlayerList.Length == 6)
-        {
-            //car 1
-            pv.RPC("RPC_SpawnPlayer", PhotonNetwork.PlayerList[0], spawnPoints[0].position, spawnPoints[0].rotation);
-            pv.RPC("RPC_SpawnPlayer", PhotonNetwork.PlayerList[1], spawnPoints[0].position, spawnPoints[0].rotation);
-            //car 2
-            pv.RPC("RPC_SpawnPlayer", PhotonNetwork.PlayerList[2], spawnPoints[1].position, spawnPoints[1].rotation);
-            pv.RPC("RPC_SpawnPlayer", PhotonNetwork.PlayerList[3], spawnPoints[1].position, spawnPoints[1].rotation);
-            //car 3
-            pv.RPC("RPC_SpawnPlayer", PhotonNetwork.PlayerList[4], spawnPoints[2].position, spawnPoints[2].rotation);
-            pv.RPC("RPC_SpawnPlayer", PhotonNetwork.PlayerList[5], spawnPoints[2].position, spawnPoints[2].rotation);
-        }
+            if (PhotonNetwork.PlayerList.Length == 6)
+            {
+                //car 1
+                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[0], spawnPoints[0].position, spawnPoints[0].rotation);
+                pv.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[1], spawnPoints[0].position, spawnPoints[0].rotation);
+                //car 2
+                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[2], spawnPoints[1].position, spawnPoints[1].rotation);
+                pv.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[3], spawnPoints[1].position, spawnPoints[1].rotation);
+                //car 3
+                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[4], spawnPoints[2].position, spawnPoints[2].rotation);
+                pv.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[5], spawnPoints[2].position, spawnPoints[2].rotation);
+            }
 
-        if (PhotonNetwork.PlayerList.Length == 7)
-        {
-            //car 1
-            pv.RPC("RPC_SpawnPlayer", PhotonNetwork.PlayerList[0], spawnPoints[0].position, spawnPoints[0].rotation);
-            pv.RPC("RPC_SpawnPlayer", PhotonNetwork.PlayerList[1], spawnPoints[0].position, spawnPoints[0].rotation);
-            //car 2
-            pv.RPC("RPC_SpawnPlayer", PhotonNetwork.PlayerList[2], spawnPoints[1].position, spawnPoints[1].rotation);
-            pv.RPC("RPC_SpawnPlayer", PhotonNetwork.PlayerList[3], spawnPoints[1].position, spawnPoints[1].rotation);
-            //car 3
-            pv.RPC("RPC_SpawnPlayer", PhotonNetwork.PlayerList[4], spawnPoints[2].position, spawnPoints[2].rotation);
-            pv.RPC("RPC_SpawnPlayer", PhotonNetwork.PlayerList[5], spawnPoints[2].position, spawnPoints[2].rotation);
-            //car 4
-            pv.RPC("RPC_SpawnPlayer", PhotonNetwork.PlayerList[6], spawnPoints[3].position, spawnPoints[3].rotation);
+            if (PhotonNetwork.PlayerList.Length == 7)
+            {
+                //car 1
+                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[0], spawnPoints[0].position, spawnPoints[0].rotation);
+                pv.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[1], spawnPoints[0].position, spawnPoints[0].rotation);
+                //car 2
+                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[2], spawnPoints[1].position, spawnPoints[1].rotation);
+                pv.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[3], spawnPoints[1].position, spawnPoints[1].rotation);
+                //car 3
+                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[4], spawnPoints[2].position, spawnPoints[2].rotation);
+                pv.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[5], spawnPoints[2].position, spawnPoints[2].rotation);
+                //car 4
+                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[6], spawnPoints[3].position, spawnPoints[3].rotation);
+            }
+
+            if (PhotonNetwork.PlayerList.Length == 8)
+            {
+                //car 1
+                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[0], spawnPoints[0].position, spawnPoints[0].rotation);
+                pv.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[1], spawnPoints[0].position, spawnPoints[0].rotation);
+                //car 2
+                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[2], spawnPoints[1].position, spawnPoints[1].rotation);
+                pv.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[3], spawnPoints[1].position, spawnPoints[1].rotation);
+                //car 3
+                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[4], spawnPoints[2].position, spawnPoints[2].rotation);
+                pv.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[5], spawnPoints[2].position, spawnPoints[2].rotation);
+                //car 4
+                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[6], spawnPoints[3].position, spawnPoints[3].rotation);
+                pv.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[7], spawnPoints[3].position, spawnPoints[3].rotation);
+            }
+
+            if (PhotonNetwork.PlayerList.Length == 9)
+            {
+                //car 1
+                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[0], spawnPoints[0].position, spawnPoints[0].rotation);
+                pv.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[1], spawnPoints[0].position, spawnPoints[0].rotation);
+                //car 2
+                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[2], spawnPoints[1].position, spawnPoints[1].rotation);
+                pv.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[3], spawnPoints[1].position, spawnPoints[1].rotation);
+                //car 3
+                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[4], spawnPoints[2].position, spawnPoints[2].rotation);
+                pv.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[5], spawnPoints[2].position, spawnPoints[2].rotation);
+                //car 4
+                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[6], spawnPoints[3].position, spawnPoints[3].rotation);
+                pv.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[7], spawnPoints[3].position, spawnPoints[3].rotation);
+                //car 5
+                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[8], spawnPoints[4].position, spawnPoints[4].rotation);
+            }
+
+            if (PhotonNetwork.PlayerList.Length == 10)
+            {
+                //car 1
+                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[0], spawnPoints[0].position, spawnPoints[0].rotation);
+                pv.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[1], spawnPoints[0].position, spawnPoints[0].rotation);
+                //car 2
+                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[2], spawnPoints[1].position, spawnPoints[1].rotation);
+                pv.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[3], spawnPoints[1].position, spawnPoints[1].rotation);
+                //car 3
+                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[4], spawnPoints[2].position, spawnPoints[2].rotation);
+                pv.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[5], spawnPoints[2].position, spawnPoints[2].rotation);
+                //car 4
+                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[6], spawnPoints[3].position, spawnPoints[3].rotation);
+                pv.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[7], spawnPoints[3].position, spawnPoints[3].rotation);
+                //car 5
+                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[8], spawnPoints[4].position, spawnPoints[4].rotation);
+                pv.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[9], spawnPoints[4].position, spawnPoints[4].rotation);
+            }
         }
     }
 
@@ -127,10 +186,22 @@ public class GameSetup : MonoBehaviour
             nextPlayersTeam = 1;
     }
 
+    //[PunRPC]
+    //void RPC_SpawnPlayer(Vector3 spawnPos, Quaternion spawnRot)
+    //{
+        //PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PhotonPlayer"), spawnPos, spawnRot, 0);
+    //}
+
     [PunRPC]
-    void RPC_SpawnPlayer(Vector3 spawnPos, Quaternion spawnRot)
+    void RPC_SpawnDriver(Vector3 spawnPos, Quaternion spawnRot)
     {
-        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PhotonPlayer"), spawnPos, spawnRot, 0);
+        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "DriverPlayer"), spawnPos, spawnRot, 0);
+    }
+
+    [PunRPC]
+    void RPC_SpawnShooter(Vector3 spawnPos, Quaternion spawnRot)
+    {
+        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "ShooterPlayer"), spawnPos, spawnRot, 0);
     }
 
     public void DisconnectPlayer() ///////////////////////  USE IN OTHER SCRIPTS TO DC PLAYERS

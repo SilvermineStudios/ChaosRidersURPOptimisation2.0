@@ -13,8 +13,8 @@ public class PhotonDriver : MonoBehaviour
     private void Start()
     {
         pv = GetComponent<PhotonView>();
-        int spawnPicker = Random.Range(0, PlayerSpawner.PS.carSpawnPoints.Length);
-        Debug.Log("Car Spawn point = " + spawnPicker);
+        //int spawnPicker = Random.Range(0, PlayerSpawner.PS.carSpawnPoints.Length);
+        //Debug.Log("Car Spawn point = " + spawnPicker);
 
         if (pv.IsMine)
         {
