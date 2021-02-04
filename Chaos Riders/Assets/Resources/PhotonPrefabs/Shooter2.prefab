@@ -1534,7 +1534,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 5789528998435552910}
-  viewIdField: 0
+  viewIdField: 16
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &5789528998435552910
@@ -3909,7 +3909,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 3779477741285905539}
-  viewIdField: 0
+  viewIdField: 19
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &7455325592365487074
@@ -3947,7 +3947,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 7455325592365487074}
-  viewIdField: 0
+  viewIdField: 18
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!1 &6098613025292956809
@@ -6782,7 +6782,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 7634238392520716271}
-  viewIdField: 0
+  viewIdField: 17
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &7634238392520716271
@@ -13130,6 +13130,7 @@ GameObject:
   - component: {fileID: 930781084}
   - component: {fileID: 1791419875}
   - component: {fileID: 757208674}
+  - component: {fileID: 99373608}
   m_Layer: 0
   m_Name: Shooter2
   m_TagString: shooter
@@ -13173,14 +13174,11 @@ MonoBehaviour:
   barrelToRotate: {fileID: 1682963324}
   barrelRotationStartSpeed: 100
   barrelRotationMaxSpeed: 800
-  maxDeviation: 10
   cineCamera: {fileID: 5207396787800693346}
-  bulletSpawnPoint: {fileID: 7634238392448286943}
   car: {fileID: 0}
   layerMask:
     serializedVersion: 2
     m_Bits: 1024
-  minigunDamage: 30
   playerNumber: 1
   connectCar: 0
   rpgGo: {fileID: 1094957983}
@@ -13189,6 +13187,11 @@ MonoBehaviour:
   rpgcount: {fileID: 7634238393029834588}
   RPG: 0
   pickedUpRPG: 0
+  minigunDamage: 30
+  bulletSpawnPoint: {fileID: 7634238392448286943}
+  maxDeviation: 10
+  deviationIncrease: 0.2
+  currentSpread: 0
   RPGFire: {fileID: 8300000, guid: 7580962da80d6dd4b8efc66dca1d4da6, type: 3}
   range: 9999
   minigunSpeaker: {fileID: 1495605325}
@@ -13229,7 +13232,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 7634238392847830457}
-  viewIdField: 0
+  viewIdField: 20
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &7634238392847830457
@@ -13514,6 +13517,23 @@ MonoBehaviour:
   rpgUI: {fileID: 7634238393611303291}
   gunbarrelHolder: {fileID: 5937172025844165292}
   gunPartsToMakeInvisible: []
+--- !u!114 &99373608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7634238392847830435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b7190b8346475443a0b986fb556ffeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reticle: {fileID: 1617670277}
+  restingSize: 50
+  maxSize: 250
+  speed: 1
+  currentSize: 50
 --- !u!1 &7634238392854081156
 GameObject:
   m_ObjectHideFlags: 0
