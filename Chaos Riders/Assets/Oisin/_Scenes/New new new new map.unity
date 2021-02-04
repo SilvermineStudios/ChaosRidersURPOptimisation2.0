@@ -1989,28 +1989,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 96917606}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &99373607 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7634238392847830435, guid: 2a0127179681d564699c69930481b9be, type: 3}
-  m_PrefabInstance: {fileID: 2037084478}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &99373608
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 99373607}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b7190b8346475443a0b986fb556ffeb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reticle: {fileID: 1617670277}
-  restingSize: 50
-  maxSize: 250
-  speed: 1
-  currentSize: 50
 --- !u!1001 &99786101
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36062,11 +36040,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!224 &1617670277 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 1617670277, guid: 2a0127179681d564699c69930481b9be, type: 3}
-  m_PrefabInstance: {fileID: 2037084478}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1623674045
 GameObject:
   m_ObjectHideFlags: 0
@@ -36630,6 +36603,17 @@ Transform:
   m_Father: {fileID: 866700480}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1647677281 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8931214932920015701, guid: 2a0127179681d564699c69930481b9be, type: 3}
+  m_PrefabInstance: {fileID: 2037084478}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1660214501
 GameObject:
   m_ObjectHideFlags: 0
@@ -42819,9 +42803,9 @@ PrefabInstance:
       value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 7634238392847830434, guid: 2a0127179681d564699c69930481b9be, type: 3}
-      propertyPath: deviationIncrease
-      value: 0.2
-      objectReference: {fileID: 0}
+      propertyPath: hitmarker
+      value: 
+      objectReference: {fileID: 1647677281}
     - target: {fileID: 7634238392847830435, guid: 2a0127179681d564699c69930481b9be, type: 3}
       propertyPath: m_Name
       value: Shooter2
@@ -42873,6 +42857,10 @@ PrefabInstance:
     - target: {fileID: 7634238392847830459, guid: 2a0127179681d564699c69930481b9be, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8931214932920015701, guid: 2a0127179681d564699c69930481b9be, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2a0127179681d564699c69930481b9be, type: 3}

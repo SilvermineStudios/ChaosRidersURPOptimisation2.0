@@ -78,10 +78,9 @@ public class Shooter : MonoBehaviour
 
     void Start()
     {
-        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
-        {
-
-        }
+        var tempColor = hitmarker.color;
+        tempColor.a = 0;
+        hitmarker.color = tempColor;
     }
 
 
@@ -226,7 +225,7 @@ public class Shooter : MonoBehaviour
         {
             //RPG = !RPG;
         }
-
+        Hitmarker();
     }
 
     [PunRPC]
@@ -302,7 +301,9 @@ public class Shooter : MonoBehaviour
 
     void Hitmarker()
     {
-
+        var tempColor = hitmarker.color;
+        tempColor.a -= 0.1f;
+        hitmarker.color = tempColor;
     }
 
 
@@ -372,6 +373,9 @@ public class Shooter : MonoBehaviour
             if (target != null && target.gameObject != car)
             {
                 target.TakeDamage(minigunDamage);
+                var tempColor = hitmarker.color;
+                tempColor.a = 1f;
+                hitmarker.color = tempColor;
             }
 
             GameObject impactGo = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
