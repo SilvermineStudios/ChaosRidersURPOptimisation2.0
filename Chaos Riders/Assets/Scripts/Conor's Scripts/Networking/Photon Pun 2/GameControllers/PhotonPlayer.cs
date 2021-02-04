@@ -25,25 +25,23 @@ public class PhotonPlayer : MonoBehaviour
 
     private void Update()
     {
-        if(myTeam == 1)
+        if(myAvatar == null && myTeam != 0)
         {
-            int spawnPicker = Random.Range(0, PlayerSpawner.PS.carSpawnPoints.Length);
-
-            if (pv.IsMine)
+            if (myTeam == 1)
             {
-                myAvatar = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Braker"),
-                    this.transform.position, this.transform.rotation, 0);
+                if (pv.IsMine)
+                {
+                    myAvatar = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Braker"),
+                        this.transform.position, this.transform.rotation, 0);
+                }
             }
-        }
-        
-        if(myTeam == 2)
-        {
-            int spawnPicker = Random.Range(0, PlayerSpawner.PS.carSpawnPoints.Length);
-
-            if (pv.IsMine)
+            else
             {
-                myAvatar = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Shooter2"),
-                    this.transform.position, this.transform.rotation, 0);
+                if (pv.IsMine)
+                {
+                    myAvatar = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Shooter2"),
+                        this.transform.position, this.transform.rotation, 0);
+                }
             }
         }
     }

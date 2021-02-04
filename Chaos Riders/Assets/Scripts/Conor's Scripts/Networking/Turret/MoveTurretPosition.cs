@@ -28,8 +28,8 @@ public class MoveTurretPosition : MonoBehaviour
     private void OnEnable()
     {
         turretTester = GetComponent<TurretTester>();
-        ps = FindObjectOfType<PlayerSpawner>();
-        ps.gunners.Add(this.gameObject);
+        //ps = FindObjectOfType<PlayerSpawner>();           //////////////////////////////////////////////////////////////////////////////////////
+        //ps.gunners.Add(this.gameObject);                  //////////////////////////////////////////////////////////////////////////////////////
     }
 
     private void Awake()
