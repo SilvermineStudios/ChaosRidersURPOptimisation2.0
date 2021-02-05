@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerInfo : MonoBehaviour
+public class ShooterPlayerInfo : MonoBehaviour
 {
-    public static PlayerInfo pi;
+    public static ShooterPlayerInfo pi;
 
     public int mySelectedCharacter;
 
@@ -12,16 +12,16 @@ public class PlayerInfo : MonoBehaviour
 
     private void OnEnable() //creating a singleton on this gameobject that does not destroy on load
     {
-        if (PlayerInfo.pi == null)
+        if (ShooterPlayerInfo.pi == null)
         {
-            PlayerInfo.pi = this;
+            ShooterPlayerInfo.pi = this;
         }
         else
         {
-            if(PlayerInfo.pi != this)
+            if (ShooterPlayerInfo.pi != this)
             {
-                Destroy(PlayerInfo.pi.gameObject);
-                PlayerInfo.pi = this;
+                Destroy(ShooterPlayerInfo.pi.gameObject);
+                ShooterPlayerInfo.pi = this;
             }
         }
         DontDestroyOnLoad(this.gameObject);

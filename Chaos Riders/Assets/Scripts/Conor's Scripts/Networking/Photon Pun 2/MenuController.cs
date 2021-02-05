@@ -6,9 +6,9 @@ public class MenuController : MonoBehaviour
 {
     public void OnClickCharacterPick(int whichCharacter)
     {
-        if (PlayerInfo.pi != null) //check if a playerInfo singleton exists
+        if (ShooterPlayerInfo.pi != null) //check if a playerInfo singleton exists
         {
-            PlayerInfo.pi.mySelectedCharacter = whichCharacter;
+            ShooterPlayerInfo.pi.mySelectedCharacter = whichCharacter;
             PlayerPrefs.SetInt("MyCharacter", whichCharacter);
         }
     }
