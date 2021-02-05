@@ -20586,8 +20586,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c4093c9a1edda546a252a93184abd0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smokeSpawn: {fileID: 316720400258660862}
+  CurrentAbility: 0
+  abilitySpawn: {fileID: 0}
   smokeGameObject: {fileID: 1978103956446385477, guid: 0eb6a8bce0882da459843e64b04c919a, type: 3}
+  mineGameObject: {fileID: 0}
   abilityKeyCode: 113
   equipmentKeyCode: 101
   equipmentChargeBar: {fileID: 602698598232801635}
@@ -20604,7 +20606,7 @@ MonoBehaviour:
   canUseEquipment: 0
   canUseAbility: 0
   speaker: {fileID: 1628608096}
-  SmokeHiss: {fileID: 8300000, guid: d59efd8a66d421b4399021f91cd5f9af, type: 3}
+  AbilitySound: {fileID: 0}
 --- !u!114 &4468230371053281705
 MonoBehaviour:
   m_ObjectHideFlags: 0

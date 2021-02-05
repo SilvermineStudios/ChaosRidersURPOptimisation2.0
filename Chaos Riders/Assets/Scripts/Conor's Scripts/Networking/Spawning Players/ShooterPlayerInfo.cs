@@ -2,26 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DriverPlayerInfo : MonoBehaviour
+public class ShooterPlayerInfo : MonoBehaviour
 {
-    public static DriverPlayerInfo pi;
+    public static ShooterPlayerInfo pi;
 
-    public int mySelectedCharacter;
+    public int mySelectedCharacter = 0;
 
     public GameObject[] allCharacters;
 
     private void OnEnable() //creating a singleton on this gameobject that does not destroy on load
     {
-        if (DriverPlayerInfo.pi == null)
+        if (ShooterPlayerInfo.pi == null)
         {
-            DriverPlayerInfo.pi = this;
+            ShooterPlayerInfo.pi = this;
         }
         else
         {
-            if (DriverPlayerInfo.pi != this)
+            if (ShooterPlayerInfo.pi != this)
             {
-                Destroy(DriverPlayerInfo.pi.gameObject);
-                DriverPlayerInfo.pi = this;
+                Destroy(ShooterPlayerInfo.pi.gameObject);
+                ShooterPlayerInfo.pi = this;
             }
         }
         DontDestroyOnLoad(this.gameObject);
