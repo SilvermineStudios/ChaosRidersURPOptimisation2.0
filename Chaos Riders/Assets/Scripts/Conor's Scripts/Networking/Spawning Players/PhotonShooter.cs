@@ -11,6 +11,8 @@ public class PhotonShooter : MonoBehaviour
     public int characterValue;
     public GameObject myCharacter;
 
+    [SerializeField] private float spawnHeightOffset;
+
     private void Start()
     {
         pv = GetComponent<PhotonView>();
@@ -24,7 +26,9 @@ public class PhotonShooter : MonoBehaviour
     [PunRPC]
     void RPC_AddCharacter(int whichCharacter)
     {
+        Vector3 spawnPos = new Vector3(transform.position.x, transform.position.y + spawnHeightOffset, transform.position.z);
+
         characterValue = whichCharacter;
-        myCharacter = Instantiate(ShooterPlayerInfo.pi.allCharacters[whichCharacter], transform.position, transform.rotation, transform);
+        myCharacter = Instantiate(ShooterPlayerInfo.pi.allCharacters[whichCharacter], spawnPos, transform.rotation, transform);
     }
 }
