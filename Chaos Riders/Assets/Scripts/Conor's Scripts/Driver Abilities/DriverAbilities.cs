@@ -7,8 +7,9 @@ using UnityEngine.UI;
 public class DriverAbilities : MonoBehaviour
 {
 
-
-    public GameObject smokeSpawn, smokeGameObject;
+    enum Abilities { SmokeScreen, Mine }
+    [SerializeField] Abilities CurrentAbility;
+    public GameObject abilitySpawn, smokeGameObject, mineGameObject;
 
     [SerializeField] private KeyCode abilityKeyCode = KeyCode.Q, equipmentKeyCode = KeyCode.E; //Create Keycode Variables for the buttons
 
@@ -22,7 +23,7 @@ public class DriverAbilities : MonoBehaviour
     private Animator anim;
     private Controller carController; //my Car Controller
     [SerializeField] private AudioSource speaker;
-    [SerializeField] AudioClip SmokeHiss;
+    [SerializeField] AudioClip AbilitySound;
     void Start()
     {
         anim = GetComponentInChildren<Animator>();
@@ -47,15 +48,28 @@ public class DriverAbilities : MonoBehaviour
             //if you use the equipment
             if (Input.GetKeyDown(equipmentKeyCode) && canUseEquipment)
             {
-                speaker.PlayOneShot(SmokeHiss);
-                //spawn the smoke grenade accross the network
-                if (IsThisMultiplayer.Instance.multiplayer)
-                    PhotonNetwork.Instantiate("Smoke Particle", smokeSpawn.transform.position, smokeSpawn.transform.rotation, 0);
+                speaker.PlayOneShot(AbilitySound);
 
-                //spawn the smoke grenade in single player
-                if (!IsThisMultiplayer.Instance.multiplayer)
-                    Instantiate(smokeGameObject, smokeSpawn.transform.position, smokeSpawn.transform.rotation); 
+                if (CurrentAbility == Abilities.SmokeScreen)
+                {
+                    //spawn the smoke grenade accross the network
+                    if (IsThisMultiplayer.Instance.multiplayer)
+                        PhotonNetwork.Instantiate("Smoke Particle", abilitySpawn.transform.position, abilitySpawn.transform.rotation, 0);
 
+                    //spawn the smoke grenade in single player
+                    if (!IsThisMultiplayer.Instance.multiplayer)
+                        Instantiate(smokeGameObject, abilitySpawn.transform.position, abilitySpawn.transform.rotation);
+                }
+                if(CurrentAbility == Abilities.Mine)
+                {
+                    //spawn the mine accross the network
+                    if (IsThisMultiplayer.Instance.multiplayer)
+                        PhotonNetwork.Instantiate("Mine", abilitySpawn.transform.position, abilitySpawn.transform.rotation, 0);
+
+                    //spawn the mine in single player
+                    if (!IsThisMultiplayer.Instance.multiplayer)
+                        Instantiate(mineGameObject, abilitySpawn.transform.position, abilitySpawn.transform.rotation);
+                }
                 equipmentChargeAmount = 0; //reset the cooldownbar after the equipment is used
             }
 

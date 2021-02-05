@@ -13,14 +13,10 @@ public class Shooter : MonoBehaviour
     [SerializeField] private Transform barrelToRotate;
     private float barrelRotationSpeed;
     [SerializeField] private float barrelRotationStartSpeed = 100f, barrelRotationMaxSpeed = 800f;
-    [SerializeField] private float maxDeviation;
-    private float currentSpread = 0;
     [SerializeField] private CinemachineVirtualCamera cineCamera;
-    [SerializeField] private GameObject bulletSpawnPoint;
     public GameObject car;
     private GameObject carCollision;
     [SerializeField] private LayerMask layerMask;
-    [SerializeField] private float minigunDamage;
     [SerializeField] float playerNumber = 1;
     public bool connectCar = false;
     [SerializeField] GameObject rpgGo;
@@ -31,6 +27,14 @@ public class Shooter : MonoBehaviour
     [SerializeField] private bool pickedUpRPG = false;
 
     //shooting
+    [SerializeField] private float minigunDamage;
+    [SerializeField] private GameObject bulletSpawnPoint;
+    [SerializeField] private float maxDeviation;
+    [SerializeField] private float deviationIncrease;
+    public float spread { get { return currentSpread; } private set { spread = currentSpread; } }
+    private bool currentlyShooting;
+    public bool isShooting { get { return currentlyShooting; } private set { isShooting = currentlyShooting; } }
+    public float currentSpread = 0;
     [SerializeField] AudioClip RPGFire;
     [SerializeField] private float range = 100f;
     [SerializeField] private AudioSource minigunSpeaker;
@@ -74,10 +78,9 @@ public class Shooter : MonoBehaviour
 
     void Start()
     {
-        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
-        {
-
-        }
+        var tempColor = hitmarker.color;
+        tempColor.a = 0;
+        hitmarker.color = tempColor;
     }
 
 
@@ -127,9 +130,10 @@ public class Shooter : MonoBehaviour
                 
                 if (Time.time >= fireCooldown + minigunFireRate)
                 {
+                    currentlyShooting = true;
                     if (currentSpread < maxDeviation)
                     {
-                        currentSpread += 0.01f;
+                        currentSpread += deviationIncrease;
                     }
                     pv.RPC("Shoot", RpcTarget.All);
                     fireCooldown = Time.time;
@@ -137,9 +141,10 @@ public class Shooter : MonoBehaviour
             }
             else
             {
+                currentlyShooting = false;
                 if (currentSpread > 0)
                 {
-                    currentSpread -= 0.02f;
+                    currentSpread -= deviationIncrease ;
                 }
             }
             if (!RPG)
@@ -174,9 +179,10 @@ public class Shooter : MonoBehaviour
             {
                 if (Time.time >= fireCooldown + minigunFireRate)
                 {
+                    currentlyShooting = true;
                     if (currentSpread < maxDeviation)
                     {
-                        currentSpread += 0.01f;
+                        currentSpread += deviationIncrease;
                     }
                     OfflineShoot();
                     fireCooldown = Time.time;
@@ -184,9 +190,10 @@ public class Shooter : MonoBehaviour
             }
             else
             {
-                if(currentSpread > 0)
+                currentlyShooting = false;
+                if (currentSpread > 0)
                 {
-                    currentSpread -= 0.02f;
+                    currentSpread -= deviationIncrease;
                 }
             }
             if (!RPG)
@@ -218,7 +225,7 @@ public class Shooter : MonoBehaviour
         {
             //RPG = !RPG;
         }
-
+        Hitmarker();
     }
 
     [PunRPC]
@@ -294,7 +301,9 @@ public class Shooter : MonoBehaviour
 
     void Hitmarker()
     {
-
+        var tempColor = hitmarker.color;
+        tempColor.a -= 0.1f;
+        hitmarker.color = tempColor;
     }
 
 
@@ -364,6 +373,9 @@ public class Shooter : MonoBehaviour
             if (target != null && target.gameObject != car)
             {
                 target.TakeDamage(minigunDamage);
+                var tempColor = hitmarker.color;
+                tempColor.a = 1f;
+                hitmarker.color = tempColor;
             }
 
             GameObject impactGo = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
