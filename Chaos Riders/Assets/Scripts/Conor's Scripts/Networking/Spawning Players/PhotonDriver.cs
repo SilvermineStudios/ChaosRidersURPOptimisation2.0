@@ -17,7 +17,9 @@ public class PhotonDriver : MonoBehaviour
         if (pv.IsMine) //make sure it only calls it for the person it belongs to
         {
             //myAvatar = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Golden Shooter"),this.transform.position, this.transform.rotation, 0);
-            pv.RPC("RPC_AddCharacter", RpcTarget.AllBuffered, DriverPlayerInfo.pi.mySelectedCharacter);
+            //pv.RPC("RPC_AddCharacter", RpcTarget.AllBuffered, DriverPlayerInfo.pi.mySelectedCharacter);
+            pv.RPC("RPC_AddCharacter", PhotonNetwork.LocalPlayer, DriverPlayerInfo.pi.mySelectedCharacter);
+
         }
     }
 
@@ -25,6 +27,9 @@ public class PhotonDriver : MonoBehaviour
     void RPC_AddCharacter(int whichCharacter)
     {
         characterValue = whichCharacter;
-        myCharacter = Instantiate(DriverPlayerInfo.pi.allCharacters[whichCharacter], transform.position, transform.rotation, transform);
+        //myCharacter = Instantiate(DriverPlayerInfo.pi.allCharacters[whichCharacter], transform.position, transform.rotation, transform);
+
+        myCharacter = DriverPlayerInfo.pi.allCharacters[whichCharacter];
+        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", myCharacter.name), transform.position, transform.rotation, 0);
     }
 }

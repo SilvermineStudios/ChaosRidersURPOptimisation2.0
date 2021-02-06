@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CheckpointManager : MonoBehaviour
 {
+    
+
     [SerializeField] private bool drawLines = true;
     [SerializeField] private bool drawSpheres = true;
     [SerializeField] private Color lineColour;
@@ -25,6 +27,7 @@ public class CheckpointManager : MonoBehaviour
     {
         AddCarWaypoints();
     }
+
 
     private void OnDrawGizmosSelected()
     {

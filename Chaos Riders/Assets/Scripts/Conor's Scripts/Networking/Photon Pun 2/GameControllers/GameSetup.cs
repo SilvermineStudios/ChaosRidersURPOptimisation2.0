@@ -45,6 +45,11 @@ public class GameSetup : MonoBehaviour
         } 
     }
 
+    private void Update()
+    {
+        if (!IsThisMultiplayer.Instance.multiplayer) { return; }
+    }
+
     //[PunRPC]
     public void RPC_SpawnPlayers()
     {
