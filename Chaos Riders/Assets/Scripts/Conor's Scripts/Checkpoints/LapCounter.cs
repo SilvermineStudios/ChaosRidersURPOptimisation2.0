@@ -6,8 +6,6 @@ using TMPro;
 
 public class LapCounter : MonoBehaviour
 {
-    [SerializeField] private GameVariables gameVariables;
-
     public static int AmountOfLaps;
     //[SerializeField] private int amountOfLaps = 3;
 
