@@ -17,12 +17,14 @@ public class GameVariables : MonoBehaviour
 
     public static bool ToggleAI;
     [SerializeField] private bool toggleAI = true;
+    [SerializeField] private TMP_Dropdown toggleAIDropdown;
 
     public static int AmountOfAICars;
     [SerializeField] private int amountOfAICars = 2;
+    [SerializeField] private TMP_Dropdown amountOfAIDropdown;
 
     public static bool Pickups;
-    [SerializeField] private bool pickup = true;
+    [SerializeField] private bool pickups = true;
 
     public static bool NitroPickup;
     [SerializeField] private bool nitroPickup = true;
@@ -74,72 +76,98 @@ public class GameVariables : MonoBehaviour
     //runs everytime the host changes the lap count
     public void HangleLapsInputData(int val)
     {
-        pv.RPC("UpdateLapText", RpcTarget.AllBuffered, val);
+        pv.RPC("UpdateLap", RpcTarget.AllBuffered, val); //val = the array index of the chose box on the dropdown menu
     }
 
     //runs everytime the host toggles the Ai on and off
     public void HangleToggleAIInputData(int val)
     {
-        pv.RPC("UpdateToggleAIText", RpcTarget.AllBuffered, val);
+        pv.RPC("UpdateToggleAI", RpcTarget.AllBuffered, val); //val = the array index of the chose box on the dropdown menu
     }
 
     //runs everytime the host changes the ai count
     public void HangleAmountOfAIInputData(int val)
     {
-        pv.RPC("UpdateAmountOfAIText", RpcTarget.AllBuffered, val);
+        pv.RPC("UpdateAmountOfAI", RpcTarget.AllBuffered, val); //val = the array index of the chose box on the dropdown menu
     }
 
     public void HangleTogglePickupsInputData(int val)
     {
-        pv.RPC("UpdateTogglePickupsText", RpcTarget.AllBuffered, val);
+        pv.RPC("UpdateTogglePickups", RpcTarget.AllBuffered, val); //val = the array index of the chose box on the dropdown menu
     }
 
 
 
     [PunRPC]
-    void UpdateLapText(int val)
+    void UpdateLap(int val)
     {
-        int lapVal = val + 1;
+        int lapVal = val + 1; //adding 1 to val, val is the array index value from the dropdown which starts at 0, the index 0 on the drop down is 1 lap
         laps = lapVal;
-        nonHostLapText.text = "Laps: " + laps;
+        nonHostLapText.text = "Laps: " + laps; //display what the host chooses for the other players
         Laps = laps;
     }
 
     [PunRPC]
-    void UpdateToggleAIText(int val)
+    void UpdateToggleAI(int val)
     {
         if (val == 0)
         {
-            ToggleAI = true;
-            nonHostToggleAIText.text = "AI Drivers: on";
+            toggleAI = true;
+            nonHostToggleAIText.text = "AI Drivers: on"; //display what the host chooses for the other players
+            ToggleAI = toggleAI;
+
+            //amountOfAIDropdown.value = 2;
+            //pv.RPC("UpdateAmountOfAI", RpcTarget.AllBuffered, 2);
         } 
         else
         {
-            ToggleAI = false;
-            nonHostToggleAIText.text = "AI Drivers: off";
+            toggleAI = false;
+            nonHostToggleAIText.text = "AI Drivers: off"; //display what the host chooses for the other players
+            ToggleAI = toggleAI;
+
+            //amountOfAIDropdown.value = 0;
+            //pv.RPC("UpdateAmountOfAI", RpcTarget.AllBuffered, 0);
         }  
     }
 
     [PunRPC]
-    void UpdateAmountOfAIText(int val)
+    void UpdateAmountOfAI(int val)
     {
-        int amountAI = val + 1;
-        AmountOfAICars = amountAI;
-        nonHostAmountOfAIText.text = "Amount of AI: " + amountAI;
-    }
+        int amountAI = val;
+        amountOfAICars = amountAI;
 
-    [PunRPC]
-    void UpdateTogglePickupsText(int val)
-    {
+        //host has chosen 0 ai cars
         if (val == 0)
         {
-            Pickups = true;
-            nonHostPickupsText.text = "Pickups: on";
+            //turn off the toggleAI if there is 0 ai drivers selected
+            toggleAIDropdown.value = 1;
+            pv.RPC("UpdateToggleAI", RpcTarget.AllBuffered, 1);
         }
         else
         {
-            Pickups = false;
-            nonHostPickupsText.text = "Pickups: off";
+            //turn on the toggleAI if there are more than one ai driver selected
+            toggleAIDropdown.value = 0;
+            pv.RPC("UpdateToggleAI", RpcTarget.AllBuffered, 0);
+        }
+
+        nonHostAmountOfAIText.text = "Amount of AI: " + amountAI; //display what the host chooses for the other players
+        AmountOfAICars = amountOfAICars;
+    }
+
+    [PunRPC]
+    void UpdateTogglePickups(int val)
+    {
+        if (val == 0)
+        {
+            pickups = true;
+            nonHostPickupsText.text = "Pickups: on"; //display what the host chooses for the other players
+            Pickups = pickups;
+        }
+        else
+        {
+            pickups = false;
+            nonHostPickupsText.text = "Pickups: off"; //display what the host chooses for the other players
+            Pickups = pickups;
         }
     }
 }
