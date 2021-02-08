@@ -311,17 +311,8 @@ public class Shooter : MonoBehaviour
     void Shoot()
     {
         muzzleFlash.Play();
-        if(useSpeaker1)
-        {
-            minigunSpeaker.PlayOneShot(minigunShot);
-            useSpeaker1 = false;
-        }
-        else
-        {
-            minigunSpeaker2.PlayOneShot(minigunShot);
-            useSpeaker1 = true;
-        }
-        
+        FMODUnity.RuntimeManager.PlayOneShot("event:/MinigunShot", transform.position);
+
         Vector3 direction = Spread(currentSpread);
 
         RaycastHit hit; //gets the information on whats hit
@@ -354,16 +345,7 @@ public class Shooter : MonoBehaviour
     void OfflineShoot()
     {
         muzzleFlash.Play();
-        if (useSpeaker1)
-        {
-            minigunSpeaker.PlayOneShot(minigunShot);
-            useSpeaker1 = false;
-        }
-        else
-        {
-            minigunSpeaker2.PlayOneShot(minigunShot);
-            useSpeaker1 = true;
-        }
+        FMODUnity.RuntimeManager.PlayOneShot("event:/MinigunShot", transform.position);
         Vector3 direction = Spread(currentSpread);
 
         RaycastHit hit; //gets the information on whats hit
