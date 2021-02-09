@@ -7786,8 +7786,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasSpeedBoost: 0
+  hasInvincibilityPickup: 0
+  hasRPG: 0
+  shooter: {fileID: 0}
   nitroUiImage: {fileID: 12713959}
   armourUiImage: {fileID: 1345635538}
+  nitroCooldownBar: {fileID: 0}
+  invincibleCooldownBar: {fileID: 0}
+  nitroTimerNormalized: 0
+  invincibleTimerNormalized: 0
+  nitroStartTimer: 0
+  invincibleStartTimer: 0
+  nitroCurrentTimer: 0
+  invincibleCurrentTimer: 0
+  nitroTimerCountDown: 0
+  invincibleTimerCountDown: 0
 --- !u!114 &4093545078612295394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7801,6 +7814,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunSpawnPoint: {fileID: 6750458156473450609}
+  gunstand: {fileID: 0}
 --- !u!114 &893346340234772429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7839,12 +7853,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8abb6b87053e7140ab06b8c1c924e94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deathExplosionHeight: 3
   healthBarUi: {fileID: 1884155435}
+  myHealthBar: {fileID: 0}
   health: 100
   lastHit: 0
   isProtected: 0
   deathParticles: {fileID: 1925145246}
   dead: 0
+  respawning: 0
 --- !u!114 &641978831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7858,6 +7875,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundEffect: {fileID: 8300000, guid: ed476ad4a6f78b64382ce8cd8d9c2f2f, type: 3}
+  audioS: {fileID: 0}
   currentLap: 1
   lapsText: {fileID: 1863176190}
   canCrossFinish: 0
@@ -8006,6 +8024,8 @@ MonoBehaviour:
   useOverCharge: 0
   canUseEquipment: 0
   canUseAbility: 0
+  speaker: {fileID: 0}
+  SmokeHiss: {fileID: 0}
 --- !u!114 &3078111332893963293
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8037,6 +8057,7 @@ MonoBehaviour:
   PauseMenu: {fileID: 592335573}
   audioSettingsPanel: {fileID: 7284507786560195646}
   mainPauseMenuPanel: {fileID: 5725045862313248287}
+  controlsPanel: {fileID: 0}
   pauseMenuButton1: 112
   pauseMenuButton2: 27
   paused: 0
@@ -14803,6 +14824,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1296489826}
     m_Modifications:
+    - target: {fileID: -2674143812773984224, guid: fd2d69656cbb3ab4dbd3965be91e94eb, type: 3}
+      propertyPath: viewIdField
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9147135579071462040, guid: fd2d69656cbb3ab4dbd3965be91e94eb, type: 3}
       propertyPath: m_Name
       value: DeathExplosion
