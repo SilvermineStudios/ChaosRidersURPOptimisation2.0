@@ -1,5 +1,28 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8081485380875060407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/CarFX/Braker/SmokeHiss
+  m_EditorClassIdentifier: 
+  Path: event:/CarFX/Braker/SmokeHiss
+  guid: f3f51ff6a1d89e4f82376a8b13675cdf
+  Banks:
+  - {fileID: -4466803539278922483}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 1126
 --- !u!114 &-7636924816389521059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20,6 +43,29 @@ MonoBehaviour:
   - Name: Desktop
     Value: 748
   Exists: 1
+--- !u!114 &-4789631137126399954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/GunFX/RPG/Explosion
+  m_EditorClassIdentifier: 
+  Path: event:/GunFX/RPG/Explosion
+  guid: 43f408035d0feb4a907b059f119e0bbe
+  Banks:
+  - {fileID: -4466803539278922483}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 5398
 --- !u!114 &-4466803539278922483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34,7 +80,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/Master.bank
   Name: Master
-  lastModified: 637483398939267640
+  lastModified: 637484909734196648
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -52,12 +98,81 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/Master.strings.bank
   Name: Master.strings
-  lastModified: 637483398939337573
+  lastModified: 637484909734276529
   LoadResult: 0
   FileSizes:
   - Name: Desktop
-    Value: 748
+    Value: 1030
   Exists: 1
+--- !u!114 &-2173327587602132150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/GunFX/Minigun/MinigunShot
+  m_EditorClassIdentifier: 
+  Path: event:/GunFX/Minigun/MinigunShot
+  guid: cb21b033b286194cac2878d014eecb36
+  Banks:
+  - {fileID: -4466803539278922483}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 4416
+--- !u!114 &-1408049179336847372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/GunFX/Minigun/MinigunShot
+  m_EditorClassIdentifier: 
+  Path: event:/GunFX/Minigun/MinigunShot
+  guid: cb21b033b286194cac2878d014eecb36
+  Banks:
+  - {fileID: -4466803539278922483}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 4416
+--- !u!114 &-738458561647045439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/MainTrack
+  m_EditorClassIdentifier: 
+  Path: event:/Music/MainTrack
+  guid: f54c1ed87306764a90b170a10b618c7a
+  Banks:
+  - {fileID: -4466803539278922483}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 154279
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74,13 +189,18 @@ MonoBehaviour:
   - {fileID: -2954939187940535496}
   - {fileID: -4466803539278922483}
   EditorEvents:
-  - {fileID: 4123615403235642673}
+  - {fileID: -4789631137126399954}
+  - {fileID: -2173327587602132150}
+  - {fileID: 1024597250537362491}
+  - {fileID: 9218620742506719748}
+  - {fileID: 1940064962955596542}
+  - {fileID: 3579443148625413028}
   EditorParameters: []
   MasterBanks:
   - {fileID: -4466803539278922483}
   StringsBanks:
   - {fileID: -2954939187940535496}
-  stringsBankWriteTime: 637483398939337573
+  stringsBankWriteTime: 637484909734276529
   cacheVersion: 5
 --- !u!114 &819316503958239870
 MonoBehaviour:
@@ -100,6 +220,98 @@ MonoBehaviour:
   LoadResult: 0
   FileSizes: []
   Exists: 1
+--- !u!114 &1024597250537362491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/GunFX/RPG/RPGFire
+  m_EditorClassIdentifier: 
+  Path: event:/GunFX/RPG/RPGFire
+  guid: ee525e6f4e289346adb98973d6db4bca
+  Banks:
+  - {fileID: -4466803539278922483}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 1400
+--- !u!114 &1940064962955596542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/CarFX/Braker/SmokeHiss
+  m_EditorClassIdentifier: 
+  Path: event:/CarFX/Braker/SmokeHiss
+  guid: f3f51ff6a1d89e4f82376a8b13675cdf
+  Banks:
+  - {fileID: -4466803539278922483}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 1126
+--- !u!114 &3364068989726150866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/CarFX/All/Skid
+  m_EditorClassIdentifier: 
+  Path: event:/CarFX/All/Skid
+  guid: f1dfbc23d22e75499788a51be0fd213c
+  Banks:
+  - {fileID: -4466803539278922483}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 3808
+--- !u!114 &3579443148625413028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/MainTrack
+  m_EditorClassIdentifier: 
+  Path: event:/Music/MainTrack
+  guid: f54c1ed87306764a90b170a10b618c7a
+  Banks:
+  - {fileID: -4466803539278922483}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 154279
 --- !u!114 &4123615403235642673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,3 +358,49 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 4416
+--- !u!114 &8596027265385456132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/GunFX/RPG/RPGFire
+  m_EditorClassIdentifier: 
+  Path: event:/GunFX/RPG/RPGFire
+  guid: ee525e6f4e289346adb98973d6db4bca
+  Banks:
+  - {fileID: -4466803539278922483}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 1400
+--- !u!114 &9218620742506719748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/CarFX/All/Skid
+  m_EditorClassIdentifier: 
+  Path: event:/CarFX/All/Skid
+  guid: f1dfbc23d22e75499788a51be0fd213c
+  Banks:
+  - {fileID: -4466803539278922483}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 3808

@@ -35,11 +35,7 @@ public class Shooter : MonoBehaviour
     private bool currentlyShooting;
     public bool isShooting { get { return currentlyShooting; } private set { isShooting = currentlyShooting; } }
     public float currentSpread = 0;
-    [SerializeField] AudioClip RPGFire;
     [SerializeField] private float range = 100f;
-    [SerializeField] private AudioSource minigunSpeaker;
-    [SerializeField] private AudioSource minigunSpeaker2;
-    [SerializeField] private AudioClip minigunShot;
     [SerializeField] private float minigunFireRate;
     [SerializeField] private KeyCode shootButton = KeyCode.Mouse0;
     [SerializeField] private KeyCode RPGButton = KeyCode.Tab;
@@ -49,7 +45,6 @@ public class Shooter : MonoBehaviour
     private float startAmmo; //the amount of ammo for the cooldown bar at the start of the game
     private float ammoNormalized; //normalized the ammo value to be between 0 and 1 for the cooldown bar scale
     [SerializeField] private Transform coolDownBarUi; //ui bar that shows the cooldown of the minigun
-    private bool useSpeaker1;
     [SerializeField] private Transform gunBarrel; //barrel that is going to rotate to face the correct direction
     [SerializeField] private float horizontalRotationSpeed = 5f, verticalRotationSpeed = 3f; //rotation speeds for the gun
     private float xAngle, yAngle; //angle of rotation for the gun axis
@@ -242,7 +237,7 @@ public class Shooter : MonoBehaviour
 
     void OfflineShootRPG()
     {
-        minigunSpeaker.PlayOneShot(RPGFire);
+        FMODUnity.RuntimeManager.PlayOneShot("event:/GunFX/RPG/RPGFire", transform.position);
         GameObject grenade = Instantiate(rocket, rocketspawn.transform.position, rpgGo.transform.rotation);
         grenade.GetComponent<Rigidbody>().AddForce(rpgGo.transform.transform.forward * 100, ForceMode.Impulse);
     }
@@ -252,7 +247,7 @@ public class Shooter : MonoBehaviour
     {
         if (pv.IsMine)
         {
-            minigunSpeaker.PlayOneShot(RPGFire);
+            FMODUnity.RuntimeManager.PlayOneShot("event:/GunFX/RPG/RPGFire", transform.position);
             GameObject grenade = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Grenade"), rocketspawn.transform.position, rpgGo.transform.rotation, 0);
             grenade.GetComponent<Rigidbody>().AddForce(rpgGo.transform.transform.forward * 100, ForceMode.Impulse);
         }
@@ -311,7 +306,7 @@ public class Shooter : MonoBehaviour
     void Shoot()
     {
         muzzleFlash.Play();
-        FMODUnity.RuntimeManager.PlayOneShot("event:/MinigunShot", transform.position);
+        FMODUnity.RuntimeManager.PlayOneShot("event:/GunFX/Minigun/MinigunShot", transform.position);
 
         Vector3 direction = Spread(currentSpread);
 
@@ -345,7 +340,7 @@ public class Shooter : MonoBehaviour
     void OfflineShoot()
     {
         muzzleFlash.Play();
-        FMODUnity.RuntimeManager.PlayOneShot("event:/MinigunShot", transform.position);
+        FMODUnity.RuntimeManager.PlayOneShot("event:/GunFX/Minigun/MinigunShot", transform.position);
         Vector3 direction = Spread(currentSpread);
 
         RaycastHit hit; //gets the information on whats hit
