@@ -57,6 +57,8 @@ public class Shooter : MonoBehaviour
     [SerializeField] private Transform impactEffectHolder;
     [SerializeField] Image hitmarker;
 
+    //Pause Menu
+    Pause pauseMenu;
 
     private PhotonView pv;
     private float fireCooldown;
@@ -64,6 +66,7 @@ public class Shooter : MonoBehaviour
 
     private void Awake()
     {
+        pauseMenu = GetComponent<Pause>();
         pv = GetComponent<PhotonView>();
         startAmmo = amountOfAmmoForCooldownBar;
         startAmountOfAmmoForRPG = amountOfAmmoForRPG;
@@ -83,6 +86,7 @@ public class Shooter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (pauseMenu.paused) { return; }
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
             RotateGunBarrel();

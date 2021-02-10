@@ -56,6 +56,9 @@ public class Controller : MonoBehaviour
     public TurretTester ShooterAttached;
     public GameObject Shooter;
 
+    FMOD.Studio.Bus SkidBus;
+
+
 
     private void Awake()
     {

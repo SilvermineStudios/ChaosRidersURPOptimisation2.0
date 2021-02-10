@@ -22,8 +22,6 @@ public class DriverAbilities : MonoBehaviour
     private PhotonView pv; //my Photon View
     private Animator anim;
     private Controller carController; //my Car Controller
-    [SerializeField] private AudioSource speaker;
-    [SerializeField] AudioClip AbilitySound;
     void Start()
     {
         anim = GetComponentInChildren<Animator>();
@@ -48,10 +46,11 @@ public class DriverAbilities : MonoBehaviour
             //if you use the equipment
             if (Input.GetKeyDown(equipmentKeyCode) && canUseEquipment)
             {
-                speaker.PlayOneShot(AbilitySound);
+                
 
                 if (CurrentAbility == Abilities.SmokeScreen)
                 {
+                    FMODUnity.RuntimeManager.PlayOneShot("event:/CarFX/Braker/SmokeHiss", transform.position);
                     //spawn the smoke grenade accross the network
                     if (IsThisMultiplayer.Instance.multiplayer)
                         PhotonNetwork.Instantiate("Smoke Particle", abilitySpawn.transform.position, abilitySpawn.transform.rotation, 0);
