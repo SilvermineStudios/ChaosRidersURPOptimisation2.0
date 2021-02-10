@@ -22,7 +22,16 @@ public class GameSetup : MonoBehaviour
 
     public int nextPlayersTeam = 1; //team 1 = drivers, team 2 = shooters
     public Transform[] spawnPoints;
-  
+
+
+    private void OnDrawGizmos()
+    {
+        spawnPoints = new Transform[this.transform.childCount]; //make the array the same length as the amount of children waypoints
+        for (int i = 0; i < this.transform.childCount; i++) //put every waypoint(Child) in the array
+        {
+            spawnPoints[i] = transform.GetChild(i);
+        }
+    }
 
     private void OnEnable()
     {

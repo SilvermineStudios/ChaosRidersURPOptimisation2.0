@@ -110,7 +110,7 @@ public class Audio : MonoBehaviour
                 if(m_CarController.boost)
                 {
                     m_HighAccel.pitch = pitch * pitchMultiplier * highPitchMultiplier * 1.2f;
-                }
+                } 
                 else
                 {
                     m_HighAccel.pitch = pitch * pitchMultiplier * highPitchMultiplier;
