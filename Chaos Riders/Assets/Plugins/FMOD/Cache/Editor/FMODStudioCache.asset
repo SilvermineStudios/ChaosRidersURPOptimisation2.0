@@ -80,7 +80,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/Master.bank
   Name: Master
-  lastModified: 637485668714921285
+  lastModified: 637485719189638667
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -98,11 +98,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/Master.strings.bank
   Name: Master.strings
-  lastModified: 637485668714981222
+  lastModified: 637485719189708588
   LoadResult: 0
   FileSizes:
   - Name: Desktop
-    Value: 1212
+    Value: 1254
   Exists: 1
 --- !u!114 &-2173327587602132150
 MonoBehaviour:
@@ -126,7 +126,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 5398
+  Length: 1850
 --- !u!114 &-1408049179336847372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,6 +173,29 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 154279
+--- !u!114 &-253378535049460817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/GunFX/Minigun/MinigunShot2
+  m_EditorClassIdentifier: 
+  Path: event:/GunFX/Minigun/MinigunShot2
+  guid: fb6ed795430b1d4993829678f18848c5
+  Banks:
+  - {fileID: -4466803539278922483}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 4416
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,12 +218,13 @@ MonoBehaviour:
   - {fileID: 9218620742506719748}
   - {fileID: 1940064962955596542}
   - {fileID: 3579443148625413028}
+  - {fileID: -253378535049460817}
   EditorParameters: []
   MasterBanks:
   - {fileID: -4466803539278922483}
   StringsBanks:
   - {fileID: -2954939187940535496}
-  stringsBankWriteTime: 637485668714981222
+  stringsBankWriteTime: 637485719189708588
   cacheVersion: 5
 --- !u!114 &819316503958239870
 MonoBehaviour:
@@ -243,6 +267,28 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 1400
+--- !u!114 &1671077736914714224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/GunFX/Minigun/3333
+  m_EditorClassIdentifier: 
+  Path: event:/GunFX/Minigun/3333
+  guid: 1895ace3ed33bb43b7aabb0b883aa9eb
+  Banks: []
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 5398
 --- !u!114 &1940064962955596542
 MonoBehaviour:
   m_ObjectHideFlags: 0
