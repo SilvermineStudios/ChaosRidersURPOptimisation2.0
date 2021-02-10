@@ -22045,7 +22045,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69ed83d035c54b74dbd9aa16209fa787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amountOfLaps: 3
   lapsTextUI: {fileID: 1032775970}
   finishLine: {fileID: 665987939}
   youWinText: {fileID: 1162221053}
@@ -24026,6 +24025,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4468230371053281702, guid: c50582e8a03590b43b5875b514a6a8a7, type: 3}
+      propertyPath: MasterVolume
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4468230371053281704, guid: c50582e8a03590b43b5875b514a6a8a7, type: 3}
       propertyPath: viewIdField
       value: 12
@@ -24044,7 +24047,7 @@ PrefabInstance:
       objectReference: {fileID: 14798063656109763, guid: 382548688a4f34d46b4956ec9abeabb5, type: 3}
     - target: {fileID: 4468230371053281707, guid: c50582e8a03590b43b5875b514a6a8a7, type: 3}
       propertyPath: CurrentAbility
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4468230371053281712, guid: c50582e8a03590b43b5875b514a6a8a7, type: 3}
       propertyPath: displayGui
@@ -36603,17 +36606,6 @@ Transform:
   m_Father: {fileID: 866700480}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1647677281 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8931214932920015701, guid: 2a0127179681d564699c69930481b9be, type: 3}
-  m_PrefabInstance: {fileID: 2037084478}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1660214501
 GameObject:
   m_ObjectHideFlags: 0
@@ -36915,7 +36907,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3043033492974397417}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlayerSpawner, Assembly-CSharp
         m_MethodName: StartGame
         m_Mode: 1
@@ -41448,6 +41440,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1947431731}
   - component: {fileID: 1947431732}
+  - component: {fileID: 1947431733}
   m_Layer: 0
   m_Name: Music
   m_TagString: Untagged
@@ -41476,7 +41469,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1947431730}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 3396345483975192079, guid: c5b7f6daef602b0478a2bc18598cb617, type: 2}
   m_audioClip: {fileID: 8300000, guid: 7c7c544e6044eaa48b96b59d8767b185, type: 3}
@@ -41565,6 +41558,29 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1947431733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1947431730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  Event: event:/Music/MainTrack
+  PlayEvent: 1
+  StopEvent: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 0
+  OverrideMaxDistance: 0
 --- !u!1 &1950397956
 GameObject:
   m_ObjectHideFlags: 0
@@ -42788,7 +42804,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 670384005629049964, guid: 2a0127179681d564699c69930481b9be, type: 3}
       propertyPath: viewIdField
-      value: 18
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4724015228536371061, guid: 2a0127179681d564699c69930481b9be, type: 3}
       propertyPath: viewIdField
@@ -42796,23 +42812,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6365413490110004830, guid: 2a0127179681d564699c69930481b9be, type: 3}
       propertyPath: viewIdField
-      value: 16
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 7634238392520716272, guid: 2a0127179681d564699c69930481b9be, type: 3}
       propertyPath: viewIdField
       value: 17
       objectReference: {fileID: 0}
-    - target: {fileID: 7634238392847830434, guid: 2a0127179681d564699c69930481b9be, type: 3}
-      propertyPath: hitmarker
-      value: 
-      objectReference: {fileID: 1647677281}
     - target: {fileID: 7634238392847830435, guid: 2a0127179681d564699c69930481b9be, type: 3}
       propertyPath: m_Name
       value: Shooter2
       objectReference: {fileID: 0}
     - target: {fileID: 7634238392847830456, guid: 2a0127179681d564699c69930481b9be, type: 3}
       propertyPath: viewIdField
-      value: 20
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 7634238392847830459, guid: 2a0127179681d564699c69930481b9be, type: 3}
       propertyPath: m_LocalPosition.x
@@ -42857,10 +42869,6 @@ PrefabInstance:
     - target: {fileID: 7634238392847830459, guid: 2a0127179681d564699c69930481b9be, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8931214932920015701, guid: 2a0127179681d564699c69930481b9be, type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2a0127179681d564699c69930481b9be, type: 3}
@@ -44728,17 +44736,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3545949801908645098, guid: 2a12aa29d7e4e8341934934d4c2f5938, type: 3}
   m_PrefabInstance: {fileID: 3043033492974397413}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3043033492974397417 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3395196458690048736, guid: 2a12aa29d7e4e8341934934d4c2f5938, type: 3}
-  m_PrefabInstance: {fileID: 3043033492974397413}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8d8e1e50e4c10347b543dc5f24aa9b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &6816233923579808444
 PrefabInstance:
   m_ObjectHideFlags: 0

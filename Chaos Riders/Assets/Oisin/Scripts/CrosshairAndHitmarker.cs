@@ -6,7 +6,9 @@ using UnityEngine.UI;
 public class CrosshairAndHitmarker : MonoBehaviour
 {
     [SerializeField] RectTransform reticle; // The RecTransform of reticle UI element.
+    [SerializeField] GameObject CrossHairGameobject;
 
+    Pause pauseMenu;
     public float restingSize;
     public float maxSize;
     public float speed;
@@ -15,12 +17,21 @@ public class CrosshairAndHitmarker : MonoBehaviour
     private float spreadSize;
     private void Start()
     {
+        pauseMenu = GetComponent<Pause>();
         shooterScript = GetComponent<Shooter>();
     }
 
     private void Update()
     {
-        Debug.Log(shooterScript.isShooting);
+        if(pauseMenu.paused)
+        {
+            CrossHairGameobject.SetActive(false);
+        }
+        else
+        {
+            CrossHairGameobject.SetActive(true);
+        }
+        //Debug.Log(shooterScript.isShooting);
         if (shooterScript.isShooting)
         {
             spreadSize = shooterScript.spread * 10 + restingSize;
