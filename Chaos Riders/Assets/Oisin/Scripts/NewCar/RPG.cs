@@ -37,7 +37,7 @@ public class RPG : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(IsThisMultiplayer.Instance.multiplayer)
+        if(IsThisMultiplayer.Instance.multiplayer && pv.IsMine)
         {
             pv.RPC("Explode", RpcTarget.All);
         }

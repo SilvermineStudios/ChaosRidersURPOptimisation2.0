@@ -26,14 +26,10 @@ public class Audio : MonoBehaviour
     public enum EngineAudioOptions // Options for the engine audio
     {
         Simple, // Simple style audio
-        FourChannel // four Channel audio
     }
 
-    public EngineAudioOptions engineSoundStyle = EngineAudioOptions.FourChannel;// Set the default audio options to be four channel
-    public AudioClip lowAccelClip;                                              // Audio clip for low acceleration
-    public AudioClip lowDecelClip;                                              // Audio clip for low deceleration
+    public EngineAudioOptions engineSoundStyle = EngineAudioOptions.Simple;// Set the default audio options to be four channel
     public AudioClip highAccelClip;                                             // Audio clip for high acceleration
-    public AudioClip highDecelClip;                                             // Audio clip for high deceleration
     public float pitchMultiplier = 1f;                                          // Used for altering the pitch of audio clips
     public float lowPitchMin = 1f;                                              // The lowest possible pitch for the low sounds
     public float lowPitchMax = 6f;                                              // The highest possible pitch for the low sounds
@@ -41,105 +37,48 @@ public class Audio : MonoBehaviour
     public float maxRolloffDistance = 500;                                      // The maximum distance where rollof starts to take place
     public float dopplerLevel = 1;                                              // The mount of doppler effect used in the audio
     public bool useDoppler = true;                                              // Toggle for using doppler
+    Rigidbody rb;
 
-
-    private AudioSource m_HighAccel; // Source for the high acceleration sounds
-
-    public AudioSource speaker;
-
-    private bool m_StartedSound; // flag for knowing if we have started sounds
     private Controller m_CarController; // Reference to car we are controlling
 
+    FMOD.Studio.EventInstance brakerSound;
 
-    private void StartSound()
+    private void Awake()
     {
-        // get the carcontroller ( this will not be null as we have require component)
+        rb = GetComponent<Rigidbody>();
+        brakerSound = FMODUnity.RuntimeManager.CreateInstance("event:/CarFX/Braker/BrakerAudio");
+        FMODUnity.RuntimeManager.AttachInstanceToGameObject(brakerSound, transform, rb);
+        brakerSound.start();
         m_CarController = GetComponent<Controller>();
-
-        // setup the simple audio source
-        m_HighAccel = SetUpEngineAudioSource(highAccelClip);
-
-        // if we have four channel audio setup the four audio sources
-
-        // flag that we have started the sounds playing
-        m_StartedSound = true;
-    }
-
-
-    private void StopSound()
-    {
-        //Destroy all audio sources on this object:
-        foreach (var source in GetComponents<AudioSource>())
-        {
-            Destroy(source);
-        }
-
-        m_StartedSound = false;
     }
 
 
     // Update is called once per frame
-    private void Update()
+    private void FixedUpdate()
     {
-        // get the distance to main camera
-        float camDist = (Camera.main.transform.position - transform.position).sqrMagnitude;
+        
+        // The pitch is interpolated between the min and max values, according to the car's revs.
+        float pitch = ULerp(lowPitchMin, lowPitchMax, m_CarController.Revs);
 
-        // stop sound if the object is beyond the maximum roll off distance
-        if (m_StartedSound && camDist > maxRolloffDistance * maxRolloffDistance)
+        // clamp to minimum pitch (note, not clamped to max for high revs while burning out)
+        pitch = Mathf.Min(lowPitchMax, pitch);
+
+        if (engineSoundStyle == EngineAudioOptions.Simple)
         {
-            StopSound();
-        }
-
-        // start the sound if not playing and it is nearer than the maximum distance
-        if (!m_StartedSound && camDist < maxRolloffDistance * maxRolloffDistance)
-        {
-            StartSound();
-        }
-
-        if (m_StartedSound)
-        {
-            // The pitch is interpolated between the min and max values, according to the car's revs.
-            float pitch = ULerp(lowPitchMin, lowPitchMax, m_CarController.Revs);
-
-            // clamp to minimum pitch (note, not clamped to max for high revs while burning out)
-            pitch = Mathf.Min(lowPitchMax, pitch);
-
-            if (engineSoundStyle == EngineAudioOptions.Simple)
+            // for 1 channel engine sound, it's oh so simple:
+            if(m_CarController.boost)
             {
-                // for 1 channel engine sound, it's oh so simple:
-                if(m_CarController.boost)
-                {
-                    m_HighAccel.pitch = pitch * pitchMultiplier * highPitchMultiplier * 1.2f;
-                } 
-                else
-                {
-                    m_HighAccel.pitch = pitch * pitchMultiplier * highPitchMultiplier;
-                }
-                
-                m_HighAccel.dopplerLevel = useDoppler ? dopplerLevel : 0;
-                //m_HighAccel.volume = 0.45f;
+                brakerSound.setPitch(pitch * pitchMultiplier * highPitchMultiplier * 1.2f);
+            } 
+            else
+            {
+                brakerSound.setPitch(pitch * pitchMultiplier * highPitchMultiplier);
+                    
             }
-            
-        }
-    }
-
-
-    // sets up and adds new audio source to the gane object
-    private AudioSource SetUpEngineAudioSource(AudioClip clip)
-    {
-        // create the new audio source component on the game object and set up its properties
-        AudioSource source = speaker;
-        source.clip = clip;
-        //source.volume = 0;
-        source.loop = true;
-
-        // start the clip from a random point
-        source.time = Random.Range(0f, clip.length);
-        source.Play();
-        source.minDistance = 5;
-        source.maxDistance = maxRolloffDistance;
-        source.dopplerLevel = 0;
-        return source;
+                
+            //m_HighAccel.dopplerLevel = useDoppler ? dopplerLevel : 0;
+            //m_HighAccel.volume = 0.45f;
+        } 
     }
 
 

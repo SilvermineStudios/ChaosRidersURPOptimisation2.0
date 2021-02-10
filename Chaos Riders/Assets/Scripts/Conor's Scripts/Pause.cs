@@ -4,6 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
+using UnityEngine.UI;
 
 public class Pause : MonoBehaviour
 {
@@ -11,34 +12,62 @@ public class Pause : MonoBehaviour
     FMOD.Studio.Bus Music;
     FMOD.Studio.Bus SFX;
     FMOD.Studio.Bus Master;
-    float MusicVolume = 0.5f;
-    float SFXVolume = 0.5f;
-    float MasterVolume = 1;
 
     //Pause Menu Gameobject 
     [SerializeField] private GameObject PauseMenu, audioSettingsPanel, mainPauseMenuPanel, controlsPanel; 
     [SerializeField] private KeyCode pauseMenuButton1, pauseMenuButton2;
+    [SerializeField] Slider MasterSlider;
+    [SerializeField] Slider MusicSlider;
+    [SerializeField] Slider SFXSlider;
+    [SerializeField] Toggle saveChanges;
+
+    float timeSinceLastPush = 0;
     public bool paused = false;
+    public bool saveChangesToAudio;
     [SerializeField] private int LobbySceneIndex = 0;
     private PhotonView pv;
 
-    void Awake()
+    void Start()
     {
         pv = GetComponent<PhotonView>();
         PauseMenu.SetActive(false); //deactivate pause menu
         Music = FMODUnity.RuntimeManager.GetBus("bus:/Master/Music");
         SFX = FMODUnity.RuntimeManager.GetBus("bus:/Master/SFX");
         Master = FMODUnity.RuntimeManager.GetBus("bus:/Master");
+        if (!PlayerPrefs.HasKey("MasterVolume"))
+        {
+            PlayerPrefs.SetFloat("MasterVolume", 1);
+            PlayerPrefs.SetFloat("SFXVolume", 0.5f);
+            PlayerPrefs.SetFloat("MusicVolume", 0.5f);
+            PlayerPrefs.SetInt("SaveChanges", 1);
+        }
+        else
+        {
+            MasterSlider.value = PlayerPrefs.GetFloat("MasterVolume");
+            MusicSlider.value = PlayerPrefs.GetFloat("MusicVolume");
+            SFXSlider.value = PlayerPrefs.GetFloat("SFXVolume");
+            if(PlayerPrefs.GetInt("SaveChanges") == 1)
+            {
+                saveChanges.isOn = true;
+                saveChangesToAudio = true;
+            }
+            else
+            {
+                saveChanges.isOn = false;
+                saveChangesToAudio = false;
+            }
+        }
+
+        // AUDIO SETTINGS
+        Music.setVolume(PlayerPrefs.GetFloat("MusicVolume"));
+        SFX.setVolume(PlayerPrefs.GetFloat("SFXVolume"));
+        Master.setVolume(PlayerPrefs.GetFloat("MasterVolume"));
     }
 
     void Update()
     {
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
-            // AUDIO SETTINGS
-            Music.setVolume(MusicVolume);
-            SFX.setVolume(SFXVolume);
-            Master.setVolume(MasterVolume);
             //check if the pause buttons are pressed
             if(Input.GetKeyDown(pauseMenuButton1) || Input.GetKeyDown(pauseMenuButton2))
             {
@@ -110,25 +139,74 @@ public class Pause : MonoBehaviour
             paused = false;
         }   
     }
+    
+    public void SaveChangesToAudio()
+    {
+        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer && Time.timeSinceLevelLoad > 5)
+        {
+            timeSinceLastPush = Time.time;
+            saveChangesToAudio = saveChanges.isOn;
+            if(saveChangesToAudio)
+            {
+                PlayerPrefs.SetFloat("MasterVolume", MasterSlider.value);
+                PlayerPrefs.SetFloat("SFXVolume", SFXSlider.value);
+                PlayerPrefs.SetFloat("MusicVolume", MusicSlider.value);
+            }
+            if (PlayerPrefs.GetInt("SaveChanges") == 1)
+            {
+                PlayerPrefs.SetInt("SaveChanges", 0);
+            }
+            else
+            {
+                PlayerPrefs.SetInt("SaveChanges", 1);
+            }
+        }
+    }
+
     #endregion
 
     #region Sliders
     public void SetMasterLevel(float sliderValue)
     {
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
-            MasterVolume = sliderValue;
+        {
+            if(saveChangesToAudio)
+            {
+                PlayerPrefs.SetFloat("MasterVolume", sliderValue);
+            }
+
+            Master.setVolume(sliderValue);
+            
+        }
+            
     }
 
     public void SetMusicLevel(float sliderValue)
     {
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
-            MusicVolume = sliderValue;
+        {
+            if (saveChangesToAudio)
+            {
+                PlayerPrefs.SetFloat("MusicVolume", sliderValue);
+            }
+
+
+             Music.setVolume(sliderValue);
+            
+        }
     }
 
     public void SetSFXLevel(float sliderValue)
     {
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
-            SFXVolume = sliderValue;
+        {
+            if (saveChangesToAudio)
+            {
+                PlayerPrefs.SetFloat("SFXVolume", sliderValue);
+            }
+             SFX.setVolume(sliderValue);
+              
+        }
     }
     #endregion
 }
