@@ -21334,7 +21334,7 @@ Transform:
   - {fileID: 432711604}
   - {fileID: 598667763}
   m_Father: {fileID: 2109867049}
-  m_RootOrder: 2
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 220, z: 90}
 --- !u!65 &978473209
 BoxCollider:
@@ -40459,7 +40459,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1947431731}
   - component: {fileID: 1947431732}
-  - component: {fileID: 1947431733}
   m_Layer: 0
   m_Name: Music
   m_TagString: Untagged
@@ -40488,7 +40487,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1947431730}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 3396345483975192079, guid: c5b7f6daef602b0478a2bc18598cb617, type: 2}
   m_audioClip: {fileID: 8300000, guid: 7c7c544e6044eaa48b96b59d8767b185, type: 3}
@@ -40577,29 +40576,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1947431733
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1947431730}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollisionTag: 
-  Event: event:/Music/MainTrack
-  PlayEvent: 1
-  StopEvent: 2
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 0
-  OverrideMaxDistance: 0
 --- !u!1 &1950397956
 GameObject:
   m_ObjectHideFlags: 0
@@ -42096,10 +42072,10 @@ Transform:
   m_Children:
   - {fileID: 1947431731}
   - {fileID: 439900633}
-  - {fileID: 978473208}
   - {fileID: 1700793482}
   - {fileID: 225755741}
   - {fileID: 1976624990}
+  - {fileID: 978473208}
   - {fileID: 441288500}
   m_Father: {fileID: 0}
   m_RootOrder: 4
