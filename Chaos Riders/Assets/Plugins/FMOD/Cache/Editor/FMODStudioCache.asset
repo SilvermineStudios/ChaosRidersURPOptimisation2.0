@@ -102,10 +102,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/Master.bank
   Name: Master
-  lastModified: 637485788059613493
+  lastModified: 637485891452824796
   LoadResult: 0
   FileSizes: []
   Exists: 1
+--- !u!114 &-4084819181730206448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/CarFX/Braker/BrakerAudio 3
+  m_EditorClassIdentifier: 
+  Path: event:/CarFX/Braker/BrakerAudio 3
+  guid: 4d2a187bbedc77409fe7b989e43eebbb
+  Banks:
+  - {fileID: -4466803539278922483}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 3000
 --- !u!114 &-2954939187940535496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,11 +143,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/Master.strings.bank
   Name: Master.strings
-  lastModified: 637485788059683430
+  lastModified: 637485891452894722
   LoadResult: 0
   FileSizes:
   - Name: Desktop
-    Value: 1212
+    Value: 1404
   Exists: 1
 --- !u!114 &-2173327587602132150
 MonoBehaviour:
@@ -232,6 +255,7 @@ MonoBehaviour:
   EditorBanks:
   - {fileID: -2954939187940535496}
   - {fileID: -4466803539278922483}
+  - {fileID: 4507873241952277348}
   EditorEvents:
   - {fileID: -4789631137126399954}
   - {fileID: -2173327587602132150}
@@ -239,13 +263,39 @@ MonoBehaviour:
   - {fileID: 9218620742506719748}
   - {fileID: 1940064962955596542}
   - {fileID: 3579443148625413028}
+  - {fileID: 9032324927115125122}
+  - {fileID: 481966967742989797}
+  - {fileID: -4084819181730206448}
   EditorParameters: []
   MasterBanks:
   - {fileID: -4466803539278922483}
   StringsBanks:
   - {fileID: -2954939187940535496}
-  stringsBankWriteTime: 637485788059683430
+  stringsBankWriteTime: 637485891452894722
   cacheVersion: 5
+--- !u!114 &481966967742989797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/CarFX/Braker/BrakerAudio 2
+  m_EditorClassIdentifier: 
+  Path: event:/CarFX/Braker/BrakerAudio 2
+  guid: 964c78e289aea149b6ca999377ffdbee
+  Banks:
+  - {fileID: -4466803539278922483}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 3250
 --- !u!114 &819316503958239870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -332,6 +382,28 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1126
+--- !u!114 &2110778273184460119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/CarFX/Braker/BreakerAudio 3
+  m_EditorClassIdentifier: 
+  Path: event:/CarFX/Braker/BreakerAudio 3
+  guid: 4d2a187bbedc77409fe7b989e43eebbb
+  Banks: []
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 3000
 --- !u!114 &3364068989726150866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -401,6 +473,24 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 4416
+--- !u!114 &4507873241952277348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/CarNoise.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Chaos Riders/Build/Desktop/CarNoise.bank
+  Name: CarNoise
+  lastModified: 637485891453065156
+  LoadResult: 0
+  FileSizes: []
+  Exists: 1
 --- !u!114 &7425718266395928888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -447,6 +537,30 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 1400
+--- !u!114 &9032324927115125122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/CarFX/Braker/BrakerAudio
+  m_EditorClassIdentifier: 
+  Path: event:/CarFX/Braker/BrakerAudio
+  guid: 1afa13fc8c97a2449ffc3c1f3041719a
+  Banks:
+  - {fileID: 4507873241952277348}
+  - {fileID: -4466803539278922483}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 10000
+  Length: 3249
 --- !u!114 &9218620742506719748
 MonoBehaviour:
   m_ObjectHideFlags: 0

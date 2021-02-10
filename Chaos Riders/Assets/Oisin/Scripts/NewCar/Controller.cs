@@ -26,8 +26,6 @@ public class Controller : MonoBehaviour
     [SerializeField] private Vector3 stationaryCamOffset;
     [SerializeField] private Vector3 movingCamOffset;
     [SerializeField] private Vector3 boostCamOffset;
-    [SerializeField] private AudioClip skidClip;
-    [SerializeField] private AudioSource speakerSkid;
     private CinemachineVirtualCamera cineCamera;
     Skidmarks skidmarksController;
     private float horizontalInput;
