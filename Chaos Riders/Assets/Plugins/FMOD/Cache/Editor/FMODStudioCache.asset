@@ -57,8 +57,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: event:/CarFX/All/Skid2
   guid: 68bce99e6467fa4d9bc14d1700ddcbb9
-  Banks:
-  - {fileID: -4466803539278922483}
+  Banks: []
   IsStream: 0
   Is3D: 1
   IsOneShot: 0
@@ -103,7 +102,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/Master.bank
   Name: Master
-  lastModified: 637485731075624291
+  lastModified: 637485788059613493
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -121,11 +120,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/Master.strings.bank
   Name: Master.strings
-  lastModified: 637485731075694213
+  lastModified: 637485788059683430
   LoadResult: 0
   FileSizes:
   - Name: Desktop
-    Value: 1254
+    Value: 1212
   Exists: 1
 --- !u!114 &-2173327587602132150
 MonoBehaviour:
@@ -240,13 +239,12 @@ MonoBehaviour:
   - {fileID: 9218620742506719748}
   - {fileID: 1940064962955596542}
   - {fileID: 3579443148625413028}
-  - {fileID: -7347824910823138339}
   EditorParameters: []
   MasterBanks:
   - {fileID: -4466803539278922483}
   StringsBanks:
   - {fileID: -2954939187940535496}
-  stringsBankWriteTime: 637485731075694213
+  stringsBankWriteTime: 637485788059683430
   cacheVersion: 5
 --- !u!114 &819316503958239870
 MonoBehaviour:
@@ -462,13 +460,13 @@ MonoBehaviour:
   m_Name: event:/CarFX/All/Skid
   m_EditorClassIdentifier: 
   Path: event:/CarFX/All/Skid
-  guid: f1dfbc23d22e75499788a51be0fd213c
+  guid: 68bce99e6467fa4d9bc14d1700ddcbb9
   Banks:
   - {fileID: -4466803539278922483}
   IsStream: 0
-  Is3D: 0
+  Is3D: 1
   IsOneShot: 0
   Parameters: []
-  MinDistance: 0
-  MaxDistance: 0
+  MinDistance: 1
+  MaxDistance: 20
   Length: 3808
