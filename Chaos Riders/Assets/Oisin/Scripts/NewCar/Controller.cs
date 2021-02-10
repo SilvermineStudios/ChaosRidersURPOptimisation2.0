@@ -26,8 +26,6 @@ public class Controller : MonoBehaviour
     [SerializeField] private Vector3 stationaryCamOffset;
     [SerializeField] private Vector3 movingCamOffset;
     [SerializeField] private Vector3 boostCamOffset;
-    [SerializeField] private AudioClip skidClip;
-    [SerializeField] private AudioSource speakerSkid;
     private CinemachineVirtualCamera cineCamera;
     Skidmarks skidmarksController;
     private float horizontalInput;
@@ -57,16 +55,22 @@ public class Controller : MonoBehaviour
     public GameObject Shooter;
 
     FMOD.Studio.Bus SkidBus;
-
-
+    FMOD.Studio.EventInstance skidSound;
 
     private void Awake()
     {
-        skidmarksController = FindObjectOfType<Skidmarks>();
+        skidSound = FMODUnity.RuntimeManager.CreateInstance("event:/CarFX/All/Skid");
+        FMODUnity.RuntimeManager.AttachInstanceToGameObject(skidSound, transform, rb);
+        skidSound.start();
+        skidSound.setVolume(0);
     }
+
+    
+
 
     private void Start()
     {
+        skidmarksController = FindObjectOfType<Skidmarks>();
         pv = GetComponent<PhotonView>();
         healthScript = GetComponent<Health>();
 
@@ -509,13 +513,13 @@ public class Controller : MonoBehaviour
         {
             amount = 0.75f;
         }
-        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
+        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer) //|| !IsThisMultiplayer.Instance.multiplayer)
         {
             pv.RPC("SetSkidVolume",  RpcTarget.All, amount);
         }
         else
         {
-            speakerSkid.volume = amount;
+            skidSound.setVolume(amount);
         }
         
     }
@@ -523,7 +527,7 @@ public class Controller : MonoBehaviour
     [PunRPC]
     void SetSkidVolume(float amount)
     {
-        speakerSkid.volume = amount;
+        skidSound.setVolume(amount);
     }
 
     private void ChangeFOV()
