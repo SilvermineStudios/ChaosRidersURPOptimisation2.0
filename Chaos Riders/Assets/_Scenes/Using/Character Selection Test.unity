@@ -2657,6 +2657,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 168172796}
+  - component: {fileID: 168172797}
   m_Layer: 0
   m_Name: AISpawnPoints
   m_TagString: Untagged
@@ -2683,6 +2684,29 @@ Transform:
   m_Father: {fileID: 3043033492974397414}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &168172797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 168172795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d5b6348f1e132946b2b027af54debc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnPoints:
+  - {fileID: 98139328}
+  - {fileID: 47520654}
+  - {fileID: 1502104125}
+  - {fileID: 1561331622}
+  - {fileID: 1489738807}
+  aiCars:
+  - {fileID: 2011213230151948855, guid: 4fef911cd4b7a114bb4c2b67b8861e47, type: 3}
+  - {fileID: 1407414512137103672, guid: c7d771049c583ed4d8583216cccd3132, type: 3}
+  spawnAI: 1
+  amountOfAI: 10
 --- !u!1 &172379448
 GameObject:
   m_ObjectHideFlags: 0
@@ -43115,6 +43139,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4477362338368450644, guid: c7d771049c583ed4d8583216cccd3132, type: 3}
+      propertyPath: viewIdField
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7d771049c583ed4d8583216cccd3132, type: 3}
 --- !u!1001 &1449818629166335184
@@ -43539,7 +43567,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spawners
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 209425560225518002, guid: 2a12aa29d7e4e8341934934d4c2f5938, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 2a12aa29d7e4e8341934934d4c2f5938, type: 3}
 --- !u!4 &3043033492974397414 stripped
 Transform:
