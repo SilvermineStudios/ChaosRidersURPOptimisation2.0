@@ -6,7 +6,7 @@ public class ExplosionAudio : MonoBehaviour
 {
     void Awake()
     {
-        FMODUnity.RuntimeManager.PlayOneShot("event:/GunFX/RPG/Explosion", transform.position);
+        FMODUnity.RuntimeManager.PlayOneShotAttached("event:/GunFX/RPG/Explosion", gameObject);
     }
 
 

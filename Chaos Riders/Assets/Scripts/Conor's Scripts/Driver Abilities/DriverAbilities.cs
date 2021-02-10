@@ -50,7 +50,7 @@ public class DriverAbilities : MonoBehaviour
 
                 if (CurrentAbility == Abilities.SmokeScreen)
                 {
-                    FMODUnity.RuntimeManager.PlayOneShot("event:/CarFX/Braker/SmokeHiss", transform.position);
+                    FMODUnity.RuntimeManager.PlayOneShotAttached("event:/CarFX/Braker/SmokeHiss",  gameObject);
                     //spawn the smoke grenade accross the network
                     if (IsThisMultiplayer.Instance.multiplayer)
                         PhotonNetwork.Instantiate("Smoke Particle", abilitySpawn.transform.position, abilitySpawn.transform.rotation, 0);
