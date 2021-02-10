@@ -305,12 +305,11 @@ public class Shooter : MonoBehaviour
         hitmarker.color = tempColor;
     }
 
-
     [PunRPC]
     void Shoot()
     {
         muzzleFlash.Play();
-        FMODUnity.RuntimeManager.PlayOneShot("event:/GunFX/Minigun/MinigunShot", transform.position);
+        FMODUnity.RuntimeManager.PlayOneShotAttached("event:/GunFX/Minigun/MinigunShot", gameObject);
 
         Vector3 direction = Spread(currentSpread);
 
@@ -344,7 +343,7 @@ public class Shooter : MonoBehaviour
     void OfflineShoot()
     {
         muzzleFlash.Play();
-        FMODUnity.RuntimeManager.PlayOneShot("event:/GunFX/Minigun/MinigunShot", transform.position);
+        FMODUnity.RuntimeManager.PlayOneShotAttached("event:/GunFX/Minigun/MinigunShot", gameObject);
         Vector3 direction = Spread(currentSpread);
 
         RaycastHit hit; //gets the information on whats hit

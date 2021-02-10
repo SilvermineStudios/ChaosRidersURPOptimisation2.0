@@ -3103,6 +3103,7 @@ GameObject:
   - component: {fileID: 5207396787800693346}
   - component: {fileID: 375378850523484526}
   - component: {fileID: 726465717644474962}
+  - component: {fileID: 684522730221520119}
   m_Layer: 0
   m_Name: CinemachineVirtualCamera (1)
   m_TagString: Untagged
@@ -3198,6 +3199,20 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3770331528932347660}
   m_Enabled: 1
+--- !u!114 &684522730221520119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3770331528932347660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 0}
+  ListenerNumber: -1
 --- !u!1 &3789030189052424572
 GameObject:
   m_ObjectHideFlags: 0
@@ -13386,9 +13401,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ab777177ba797547980c17194e9a1cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MusicVolume: 0.5
-  SFXVolume: 0.5
-  MasterVolume: 0.5
   PauseMenu: {fileID: 7634238392792563357}
   audioSettingsPanel: {fileID: 7634238392505030774}
   mainPauseMenuPanel: {fileID: 7634238391561259603}
@@ -13397,7 +13409,6 @@ MonoBehaviour:
   pauseMenuButton2: 112
   paused: 0
   LobbySceneIndex: 0
-  mixer: {fileID: 24100000, guid: c5b7f6daef602b0478a2bc18598cb617, type: 2}
 --- !u!65 &7634238392847830454
 BoxCollider:
   m_ObjectHideFlags: 0
