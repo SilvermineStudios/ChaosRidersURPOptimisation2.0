@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class PlayerSpawner : MonoBehaviourPunCallbacks
 {
+    public static PlayerSpawner PS;
+
     [SerializeField] float gunnerSpawnDelay = 1f;
     //[SerializeField] private bool spawnGunnerFirst = false;
     [SerializeField] private bool spawnShootersNow = false;
@@ -17,14 +19,22 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
     public List<Transform> gunSpawnPoints = new List<Transform>();
     public List<GameObject> gunners = new List<GameObject>();
     private bool canSpawnShooters = true;
-
     private bool startSpawningGunners = false;
+
 
     public Transform[] carSpawnPoints;
 
     private void OnDrawGizmos()
     {
         AssignCarSpawnPointsToArray();
+    }
+
+    private void OnEnable()
+    {
+        if(PlayerSpawner.PS == null)
+        {
+            PlayerSpawner.PS = this;
+        }
     }
 
     private void Awake()
@@ -38,8 +48,6 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
             }
         }
     }
-
-    
 
 
 
@@ -161,7 +169,7 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
     void RPC_SpawnCar(Vector3 spawnPos, Quaternion spawnRot)
     {
         //if (!spawnGunnerFirst)
-            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Braker"), spawnPos, spawnRot, 0); //correct one for this function
+            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "DriverPlayer"), spawnPos, spawnRot, 0); //correct one for this function
         //else
             //PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Shooter"), spawnPos, spawnRot, 0);
     }
@@ -171,7 +179,7 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
     void RPC_SpawnShooter(Vector3 spawnPos, Quaternion spawnRot)
     {
         //if(!spawnGunnerFirst)
-            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Shooter2"), spawnPos, spawnRot, 0); //correct one for this function
+            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "ShooterPlayer"), spawnPos, spawnRot, 0); //correct one for this function
         //else
             //PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "CarAvatar"), spawnPos, spawnRot, 0);
     }

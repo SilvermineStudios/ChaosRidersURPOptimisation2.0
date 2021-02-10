@@ -7,23 +7,38 @@ using UnityEngine.Audio;
 
 public class Pause : MonoBehaviour
 {
-    [SerializeField] private GameObject PauseMenu, audioSettingsPanel, mainPauseMenuPanel; //Pause Menu Gameobject 
+    //Audio
+    FMOD.Studio.Bus Music;
+    FMOD.Studio.Bus SFX;
+    FMOD.Studio.Bus Master;
+    float MusicVolume = 0.5f;
+    float SFXVolume = 0.5f;
+    float MasterVolume = 1;
+
+    //Pause Menu Gameobject 
+    [SerializeField] private GameObject PauseMenu, audioSettingsPanel, mainPauseMenuPanel, controlsPanel; 
     [SerializeField] private KeyCode pauseMenuButton1, pauseMenuButton2;
     public bool paused = false;
     [SerializeField] private int LobbySceneIndex = 0;
     private PhotonView pv;
-    public AudioMixer mixer;
 
     void Awake()
     {
         pv = GetComponent<PhotonView>();
         PauseMenu.SetActive(false); //deactivate pause menu
+        Music = FMODUnity.RuntimeManager.GetBus("bus:/Master/Music");
+        SFX = FMODUnity.RuntimeManager.GetBus("bus:/Master/SFX");
+        Master = FMODUnity.RuntimeManager.GetBus("bus:/Master");
     }
 
     void Update()
     {
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
+            // AUDIO SETTINGS
+            Music.setVolume(MusicVolume);
+            SFX.setVolume(SFXVolume);
+            Master.setVolume(MasterVolume);
             //check if the pause buttons are pressed
             if(Input.GetKeyDown(pauseMenuButton1) || Input.GetKeyDown(pauseMenuButton2))
             {
@@ -71,12 +86,19 @@ public class Pause : MonoBehaviour
         }
     }
 
+    public void GameControlsButton()
+    {
+        mainPauseMenuPanel.SetActive(false); // disable the main pause menu panel 
+        controlsPanel.SetActive(true); //enable the controls panel
+    }
+
     public void BackButton()
     {
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
             mainPauseMenuPanel.SetActive(true); //enable the main pause menu panel 
             audioSettingsPanel.SetActive(false); //disable the audio settings panel
+            controlsPanel.SetActive(false); //disable the controls panel
         }
     }
 
@@ -94,19 +116,19 @@ public class Pause : MonoBehaviour
     public void SetMasterLevel(float sliderValue)
     {
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
-            mixer.SetFloat("Master", Mathf.Log10(sliderValue) * 20);
+            MasterVolume = sliderValue;
     }
 
     public void SetMusicLevel(float sliderValue)
     {
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
-            mixer.SetFloat("Music", Mathf.Log10(sliderValue) * 20);
+            MusicVolume = sliderValue;
     }
 
     public void SetSFXLevel(float sliderValue)
     {
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
-            mixer.SetFloat("SFX", Mathf.Log10(sliderValue) * 20);
+            SFXVolume = sliderValue;
     }
     #endregion
 }

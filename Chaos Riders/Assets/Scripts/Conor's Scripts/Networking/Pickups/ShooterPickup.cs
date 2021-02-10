@@ -7,6 +7,8 @@ public class ShooterPickup : MonoBehaviour
 {
     private PhotonView pv;
 
+    [SerializeField] private KeyCode togglePickupButton = KeyCode.Space;
+
     public bool hasRPG = false;
     bool rpgOn = false;
     [SerializeField] private GameObject rpgUI;
@@ -28,6 +30,16 @@ public class ShooterPickup : MonoBehaviour
 
             //use this to make the rocket launcher active and inactive
             rpgOn = GetComponent<Shooter>().RPG;
+
+            if(hasRPG && rpgOn && Input.GetKeyDown(togglePickupButton))
+            {
+                //rpgOn = false;
+            }
+
+            if (hasRPG && !rpgOn && Input.GetKeyDown(togglePickupButton))
+            {
+                //rpgOn = true;
+            }
         }
 
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer)

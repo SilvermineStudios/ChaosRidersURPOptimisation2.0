@@ -37,6 +37,8 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
             GameObject tempListing = Instantiate(playerListingPrefab, playersContainer);
             TMP_Text tempText = tempListing.transform.GetChild(0).GetComponent<TMP_Text>();              
             tempText.text = player.NickName;
+
+
         }
     }
 

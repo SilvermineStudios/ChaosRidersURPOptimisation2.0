@@ -7,7 +7,7 @@ using TMPro;
 public class LapCounter : MonoBehaviour
 {
     public static int AmountOfLaps;
-    [SerializeField] private int amountOfLaps = 3;
+    //[SerializeField] private int amountOfLaps = 3;
 
     public static TMP_Text lapsText;
     [SerializeField] private TMP_Text lapsTextUI;
@@ -25,7 +25,8 @@ public class LapCounter : MonoBehaviour
         //YouWinText = youWinText;
         //YouWinText.SetActive(false);
 
-        AmountOfLaps = amountOfLaps;
+        //AmountOfLaps = amountOfLaps;
+        AmountOfLaps = GameVariables.Laps;
 
         FinishLine = finishLine;
         FinishLine.SetActive(false);
@@ -34,11 +35,19 @@ public class LapCounter : MonoBehaviour
 
         //lapsTextGo.SetActive(false);
         lapsText.text = "";
+
+        Debug.Log("AMOUNT OF LAPS: " + AmountOfLaps);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        /*
+        ////////////Get access to the race variables from the Main Menu
+        if (gameVariables == null)
+            gameVariables = (GameVariables)FindObjectOfType(typeof(GameVariables));
+        else
+            return;
+        */
     }
 }

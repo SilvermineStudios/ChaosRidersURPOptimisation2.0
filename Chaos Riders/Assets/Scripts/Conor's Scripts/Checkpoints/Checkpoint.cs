@@ -7,7 +7,7 @@ using TMPro;
 public class Checkpoint : MonoBehaviour
 {
     [SerializeField] private AudioClip soundEffect;
-    private AudioSource audioS;
+    [SerializeField] private AudioSource audioS;
 
     private int amountOfLaps;
     [SerializeField] private int currentLap = 1;
@@ -34,7 +34,7 @@ public class Checkpoint : MonoBehaviour
         youWinText.SetActive(false);
         //CarUIManager.youWinText.SetActive(false);
 
-        audioS = GetComponent<AudioSource>();
+        //audioS = GetComponent<AudioSource>();
 
         amountOfLaps = LapCounter.AmountOfLaps;
 

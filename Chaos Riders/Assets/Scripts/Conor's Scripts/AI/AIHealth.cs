@@ -7,6 +7,8 @@ public class AIHealth : MonoBehaviour
 {
     public float health;
     private float startHealth;
+    private float healthNormalized;
+
     [SerializeField] float lastHit;
 
     public bool isProtected;
@@ -33,7 +35,8 @@ public class AIHealth : MonoBehaviour
 
     void Update()
     {
-        healthbar.value = health;
+        healthNormalized = (health / startHealth);
+        healthbar.value = healthNormalized;
 
         if (health <= 0 && !dead)
         {
@@ -71,7 +74,6 @@ public class AIHealth : MonoBehaviour
         if (!isProtected)
         {
             health -= DamagetoTake;
-
         }
     }
 }

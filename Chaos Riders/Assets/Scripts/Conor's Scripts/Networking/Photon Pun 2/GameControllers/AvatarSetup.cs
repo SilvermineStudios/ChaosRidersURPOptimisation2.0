@@ -22,7 +22,7 @@ public class AvatarSetup : MonoBehaviour
     [PunRPC]
     void RPC_AddCharacter(int whichCharacter)
     {
-        //characterValue = whichCharacter;
+        characterValue = whichCharacter;
         //myCharacter = Instantiate(PlayerInfo.pi.allCharacters[whichCharacter], transform.position, transform.rotation, transform);
     }
 }
