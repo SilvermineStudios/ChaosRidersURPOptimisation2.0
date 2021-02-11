@@ -11388,6 +11388,7 @@ GameObject:
   - component: {fileID: 7128683594741705022}
   - component: {fileID: 7128683593645103807}
   - component: {fileID: 7128683594319486709}
+  - component: {fileID: 7206053803061651099}
   m_Layer: 0
   m_Name: Golden Shooter
   m_TagString: shooter
@@ -11792,6 +11793,22 @@ MonoBehaviour:
   maxSize: 250
   speed: 1
   currentSize: 50
+--- !u!114 &7206053803061651099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800629919530156414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 538f27902c8b0264cb248af0a987cabd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canReplaceDriver: 0
+  driverModelIndex: -1
+  AIBraker: {fileID: 1407414512137103672, guid: c7d771049c583ed4d8583216cccd3132, type: 3}
+  AIColt: {fileID: 2011213230151948855, guid: 4fef911cd4b7a114bb4c2b67b8861e47, type: 3}
 --- !u!1 &800629919540994649
 GameObject:
   m_ObjectHideFlags: 0
