@@ -50,7 +50,12 @@ public class ReplaceDisconnectedDriver : MonoBehaviour
                 //shredder
                 if(driverModelIndex == 1)
                 {
-
+                    //GameObject AIReplacementBraker = Instantiate(x, this.transform.position, this.transform.rotation);
+                }
+                //colt
+                if (driverModelIndex == 2)
+                {
+                    GameObject AIReplacementBraker = Instantiate(AIColt, this.transform.position, this.transform.rotation);
                 }
 
                 canReplaceDriver = false;
