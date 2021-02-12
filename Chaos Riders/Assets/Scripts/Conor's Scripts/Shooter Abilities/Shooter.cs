@@ -241,7 +241,7 @@ public class Shooter : MonoBehaviour
 
     void OfflineShootRPG()
     {
-        FMODUnity.RuntimeManager.PlayOneShot("event:/GunFX/RPG/RPGFire", transform.position);
+        FMODUnity.RuntimeManager.PlayOneShotAttached("event:/GunFX/RPG/RPGFire", gameObject);
         GameObject grenade = Instantiate(rocket, rocketspawn.transform.position, rpgGo.transform.rotation);
         grenade.GetComponent<Rigidbody>().AddForce(rpgGo.transform.transform.forward * 100, ForceMode.Impulse);
     }
@@ -251,7 +251,7 @@ public class Shooter : MonoBehaviour
     {
         if (pv.IsMine)
         {
-            FMODUnity.RuntimeManager.PlayOneShot("event:/GunFX/RPG/RPGFire", transform.position);
+            FMODUnity.RuntimeManager.PlayOneShotAttached("event:/GunFX/RPG/RPGFire", gameObject);
             GameObject grenade = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Grenade"), rocketspawn.transform.position, rpgGo.transform.rotation, 0);
             grenade.GetComponent<Rigidbody>().AddForce(rpgGo.transform.transform.forward * 100, ForceMode.Impulse);
         }
@@ -305,12 +305,11 @@ public class Shooter : MonoBehaviour
         hitmarker.color = tempColor;
     }
 
-
     [PunRPC]
     void Shoot()
     {
         muzzleFlash.Play();
-        FMODUnity.RuntimeManager.PlayOneShot("event:/GunFX/Minigun/MinigunShot", transform.position);
+        FMODUnity.RuntimeManager.PlayOneShotAttached("event:/GunFX/Minigun/MinigunShot", gameObject);
 
         Vector3 direction = Spread(currentSpread);
 
@@ -344,7 +343,7 @@ public class Shooter : MonoBehaviour
     void OfflineShoot()
     {
         muzzleFlash.Play();
-        FMODUnity.RuntimeManager.PlayOneShot("event:/GunFX/Minigun/MinigunShot", transform.position);
+        FMODUnity.RuntimeManager.PlayOneShotAttached("event:/GunFX/Minigun/MinigunShot", gameObject);
         Vector3 direction = Spread(currentSpread);
 
         RaycastHit hit; //gets the information on whats hit

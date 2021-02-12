@@ -17234,7 +17234,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1495191830297909030}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.019, y: 1.615, z: 0.175}
+  m_LocalPosition: {x: 0.02, y: 2.48, z: -1.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1495191829688442747}
@@ -23667,7 +23667,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6802747239850369030, guid: f5b6ab13a94e3be4686cfed072ec7146, type: 3}
+  - {fileID: -7951524387065104108, guid: f5b6ab13a94e3be4686cfed072ec7146, type: 3}
   - {fileID: -7951524387065104108, guid: f5b6ab13a94e3be4686cfed072ec7146, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -38302,8 +38302,6 @@ MonoBehaviour:
   stationaryCamOffset: {x: 0, y: 2, z: 6}
   movingCamOffset: {x: 0, y: 1.55, z: 3}
   boostCamOffset: {x: 0, y: 1.55, z: 5}
-  skidClip: {fileID: 8300000, guid: bd9566abdbf08834281bfb4ea8b92a5d, type: 3}
-  speakerSkid: {fileID: 3079805553201249452}
   verticalInput: 0
   boost: 0
   brake: 0
@@ -38428,8 +38426,6 @@ MonoBehaviour:
   useOverCharge: 0
   canUseEquipment: 0
   canUseAbility: 0
-  speaker: {fileID: 1495191831170337640}
-  AbilitySound: {fileID: 0}
 --- !u!114 &3079805553201249441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38725,9 +38721,13 @@ MonoBehaviour:
   controlsPanel: {fileID: 1495191830549704943}
   pauseMenuButton1: 112
   pauseMenuButton2: 27
+  MasterSlider: {fileID: 0}
+  MusicSlider: {fileID: 0}
+  SFXSlider: {fileID: 0}
+  saveChanges: {fileID: 0}
   paused: 0
+  saveChangesToAudio: 0
   LobbySceneIndex: 0
-  mixer: {fileID: 24100000, guid: c5b7f6daef602b0478a2bc18598cb617, type: 2}
 --- !u!114 &1495191830134657517
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38880,10 +38880,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   engineSoundStyle: 0
-  lowAccelClip: {fileID: 0}
-  lowDecelClip: {fileID: 0}
   highAccelClip: {fileID: 8300000, guid: 7e9aa886130f6ab4bb36228fb53e1fa1, type: 3}
-  highDecelClip: {fileID: 0}
   pitchMultiplier: 1
   lowPitchMin: 1
   lowPitchMax: 6
@@ -38891,7 +38888,6 @@ MonoBehaviour:
   maxRolloffDistance: 500
   dopplerLevel: 1
   useDoppler: 1
-  speaker: {fileID: 1495191829874953788}
 --- !u!82 &4637751755544634014
 AudioSource:
   m_ObjectHideFlags: 0
@@ -39657,8 +39653,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3079805553897346370}
-  m_LocalRotation: {x: -0.000000013038516, y: 0.99744195, z: -0.07148154, w: -0.00000017881393}
-  m_LocalPosition: {x: 0.0000026226044, y: 3.2600002, z: 7.2200003}
+  m_LocalRotation: {x: -0.000000013038516, y: 0.99744195, z: -0.07148152, w: -0.00000017881393}
+  m_LocalPosition: {x: 0.0000026226044, y: 3.26, z: 7.2200003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3079805553281901962}
