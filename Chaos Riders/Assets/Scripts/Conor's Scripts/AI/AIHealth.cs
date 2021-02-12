@@ -7,8 +7,8 @@ public class AIHealth : MonoBehaviour
 {
     public GameObject myHealthBar;
     public float health;
-    private float startHealth;
-    private float healthNormalized;
+    public float startHealth;
+    public float healthNormalized;
 
     [SerializeField] float lastHit;
 

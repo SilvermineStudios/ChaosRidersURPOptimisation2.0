@@ -11,8 +11,10 @@ public class MatchDriversHealth : MonoBehaviour
     [SerializeField] private Transform myHealthBarUi;
     private Transform carHealthBarUI;
 
-    private PhotonView pv;
+    [SerializeField] private float health, startHealth, healthNormalized;
+    [SerializeField] private bool setStartHealth = false;
 
+    private PhotonView pv;
 
 
     void Awake()
@@ -29,6 +31,8 @@ public class MatchDriversHealth : MonoBehaviour
 
     void Update()
     {
+
+
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
             //if there is a car connected to the shooter
@@ -37,15 +41,35 @@ public class MatchDriversHealth : MonoBehaviour
                 car = ShooterScript.car;
 
                 if(car.tag == "car")
+                {
                     healthBarAboveCar = car.GetComponent<Health>().myHealthBar;
-                else
+                    carHealthBarUI = car.GetComponent<Health>().healthBarUi;
+                }
+                if(car.tag != "car")
+                {
                     healthBarAboveCar = car.GetComponent<AIHealth>().myHealthBar;
+                    health = car.GetComponent<AIHealth>().health;
+                    startHealth = car.GetComponent<AIHealth>().startHealth;
+                    healthNormalized = car.GetComponent<AIHealth>().healthNormalized;
 
-                //healthBarAboveCar.SetActive(false); //make the cars healthbar invisable to the gunner
+                    SetHealthBarUiSize(healthNormalized);
+                }
 
-                //carHealthBarUI = car.GetComponent<Health>().healthBarUi;
-                //myHealthBarUi.localScale = carHealthBarUI.localScale;
+                if (healthBarAboveCar != null)
+                {
+                    healthBarAboveCar.SetActive(false); //make the cars healthbar invisable to the gunner
+
+
+                    //myHealthBarUi.localScale = carHealthBarUI.localScale;
+                    //myHealthBarUi.localScale = new Vector3(1f, sizeNormalized);
+                }
+
             }
         }
+    }
+
+    private void SetHealthBarUiSize(float sizeNormalized)
+    {
+        myHealthBarUi.localScale = new Vector3(1f, sizeNormalized);
     }
 }
