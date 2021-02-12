@@ -1829,7 +1829,7 @@ GameObject:
   - component: {fileID: 7466595670723712435}
   - component: {fileID: 157449244}
   m_Layer: 10
-  m_Name: AI Car
+  m_Name: AI Colt
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1890,6 +1890,7 @@ MonoBehaviour:
   maxSpeed: 2000
   maxSteerAngle: 45
   currentWaypoint: 0
+  nearestWaypoint: 0
   changeWaypointDistance: 30
   FL: {fileID: 5469345459586809120}
   FR: {fileID: 3328310971132180599}
@@ -1943,7 +1944,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 2053218935}
   - {fileID: 2053218936}
-  viewIdField: 0
+  viewIdField: 40
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &2053218935
@@ -1989,6 +1990,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: febe6d505073b4a45ac2738d786df0b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myHealthBar: {fileID: 4769059645039773338}
   health: 100
   lastHit: 0
   isProtected: 0

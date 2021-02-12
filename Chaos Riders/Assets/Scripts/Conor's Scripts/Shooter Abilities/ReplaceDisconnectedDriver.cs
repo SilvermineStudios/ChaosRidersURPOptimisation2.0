@@ -34,7 +34,10 @@ public class ReplaceDisconnectedDriver : MonoBehaviour
             {
                 car = ShooterScript.car;
                 canReplaceDriver = true;
-                driverModelIndex = car.GetComponent<DriverTitle>().carIndex;
+                if(car.tag == "car")
+                {
+                    driverModelIndex = car.GetComponent<DriverTitle>().carIndex;
+                }
             }
 
             //replace the disconnected driver

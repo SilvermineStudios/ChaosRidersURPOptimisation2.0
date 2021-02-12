@@ -31,6 +31,7 @@ public class Health : MonoBehaviour
     void Awake()
     {
         pv = GetComponent<PhotonView>();
+        
     }
 
     void Start()

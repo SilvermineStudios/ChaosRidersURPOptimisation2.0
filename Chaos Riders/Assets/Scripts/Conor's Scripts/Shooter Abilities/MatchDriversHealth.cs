@@ -7,7 +7,7 @@ public class MatchDriversHealth : MonoBehaviour
 {
     private Shooter ShooterScript; //ref to the shooter script so you can access the car gameobject
     private GameObject car; //ref to the connected car
-    private GameObject healthBarAboveCar;
+    [SerializeField] private GameObject healthBarAboveCar;
     [SerializeField] private Transform myHealthBarUi;
     private Transform carHealthBarUI;
 
@@ -35,11 +35,16 @@ public class MatchDriversHealth : MonoBehaviour
             if (ShooterScript.car != null)
             {
                 car = ShooterScript.car;
-                healthBarAboveCar = car.GetComponent<Health>().myHealthBar;
-                healthBarAboveCar.SetActive(false); //make the cars healthbar invisable to the gunner
 
-                carHealthBarUI = car.GetComponent<Health>().healthBarUi;
-                myHealthBarUi.localScale = carHealthBarUI.localScale;
+                if(car.tag == "car")
+                    healthBarAboveCar = car.GetComponent<Health>().myHealthBar;
+                else
+                    healthBarAboveCar = car.GetComponent<AIHealth>().myHealthBar;
+
+                //healthBarAboveCar.SetActive(false); //make the cars healthbar invisable to the gunner
+
+                //carHealthBarUI = car.GetComponent<Health>().healthBarUi;
+                //myHealthBarUi.localScale = carHealthBarUI.localScale;
             }
         }
     }
