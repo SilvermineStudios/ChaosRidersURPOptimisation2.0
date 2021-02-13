@@ -10,16 +10,36 @@ public class PhotonDriver : MonoBehaviour
     public PhotonView pv;
     public int characterValue;
     public GameObject myCharacter;
+    private bool characterAdded = false;
 
-    private void Start()
+    Player[] allPlayers;
+    [SerializeField] private int myNumberInRoom;
+    public int myDriverNumber;
+    [SerializeField] private float spawnDelay = 2f;
+
+
+    private void Awake()
     {
         pv = GetComponent<PhotonView>();
+        
+
         if (pv.IsMine) //make sure it only calls it for the person it belongs to
         {
-            //myAvatar = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Golden Shooter"),this.transform.position, this.transform.rotation, 0);
-            //pv.RPC("RPC_AddCharacter", RpcTarget.AllBuffered, DriverPlayerInfo.pi.mySelectedCharacter);
             pv.RPC("RPC_AddCharacter", PhotonNetwork.LocalPlayer, DriverPlayerInfo.pi.mySelectedCharacter);
+            AssignPlayerNumber();
+        }
+    }
 
+    //calculate players number in the server
+    private void AssignPlayerNumber()
+    {
+        allPlayers = PhotonNetwork.PlayerList;
+        foreach (Player p in allPlayers)
+        {
+            if (p != PhotonNetwork.LocalPlayer)
+            {
+                myNumberInRoom++;
+            }
         }
     }
 
@@ -30,6 +50,25 @@ public class PhotonDriver : MonoBehaviour
         //myCharacter = Instantiate(DriverPlayerInfo.pi.allCharacters[whichCharacter], transform.position, transform.rotation, transform);
 
         myCharacter = DriverPlayerInfo.pi.allCharacters[whichCharacter];
-        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", myCharacter.name), transform.position, transform.rotation, 0);
+        //PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", myCharacter.name), transform.position, transform.rotation, 0);
+        //PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", myCharacter.name), GameSetup.SpawnPoints[myDriverNumber].position, GameSetup.SpawnPoints[myDriverNumber].rotation, 0);
+        characterAdded = true;
+        StartCoroutine(SpawnDelay(spawnDelay));
     }
+
+    private IEnumerator SpawnDelay(float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        //pv.RPC("RPC_SpawnMyCharacter", PhotonNetwork.PlayerList[myNumberInRoom], GameSetup.SpawnPoints[myDriverNumber].position, GameSetup.SpawnPoints[myDriverNumber].rotation);
+        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", myCharacter.name), GameSetup.SpawnPoints[myDriverNumber].position, GameSetup.SpawnPoints[myDriverNumber].rotation, 0);
+    }
+
+    [PunRPC]
+    void RPC_SpawnMyCharacter(Vector3 spawnPos, Quaternion spawnRot)
+    {
+        //PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "DriverPlayer"), spawnPos, spawnRot, 0);
+        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", myCharacter.name), spawnPos, spawnRot, 0);
+    }
+
 }

@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class Pause : MonoBehaviour
 {
+    [SerializeField] private int menuSceneIndex = 0;
+
     //Audio
     FMOD.Studio.Bus Music;
     FMOD.Studio.Bus SFX;
@@ -92,19 +94,43 @@ public class Pause : MonoBehaviour
     {
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
-            PhotonNetwork.Disconnect(); //disconnect the player from the photon network before removing them from the game
-            SceneManager.LoadScene(LobbySceneIndex); //return to the custom matchmaking lobby
+            //PhotonNetwork.Disconnect(); //disconnect the player from the photon network before removing them from the game
+            //SceneManager.LoadScene(LobbySceneIndex); //return to the custom matchmaking lobby
+            StartCoroutine(DisconnectAndLoad());
         }
+    }
+    IEnumerator DisconnectAndLoad()
+    {
+        //PhotonNetwork.Disconnect();
+        PhotonNetwork.LeaveRoom();
+        //while (PhotonNetwork.IsConnected)
+        while(PhotonNetwork.InRoom)
+            yield return null;
+        SceneManager.LoadScene(menuSceneIndex);
     }
 
     public void QuitGameButton()
     {
+        
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
-            PhotonNetwork.Disconnect(); //disconnect the player from the photon network before removing them from the game
-            Application.Quit(); //close the game for the player         
+            //PhotonNetwork.Disconnect(); //disconnect the player from the photon network before removing them from the game
+            //Application.Quit(); //close the game for the player   
+            StartCoroutine(Disconnect());
         }
+        
+        
     }
+    IEnumerator Disconnect()
+    {
+        //PhotonNetwork.Disconnect();
+        PhotonNetwork.LeaveRoom();
+        //while (PhotonNetwork.IsConnected)
+        while (PhotonNetwork.InRoom)
+            yield return null;
+        Application.Quit();
+    }
+
 
     public void AudioSettingsButton()
     {

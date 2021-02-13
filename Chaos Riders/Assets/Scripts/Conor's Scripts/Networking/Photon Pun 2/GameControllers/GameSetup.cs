@@ -12,7 +12,7 @@ public class GameSetup : MonoBehaviour
     public static GameSetup GS;
     public PhotonView pv;
 
-    private bool canSpawnPlayers = true;
+    [SerializeField] private bool canSpawnPlayers = true;
 
     [SerializeField] private float spawnDelay = 5f;
     [SerializeField] private int menuSceneIndex = 0;
@@ -22,6 +22,7 @@ public class GameSetup : MonoBehaviour
 
     public int nextPlayersTeam = 1; //team 1 = drivers, team 2 = shooters
     public Transform[] spawnPoints;
+    public static Transform[] SpawnPoints;
 
 
     private void OnDrawGizmos()
@@ -33,12 +34,19 @@ public class GameSetup : MonoBehaviour
         }
     }
 
+    /*
     private void OnEnable()
     {
         if(GameSetup.GS == null)
         {
-            //GameSetup.GS = this;
+            GameSetup.GS = this;
         }
+    }
+    */
+
+    private void Awake()
+    {
+        SpawnPoints = spawnPoints;
     }
 
     private void Start()
@@ -62,7 +70,42 @@ public class GameSetup : MonoBehaviour
     //[PunRPC]
     public void RPC_SpawnPlayers()
     {
-        if(canSpawnPlayers)
+        if(!canSpawnPlayers)//used for testing
+        {
+            if (PhotonNetwork.PlayerList.Length == 1)
+            {
+                //car 1
+                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[0], spawnPoints[0].position, spawnPoints[0].rotation);
+            }
+            if (PhotonNetwork.PlayerList.Length == 2)
+            {
+                //car 1
+                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[0], spawnPoints[0].position, spawnPoints[0].rotation);
+                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[1], spawnPoints[0].position, spawnPoints[0].rotation);
+            }
+            if (PhotonNetwork.PlayerList.Length == 3)
+            {
+                //car 1
+                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[0], spawnPoints[0].position, spawnPoints[0].rotation);
+                pv.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[1], spawnPoints[0].position, spawnPoints[0].rotation);
+                //car 2
+                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[2], spawnPoints[1].position, spawnPoints[1].rotation);
+            }
+
+            if (PhotonNetwork.PlayerList.Length == 4)
+            {
+                //car 1
+                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[0], spawnPoints[0].position, spawnPoints[0].rotation);
+                pv.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[1], spawnPoints[0].position, spawnPoints[0].rotation);
+                //car 2
+                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[2], spawnPoints[1].position, spawnPoints[1].rotation);
+                pv.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[3], spawnPoints[1].position, spawnPoints[1].rotation);
+            }
+        }
+        
+
+
+        if (canSpawnPlayers)
         {
             if (PhotonNetwork.PlayerList.Length == 1)
             {
@@ -218,16 +261,5 @@ public class GameSetup : MonoBehaviour
         PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "ShooterPlayer"), spawnPos, spawnRot, 0);
     }
 
-    public void DisconnectPlayer() ///////////////////////  USE IN OTHER SCRIPTS TO DC PLAYERS
-    {
-        StartCoroutine(DisconnecAndLoad());
-    }
-
-    IEnumerator DisconnecAndLoad()
-    {
-        PhotonNetwork.Disconnect();
-        while (PhotonNetwork.IsConnected)
-            yield return null;
-        SceneManager.LoadScene(menuSceneIndex);
-    }
+    
 }

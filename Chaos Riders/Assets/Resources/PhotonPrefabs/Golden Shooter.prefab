@@ -11644,6 +11644,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ab777177ba797547980c17194e9a1cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  menuSceneIndex: 0
   PauseMenu: {fileID: 800629919082197568}
   audioSettingsPanel: {fileID: 800629917775844523}
   mainPauseMenuPanel: {fileID: 800629918182770318}
@@ -11757,7 +11758,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d3ad4603bb1cd24781d8eec18a58bc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthBarAboveCar: {fileID: 0}
   myHealthBarUi: {fileID: 1875059531316372751}
+  health: 0
+  startHealth: 0
+  healthNormalized: 0
+  setStartHealth: 0
 --- !u!114 &7128683593645103807
 MonoBehaviour:
   m_ObjectHideFlags: 0

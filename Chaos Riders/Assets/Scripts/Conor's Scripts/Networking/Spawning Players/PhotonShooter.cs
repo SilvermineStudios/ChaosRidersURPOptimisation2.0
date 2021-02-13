@@ -7,6 +7,9 @@ using System.IO;
 
 public class PhotonShooter : MonoBehaviour
 {
+    Player[] allPlayers;
+    public int myShooterNumber;
+
     public PhotonView pv;
     public int characterValue;
     public GameObject myCharacter;
@@ -21,6 +24,20 @@ public class PhotonShooter : MonoBehaviour
             //myAvatar = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Golden Shooter"),this.transform.position, this.transform.rotation, 0);
             //pv.RPC("RPC_AddCharacter", RpcTarget.AllBuffered, ShooterPlayerInfo.pi.mySelectedCharacter);
             pv.RPC("RPC_AddCharacter", PhotonNetwork.LocalPlayer, ShooterPlayerInfo.pi.mySelectedCharacter);
+            AssignPlayerNumber();
+        }
+    }
+
+    private void AssignPlayerNumber()
+    {
+        //calculate players number in the server
+        allPlayers = PhotonNetwork.PlayerList;
+        foreach (Player p in allPlayers)
+        {
+            if (p != PhotonNetwork.LocalPlayer)
+            {
+                myShooterNumber++;
+            }
         }
     }
 
