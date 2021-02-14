@@ -9,6 +9,7 @@ public class PhotonShooter : MonoBehaviour
 {
     Player[] allPlayers;
     public int myShooterNumber;
+    [SerializeField] private int myNumberInRoom;
 
     public PhotonView pv;
     public int characterValue;
@@ -37,7 +38,7 @@ public class PhotonShooter : MonoBehaviour
         {
             if (p != PhotonNetwork.LocalPlayer)
             {
-                myShooterNumber++;
+                myNumberInRoom++;
             }
         }
     }

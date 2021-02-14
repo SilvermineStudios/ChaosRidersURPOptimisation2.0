@@ -16,8 +16,7 @@ public class AICarController : MonoBehaviour
     [SerializeField] private float changeWaypointDistance = 45f; // the distance the car needs to be from its current waypoint before it changes to the next waypoint
 
     [SerializeField] private WheelCollider FL, FR; // the front tire wheel colliders
-     
-    [SerializeField] private AIWaypointManager waypointManager;
+
     [SerializeField] private Transform[] waypoints;
 
     [SerializeField] private Vector3 centerOfMass;
@@ -27,20 +26,18 @@ public class AICarController : MonoBehaviour
 
     private void Awake()
     {
-        waypointManager = FindObjectOfType<AIWaypointManager>(); //find the waypoint manager
         rb = GetComponent<Rigidbody>();
     }
 
     void Start()
     {
-        waypoints = new Transform[waypointManager.waypoints.Length];
-        waypoints = waypointManager.waypoints;
-
         GetComponent<Rigidbody>().centerOfMass = centerOfMass;
         healthScript = GetComponent<AIHealth>();
 
         nearestWaypoint = NearestWP();
         currentWaypoint = nearestWaypoint;
+
+        waypoints = AIWaypointManager.Waypoints;
     }
 
     private void FixedUpdate()
