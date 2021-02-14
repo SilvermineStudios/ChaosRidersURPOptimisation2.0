@@ -11,7 +11,7 @@ public class MoveTurretPosition : MonoBehaviour
     public GameObject car;
     private Transform carGunPos, carGunStandPosition; 
 
-    private Transform FakeParent;
+    public Transform FakeParent;
 
     private Vector3 _positionOffset;
     private Quaternion _rotationOffset;
@@ -51,6 +51,7 @@ public class MoveTurretPosition : MonoBehaviour
     {
         if (FakeParent == null)
             return;
+
         if (IsThisMultiplayer.Instance.multiplayer)
         {
             pv.RPC("AttachToFakeParent", RpcTarget.All);
@@ -134,5 +135,10 @@ public class MoveTurretPosition : MonoBehaviour
             FakeParent = other.gameObject.transform;
             shooterScript.connectCar = true;
         }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        
     }
 }

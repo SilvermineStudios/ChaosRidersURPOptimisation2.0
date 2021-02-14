@@ -23,6 +23,7 @@ public class AICarController : MonoBehaviour
 
     private AIHealth healthScript;
 
+    public TurretTester ShooterAttached;
 
     private void Awake()
     {

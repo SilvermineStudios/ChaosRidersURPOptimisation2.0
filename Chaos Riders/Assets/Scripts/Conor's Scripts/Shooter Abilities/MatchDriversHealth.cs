@@ -31,8 +31,6 @@ public class MatchDriversHealth : MonoBehaviour
 
     void Update()
     {
-
-
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
             //if there is a car connected to the shooter
