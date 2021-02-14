@@ -63,12 +63,4 @@ public class PhotonDriver : MonoBehaviour
         //pv.RPC("RPC_SpawnMyCharacter", PhotonNetwork.PlayerList[myNumberInRoom], GameSetup.SpawnPoints[myDriverNumber].position, GameSetup.SpawnPoints[myDriverNumber].rotation);
         PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", myCharacter.name), GameSetup.SpawnPoints[myDriverNumber].position, GameSetup.SpawnPoints[myDriverNumber].rotation, 0);
     }
-
-    [PunRPC]
-    void RPC_SpawnMyCharacter(Vector3 spawnPos, Quaternion spawnRot)
-    {
-        //PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "DriverPlayer"), spawnPos, spawnRot, 0);
-        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", myCharacter.name), spawnPos, spawnRot, 0);
-    }
-
 }

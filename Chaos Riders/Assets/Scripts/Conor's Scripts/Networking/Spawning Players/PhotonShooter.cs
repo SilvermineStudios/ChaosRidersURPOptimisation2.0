@@ -15,6 +15,7 @@ public class PhotonShooter : MonoBehaviour
     public GameObject myCharacter;
 
     [SerializeField] private float spawnHeightOffset;
+    [SerializeField] private float spawnDelay = 2.3f;
 
     private void Start()
     {
@@ -50,6 +51,15 @@ public class PhotonShooter : MonoBehaviour
         //myCharacter = Instantiate(ShooterPlayerInfo.pi.allCharacters[whichCharacter], spawnPos, transform.rotation, transform);
 
         myCharacter = ShooterPlayerInfo.pi.allCharacters[whichCharacter];
-        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", myCharacter.name), transform.position, transform.rotation, 0);
+        //PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", myCharacter.name), transform.position, transform.rotation, 0);
+        StartCoroutine(SpawnDelay(spawnDelay));
+    }
+
+    private IEnumerator SpawnDelay(float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        //pv.RPC("RPC_SpawnMyCharacter", PhotonNetwork.PlayerList[myNumberInRoom], GameSetup.SpawnPoints[myDriverNumber].position, GameSetup.SpawnPoints[myDriverNumber].rotation);
+        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", myCharacter.name), GameSetup.SpawnPoints[myShooterNumber].position, GameSetup.SpawnPoints[myShooterNumber].rotation, 0);
     }
 }
