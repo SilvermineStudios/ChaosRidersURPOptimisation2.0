@@ -11,32 +11,34 @@ public class AICarController : MonoBehaviour
     [SerializeField] private float maxSpeed = 2000f; //maximum speed the car can achieve
     [SerializeField] private float maxSteerAngle = 45f; //maximum angle the wheels can rotate +/-
 
-    [SerializeField] private int currentWaypoint = 0; //the current waypoin the car is moving towards
+    [SerializeField] private int currentWaypoint = 0; //the current waypoint the car is moving towards
+    [SerializeField] private int nearestWaypoint = 0; //the nearest waypoint to the car
     [SerializeField] private float changeWaypointDistance = 45f; // the distance the car needs to be from its current waypoint before it changes to the next waypoint
 
     [SerializeField] private WheelCollider FL, FR; // the front tire wheel colliders
-     
-    [SerializeField] private AIWaypointManager waypointManager;
+
     [SerializeField] private Transform[] waypoints;
 
     [SerializeField] private Vector3 centerOfMass;
 
     private AIHealth healthScript;
 
+    //public TurretTester ShooterAttached;
 
     private void Awake()
     {
-        waypointManager = FindObjectOfType<AIWaypointManager>(); //find the waypoint manager
         rb = GetComponent<Rigidbody>();
     }
 
     void Start()
     {
-        waypoints = new Transform[waypointManager.waypoints.Length];
-        waypoints = waypointManager.waypoints;
-
         GetComponent<Rigidbody>().centerOfMass = centerOfMass;
         healthScript = GetComponent<AIHealth>();
+
+        nearestWaypoint = NearestWP();
+        currentWaypoint = nearestWaypoint;
+
+        waypoints = AIWaypointManager.Waypoints;
     }
 
     private void FixedUpdate()
@@ -107,4 +109,25 @@ public class AICarController : MonoBehaviour
         }
     }
 
+
+    //loop through each waypoint and calculate the nearest one to the ai car
+    //used for spawning in an ai car to replace a disconnected driver; ai car wont move towards the first waypoint at the start line it will move to the nearest one to itself
+    int NearestWP()
+    {
+        int nearestWP = 0;
+        float closestDistanceSqr = Mathf.Infinity;
+        Vector3 currentPosition = this.transform.position;
+
+        for (int i = 0; i < waypoints.Length; i++)
+        {
+            Vector3 directionToTarget = waypoints[i].position - currentPosition;
+            float dSqrToTarget = directionToTarget.sqrMagnitude;
+            if (dSqrToTarget < closestDistanceSqr && i != nearestWaypoint)
+            {
+                closestDistanceSqr = dSqrToTarget;
+                nearestWP = i;
+            }
+        }
+        return nearestWP;
+    }
 }

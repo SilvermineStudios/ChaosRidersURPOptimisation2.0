@@ -11,7 +11,7 @@ public class MoveTurretPosition : MonoBehaviour
     public GameObject car;
     private Transform carGunPos, carGunStandPosition; 
 
-    private Transform FakeParent;
+    public Transform FakeParent;
 
     private Vector3 _positionOffset;
     private Quaternion _rotationOffset;
@@ -51,6 +51,7 @@ public class MoveTurretPosition : MonoBehaviour
     {
         if (FakeParent == null)
             return;
+
         if (IsThisMultiplayer.Instance.multiplayer)
         {
             pv.RPC("AttachToFakeParent", RpcTarget.All);
@@ -111,13 +112,33 @@ public class MoveTurretPosition : MonoBehaviour
     {
         if (!canConnect) return;
 
+        /* OLD VERSION
         if (other.gameObject.tag == "car" && canConnect)
         {
             canConnect = false;
             car = other.gameObject;
-            car.GetComponent<Controller>().ShooterAttached = turretTester;
+            car.GetComponent<Controller>().ShooterAttached = turretTester; ////HERE
             FakeParent = other.gameObject.transform;
             shooterScript.connectCar = true;
         }
+        */
+        if (other.gameObject.layer == LayerMask.NameToLayer("Cars") && canConnect)
+        {
+            canConnect = false;
+            car = other.gameObject;
+
+            if(other.gameObject.tag == "car")
+                car.GetComponent<Controller>().ShooterAttached = turretTester;
+            //else
+                //car.GetComponent<AICarController>().ShooterAttached = turretTester;
+
+            FakeParent = other.gameObject.transform;
+            shooterScript.connectCar = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        
     }
 }

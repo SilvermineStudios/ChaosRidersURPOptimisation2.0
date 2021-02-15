@@ -7,12 +7,14 @@ public class MatchDriversHealth : MonoBehaviour
 {
     private Shooter ShooterScript; //ref to the shooter script so you can access the car gameobject
     private GameObject car; //ref to the connected car
-    private GameObject healthBarAboveCar;
+    [SerializeField] private GameObject healthBarAboveCar;
     [SerializeField] private Transform myHealthBarUi;
     private Transform carHealthBarUI;
 
-    private PhotonView pv;
+    [SerializeField] private float health, startHealth, healthNormalized;
+    [SerializeField] private bool setStartHealth = false;
 
+    private PhotonView pv;
 
 
     void Awake()
@@ -35,12 +37,37 @@ public class MatchDriversHealth : MonoBehaviour
             if (ShooterScript.car != null)
             {
                 car = ShooterScript.car;
-                healthBarAboveCar = car.GetComponent<Health>().myHealthBar;
-                healthBarAboveCar.SetActive(false); //make the cars healthbar invisable to the gunner
 
-                carHealthBarUI = car.GetComponent<Health>().healthBarUi;
-                myHealthBarUi.localScale = carHealthBarUI.localScale;
+                if(car.tag == "car")
+                {
+                    healthBarAboveCar = car.GetComponent<Health>().myHealthBar;
+                    carHealthBarUI = car.GetComponent<Health>().healthBarUi;
+                }
+                if(car.tag != "car")
+                {
+                    healthBarAboveCar = car.GetComponent<AIHealth>().myHealthBar;
+                    health = car.GetComponent<AIHealth>().health;
+                    startHealth = car.GetComponent<AIHealth>().startHealth;
+                    healthNormalized = car.GetComponent<AIHealth>().healthNormalized;
+
+                    SetHealthBarUiSize(healthNormalized);
+                }
+
+                if (healthBarAboveCar != null)
+                {
+                    healthBarAboveCar.SetActive(false); //make the cars healthbar invisable to the gunner
+
+
+                    //myHealthBarUi.localScale = carHealthBarUI.localScale;
+                    //myHealthBarUi.localScale = new Vector3(1f, sizeNormalized);
+                }
+
             }
         }
+    }
+
+    private void SetHealthBarUiSize(float sizeNormalized)
+    {
+        myHealthBarUi.localScale = new Vector3(1f, sizeNormalized);
     }
 }

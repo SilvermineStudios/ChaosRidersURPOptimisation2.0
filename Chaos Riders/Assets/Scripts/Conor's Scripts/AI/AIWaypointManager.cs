@@ -7,6 +7,7 @@ public class AIWaypointManager : MonoBehaviour
     [SerializeField] private Color lineColour;
     [SerializeField] private float sphereRadius = 0.3f;
     public Transform[] waypoints;
+    public static Transform[] Waypoints;
 
 
     private void OnDrawGizmosSelected()
@@ -39,8 +40,22 @@ public class AIWaypointManager : MonoBehaviour
 
             Gizmos.DrawLine(previosWaypoint, currentWaypoint);
             Gizmos.DrawSphere(currentWaypoint, sphereRadius);
+
+            
         }
     }
+
+    private void Awake()
+    {
+        waypoints = new Transform[this.transform.childCount]; //make the array the same length as the amount of children waypoints
+        for (int i = 0; i < this.transform.childCount; i++) //put every waypoint(Child) in the array
+        {
+            waypoints[i] = transform.GetChild(i);
+        }
+
+        Waypoints = waypoints;
+    }
+
     private void DrawLinesAndBalls()
     {
         
