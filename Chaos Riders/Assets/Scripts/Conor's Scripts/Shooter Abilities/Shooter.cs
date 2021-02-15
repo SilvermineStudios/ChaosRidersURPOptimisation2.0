@@ -108,9 +108,12 @@ public class Shooter : MonoBehaviour
 
             rpgcount.text = amountOfAmmoForRPG + " / " + startAmountOfAmmoForRPG;
             
-
-            if(car.GetComponent<CarPickup>().hasRPG)
-                RPG = true;
+            if(car.tag == "car")
+            {
+                if (car.GetComponent<CarPickup>().hasRPG)
+                    RPG = true;
+            }
+            
 
             if(amountOfAmmoForRPG <= 0 && car.GetComponent<CarPickup>().hasRPG)
             {

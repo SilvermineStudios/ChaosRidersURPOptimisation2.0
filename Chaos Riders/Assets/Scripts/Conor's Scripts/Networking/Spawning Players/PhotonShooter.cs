@@ -7,11 +7,16 @@ using System.IO;
 
 public class PhotonShooter : MonoBehaviour
 {
+    Player[] allPlayers;
+    public int myShooterNumber;
+    [SerializeField] private int myNumberInRoom;
+
     public PhotonView pv;
     public int characterValue;
     public GameObject myCharacter;
 
     [SerializeField] private float spawnHeightOffset;
+    [SerializeField] private float spawnDelay = 2.3f;
 
     private void Start()
     {
@@ -21,6 +26,20 @@ public class PhotonShooter : MonoBehaviour
             //myAvatar = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Golden Shooter"),this.transform.position, this.transform.rotation, 0);
             //pv.RPC("RPC_AddCharacter", RpcTarget.AllBuffered, ShooterPlayerInfo.pi.mySelectedCharacter);
             pv.RPC("RPC_AddCharacter", PhotonNetwork.LocalPlayer, ShooterPlayerInfo.pi.mySelectedCharacter);
+            AssignPlayerNumber();
+        }
+    }
+
+    private void AssignPlayerNumber()
+    {
+        //calculate players number in the server
+        allPlayers = PhotonNetwork.PlayerList;
+        foreach (Player p in allPlayers)
+        {
+            if (p != PhotonNetwork.LocalPlayer)
+            {
+                myNumberInRoom++;
+            }
         }
     }
 
@@ -33,6 +52,15 @@ public class PhotonShooter : MonoBehaviour
         //myCharacter = Instantiate(ShooterPlayerInfo.pi.allCharacters[whichCharacter], spawnPos, transform.rotation, transform);
 
         myCharacter = ShooterPlayerInfo.pi.allCharacters[whichCharacter];
-        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", myCharacter.name), transform.position, transform.rotation, 0);
+        //PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", myCharacter.name), transform.position, transform.rotation, 0);
+        StartCoroutine(SpawnDelay(spawnDelay));
+    }
+
+    private IEnumerator SpawnDelay(float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        //pv.RPC("RPC_SpawnMyCharacter", PhotonNetwork.PlayerList[myNumberInRoom], GameSetup.SpawnPoints[myDriverNumber].position, GameSetup.SpawnPoints[myDriverNumber].rotation);
+        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", myCharacter.name), GameSetup.SpawnPoints[myShooterNumber].position, GameSetup.SpawnPoints[myShooterNumber].rotation, 0);
     }
 }
