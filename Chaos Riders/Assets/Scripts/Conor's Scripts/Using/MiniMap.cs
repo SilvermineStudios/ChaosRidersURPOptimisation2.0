@@ -4,6 +4,7 @@ using UnityEngine;
 
 
 //this script follows the players car for the minimap
+//attached to the minimap cam gameobject on the player avatars
 public class MiniMap : MonoBehaviour
 {
     public Transform player;
