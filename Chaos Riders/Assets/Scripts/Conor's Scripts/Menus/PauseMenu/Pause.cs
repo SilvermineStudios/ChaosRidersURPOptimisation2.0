@@ -36,7 +36,7 @@ public class Pause : MonoBehaviour
         Music = FMODUnity.RuntimeManager.GetBus("bus:/Master/Music");
         SFX = FMODUnity.RuntimeManager.GetBus("bus:/Master/SFX");
         Master = FMODUnity.RuntimeManager.GetBus("bus:/Master");
-        if (!PlayerPrefs.HasKey("MasterVolume"))
+        if (!PlayerPrefs.HasKey("MasterVolume") || !PlayerPrefs.HasKey("MusicVolume") || !PlayerPrefs.HasKey("SFXVolume"))
         {
             PlayerPrefs.SetFloat("MasterVolume", 1);
             PlayerPrefs.SetFloat("SFXVolume", 0.5f);
