@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class AICarController : MonoBehaviour
 {
@@ -25,9 +26,12 @@ public class AICarController : MonoBehaviour
 
     //public TurretTester ShooterAttached;
 
+    private NavMeshAgent navMeshAgent;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        navMeshAgent = GetComponent<NavMeshAgent>();
     }
 
     void Start()
@@ -46,11 +50,23 @@ public class AICarController : MonoBehaviour
         //if dead bring to a stop and dont steer or update waypoints
         if (healthScript.isDead) { Die(); return; }
 
-        ApplySteer();
-        Drive();
+        ////////////////////////////////////////////////////////////////////////////////<---------------------------------------------------------
+        //ApplySteer();
+        //Drive();
         CheckWaypointDistance();
         AddDownForce();
+        //////////////////////////////////////////////////////////////////////////////////////////////////////            TURNED OFF FOR NAV AGENT
+        NavMeshMoveToWaypoint();
     }
+
+    private void NavMeshMoveToWaypoint()
+    {
+        if(currentWaypoint > -1 && navMeshAgent != null)
+        {
+            navMeshAgent.SetDestination(waypoints[currentWaypoint].position);
+        }
+    }
+
 
     private void AddDownForce()
     {
