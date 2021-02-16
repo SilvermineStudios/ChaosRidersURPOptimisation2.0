@@ -111,6 +111,7 @@ public class CarPickup : MonoBehaviour
                 hasRPG = true;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////<---------------------check if RPC necessary
         if(pv.IsMine && IsThisMultiplayer.Instance.multiplayer)
         {
             if (other.CompareTag("RPGPickup") && !hasRPG)

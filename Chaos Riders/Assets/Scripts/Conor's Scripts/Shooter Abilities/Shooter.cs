@@ -108,19 +108,42 @@ public class Shooter : MonoBehaviour
 
             rpgcount.text = amountOfAmmoForRPG + " / " + startAmountOfAmmoForRPG;
             
-            if(car.tag == "car")
-            {
-                if (car.GetComponent<CarPickup>().hasRPG)
-                    RPG = true;
-            }
             
-
-            if(amountOfAmmoForRPG <= 0 && car.GetComponent<CarPickup>().hasRPG)
+            
+            if(car.layer == LayerMask.NameToLayer("Cars"))
             {
-                RPG = false;
-                car.GetComponent<CarPickup>().hasRPG = false;
-                amountOfAmmoForRPG = startAmountOfAmmoForRPG;
+                //ONLINE PLAYERS
+                if (car.tag == "car")
+                {
+                    if (car.GetComponent<CarPickup>().hasRPG)
+                        RPG = true;
+
+                    if (amountOfAmmoForRPG <= 0 && car.GetComponent<CarPickup>().hasRPG)
+                    {
+                        RPG = false;
+                        car.GetComponent<CarPickup>().hasRPG = false;
+                        amountOfAmmoForRPG = startAmountOfAmmoForRPG;
+                    }
+                }
+
+                //AI CARS
+                if(car.tag != "car")
+                {
+                    Debug.Log("Put AI car RPG STUFF HERE");///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                    if (car.GetComponent<AICarPickups>().hasRPG)
+                        RPG = true;
+
+                    if(amountOfAmmoForRPG <= 0 && car.GetComponent<AICarPickups>().hasRPG)
+                    {
+                        RPG = false;
+                        car.GetComponent<AICarPickups>().hasRPG = false;
+                        amountOfAmmoForRPG = startAmountOfAmmoForRPG;
+                    }
+                }
             }
+
+            
         }
 
         //online shooting
