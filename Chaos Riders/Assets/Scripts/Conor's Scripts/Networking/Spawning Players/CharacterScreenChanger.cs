@@ -10,8 +10,8 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
 {
     [SerializeField] private GameVariables gameVariables;
 
-    [SerializeField] private GameObject shooterCharacterScreen, driverCharacterScreen;
-    [SerializeField] private GameObject choosePlayerTypePanel; //panel for choosing whether to be a driver or shooter 
+    public GameObject shooterCharacterScreen, driverCharacterScreen;
+    public GameObject choosePlayerTypePanel; //panel for choosing whether to be a driver or shooter 
     private PhotonView pv;
 
     private void Start()
@@ -39,6 +39,15 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
         driverCharacterScreen.SetActive(true);
 
         pv.RPC("AddToDrivers", PhotonNetwork.MasterClient);
+
+
+        foreach (Player p in PhotonNetwork.PlayerList)
+        {
+            if(p == PhotonNetwork.LocalPlayer)
+            {
+
+            }
+        }
     }
 
     [PunRPC]
