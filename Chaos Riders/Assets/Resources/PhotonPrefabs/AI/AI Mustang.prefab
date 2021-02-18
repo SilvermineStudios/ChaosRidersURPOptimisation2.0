@@ -550,7 +550,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 313d09cf27328734699ee7ecda7ae6dc, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8995,6 +8995,8 @@ GameObject:
   - component: {fileID: 8296368093936665066}
   - component: {fileID: 1166782067}
   - component: {fileID: 976415736}
+  - component: {fileID: 604401238}
+  - component: {fileID: 604401239}
   m_Layer: 10
   m_Name: AI Mustang
   m_TagString: Untagged
@@ -9076,10 +9078,9 @@ MonoBehaviour:
   maxSteerAngle: 45
   currentWaypoint: 0
   nearestWaypoint: 0
-  changeWaypointDistance: 45
+  changeWaypointDistance: 60.78
   FL: {fileID: 2652499756507993981}
   FR: {fileID: 4583228938035943459}
-  waypointManager: {fileID: 0}
   waypoints: []
   centerOfMass: {x: 0, y: -0.2, z: 2}
 --- !u!114 &4477362338368450644
@@ -9186,6 +9187,41 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunSpawnPoint: {fileID: 800787250}
   gunstand: {fileID: 180285429}
+--- !u!195 &604401238
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407414512137103672}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 45
+  m_Acceleration: 60
+  avoidancePriority: 50
+  m_AngularSpeed: 40
+  m_StoppingDistance: 3.39
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &604401239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407414512137103672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84c954eb795d8cd42a5588b43fe8bc76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasRPG: 0
 --- !u!1 &1407414512161380209
 GameObject:
   m_ObjectHideFlags: 0
