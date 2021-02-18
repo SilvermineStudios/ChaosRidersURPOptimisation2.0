@@ -11,7 +11,9 @@ public class PhotonMenuPlayer : MonoBehaviour
     private PlayerDataManager playerDataManager;
 
     //decided by player data manager
-    public int playerNumber; // from 0, decides which team you are in; driver 0 and shooter 0 will be in the same car, driver 1 and shooter 1 will be in the same car.
+    public int teamNumber; // from 0, decides which team you are in; driver 0 and shooter 0 will be in the same car, driver 1 and shooter 1 will be in the same car.
+    public Player Player;
+    public int playerNumber;
 
     public bool driver = false;
     public bool shooter = false;
@@ -50,11 +52,13 @@ public class PhotonMenuPlayer : MonoBehaviour
             shooterSelectionScreen.SetActive(false);
             driverSelectionScreen.SetActive(false);
         }
+
+        Player = pv.Owner;
     }
 
     void Update()
     {
-        
+        //Debug.Log("Player = " + Player);
     }
 
     void GetPlayeNumber()

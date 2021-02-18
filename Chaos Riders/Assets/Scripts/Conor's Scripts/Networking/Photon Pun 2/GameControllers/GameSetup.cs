@@ -79,14 +79,32 @@ public class GameSetup : MonoBehaviour
             {
                 if(p.driver)
                 {
-                    Debug.Log("Player is a driver and has chosen the " + p.carModel + " as their car");
-
+                    //Debug.Log("Player is a driver and has chosen the " + p.carModel + " as their car");
+                    
+                    //Braker
                     if (p.carModel == PhotonMenuPlayer.carType.Braker)
-                        pv.RPC("RPC_SpawnPlayer", PhotonNetwork.PlayerList[0], BrakerPrefab, spawnPoints[0].position, spawnPoints[0].rotation);
+                        pv.RPC("RPC_SpawnDriver", p.Player, spawnPoints[0].position, spawnPoints[0].rotation);
+                    //pv.RPC("RPC_SpawnPlayer", p.Player, BrakerPrefab, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
+
+                    //Shredder
+                    if (p.carModel == PhotonMenuPlayer.carType.Shredder)
+                        pv.RPC("RPC_SpawnPlayer", p.Player, ShreddedPrefab, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
+
+                    //Colt
+                    if (p.carModel == PhotonMenuPlayer.carType.Colt)
+                        pv.RPC("RPC_SpawnPlayer", p.Player, ColtPrefab, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
                 }
                 else
                 {
-                    Debug.Log("Player is a shooter and has chosen the " + p.shooterModel + " as their gun");
+                    //Debug.Log("Player is a shooter and has chosen the " + p.shooterModel + " as their gun");
+
+                    //standard Gun
+                    if (p.shooterModel == PhotonMenuPlayer.shooterType.standardGun)
+                        pv.RPC("RPC_SpawnPlayer", p.Player, StandardGunPrefab, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
+
+                    //Golden Gun
+                    if (p.shooterModel == PhotonMenuPlayer.shooterType.goldenGun)
+                        pv.RPC("RPC_SpawnPlayer", p.Player, GoldenGunPrefab, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
                 }
             }
         }

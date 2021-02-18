@@ -71,7 +71,7 @@ public class PlayerDataManager : MonoBehaviour
         {
             for (int i = 0; i < drivers.Count; i++)
             {
-                drivers[i].GetComponent<PhotonMenuPlayer>().playerNumber = i;
+                drivers[i].GetComponent<PhotonMenuPlayer>().teamNumber = i;
             }
         }
 
@@ -81,7 +81,7 @@ public class PlayerDataManager : MonoBehaviour
         {
             for (int i = 0; i < shooters.Count; i++)
             {
-                shooters[i].GetComponent<PhotonMenuPlayer>().playerNumber = i;
+                shooters[i].GetComponent<PhotonMenuPlayer>().teamNumber = i;
             }
         }
     }
