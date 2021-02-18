@@ -22,6 +22,7 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
 
     [SerializeField] private TMP_Text roomNameDisplay; //display for the name of the room
     [SerializeField] private GameObject photonMenuPlayer; //each player will be given one of these when they join the room
+    [SerializeField] private Transform playerHolder; //this game object will be the parent object for each player in the lobby
     #endregion
    
     void ClearPlayerListings()
@@ -62,7 +63,9 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
         {
             if(p == PhotonNetwork.LocalPlayer)
             {
-                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", photonMenuPlayer.name), this.transform.position, this.transform.rotation, 0);
+                //GameObject player = 
+                    PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", photonMenuPlayer.name), this.transform.position, this.transform.rotation, 0);
+                //player.transform.parent = playerHolder;
             }
         }
 

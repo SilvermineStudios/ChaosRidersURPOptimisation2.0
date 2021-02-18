@@ -24,6 +24,9 @@ public class GameSetup : MonoBehaviour
     public Transform[] spawnPoints;
     public static Transform[] SpawnPoints;
 
+    public GameObject BrakerPrefab, ShreddedPrefab, ColtPrefab;
+    public GameObject StandardGunPrefab, GoldenGunPrefab;
+
 
     private void OnDrawGizmos()
     {
@@ -72,34 +75,19 @@ public class GameSetup : MonoBehaviour
     {
         if(!canSpawnPlayers)//used for testing
         {
-            if (PhotonNetwork.PlayerList.Length == 1)
+            foreach(PhotonMenuPlayer p in PlayerDataManager.Players)
             {
-                //car 1
-                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[0], spawnPoints[0].position, spawnPoints[0].rotation);
-            }
-            if (PhotonNetwork.PlayerList.Length == 2)
-            {
-                //car 1
-                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[0], spawnPoints[0].position, spawnPoints[0].rotation);
-                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[1], spawnPoints[0].position, spawnPoints[0].rotation);
-            }
-            if (PhotonNetwork.PlayerList.Length == 3)
-            {
-                //car 1
-                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[0], spawnPoints[0].position, spawnPoints[0].rotation);
-                pv.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[1], spawnPoints[0].position, spawnPoints[0].rotation);
-                //car 2
-                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[2], spawnPoints[1].position, spawnPoints[1].rotation);
-            }
+                if(p.driver)
+                {
+                    Debug.Log("Player is a driver and has chosen the " + p.carModel + " as their car");
 
-            if (PhotonNetwork.PlayerList.Length == 4)
-            {
-                //car 1
-                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[0], spawnPoints[0].position, spawnPoints[0].rotation);
-                pv.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[1], spawnPoints[0].position, spawnPoints[0].rotation);
-                //car 2
-                pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[2], spawnPoints[1].position, spawnPoints[1].rotation);
-                pv.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[3], spawnPoints[1].position, spawnPoints[1].rotation);
+                    if (p.carModel == PhotonMenuPlayer.carType.Braker)
+                        pv.RPC("RPC_SpawnPlayer", PhotonNetwork.PlayerList[0], BrakerPrefab, spawnPoints[0].position, spawnPoints[0].rotation);
+                }
+                else
+                {
+                    Debug.Log("Player is a shooter and has chosen the " + p.shooterModel + " as their gun");
+                }
             }
         }
         
@@ -261,5 +249,9 @@ public class GameSetup : MonoBehaviour
         PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "ShooterPlayer"), spawnPos, spawnRot, 0);
     }
 
-    
+    [PunRPC]
+    void RPC_SpawnPlayer(GameObject playerAvatar, Vector3 spawnPos, Quaternion spawnRot)
+    {
+        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", playerAvatar.name), spawnPos, spawnRot, 0);
+    }
 }

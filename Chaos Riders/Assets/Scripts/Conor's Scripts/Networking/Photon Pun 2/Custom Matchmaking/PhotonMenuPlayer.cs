@@ -1,4 +1,5 @@
 ﻿using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,10 @@ public class PhotonMenuPlayer : MonoBehaviour
 {
     private PhotonView pv;
     private GameVariables gameVariables;
+    private PlayerDataManager playerDataManager;
+
+    //decided by player data manager
+    public int playerNumber; // from 0, decides which team you are in; driver 0 and shooter 0 will be in the same car, driver 1 and shooter 1 will be in the same car.
 
     public bool driver = false;
     public bool shooter = false;
@@ -25,6 +30,7 @@ public class PhotonMenuPlayer : MonoBehaviour
     {
         pv = GetComponent<PhotonView>();
         gameVariables = FindObjectOfType<GameVariables>();
+        playerDataManager = FindObjectOfType<PlayerDataManager>();
 
         carModel = carType.None;
         shooterModel = shooterType.None;
@@ -51,6 +57,19 @@ public class PhotonMenuPlayer : MonoBehaviour
         
     }
 
+    void GetPlayeNumber()
+    {
+        foreach(Player p in PhotonNetwork.PlayerList)
+        {
+            if(p == PhotonNetwork.LocalPlayer)
+            {
+                
+            }
+        }
+    }
+
+
+
     #region Driver Buttons
     //button for choosing to be a driver
     public void DriverButton()
@@ -70,6 +89,7 @@ public class PhotonMenuPlayer : MonoBehaviour
     {
         //increase the global amount of drivers
         gameVariables.amountOfDrivers++;
+        playerDataManager.drivers.Add(this.gameObject);
 
         //show that the player is a driver
         driver = true;
@@ -132,6 +152,7 @@ public class PhotonMenuPlayer : MonoBehaviour
     {
         //increase the global amount of shooters
         gameVariables.amountOfShooters++;
+        playerDataManager.shooters.Add(this.gameObject);
 
         //show that the player is a shooter
         shooter = true;
