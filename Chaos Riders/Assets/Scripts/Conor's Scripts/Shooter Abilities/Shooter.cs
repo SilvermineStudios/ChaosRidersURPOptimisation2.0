@@ -48,12 +48,13 @@ public class Shooter : MonoBehaviour
     [SerializeField] private Transform gunBarrel; //barrel that is going to rotate to face the correct direction
     [SerializeField] private float horizontalRotationSpeed = 5f, verticalRotationSpeed = 3f; //rotation speeds for the gun
     private float xAngle, yAngle; //angle of rotation for the gun axis
-
+    [SerializeField] GameObject trail;
+    [SerializeField] float trailPercentage;
     [SerializeField] private ParticleSystem muzzleFlash;
     public GameObject impactEffect;
-
+    [SerializeField] GameObject CasingSpawn, Casing;
     [SerializeField] private float minRotationHeight = -20f, maxRotationHeight = 20f;
-
+    Rigidbody rb;
     [SerializeField] private Transform impactEffectHolder;
     [SerializeField] Image hitmarker;
 
@@ -62,7 +63,7 @@ public class Shooter : MonoBehaviour
 
     private PhotonView pv;
     private float fireCooldown;
-
+    Controller carController;
 
     private void Awake()
     {
@@ -70,7 +71,7 @@ public class Shooter : MonoBehaviour
         pv = GetComponent<PhotonView>();
         startAmmo = amountOfAmmoForCooldownBar;
         startAmountOfAmmoForRPG = amountOfAmmoForRPG;
-
+        rb = GetComponent<Rigidbody>();
         barrelRotationSpeed = barrelRotationStartSpeed;
     }
 
@@ -113,7 +114,10 @@ public class Shooter : MonoBehaviour
                 if (car.GetComponent<CarPickup>().hasRPG)
                     RPG = true;
             }
-            
+            if(car &&  carController == null)
+            {
+                carController = car.GetComponent<Controller>();
+            }
 
             if(amountOfAmmoForRPG <= 0 && car.GetComponent<CarPickup>().hasRPG)
             {
@@ -316,6 +320,11 @@ public class Shooter : MonoBehaviour
 
         Vector3 direction = Spread(currentSpread);
 
+        GameObject a = PhotonNetwork.Instantiate("BulletCasing", CasingSpawn.transform.position, CasingSpawn.transform.rotation);
+
+        a.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
+        a.GetComponent<Rigidbody>().AddForce((a.transform.right + (a.transform.up * 2)) * 0.3f, ForceMode.Impulse);
+
         RaycastHit hit; //gets the information on whats hit
         if (Physics.Raycast(cineCamera.transform.position, direction, out hit, range))
         {
@@ -331,6 +340,17 @@ public class Shooter : MonoBehaviour
             //impactGo.transform.parent = impactEffectHolder;
             //PhotonNetwork.Destroy(impactGo);
         }
+
+        float chance = Random.Range(0, 100);
+        if (chance <= trailPercentage)
+        {
+            GameObject b = PhotonNetwork.Instantiate("Trail", bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.rotation);
+            FMODUnity.RuntimeManager.PlayOneShotAttached("event:/GunFX/Minigun/BulletWhistle", b);
+            b.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
+            b.GetComponent<Rigidbody>().AddForce(b.transform.forward * 100, ForceMode.Impulse);
+            b.GetComponent<DeleteMe>().enabled = true;
+        }
+
     }
 
     Vector3 Spread(float maxDeviation)
@@ -349,6 +369,11 @@ public class Shooter : MonoBehaviour
         FMODUnity.RuntimeManager.PlayOneShotAttached("event:/GunFX/Minigun/MinigunShot", gameObject);
         Vector3 direction = Spread(currentSpread);
 
+        GameObject a = Instantiate(Casing, CasingSpawn.transform.position, CasingSpawn.transform.rotation);
+        
+        a.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
+        a.GetComponent<Rigidbody>().AddForce((a.transform.right + (a.transform.up * 2)) * 0.3f  , ForceMode.Impulse);
+
         RaycastHit hit; //gets the information on whats hit
         if (Physics.Raycast(cineCamera.transform.position, direction, out hit, range))
         {
@@ -365,6 +390,17 @@ public class Shooter : MonoBehaviour
             impactGo.transform.parent = impactEffectHolder;
             //Destroy(impactGo, 1);
         }
+
+        float chance = Random.Range(0, 100);
+        if (chance <= trailPercentage)
+        {
+            GameObject b = Instantiate(trail, bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.rotation);
+            FMODUnity.RuntimeManager.PlayOneShotAttached("event:/GunFX/Minigun/BulletWhistle", b);
+            b.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
+            b.GetComponent<Rigidbody>().AddForce(b.transform.forward * 300, ForceMode.Impulse);
+            b.GetComponent<DeleteMe>().enabled = true;
+        }
+
     }
 
     private IEnumerator DeleteImpactEffect(float time)

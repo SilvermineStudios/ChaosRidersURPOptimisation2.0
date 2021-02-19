@@ -8,12 +8,10 @@ public class SpeedPickup : MonoBehaviour
     private MeshRenderer[] meshRenderers;
 
     [SerializeField] private AudioClip pickUpSound;
-    private AudioSource audioS;
 
     void Start()
     {
         meshRenderers = this.GetComponentsInChildren<MeshRenderer>();
-        audioS = GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -21,7 +19,7 @@ public class SpeedPickup : MonoBehaviour
         if(!pickedUp)
         {
             pickedUp = true;
-            audioS.PlayOneShot(pickUpSound);
+            FMODUnity.RuntimeManager.PlayOneShotAttached("event:/Pickups/PickupItem", other.gameObject);
 
             StartCoroutine(Timer(PickupManager.pickupRespawnTime));
         }
