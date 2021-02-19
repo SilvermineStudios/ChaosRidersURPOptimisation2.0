@@ -22,11 +22,13 @@ public class DriverAbilities : MonoBehaviour
     private PhotonView pv; //my Photon View
     private Animator anim;
     private Controller carController; //my Car Controller
+    private DriverTitle driverTitle;
     void Start()
     {
         anim = GetComponentInChildren<Animator>();
         pv = GetComponent<PhotonView>();
         carController = GetComponent<Controller>();
+        driverTitle = GetComponent<DriverTitle>();
         
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
@@ -73,7 +75,7 @@ public class DriverAbilities : MonoBehaviour
             }
 
             //if you use the Ability
-            if (Input.GetKeyDown(abilityKeyCode) && canUseAbility)
+            if (Input.GetKeyDown(abilityKeyCode) && canUseAbility && driverTitle.carModel == DriverTitle.carType.Braker) //only does this if the cars title is braker
             {
                 //<----------------------------------------------------------------------------------------------------------------------------PUT THE ABILITY STUFF HERE
                 
