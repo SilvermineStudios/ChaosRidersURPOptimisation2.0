@@ -36,7 +36,7 @@ public class Controller : MonoBehaviour
 
     PhotonView pv;
     Health healthScript;
-    Rigidbody rb;
+    public Rigidbody rb;
     float oldRot;
     float steerAngle;
     private float currentTorque;

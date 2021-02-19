@@ -8,11 +8,9 @@ public class RPGPickup : MonoBehaviour
     [SerializeField] private MeshRenderer[] meshRenderers;
 
     [SerializeField] private AudioClip pickUpSound;
-    private AudioSource audioS;
 
     void Start()
     {
-        audioS = GetComponent<AudioSource>();
         meshRenderers = this.GetComponentsInChildren<MeshRenderer>();
     }
 
@@ -22,8 +20,8 @@ public class RPGPickup : MonoBehaviour
         if (!pickedUp)
         {
             pickedUp = true;
-            
-            audioS.PlayOneShot(pickUpSound);
+
+            FMODUnity.RuntimeManager.PlayOneShotAttached("event:/Pickups/PickupItem", other.gameObject);
 
             StartCoroutine(Timer(PickupManager.pickupRespawnTime));
         }
