@@ -79,12 +79,13 @@ public class GameSetup : MonoBehaviour
             {
                 if(p.driver)
                 {
+                    pv.RPC("RPC_SpawnDriver", p.Player, spawnPoints[0].position, spawnPoints[0].rotation);
+                    /*
                     //Debug.Log("Player is a driver and has chosen the " + p.carModel + " as their car");
                     
                     //Braker
-                    if (p.carModel == PhotonMenuPlayer.carType.Braker)
-                        pv.RPC("RPC_SpawnDriver", p.Player, spawnPoints[0].position, spawnPoints[0].rotation);
-                    //pv.RPC("RPC_SpawnPlayer", p.Player, BrakerPrefab, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
+                    //if (p.carModel == PhotonMenuPlayer.carType.Braker)
+                        pv.RPC("RPC_SpawnPlayer", p.Player, BrakerPrefab, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
 
                     //Shredder
                     if (p.carModel == PhotonMenuPlayer.carType.Shredder)
@@ -93,9 +94,12 @@ public class GameSetup : MonoBehaviour
                     //Colt
                     if (p.carModel == PhotonMenuPlayer.carType.Colt)
                         pv.RPC("RPC_SpawnPlayer", p.Player, ColtPrefab, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
+                    */
                 }
-                else
+                if(p.shooter)
                 {
+                    pv.RPC("RPC_SpawnShooter", p.Player, spawnPoints[0].position, spawnPoints[0].rotation);
+                    /*
                     //Debug.Log("Player is a shooter and has chosen the " + p.shooterModel + " as their gun");
 
                     //standard Gun
@@ -105,6 +109,7 @@ public class GameSetup : MonoBehaviour
                     //Golden Gun
                     if (p.shooterModel == PhotonMenuPlayer.shooterType.goldenGun)
                         pv.RPC("RPC_SpawnPlayer", p.Player, GoldenGunPrefab, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
+                    */
                 }
             }
         }
