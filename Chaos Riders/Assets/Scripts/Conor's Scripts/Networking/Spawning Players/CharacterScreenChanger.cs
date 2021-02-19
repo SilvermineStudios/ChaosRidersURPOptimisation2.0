@@ -8,49 +8,70 @@ using TMPro;
 
 public class CharacterScreenChanger : MonoBehaviourPunCallbacks
 {
-    [SerializeField] private GameObject shooterCharacterScreen, driverCharacterScreen;
+    [SerializeField] private GameVariables gameVariables;
+
+    public GameObject shooterCharacterScreen, driverCharacterScreen;
+    public GameObject choosePlayerTypePanel; //panel for choosing whether to be a driver or shooter 
     private PhotonView pv;
 
     private void Start()
     {
         pv = GetComponent<PhotonView>();
+        gameVariables = FindObjectOfType<GameVariables>();
+
+        choosePlayerTypePanel.SetActive(true);
+        shooterCharacterScreen.SetActive(false);
+        driverCharacterScreen.SetActive(false);
     }
 
     void Update()
     {
-        /*
-        if (PhotonNetwork.PlayerList != null)
+
+        //PlayerType();
+    }
+
+    #region Buttons
+    //button for choosing to be a driver
+    public void DriverButton()
+    {
+        choosePlayerTypePanel.SetActive(false);
+        shooterCharacterScreen.SetActive(false);
+        driverCharacterScreen.SetActive(true);
+
+        pv.RPC("AddToDrivers", PhotonNetwork.MasterClient);
+
+
+        foreach (Player p in PhotonNetwork.PlayerList)
         {
-
-
-            if (pv.IsMine && PhotonNetwork.PlayerList[1].ActorNumber == 1)
+            if(p == PhotonNetwork.LocalPlayer)
             {
-                Debug.Log("Photon Value: " + pv.ViewID);
-            }
 
-            //drivers
-            for (int i = 0; i > PhotonNetwork.PlayerList.Length; i += 2)
-            {
-                if (pv.IsMine)
-                {
-
-                }
-                //shooterCharacterScreen.SetActive(false);
-                //driverCharacterScreen.SetActive(true);
-            }
-
-            //shooters
-            for (int i = 1; i > PhotonNetwork.PlayerList.Length; i += 2)
-            {
-                //shooterCharacterScreen.SetActive(true);
-                //driverCharacterScreen.SetActive(false);
             }
         }
-        */
-
-        PlayerType();
-
     }
+
+    [PunRPC]
+    void AddToDrivers()
+    {
+        gameVariables.amountOfDrivers++;
+    }
+
+    //button for choosing to be a shooter
+    public void ShooterButton()
+    {
+        choosePlayerTypePanel.SetActive(false);
+        shooterCharacterScreen.SetActive(true);
+        driverCharacterScreen.SetActive(false);
+
+        pv.RPC("AddToShooters", PhotonNetwork.MasterClient);
+    }
+
+    [PunRPC]
+    void AddToShooters()
+    {
+        gameVariables.amountOfShooters++;
+    }
+    #endregion
 
     private void PlayerType()
     {

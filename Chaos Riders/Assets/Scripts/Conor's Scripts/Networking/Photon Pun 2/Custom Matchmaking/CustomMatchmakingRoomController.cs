@@ -5,6 +5,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
 using TMPro;
+using System.IO;
 
 public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
 {
@@ -20,6 +21,8 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject playerListingPrefab; //Instansiate to display each player in the room
 
     [SerializeField] private TMP_Text roomNameDisplay; //display for the name of the room
+    [SerializeField] private GameObject photonMenuPlayer; //each player will be given one of these when they join the room
+    [SerializeField] private Transform playerHolder; //this game object will be the parent object for each player in the lobby
     #endregion
    
     void ClearPlayerListings()
@@ -54,6 +57,18 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
         {
             startButton.SetActive(false);
         }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////Spawn photon menu player
+        foreach(Player p in PhotonNetwork.PlayerList)
+        {
+            if(p == PhotonNetwork.LocalPlayer)
+            {
+                //GameObject player = 
+                    PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", photonMenuPlayer.name), this.transform.position, this.transform.rotation, 0);
+                //player.transform.parent = playerHolder;
+            }
+        }
+
         //photonPlayers = PhotonNetwork.playerList;
         ClearPlayerListings(); //remove all old player listings
         ListPlayers();

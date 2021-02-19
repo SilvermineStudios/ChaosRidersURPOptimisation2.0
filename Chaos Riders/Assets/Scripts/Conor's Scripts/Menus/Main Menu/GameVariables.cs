@@ -35,6 +35,9 @@ public class GameVariables : MonoBehaviour
     public static bool RPGPickup;
     [SerializeField] private bool rpgPickup = true;
 
+    public static int AmountOfDrivers, AmountOfShooters;
+    public int amountOfDrivers, amountOfShooters;
+
     void Awake()
     {
         pv = GetComponent<PhotonView>();
@@ -69,6 +72,8 @@ public class GameVariables : MonoBehaviour
         NitroPickup = nitroPickup;
         ShieldPickup = shieldPickup;
         RPGPickup = rpgPickup;
+        AmountOfDrivers = amountOfDrivers;
+        AmountOfShooters = amountOfShooters;
     }
 
 
