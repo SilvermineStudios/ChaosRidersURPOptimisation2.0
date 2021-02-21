@@ -102,7 +102,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/Master.bank
   Name: Master
-  lastModified: 637487682237857403
+  lastModified: 637492824949509406
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -129,6 +129,29 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 3000
+--- !u!114 &-3014580675922471995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Pickups/PickupItem
+  m_EditorClassIdentifier: 
+  Path: event:/Pickups/PickupItem
+  guid: 96c59e92f8e28343be8ca2a010dc50bb
+  Banks:
+  - {fileID: -4466803539278922483}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1000
 --- !u!114 &-2954939187940535496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,11 +166,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/Master.strings.bank
   Name: Master.strings
-  lastModified: 637486035787519117
+  lastModified: 637492824949579332
   LoadResult: 0
   FileSizes:
   - Name: Desktop
-    Value: 1404
+    Value: 1662
   Exists: 1
 --- !u!114 &-2173327587602132150
 MonoBehaviour:
@@ -236,6 +259,29 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 154279
+--- !u!114 &-541447062945515582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/GunFX/Minigun/BulletWhistle
+  m_EditorClassIdentifier: 
+  Path: event:/GunFX/Minigun/BulletWhistle
+  guid: 131a59e04a385447bdecdd34c3e9bc62
+  Banks:
+  - {fileID: -4466803539278922483}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 230
 --- !u!114 &-253378535049460817
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -273,6 +319,7 @@ MonoBehaviour:
   EditorBanks:
   - {fileID: -2954939187940535496}
   - {fileID: -4466803539278922483}
+  - {fileID: 3552636947373160718}
   EditorEvents:
   - {fileID: -4789631137126399954}
   - {fileID: -2173327587602132150}
@@ -283,12 +330,17 @@ MonoBehaviour:
   - {fileID: 9032324927115125122}
   - {fileID: 481966967742989797}
   - {fileID: -4084819181730206448}
+  - {fileID: 2111459584622707245}
+  - {fileID: 1475981521296751756}
+  - {fileID: -3014580675922471995}
+  - {fileID: 6390147793029029078}
+  - {fileID: -541447062945515582}
   EditorParameters: []
   MasterBanks:
   - {fileID: -4466803539278922483}
   StringsBanks:
   - {fileID: -2954939187940535496}
-  stringsBankWriteTime: 637486035787519117
+  stringsBankWriteTime: 637492824949579332
   cacheVersion: 5
 --- !u!114 &481966967742989797
 MonoBehaviour:
@@ -354,6 +406,29 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1400
+--- !u!114 &1475981521296751756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/CarFX/Shredder/ShredFX
+  m_EditorClassIdentifier: 
+  Path: event:/CarFX/Shredder/ShredFX
+  guid: a8a2aa384fa9cc4ca00f573b7c0c9148
+  Banks:
+  - {fileID: -4466803539278922483}
+  IsStream: 1
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 5000
 --- !u!114 &1671077736914714224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -421,6 +496,29 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 3000
+--- !u!114 &2111459584622707245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/CarFX/Shredder/MineClick
+  m_EditorClassIdentifier: 
+  Path: event:/CarFX/Shredder/MineClick
+  guid: 644373b914a7ce40a43b4f36222b3fb0
+  Banks:
+  - {fileID: -4466803539278922483}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 2000
 --- !u!114 &3364068989726150866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -444,6 +542,24 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 3808
+--- !u!114 &3552636947373160718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/CarNoise.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Chaos Riders/Build/Desktop/CarNoise.bank
+  Name: CarNoise
+  lastModified: 637492824949039912
+  LoadResult: 0
+  FileSizes: []
+  Exists: 1
 --- !u!114 &3579443148625413028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -508,6 +624,29 @@ MonoBehaviour:
   LoadResult: 0
   FileSizes: []
   Exists: 1
+--- !u!114 &6390147793029029078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Pickups/Checkpoint
+  m_EditorClassIdentifier: 
+  Path: event:/Pickups/Checkpoint
+  guid: 0ca8f43a1a35a54f90b9c993c04b2702
+  Banks:
+  - {fileID: -4466803539278922483}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 981
 --- !u!114 &7425718266395928888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -531,6 +670,24 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 4416
+--- !u!114 &8390316997883208087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/CarNoise.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Chaos Riders/Build/Desktop/CarNoise.bank
+  Name: CarNoise
+  lastModified: 637486451876785271
+  LoadResult: 0
+  FileSizes: []
+  Exists: 1
 --- !u!114 &8596027265385456132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -569,6 +726,8 @@ MonoBehaviour:
   Path: event:/CarFX/Braker/BrakerAudio
   guid: 1afa13fc8c97a2449ffc3c1f3041719a
   Banks:
+  - {fileID: 8390316997883208087}
+  - {fileID: 3552636947373160718}
   - {fileID: -4466803539278922483}
   IsStream: 0
   Is3D: 1

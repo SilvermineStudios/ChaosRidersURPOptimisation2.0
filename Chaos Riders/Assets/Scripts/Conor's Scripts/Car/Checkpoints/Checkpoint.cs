@@ -7,7 +7,6 @@ using TMPro;
 public class Checkpoint : MonoBehaviour
 {
     [SerializeField] private AudioClip soundEffect;
-    [SerializeField] private AudioSource audioS;
 
     private int amountOfLaps;
     [SerializeField] private int currentLap = 1;
@@ -75,7 +74,7 @@ public class Checkpoint : MonoBehaviour
             if (other.gameObject.tag == "Checkpoint")
             {
 
-                audioS.PlayOneShot(soundEffect, 0.2f);
+                FMODUnity.RuntimeManager.PlayOneShotAttached("event:/Pickups/Checkpoint", gameObject);
 
                 other.gameObject.SetActive(false);
 

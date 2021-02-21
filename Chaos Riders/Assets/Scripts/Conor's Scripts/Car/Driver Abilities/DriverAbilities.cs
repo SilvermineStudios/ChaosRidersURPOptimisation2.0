@@ -8,9 +8,10 @@ public class DriverAbilities : MonoBehaviour
 {
 
     enum Abilities { SmokeScreen, Mine }
+    enum Ultimates { Brake, Shred }
     [SerializeField] Abilities CurrentAbility;
-    public GameObject abilitySpawn, smokeGameObject, mineGameObject;
-
+    [SerializeField] Ultimates CurrentUltimate;
+    public GameObject abilitySpawn, smokeGameObject, mineGameObject, shredObject;
     [SerializeField] private KeyCode abilityKeyCode = KeyCode.Q, equipmentKeyCode = KeyCode.E; //Create Keycode Variables for the buttons
 
     [SerializeField] private Transform equipmentChargeBar, equipmentOverChargeBar, abilityChargeBar, abilityOverChargeBar; //equipment/ability chargebars
@@ -22,6 +23,7 @@ public class DriverAbilities : MonoBehaviour
     private PhotonView pv; //my Photon View
     private Animator anim;
     private Controller carController; //my Car Controller
+
     void Start()
     {
         anim = GetComponentInChildren<Animator>();
@@ -59,8 +61,9 @@ public class DriverAbilities : MonoBehaviour
                     if (!IsThisMultiplayer.Instance.multiplayer)
                         Instantiate(smokeGameObject, abilitySpawn.transform.position, abilitySpawn.transform.rotation);
                 }
-                if(CurrentAbility == Abilities.Mine)
+                if (CurrentAbility == Abilities.Mine)
                 {
+                    FMODUnity.RuntimeManager.PlayOneShotAttached("event:/CarFX/Shredder/MineClick", gameObject);
                     //spawn the mine accross the network
                     if (IsThisMultiplayer.Instance.multiplayer)
                         PhotonNetwork.Instantiate("Mine", abilitySpawn.transform.position, abilitySpawn.transform.rotation, 0);
@@ -76,9 +79,15 @@ public class DriverAbilities : MonoBehaviour
             if (Input.GetKeyDown(abilityKeyCode) && canUseAbility)
             {
                 //<----------------------------------------------------------------------------------------------------------------------------PUT THE ABILITY STUFF HERE
-                
-                StartCoroutine(UseBrakerAbility());
 
+                if (CurrentUltimate == Ultimates.Brake)
+                {
+                    StartCoroutine(UseBrakerAbility());
+                }
+                if (CurrentUltimate == Ultimates.Shred)
+                {
+                    StartCoroutine(UseShredderAbility());
+                }
                 abilityChargeAmount = 0; //reset the cooldownbar after the ability is used
             }
         }
@@ -101,6 +110,21 @@ public class DriverAbilities : MonoBehaviour
         carController.boost = false;
     }
 
+    private IEnumerator UseShredderAbility()
+    {
+        FMODUnity.RuntimeManager.PlayOneShotAttached("event:/CarFX/Shredder/ShredFX", gameObject);
+
+        //anim.SetTrigger("BreakerTransTrigger");
+        //enable shred
+        shredObject.SetActive(true);
+
+        yield return new WaitForSeconds(4.5f);
+        //anim.SetTrigger("LeaveBreakerTrigger");
+        //speed
+
+        shredObject.SetActive(false);
+       
+    }
 
 
 

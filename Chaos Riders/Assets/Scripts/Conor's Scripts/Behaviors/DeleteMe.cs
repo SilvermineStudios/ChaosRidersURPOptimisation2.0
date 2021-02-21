@@ -13,7 +13,7 @@ public class DeleteMe : MonoBehaviour
     {
         pv = GetComponent<PhotonView>();
         //if multiplayer
-        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer)
+        if (IsThisMultiplayer.Instance.multiplayer && pv.IsMine )
         {
             StartCoroutine(DeleteTimer(timeToDelete));
         }
