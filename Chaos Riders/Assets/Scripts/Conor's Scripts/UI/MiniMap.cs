@@ -16,6 +16,6 @@ public class MiniMap : MonoBehaviour
         newPosition.y = this.transform.position.y;
         transform.position = newPosition;
 
-        transform.rotation = Quaternion.Euler(90f, player.eulerAngles.y, 0f);
+        transform.rotation = Quaternion.Euler(90f, player.eulerAngles.y - 180, 0f);
     }
 }
