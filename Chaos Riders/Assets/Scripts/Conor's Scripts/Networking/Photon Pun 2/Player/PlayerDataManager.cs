@@ -23,10 +23,7 @@ public class PlayerDataManager : MonoBehaviour
     void Update()
     {
         UpdatePlayerList();
-        
-        AssignPlayerNumbers();
-        AssignDriverNumbers();
-        AssignShooterNumbers();
+        AssignPlayerNumbers(); //give each player the index of the spawnpoint they will be spawned at
     }
 
     private void FixedUpdate()
@@ -77,37 +74,12 @@ public class PlayerDataManager : MonoBehaviour
             }
         }
 
-
         //shooters
         if (shooters.Count != 0)
         {
             for (int i = 0; i < shooters.Count; i++)
             {
                 shooters[i].GetComponent<PhotonMenuPlayer>().teamNumber = i;
-            }
-        }
-    }
-
-    private void AssignDriverNumbers()
-    {
-        //drivers
-        if (drivers.Count != 0)
-        {
-            for (int i = 0; i < drivers.Count; i++)
-            {
-                drivers[i].GetComponent<PhotonMenuPlayer>().driverNumber = i;
-            }
-        }
-    }
-
-    private void AssignShooterNumbers()
-    {
-        //shooters
-        if (shooters.Count != 0)
-        {
-            for (int i = 0; i < shooters.Count; i++)
-            {
-                shooters[i].GetComponent<PhotonMenuPlayer>().shooterNumber = i;
             }
         }
     }

@@ -14,7 +14,6 @@ public class PhotonMenuPlayer : MonoBehaviour
 
     //decided by player data manager
     public int teamNumber; // from 0, decides which team you are in; driver 0 and shooter 0 will be in the same car, driver 1 and shooter 1 will be in the same car.
-    public int driverNumber = -1, shooterNumber = -1;
 
     public Player Player;
     public int playerNumber;
