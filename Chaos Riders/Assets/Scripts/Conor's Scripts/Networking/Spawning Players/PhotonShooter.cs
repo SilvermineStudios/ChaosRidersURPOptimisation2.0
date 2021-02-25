@@ -61,6 +61,6 @@ public class PhotonShooter : MonoBehaviour
         yield return new WaitForSeconds(time);
 
         //pv.RPC("RPC_SpawnMyCharacter", PhotonNetwork.PlayerList[myNumberInRoom], GameSetup.SpawnPoints[myDriverNumber].position, GameSetup.SpawnPoints[myDriverNumber].rotation);
-        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", myCharacter.name), GameSetup.SpawnPoints[myShooterNumber].position, GameSetup.SpawnPoints[myShooterNumber].rotation, 0);
+        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", myCharacter.name), this.transform.position, this.transform.rotation, 0);
     }
 }

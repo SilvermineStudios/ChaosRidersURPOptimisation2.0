@@ -25,6 +25,8 @@ public class PlayerDataManager : MonoBehaviour
         UpdatePlayerList();
         
         AssignPlayerNumbers();
+        AssignDriverNumbers();
+        AssignShooterNumbers();
     }
 
     private void FixedUpdate()
@@ -82,6 +84,30 @@ public class PlayerDataManager : MonoBehaviour
             for (int i = 0; i < shooters.Count; i++)
             {
                 shooters[i].GetComponent<PhotonMenuPlayer>().teamNumber = i;
+            }
+        }
+    }
+
+    private void AssignDriverNumbers()
+    {
+        //drivers
+        if (drivers.Count != 0)
+        {
+            for (int i = 0; i < drivers.Count; i++)
+            {
+                drivers[i].GetComponent<PhotonMenuPlayer>().driverNumber = i;
+            }
+        }
+    }
+
+    private void AssignShooterNumbers()
+    {
+        //shooters
+        if (shooters.Count != 0)
+        {
+            for (int i = 0; i < shooters.Count; i++)
+            {
+                shooters[i].GetComponent<PhotonMenuPlayer>().shooterNumber = i;
             }
         }
     }

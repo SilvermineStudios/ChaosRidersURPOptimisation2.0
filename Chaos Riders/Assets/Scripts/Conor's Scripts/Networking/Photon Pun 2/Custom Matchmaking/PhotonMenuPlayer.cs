@@ -6,12 +6,16 @@ using UnityEngine;
 
 public class PhotonMenuPlayer : MonoBehaviour
 {
+    private int spawnNumberValue; //the index used for spawning this player (0 = at spawn 1, 1 = at spawn 2 etc.)
+
     private PhotonView pv;
     private GameVariables gameVariables;
     private PlayerDataManager playerDataManager;
 
     //decided by player data manager
     public int teamNumber; // from 0, decides which team you are in; driver 0 and shooter 0 will be in the same car, driver 1 and shooter 1 will be in the same car.
+    public int driverNumber = -1, shooterNumber = -1;
+
     public Player Player;
     public int playerNumber;
 
@@ -59,6 +63,11 @@ public class PhotonMenuPlayer : MonoBehaviour
     void Update()
     {
         //Debug.Log("Player = " + Player);
+
+        if(driver && playerDataManager.drivers.Count > 0)
+        {
+            //foreach()
+        }
     }
 
     void GetPlayeNumber()
