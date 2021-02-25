@@ -58,6 +58,8 @@ public class Shooter : MonoBehaviour
     [SerializeField] private Transform impactEffectHolder;
     [SerializeField] Image hitmarker;
 
+    [SerializeField] bool noCarNeeded;
+
     //Pause Menu
     Pause pauseMenu;
 
@@ -101,48 +103,54 @@ public class Shooter : MonoBehaviour
                 carCollision = GetComponentInParent<MoveTurretPosition>().car.transform.GetChild(0).gameObject;
             }
 
-            CooldownBarValues();
-            ammoNormalized = amountOfAmmoForCooldownBar / startAmmo; //normalized the ammo value to be between 0 and 1 for the cooldown bar scale
-            CoolDownBar(ammoNormalized); //scale the size of the cooldown bar to match the ammo count
+            if ((IsThisMultiplayer.Instance.multiplayer && MasterClientRaceStart.Instance.weaponsFree) || !IsThisMultiplayer.Instance.multiplayer)
+            {
+                CooldownBarValues();
+                ammoNormalized = amountOfAmmoForCooldownBar / startAmmo; //normalized the ammo value to be between 0 and 1 for the cooldown bar scale
+                CoolDownBar(ammoNormalized); //scale the size of the cooldown bar to match the ammo count
+            }
 
 
 
             rpgcount.text = amountOfAmmoForRPG + " / " + startAmountOfAmmoForRPG;
 
             //NEW
-            if (car.layer == LayerMask.NameToLayer("Cars"))
+            if (!noCarNeeded)
             {
-                //ONLINE PLAYERS
-                if (car.tag == "car")
+                if (car.layer == LayerMask.NameToLayer("Cars"))
                 {
-                    if (car.GetComponent<CarPickup>().hasRPG)
-                        RPG = true;
-
-                    if (amountOfAmmoForRPG <= 0 && car.GetComponent<CarPickup>().hasRPG)
+                    //ONLINE PLAYERS
+                    if (car.tag == "car")
                     {
-                        RPG = false;
-                        car.GetComponent<CarPickup>().hasRPG = false;
-                        amountOfAmmoForRPG = startAmountOfAmmoForRPG;
+                        if (car.GetComponent<CarPickup>().hasRPG)
+                            RPG = true;
+
+                        if (amountOfAmmoForRPG <= 0 && car.GetComponent<CarPickup>().hasRPG)
+                        {
+                            RPG = false;
+                            car.GetComponent<CarPickup>().hasRPG = false;
+                            amountOfAmmoForRPG = startAmountOfAmmoForRPG;
+                        }
+                    }
+
+                    //AI CARS
+                    if (car.tag != "car")
+                    {
+                        Debug.Log("Put AI car RPG STUFF HERE");///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                        if (car.GetComponent<AICarPickups>().hasRPG)
+                            RPG = true;
+
+                        if (amountOfAmmoForRPG <= 0 && car.GetComponent<AICarPickups>().hasRPG)
+                        {
+                            RPG = false;
+                            car.GetComponent<AICarPickups>().hasRPG = false;
+                            amountOfAmmoForRPG = startAmountOfAmmoForRPG;
+                        }
                     }
                 }
 
-                //AI CARS
-                if (car.tag != "car")
-                {
-                    Debug.Log("Put AI car RPG STUFF HERE");///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-                    if (car.GetComponent<AICarPickups>().hasRPG)
-                        RPG = true;
-
-                    if (amountOfAmmoForRPG <= 0 && car.GetComponent<AICarPickups>().hasRPG)
-                    {
-                        RPG = false;
-                        car.GetComponent<AICarPickups>().hasRPG = false;
-                        amountOfAmmoForRPG = startAmountOfAmmoForRPG;
-                    }
-                }
             }
-
             /*
             if (car.tag == "car")
             {
@@ -166,6 +174,9 @@ public class Shooter : MonoBehaviour
         //online shooting
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer)
         {
+            //Wait for weapons Free
+            if (!MasterClientRaceStart.Instance.weaponsFree) { return; }
+            
             //if you are shooting and have ammo (MINIGUN)
             if (Input.GetKey(shootButton) && amountOfAmmoForCooldownBar > 0 && !RPG)
             {
@@ -358,9 +369,11 @@ public class Shooter : MonoBehaviour
 
         GameObject a = PhotonNetwork.Instantiate("BulletCasing", CasingSpawn.transform.position, CasingSpawn.transform.rotation);
 
-        a.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
-        a.GetComponent<Rigidbody>().AddForce((a.transform.right + (a.transform.up * 2)) * 0.3f, ForceMode.Impulse);
-
+        if (!noCarNeeded)
+        {
+            a.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
+            a.GetComponent<Rigidbody>().AddForce((a.transform.right + (a.transform.up * 2)) * 0.3f, ForceMode.Impulse);
+        }
         RaycastHit hit; //gets the information on whats hit
         if (Physics.Raycast(cineCamera.transform.position, direction, out hit, range))
         {
@@ -382,7 +395,10 @@ public class Shooter : MonoBehaviour
         {
             GameObject b = PhotonNetwork.Instantiate("Trail", bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.rotation);
             FMODUnity.RuntimeManager.PlayOneShotAttached("event:/GunFX/Minigun/BulletWhistle", b);
-            b.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
+            if (!noCarNeeded)
+            {
+                b.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
+            }
             b.GetComponent<Rigidbody>().AddForce(b.transform.forward * 100, ForceMode.Impulse);
             b.GetComponent<DeleteMe>().enabled = true;
         }
@@ -406,10 +422,12 @@ public class Shooter : MonoBehaviour
         Vector3 direction = Spread(currentSpread);
 
         GameObject a = Instantiate(Casing, CasingSpawn.transform.position, CasingSpawn.transform.rotation);
-        
-        a.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
-        a.GetComponent<Rigidbody>().AddForce((a.transform.right + (a.transform.up * 2)) * 0.3f  , ForceMode.Impulse);
 
+        if (!noCarNeeded)
+        {
+            a.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
+            a.GetComponent<Rigidbody>().AddForce((a.transform.right + (a.transform.up * 2)) * 0.3f, ForceMode.Impulse);
+        }
         RaycastHit hit; //gets the information on whats hit
         if (Physics.Raycast(cineCamera.transform.position, direction, out hit, range))
         {
@@ -432,7 +450,10 @@ public class Shooter : MonoBehaviour
         {
             GameObject b = Instantiate(trail, bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.rotation);
             FMODUnity.RuntimeManager.PlayOneShotAttached("event:/GunFX/Minigun/BulletWhistle", b);
-            b.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
+            if (!noCarNeeded)
+            { 
+                b.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
+            }
             b.GetComponent<Rigidbody>().AddForce(b.transform.forward * 300, ForceMode.Impulse);
             b.GetComponent<DeleteMe>().enabled = true;
         }

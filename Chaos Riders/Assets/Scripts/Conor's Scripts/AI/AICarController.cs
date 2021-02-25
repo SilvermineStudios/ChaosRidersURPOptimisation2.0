@@ -49,7 +49,8 @@ public class AICarController : MonoBehaviour
     {
         //if dead bring to a stop and dont steer or update waypoints
         if (healthScript.isDead) { Die(); return; }
-
+        // if Countdown for race start hasn't finished, dont move
+        if (!MasterClientRaceStart.Instance.countdownTimerStart) { return; }
         ////////////////////////////////////////////////////////////////////////////////<---------------------------------------------------------
         //ApplySteer();
         //Drive();

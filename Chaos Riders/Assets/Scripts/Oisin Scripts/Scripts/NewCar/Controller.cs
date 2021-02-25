@@ -109,8 +109,9 @@ public class Controller : MonoBehaviour
             GetComponent<Rigidbody>().drag = 0;
         }
 
-        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
-        { 
+        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer|| !IsThisMultiplayer.Instance.multiplayer)
+        {
+            StartRace();
             Brake();
             AdjustStiffness();
             Accelerate();
@@ -125,9 +126,21 @@ public class Controller : MonoBehaviour
             CapSpeed();
             UpdateWheelPoses();
             ChangeFOV();
+            
         }
     }
 
+    private void StartRace()
+    {
+        if(!MasterClientRaceStart.Instance.countdownTimerStart)
+        {
+            ApplyBrake(brakeTorque);
+        }
+        else
+        {
+            ReleaseBrake();
+        }
+    }
 
     private void Update()
     {
@@ -369,13 +382,16 @@ public class Controller : MonoBehaviour
 
     private void Brake()
     {
-        if(brake && !braking)
+        if (MasterClientRaceStart.Instance.countdownTimerStart)
         {
-            ApplyBrake(brakeTorque);
-        }
-        else if(!brake && !braking)
-        {
-            ReleaseBrake();
+            if (brake && !braking)
+            {
+                ApplyBrake(brakeTorque);
+            }
+            else if (!brake && !braking)
+            {
+                ReleaseBrake();
+            }
         }
     }
     
@@ -511,7 +527,7 @@ public class Controller : MonoBehaviour
         }
         if(braking)
         {
-            amount = 0.75f;
+            //amount = 0.75f;
         }
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer) //|| !IsThisMultiplayer.Instance.multiplayer)
         {

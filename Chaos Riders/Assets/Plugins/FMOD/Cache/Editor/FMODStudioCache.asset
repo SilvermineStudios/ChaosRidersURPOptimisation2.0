@@ -23,6 +23,29 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 1126
+--- !u!114 &-8075725593753776570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/RaceStart/CountDown
+  m_EditorClassIdentifier: 
+  Path: event:/RaceStart/CountDown
+  guid: 29e88e2d91be07468aa4895d9f2f119c
+  Banks:
+  - {fileID: -4466803539278922483}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 658
 --- !u!114 &-7636924816389521059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,7 +125,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/Master.bank
   Name: Master
-  lastModified: 637493403777019455
+  lastModified: 637498778342170169
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -166,11 +189,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/Master.strings.bank
   Name: Master.strings
-  lastModified: 637493403777099369
+  lastModified: 637498778342260255
   LoadResult: 0
   FileSizes:
   - Name: Desktop
-    Value: 1662
+    Value: 1760
   Exists: 1
 --- !u!114 &-2379609175019932448
 MonoBehaviour:
@@ -186,7 +209,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/CarNoise.bank
   Name: CarNoise
-  lastModified: 637492824949039912
+  lastModified: 637498778341680677
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -254,6 +277,29 @@ MonoBehaviour:
   LoadResult: 0
   FileSizes: []
   Exists: 1
+--- !u!114 &-901828986925691195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/RaceStart/Start
+  m_EditorClassIdentifier: 
+  Path: event:/RaceStart/Start
+  guid: 1d0281c9a0cf7b47a659ba2f700e4e42
+  Banks:
+  - {fileID: -4466803539278922483}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 981
 --- !u!114 &-738458561647045439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -353,12 +399,14 @@ MonoBehaviour:
   - {fileID: -3014580675922471995}
   - {fileID: 6390147793029029078}
   - {fileID: -541447062945515582}
+  - {fileID: -901828986925691195}
+  - {fileID: -8075725593753776570}
   EditorParameters: []
   MasterBanks:
   - {fileID: -4466803539278922483}
   StringsBanks:
   - {fileID: -2954939187940535496}
-  stringsBankWriteTime: 637493403777099369
+  stringsBankWriteTime: 637498778342260255
   cacheVersion: 5
 --- !u!114 &481966967742989797
 MonoBehaviour:
@@ -401,6 +449,28 @@ MonoBehaviour:
   LoadResult: 0
   FileSizes: []
   Exists: 1
+--- !u!114 &976414824136971872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Pickups/Checkpoint2
+  m_EditorClassIdentifier: 
+  Path: event:/Pickups/Checkpoint2
+  guid: 1d0281c9a0cf7b47a659ba2f700e4e42
+  Banks: []
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 981
 --- !u!114 &1024597250537362491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -537,6 +607,28 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 2000
+--- !u!114 &3317266355144416784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Pickups/Checkpoint 2
+  m_EditorClassIdentifier: 
+  Path: event:/Pickups/Checkpoint 2
+  guid: 85837c6e2bb86a44b1519379125b9b63
+  Banks: []
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 981
 --- !u!114 &3364068989726150866
 MonoBehaviour:
   m_ObjectHideFlags: 0
