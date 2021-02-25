@@ -64,6 +64,7 @@ public class Shooter : MonoBehaviour
     private PhotonView pv;
     private float fireCooldown;
     Controller carController;
+    AICarController aiCarController;
 
     private void Awake()
     {
@@ -110,7 +111,7 @@ public class Shooter : MonoBehaviour
             rpgcount.text = amountOfAmmoForRPG + " / " + startAmountOfAmmoForRPG;
 
             //NEW
-            if (car.layer == LayerMask.NameToLayer("Cars"))
+            if (car != null && car.layer == LayerMask.NameToLayer("Cars"))
             {
                 //ONLINE PLAYERS
                 if (car.tag == "car")
@@ -130,6 +131,8 @@ public class Shooter : MonoBehaviour
                 if (car.tag != "car")
                 {
                     Debug.Log("Put AI car RPG STUFF HERE");///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                    aiCarController = car.GetComponent<AICarController>();
 
                     if (car.GetComponent<AICarPickups>().hasRPG)
                         RPG = true;
@@ -358,7 +361,11 @@ public class Shooter : MonoBehaviour
 
         GameObject a = PhotonNetwork.Instantiate("BulletCasing", CasingSpawn.transform.position, CasingSpawn.transform.rotation);
 
-        a.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
+        if(car.gameObject.tag == "car")
+            a.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
+        else
+            a.GetComponent<Rigidbody>().velocity = aiCarController.rb.velocity;
+
         a.GetComponent<Rigidbody>().AddForce((a.transform.right + (a.transform.up * 2)) * 0.3f, ForceMode.Impulse);
 
         RaycastHit hit; //gets the information on whats hit
@@ -382,7 +389,11 @@ public class Shooter : MonoBehaviour
         {
             GameObject b = PhotonNetwork.Instantiate("Trail", bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.rotation);
             FMODUnity.RuntimeManager.PlayOneShotAttached("event:/GunFX/Minigun/BulletWhistle", b);
-            b.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
+            if (car.gameObject.tag == "car")
+                b.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
+            else
+                b.GetComponent<Rigidbody>().velocity = aiCarController.rb.velocity;
+            
             b.GetComponent<Rigidbody>().AddForce(b.transform.forward * 100, ForceMode.Impulse);
             b.GetComponent<DeleteMe>().enabled = true;
         }
@@ -406,8 +417,13 @@ public class Shooter : MonoBehaviour
         Vector3 direction = Spread(currentSpread);
 
         GameObject a = Instantiate(Casing, CasingSpawn.transform.position, CasingSpawn.transform.rotation);
+
+        if (car.gameObject.tag == "car")
+            a.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
+        else
+            a.GetComponent<Rigidbody>().velocity = aiCarController.rb.velocity;
+
         
-        a.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
         a.GetComponent<Rigidbody>().AddForce((a.transform.right + (a.transform.up * 2)) * 0.3f  , ForceMode.Impulse);
 
         RaycastHit hit; //gets the information on whats hit
@@ -432,7 +448,11 @@ public class Shooter : MonoBehaviour
         {
             GameObject b = Instantiate(trail, bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.rotation);
             FMODUnity.RuntimeManager.PlayOneShotAttached("event:/GunFX/Minigun/BulletWhistle", b);
-            b.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
+            if (car.gameObject.tag == "car")
+                b.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
+            else
+                b.GetComponent<Rigidbody>().velocity = aiCarController.rb.velocity;
+            
             b.GetComponent<Rigidbody>().AddForce(b.transform.forward * 300, ForceMode.Impulse);
             b.GetComponent<DeleteMe>().enabled = true;
         }
