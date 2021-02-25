@@ -144,13 +144,14 @@ GameObject:
   m_Component:
   - component: {fileID: 4056095927127722697}
   - component: {fileID: 7186397026910858835}
+  - component: {fileID: 1980962064}
   m_Layer: 10
   m_Name: ShredAbility
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4056095927127722697
 Transform:
   m_ObjectHideFlags: 0
@@ -178,6 +179,20 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 4.42
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1980962064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 468741298670458511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37d4db0638a869d4cba049f69c16a58a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  radius: 4.5
 --- !u!1 &1195286317610900525
 GameObject:
   m_ObjectHideFlags: 0
@@ -17001,7 +17016,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -37724,7 +37739,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1805679841624757767
 Transform:
   m_ObjectHideFlags: 0
@@ -37923,7 +37938,7 @@ MonoBehaviour:
   abilitySpawn: {fileID: 1460910603915922144}
   smokeGameObject: {fileID: 1978103956446385477, guid: 0eb6a8bce0882da459843e64b04c919a, type: 3}
   mineGameObject: {fileID: 14798063656109763, guid: 382548688a4f34d46b4956ec9abeabb5, type: 3}
-  shredObject: {fileID: 0}
+  shredObject: {fileID: 468741298670458511}
   abilityKeyCode: 113
   equipmentKeyCode: 101
   equipmentChargeBar: {fileID: 1805679842533635235}
@@ -37935,7 +37950,7 @@ MonoBehaviour:
   abilityChargeAmount: 0
   abilityOverChargeAmount: 0
   equipmentChargeSpeed: 8
-  abilityChargeSpeed: 5
+  abilityChargeSpeed: 50
   useOverCharge: 0
   canUseEquipment: 0
   canUseAbility: 0
@@ -51376,8 +51391,8 @@ RectTransform:
   m_Father: {fileID: 1805679841781883403}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
