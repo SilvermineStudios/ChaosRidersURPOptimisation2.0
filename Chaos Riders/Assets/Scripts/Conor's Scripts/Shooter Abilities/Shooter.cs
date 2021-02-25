@@ -174,6 +174,11 @@ public class Shooter : MonoBehaviour
         //online shooting
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer)
         {
+            if (!RPG)
+            {
+                pv.RPC("HideRPG", RpcTarget.All);
+            }
+
             //Wait for weapons Free
             if (!MasterClientRaceStart.Instance.weaponsFree) { return; }
             
@@ -200,10 +205,6 @@ public class Shooter : MonoBehaviour
                     currentSpread -= deviationIncrease ;
                 }
             }
-            if (!RPG)
-                {
-                    pv.RPC("HideRPG", RpcTarget.All);
-                }
             
             if(RPG)
             {

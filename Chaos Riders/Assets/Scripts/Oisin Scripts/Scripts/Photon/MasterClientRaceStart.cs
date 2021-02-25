@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-
+using UnityEngine.UI;
+using TMPro;
 public class MasterClientRaceStart : MonoBehaviour
 {
     #region SingltonStuff
@@ -11,13 +12,8 @@ public class MasterClientRaceStart : MonoBehaviour
 
     public static MasterClientRaceStart Instance { get { return _instance; } }
 
-
-    public bool countdownTimer3 { get { return setCountdownTimer3; } private set { } }
-    public bool countdownTimer2 { get { return setCountdownTimer2; } private set { } }
-    public bool countdownTimer1 { get { return setCountdownTimer1; } private set { } }
-    public bool countdownTimerStart { get { return setCountdownTimerStart; } private set { } }
-    public bool weaponsFree { get { return setWeaponsFree; } private set { } }
-
+    public bool countdownTimerStart;
+    public bool weaponsFree;
 
     private void Awake()
     {
@@ -36,15 +32,29 @@ public class MasterClientRaceStart : MonoBehaviour
 
     private void ResetAll()
     {
-        countdownTimer3 = setCountdownTimer3;
-        countdownTimer2 = setCountdownTimer2;
-        countdownTimer1 = setCountdownTimer1;
         countdownTimerStart = setCountdownTimerStart;
         weaponsFree = setWeaponsFree;
         timer = 18;
     }
 
+    #endregion
 
+    #region UI
+    [SerializeField] Image BackgroundPanel;
+    [SerializeField] TextMeshProUGUI count3;
+    [SerializeField] TextMeshProUGUI count2;
+    [SerializeField] TextMeshProUGUI count1;
+    [SerializeField] TextMeshProUGUI countStart;
+    [SerializeField] TextMeshProUGUI countWeaponsFree;
+
+    [SerializeField] GameObject GBackgroundPanel;
+    [SerializeField] GameObject Gcount3;
+    [SerializeField] GameObject Gcount2;
+    [SerializeField] GameObject Gcount1;
+    [SerializeField] GameObject GcountStart;
+    [SerializeField] GameObject GcountWeaponsFree;
+
+    private TextMeshProUGUI currentText;
 
     #endregion
 
@@ -56,60 +66,148 @@ public class MasterClientRaceStart : MonoBehaviour
     public bool setWeaponsFree;
 
 
+    bool fadePanelOut;
 
 #endregion
 
-#region Floats
+    #region Floats
     public float timer;
 
+    public int countdownTimer;
 
 
+    #endregion
 
-#endregion
+    PhotonView pv;
+    Color panelTemp;
 
     private void Start()
     {
         if (!IsThisMultiplayer.Instance.multiplayer) { return; }
+        pv = GetComponent<PhotonView>();
+        panelTemp = BackgroundPanel.color;
+        if(PhotonNetwork.IsMasterClient)
+        {
+            StartCoroutine(StartTime());
+        }
+    }
+
+    IEnumerator StartTime()
+    {
+        yield return new WaitForSeconds(4);
+        pv.RPC("CountDown", RpcTarget.All, 16);
+        yield return new WaitForSeconds(2);
+        pv.RPC("CountDown", RpcTarget.All, 14);
+        yield return new WaitForSeconds(2);
+        pv.RPC("CountDown", RpcTarget.All, 12);
+        yield return new WaitForSeconds(2);
+        pv.RPC("CountDown", RpcTarget.All, 10);
+        yield return new WaitForSeconds(5);
+        pv.RPC("CountDown", RpcTarget.All, 5);
     }
 
     void FixedUpdate()
     {
         if (!IsThisMultiplayer.Instance.multiplayer) { return; }
+
+        /*
         if (PhotonNetwork.IsMasterClient)
         {
-            if(timer <= 16 && !setCountdownTimer3)
+
+            
+
+
+            if (timer <= 10 && !countdownTimerStart)
             {
-                setCountdownTimer3 = true;
-                FMODUnity.RuntimeManager.PlayOneShot("event:/RaceStart/CountDown");
-            }
-            else if (timer <= 14 && !setCountdownTimer2)
-            {
-                setCountdownTimer2 = true;
-                FMODUnity.RuntimeManager.PlayOneShot("event:/RaceStart/CountDown");
-            }
-            else if (timer <= 12 && !setCountdownTimer1)
-            {
-                setCountdownTimer1 = true;
-                FMODUnity.RuntimeManager.PlayOneShot("event:/RaceStart/CountDown");
-            }
-            else if (timer <= 10 && !setCountdownTimerStart)
-            {
-                setCountdownTimerStart = true;
-                FMODUnity.RuntimeManager.PlayOneShot("event:/RaceStart/Start");
+                pv.RPC("CountDownStart", RpcTarget.All);
             }
 
-            else if (timer <= 5 && !setWeaponsFree)
+            else if (timer <= 5 && !weaponsFree)
             {
-                setWeaponsFree = true;
-                FMODUnity.RuntimeManager.PlayOneShot("event:/RaceStart/Start");
+                pv.RPC("WeaponsFree", RpcTarget.All);
             }
 
             timer -= Time.deltaTime;
-
         }
 
-        //Debug.Log(timer);
-        Debug.Log(PhotonNetwork.IsMasterClient);
+        */
+        if (currentText != null && currentText.alpha > 0 && !weaponsFree)
+        {
+            currentText.SubtractAlpha(0.008f);
+            if (fadePanelOut)
+            {
+                BackgroundPanel.SubtractAlpha(0.008f);
+            }
+        }
+
+        else if (currentText != null && currentText.alpha > 0 && weaponsFree)
+        {
+            currentText.SubtractAlpha(0.004f);
+            BackgroundPanel.SubtractAlpha(0.004f);
+        }
+    }
+
+
+    [PunRPC]
+    public void CountDown(int time)
+    {
+        MasterClientRaceStart.Instance.countdownTimer = time;
+
+        switch (time)
+        {
+            case 16:
+                BackgroundPanel.ChangeAlpha(0.5f);
+                currentText = count3;
+                currentText.ChangeAlpha(1);
+                FMODUnity.RuntimeManager.PlayOneShot("event:/RaceStart/CountDown");
+                break;
+
+            case 14:
+                currentText = count2;
+                currentText.ChangeAlpha(1);
+                FMODUnity.RuntimeManager.PlayOneShot("event:/RaceStart/CountDown");
+                break;
+
+            case 12:
+                currentText = count1;
+                currentText.ChangeAlpha(1);
+                FMODUnity.RuntimeManager.PlayOneShot("event:/RaceStart/CountDown");
+                break;
+
+            case 10:
+                currentText = countStart;
+                currentText.ChangeAlpha(1);
+                FMODUnity.RuntimeManager.PlayOneShot("event:/RaceStart/Start");
+                fadePanelOut = true;
+                MasterClientRaceStart.Instance.countdownTimerStart = true;
+                break;
+
+            case 5:
+                currentText = countWeaponsFree;
+                currentText.ChangeAlpha(1);
+                BackgroundPanel.ChangeAlpha(0.5f);
+                FMODUnity.RuntimeManager.PlayOneShot("event:/RaceStart/Start");
+                MasterClientRaceStart.Instance.weaponsFree = true;
+                fadePanelOut = true;
+                break;
+        }
+
+        
+    }
+
+
+    [PunRPC]
+    public void CountDownStart()
+    {
+        MasterClientRaceStart.Instance.countdownTimerStart = true;
+        FMODUnity.RuntimeManager.PlayOneShot("event:/RaceStart/Start");
+    }
+
+    [PunRPC]
+    public void WeaponsFree()
+    {
+        MasterClientRaceStart.Instance.weaponsFree = true;
+        FMODUnity.RuntimeManager.PlayOneShot("event:/RaceStart/Start");
     }
 
 }
