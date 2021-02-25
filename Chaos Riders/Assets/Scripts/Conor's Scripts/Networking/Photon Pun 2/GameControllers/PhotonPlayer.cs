@@ -47,7 +47,7 @@ public class PhotonPlayer : MonoBehaviour
     }
 
 
-
+    /*
     [PunRPC]
     void RPC_GetTeam() //only executed on the master client
     {
@@ -55,6 +55,7 @@ public class PhotonPlayer : MonoBehaviour
         GameSetup.GS.UpdateTeam();
         pv.RPC("RPC_SentTeam", RpcTarget.OthersBuffered, myTeam);
     }
+    */
 
     [PunRPC]
     void RPC_SentTeam(int whichTeam)

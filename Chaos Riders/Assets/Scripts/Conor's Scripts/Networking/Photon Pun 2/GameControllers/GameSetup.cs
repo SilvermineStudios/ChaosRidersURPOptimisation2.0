@@ -9,7 +9,7 @@ using System.IO;
 //Photon Room https://www.youtube.com/watch?v=IsiWRD1Xh5g
 public class GameSetup : MonoBehaviour
 {
-    public static GameSetup GS;
+    //public static GameSetup GS;
     public PhotonView pv;
 
     [SerializeField] private bool canSpawnPlayers = true;
@@ -17,12 +17,8 @@ public class GameSetup : MonoBehaviour
     [SerializeField] private float spawnDelay = 5f;
     [SerializeField] private int menuSceneIndex = 0;
 
-    //public Player[] players = PhotonNetwork.PlayerList;
-    //public PhotonPlayer[] photonPlayers;
-
-    public int nextPlayersTeam = 1; //team 1 = drivers, team 2 = shooters
     public Transform[] spawnPoints;
-    public static Transform[] SpawnPoints;
+    //public static Transform[] SpawnPoints;
 
     public GameObject BrakerPrefab, ShreddedPrefab, ColtPrefab;
     public GameObject StandardGunPrefab, GoldenGunPrefab;
@@ -37,30 +33,16 @@ public class GameSetup : MonoBehaviour
         }
     }
 
-    /*
-    private void OnEnable()
-    {
-        if(GameSetup.GS == null)
-        {
-            GameSetup.GS = this;
-        }
-    }
-    */
-
     private void Awake()
     {
-        SpawnPoints = spawnPoints;
+        //SpawnPoints = spawnPoints;
+        pv = GetComponent<PhotonView>();
     }
 
     private void Start()
     {
-        Debug.Log("Test");
-
-        pv = GetComponent<PhotonView>();
-
         if (pv.IsMine)
         {
-            //pv.RPC("RPC_SpawnPlayers", RpcTarget.MasterClient); 
             RPC_SpawnPlayers();
         } 
     }
@@ -73,51 +55,23 @@ public class GameSetup : MonoBehaviour
     //[PunRPC]
     public void RPC_SpawnPlayers()
     {
-        if(!canSpawnPlayers)//used for testing
+        foreach (PhotonMenuPlayer p in PlayerDataManager.Players)
         {
-            foreach(PhotonMenuPlayer p in PlayerDataManager.Players)
+            if (p.driver)
             {
-                if(p.driver)
-                {
-                    pv.RPC("RPC_SpawnDriver", p.Player, spawnPoints[0].position, spawnPoints[0].rotation);
-                    /*
-                    //Debug.Log("Player is a driver and has chosen the " + p.carModel + " as their car");
-                    
-                    //Braker
-                    //if (p.carModel == PhotonMenuPlayer.carType.Braker)
-                        pv.RPC("RPC_SpawnPlayer", p.Player, BrakerPrefab, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
-
-                    //Shredder
-                    if (p.carModel == PhotonMenuPlayer.carType.Shredder)
-                        pv.RPC("RPC_SpawnPlayer", p.Player, ShreddedPrefab, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
-
-                    //Colt
-                    if (p.carModel == PhotonMenuPlayer.carType.Colt)
-                        pv.RPC("RPC_SpawnPlayer", p.Player, ColtPrefab, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
-                    */
-                }
-                if(p.shooter)
-                {
-                    pv.RPC("RPC_SpawnShooter", p.Player, spawnPoints[0].position, spawnPoints[0].rotation);
-                    /*
-                    //Debug.Log("Player is a shooter and has chosen the " + p.shooterModel + " as their gun");
-
-                    //standard Gun
-                    if (p.shooterModel == PhotonMenuPlayer.shooterType.standardGun)
-                        pv.RPC("RPC_SpawnPlayer", p.Player, StandardGunPrefab, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
-
-                    //Golden Gun
-                    if (p.shooterModel == PhotonMenuPlayer.shooterType.goldenGun)
-                        pv.RPC("RPC_SpawnPlayer", p.Player, GoldenGunPrefab, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
-                    */
-                }
+                pv.RPC("RPC_SpawnDriver", p.Player, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
+            }
+            if (p.shooter)
+            {
+                pv.RPC("RPC_SpawnShooter", p.Player, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
             }
         }
-        
 
 
+        //old
         if (canSpawnPlayers)
         {
+            /*
             if (PhotonNetwork.PlayerList.Length == 1)
             {
                 //car 1
@@ -242,23 +196,9 @@ public class GameSetup : MonoBehaviour
                 pv.RPC("RPC_SpawnDriver", PhotonNetwork.PlayerList[8], spawnPoints[4].position, spawnPoints[4].rotation);
                 pv.RPC("RPC_SpawnShooter", PhotonNetwork.PlayerList[9], spawnPoints[4].position, spawnPoints[4].rotation);
             }
+            */
         }
     }
-
-    public void UpdateTeam()
-    {
-        //alternate the teams
-        if(nextPlayersTeam == 1)
-            nextPlayersTeam = 2;
-        else
-            nextPlayersTeam = 1;
-    }
-
-    //[PunRPC]
-    //void RPC_SpawnPlayer(Vector3 spawnPos, Quaternion spawnRot)
-    //{
-        //PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PhotonPlayer"), spawnPos, spawnRot, 0);
-    //}
 
     [PunRPC]
     void RPC_SpawnDriver(Vector3 spawnPos, Quaternion spawnRot)
@@ -270,11 +210,5 @@ public class GameSetup : MonoBehaviour
     void RPC_SpawnShooter(Vector3 spawnPos, Quaternion spawnRot)
     {
         PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "ShooterPlayer"), spawnPos, spawnRot, 0);
-    }
-
-    [PunRPC]
-    void RPC_SpawnPlayer(GameObject playerAvatar, Vector3 spawnPos, Quaternion spawnRot)
-    {
-        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", playerAvatar.name), spawnPos, spawnRot, 0);
     }
 }
