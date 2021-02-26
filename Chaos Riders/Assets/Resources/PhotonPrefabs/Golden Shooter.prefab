@@ -548,6 +548,7 @@ Transform:
   - {fileID: 800629917799320579}
   - {fileID: 3815277320797769598}
   - {fileID: 7128683595454920573}
+  - {fileID: 5759430870480150681}
   m_Father: {fileID: 800629917775956786}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -11330,8 +11331,8 @@ MonoBehaviour:
   trailPercentage: 0
   muzzleFlash: {fileID: 800629917767139475}
   impactEffect: {fileID: 7938478309457529535, guid: 0c9781b5140952b42ae2c6af77491dfc, type: 3}
-  CasingSpawn: {fileID: 0}
-  Casing: {fileID: 0}
+  CasingSpawn: {fileID: 2669719863399298095}
+  Casing: {fileID: 861391098359841573, guid: 26e80ede9ba2652449e5169bf69301aa, type: 3}
   minRotationHeight: -20
   maxRotationHeight: 20
   impactEffectHolder: {fileID: 7128683594616652773}
@@ -12152,6 +12153,36 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &2669719863399298095
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5759430870480150681}
+  m_Layer: 0
+  m_Name: Casings
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5759430870480150681
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2669719863399298095}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.18400101, y: 0, z: 0.028994158}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 800629917583558324}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2882226526487339145
 GameObject:
   m_ObjectHideFlags: 0

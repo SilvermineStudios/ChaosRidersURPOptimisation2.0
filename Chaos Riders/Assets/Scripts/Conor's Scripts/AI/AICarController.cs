@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class AICarController : MonoBehaviour
 {
     [SerializeField] private float downforce = 800f;
-    private Rigidbody rb;
+    public Rigidbody rb;
     [SerializeField] private float maxMotorTorque = 1000f; // maximum torque that can be applied to the wheels
     [SerializeField] private float currentSpeed; //cars current speed
     [SerializeField] private float maxSpeed = 2000f; //maximum speed the car can achieve
@@ -27,6 +27,8 @@ public class AICarController : MonoBehaviour
     //public TurretTester ShooterAttached;
 
     private NavMeshAgent navMeshAgent;
+
+    public GameObject Shooter;
 
     private void Awake()
     {
@@ -52,8 +54,8 @@ public class AICarController : MonoBehaviour
         // if Countdown for race start hasn't finished, dont move
         if (!MasterClientRaceStart.Instance.countdownTimerStart) { return; }
         ////////////////////////////////////////////////////////////////////////////////<---------------------------------------------------------
-        //ApplySteer();
-        //Drive();
+        ApplySteer();
+        Drive();
         CheckWaypointDistance();
         AddDownForce();
         //////////////////////////////////////////////////////////////////////////////////////////////////////            TURNED OFF FOR NAV AGENT
@@ -146,5 +148,13 @@ public class AICarController : MonoBehaviour
             }
         }
         return nearestWP;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "shooter")
+        {
+            Shooter = other.gameObject;
+        }
     }
 }

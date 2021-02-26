@@ -70,6 +70,7 @@ public class Shooter : MonoBehaviour
     private PhotonView pv;
     private float fireCooldown;
     Controller carController;
+    AICarController aiCarController;
 
     //z rotation positive ++
     [SerializeField] private Transform barrelToRotate;
@@ -137,41 +138,50 @@ public class Shooter : MonoBehaviour
             rpgcount.text = amountOfAmmoForRPG + " / " + startAmountOfAmmoForRPG;
 
             //NEW
+
             if (!noCarNeeded)
             {
-                if (car.layer == LayerMask.NameToLayer("Cars"))
+                if (car != null && car.layer == LayerMask.NameToLayer("Cars"))
+
                 {
-                    //ONLINE PLAYERS
-                    if (car.tag == "car")
+                    if (car.layer == LayerMask.NameToLayer("Cars"))
                     {
-                        if (car.GetComponent<CarPickup>().hasRPG)
-                            RPG = true;
-
-                        if (amountOfAmmoForRPG <= 0 && car.GetComponent<CarPickup>().hasRPG)
+                        //ONLINE PLAYERS
+                        if (car.tag == "car")
                         {
-                            RPG = false;
-                            car.GetComponent<CarPickup>().hasRPG = false;
-                            amountOfAmmoForRPG = startAmountOfAmmoForRPG;
+                            if (car.GetComponent<CarPickup>().hasRPG)
+                                RPG = true;
+
+                            if (amountOfAmmoForRPG <= 0 && car.GetComponent<CarPickup>().hasRPG)
+                            {
+                                RPG = false;
+                                car.GetComponent<CarPickup>().hasRPG = false;
+                                amountOfAmmoForRPG = startAmountOfAmmoForRPG;
+                            }
+                        }
+
+                        //AI CARS
+                        if (car.tag != "car")
+                        {
+                            Debug.Log("Put AI car RPG STUFF HERE");///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+                            if (car.GetComponent<AICarPickups>().hasRPG)
+                            {
+                                RPG = true;
+                                aiCarController = car.GetComponent<AICarController>();
+                            }
+
+                            if (amountOfAmmoForRPG <= 0 && car.GetComponent<AICarPickups>().hasRPG)
+                            {
+                                RPG = false;
+                                car.GetComponent<AICarPickups>().hasRPG = false;
+                                amountOfAmmoForRPG = startAmountOfAmmoForRPG;
+                            }
                         }
                     }
 
-                    //AI CARS
-                    if (car.tag != "car")
-                    {
-                        Debug.Log("Put AI car RPG STUFF HERE");///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-                        if (car.GetComponent<AICarPickups>().hasRPG)
-                            RPG = true;
-
-                        if (amountOfAmmoForRPG <= 0 && car.GetComponent<AICarPickups>().hasRPG)
-                        {
-                            RPG = false;
-                            car.GetComponent<AICarPickups>().hasRPG = false;
-                            amountOfAmmoForRPG = startAmountOfAmmoForRPG;
-                        }
-                    }
                 }
-
             }
             /*
             if (car.tag == "car")
@@ -394,9 +404,18 @@ public class Shooter : MonoBehaviour
 
         if (!noCarNeeded)
         {
-            a.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
+            if (car.transform.tag == "car")
+            {
+                a.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
+            }
+            else
+            {
+                a.GetComponent<Rigidbody>().velocity = aiCarController.rb.velocity;
+            }
             a.GetComponent<Rigidbody>().AddForce((a.transform.right + (a.transform.up * 2)) * 0.3f, ForceMode.Impulse);
         }
+
+
         RaycastHit hit; //gets the information on whats hit
         if (Physics.Raycast(cineCamera.transform.position, direction, out hit, range))
         {
@@ -420,8 +439,12 @@ public class Shooter : MonoBehaviour
             FMODUnity.RuntimeManager.PlayOneShotAttached("event:/GunFX/Minigun/BulletWhistle", b);
             if (!noCarNeeded)
             {
-                b.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
+                if (car.transform.tag == "car")
+                    b.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
+                else
+                    b.GetComponent<Rigidbody>().velocity = aiCarController.rb.velocity;
             }
+
             b.GetComponent<Rigidbody>().AddForce(b.transform.forward * 100, ForceMode.Impulse);
             b.GetComponent<DeleteMe>().enabled = true;
         }
@@ -446,9 +469,16 @@ public class Shooter : MonoBehaviour
 
         GameObject a = Instantiate(Casing, CasingSpawn.transform.position, CasingSpawn.transform.rotation);
 
+        a.GetComponent<Rigidbody>().AddForce((a.transform.right + (a.transform.up * 2)) * 0.3f  , ForceMode.Impulse);
+
+
         if (!noCarNeeded)
         {
-            a.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
+            if (car.transform.tag == "car")
+                a.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
+            else
+                a.GetComponent<Rigidbody>().velocity = aiCarController.rb.velocity;
+
             a.GetComponent<Rigidbody>().AddForce((a.transform.right + (a.transform.up * 2)) * 0.3f, ForceMode.Impulse);
         }
         RaycastHit hit; //gets the information on whats hit
@@ -474,9 +504,13 @@ public class Shooter : MonoBehaviour
             GameObject b = Instantiate(trail, bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.rotation);
             FMODUnity.RuntimeManager.PlayOneShotAttached("event:/GunFX/Minigun/BulletWhistle", b);
             if (!noCarNeeded)
-            { 
-                b.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
-            }
+            {
+                if (car.transform.tag == "car")
+                    b.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
+                else
+                    b.GetComponent<Rigidbody>().velocity = aiCarController.rb.velocity;
+            }  
+
             b.GetComponent<Rigidbody>().AddForce(b.transform.forward * 300, ForceMode.Impulse);
             b.GetComponent<DeleteMe>().enabled = true;
         }
@@ -487,5 +521,13 @@ public class Shooter : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
 
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "car")
+        {
+            car = other.gameObject;
+        }
     }
 }
