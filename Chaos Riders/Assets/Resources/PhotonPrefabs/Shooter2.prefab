@@ -13639,6 +13639,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7634238392847830459}
   - component: {fileID: 7634238392847830434}
+  - component: {fileID: 7295222728725222640}
   - component: {fileID: 7634238392847830456}
   - component: {fileID: 7634238392847830457}
   - component: {fileID: 7634238392847830462}
@@ -13710,7 +13711,7 @@ MonoBehaviour:
   rpgcount: {fileID: 7634238393029834588}
   RPG: 0
   pickedUpRPG: 0
-  minigunDamage: 30
+  minigunDamage: 5
   bulletSpawnPoint: {fileID: 7634238392448286943}
   maxDeviation: 10
   deviationIncrease: 0.25
@@ -13735,7 +13736,19 @@ MonoBehaviour:
   maxRotationHeight: 20
   impactEffectHolder: {fileID: 322621240}
   hitmarker: {fileID: 8931214932920015701}
-  noCarNeeded: 1
+  noCarNeeded: 0
+--- !u!114 &7295222728725222640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7634238392847830435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b67f47ec8b8a7094ab0241cf36ebc939, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7634238392847830456
 MonoBehaviour:
   m_ObjectHideFlags: 0

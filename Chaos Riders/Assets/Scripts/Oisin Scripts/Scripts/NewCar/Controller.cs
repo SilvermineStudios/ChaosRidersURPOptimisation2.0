@@ -111,7 +111,7 @@ public class Controller : MonoBehaviour
 
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer|| !IsThisMultiplayer.Instance.multiplayer)
         {
-            StartRace();
+            //StartRace();
             Brake();
             AdjustStiffness();
             Accelerate();
@@ -129,7 +129,7 @@ public class Controller : MonoBehaviour
             
         }
     }
-
+    /*
     private void StartRace()
     {
         if(!MasterClientRaceStart.Instance.countdownTimerStart)
@@ -141,7 +141,7 @@ public class Controller : MonoBehaviour
             ReleaseBrake();
         }
     }
-
+    */
     private void Update()
     {
         GetInput();

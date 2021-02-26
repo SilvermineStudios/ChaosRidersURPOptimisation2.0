@@ -125,10 +125,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/Master.bank
   Name: Master
-  lastModified: 637498853660062446
+  lastModified: 637499439108829855
   LoadResult: 0
   FileSizes: []
   Exists: 1
+--- !u!114 &-4372692443979137554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/GunFX/Rifle/RifleShot
+  m_EditorClassIdentifier: 
+  Path: event:/GunFX/Rifle/RifleShot
+  guid: a7ae2cc56b279648b3aa6c704db4a4d1
+  Banks:
+  - {fileID: -4466803539278922483}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 4416
 --- !u!114 &-4084819181730206448
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,11 +212,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/Master.strings.bank
   Name: Master.strings
-  lastModified: 637498853660072433
+  lastModified: 637499439108889912
   LoadResult: 0
   FileSizes:
   - Name: Desktop
-    Value: 1760
+    Value: 1816
   Exists: 1
 --- !u!114 &-2379609175019932448
 MonoBehaviour:
@@ -209,7 +232,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/CarNoise.bank
   Name: CarNoise
-  lastModified: 637498778341680677
+  lastModified: 637499439108320592
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -401,12 +424,13 @@ MonoBehaviour:
   - {fileID: -541447062945515582}
   - {fileID: -901828986925691195}
   - {fileID: -8075725593753776570}
+  - {fileID: -4372692443979137554}
   EditorParameters: []
   MasterBanks:
   - {fileID: -4466803539278922483}
   StringsBanks:
   - {fileID: -2954939187940535496}
-  stringsBankWriteTime: 637498853660072433
+  stringsBankWriteTime: 637499439108889912
   cacheVersion: 5
 --- !u!114 &481966967742989797
 MonoBehaviour:

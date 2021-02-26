@@ -102,6 +102,12 @@
 		<property name="length">
 			<value>1.8500000000000001</value>
 		</property>
+		<property name="pitch">
+			<value>7</value>
+		</property>
+		<relationship name="modulators">
+			<destination>{f05bda3b-5a42-4d39-a6b5-85dd22a32e96}</destination>
+		</relationship>
 		<relationship name="fadeOutCurve">
 			<destination>{5dc3ecea-5411-4025-869f-6e32370dafb9}</destination>
 		</relationship>
@@ -129,6 +135,7 @@
 		</property>
 		<relationship name="modulators">
 			<destination>{3f84989c-de72-4b72-a806-d7b58b9fed99}</destination>
+			<destination>{42e09176-8c0f-4752-8791-4e88dd97282f}</destination>
 		</relationship>
 		<relationship name="fadeOutCurve">
 			<destination>{a08c0477-2b69-432c-b4df-2dced60e8a5f}</destination>
@@ -138,6 +145,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{e3b4c647-fc60-4fcf-922e-0d9f24b85c93}">
+		<property name="volume">
+			<value>-14.5</value>
+		</property>
 		<property name="name">
 			<value>Audio 2</value>
 		</property>
@@ -159,6 +169,14 @@
 	</object>
 	<object class="MixerBusPanner" id="{c3564a94-161d-4981-a03d-f26393cdc656}" />
 	<object class="MixerBusFader" id="{f96aca5e-87d1-4d45-9b2c-8b2fea7f4206}" />
+	<object class="RandomizerModulator" id="{f05bda3b-5a42-4d39-a6b5-85dd22a32e96}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>pitch</value>
+		</property>
+		<property name="amount">
+			<value>5</value>
+		</property>
+	</object>
 	<object class="FadeCurve" id="{5dc3ecea-5411-4025-869f-6e32370dafb9}">
 		<relationship name="startPoint">
 			<destination>{b54d5be4-79d5-495d-bc60-197041abe34e}</destination>
@@ -197,6 +215,14 @@
 		</property>
 		<property name="finalValue">
 			<value>-80</value>
+		</property>
+	</object>
+	<object class="RandomizerModulator" id="{42e09176-8c0f-4752-8791-4e88dd97282f}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>pitch</value>
+		</property>
+		<property name="amount">
+			<value>5.5</value>
 		</property>
 	</object>
 	<object class="FadeCurve" id="{a08c0477-2b69-432c-b4df-2dced60e8a5f}">

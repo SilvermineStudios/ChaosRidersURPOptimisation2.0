@@ -9,25 +9,35 @@ using UnityEngine.UI;
 
 public class Shooter : MonoBehaviour
 {
-    //z rotation positive ++
-    [SerializeField] private Transform barrelToRotate;
-    private float barrelRotationSpeed;
-    [SerializeField] private float barrelRotationStartSpeed = 100f, barrelRotationMaxSpeed = 800f;
-    [SerializeField] private CinemachineVirtualCamera cineCamera;
+
+    //General
+    #region GameObjects
     public GameObject car;
     private GameObject carCollision;
     [SerializeField] private LayerMask layerMask;
-    [SerializeField] float playerNumber = 1;
-    public bool connectCar = false;
     [SerializeField] GameObject rpgGo;
     [SerializeField] GameObject rocketspawn;
     [SerializeField] GameObject rocket;
     [SerializeField] TMP_Text rpgcount;
+    #endregion
+
+    #region Camera
+    [SerializeField] private CinemachineVirtualCamera cineCamera;
+    #endregion
+
+    #region Bools
+    public bool connectCar = false;
     public bool RPG;
     [SerializeField] private bool pickedUpRPG = false;
+    #endregion
+
+    #region Floats
+    [SerializeField] float playerNumber = 1;
+    #endregion
+
 
     //shooting
-    [SerializeField] private float minigunDamage;
+
     [SerializeField] private GameObject bulletSpawnPoint;
     [SerializeField] private float maxDeviation;
     [SerializeField] private float deviationIncrease;
@@ -35,19 +45,13 @@ public class Shooter : MonoBehaviour
     private bool currentlyShooting;
     public bool isShooting { get { return currentlyShooting; } private set { isShooting = currentlyShooting; } }
     public float currentSpread = 0;
-    [SerializeField] private float range = 100f;
-    [SerializeField] private float minigunFireRate;
+    
     [SerializeField] private KeyCode shootButton = KeyCode.Mouse0;
     [SerializeField] private KeyCode RPGButton = KeyCode.Tab;
-    [SerializeField] private float amountOfAmmoForCooldownBar = 1000;
+    
     [SerializeField] private float amountOfAmmoForRPG = 10;
     private float startAmountOfAmmoForRPG;
-    private float startAmmo; //the amount of ammo for the cooldown bar at the start of the game
-    private float ammoNormalized; //normalized the ammo value to be between 0 and 1 for the cooldown bar scale
-    [SerializeField] private Transform coolDownBarUi; //ui bar that shows the cooldown of the minigun
-    [SerializeField] private Transform gunBarrel; //barrel that is going to rotate to face the correct direction
-    [SerializeField] private float horizontalRotationSpeed = 5f, verticalRotationSpeed = 3f; //rotation speeds for the gun
-    private float xAngle, yAngle; //angle of rotation for the gun axis
+    
     [SerializeField] GameObject trail;
     [SerializeField] float trailPercentage;
     [SerializeField] private ParticleSystem muzzleFlash;
@@ -67,13 +71,31 @@ public class Shooter : MonoBehaviour
     private float fireCooldown;
     Controller carController;
 
+    //z rotation positive ++
+    [SerializeField] private Transform barrelToRotate;
+    private float barrelRotationSpeed;
+    [SerializeField] private float barrelRotationStartSpeed = 100f, barrelRotationMaxSpeed = 800f;
+    [SerializeField] private float minigunDamage;
+    [SerializeField] private float range = 100f;
+    [SerializeField] private float minigunFireRate;
+    [SerializeField] private float amountOfAmmoForCooldownBar = 1000;
+
+    private float startAmmo; //the amount of ammo for the cooldown bar at the start of the game
+    private float ammoNormalized; //normalized the ammo value to be between 0 and 1 for the cooldown bar scale
+    [SerializeField] private Transform coolDownBarUi; //ui bar that shows the cooldown of the minigun
+    [SerializeField] private Transform gunBarrel; //barrel that is going to rotate to face the correct direction
+    [SerializeField] private float horizontalRotationSpeed = 5f, verticalRotationSpeed = 3f; //rotation speeds for the gun
+    private float xAngle, yAngle; //angle of rotation for the gun axis
+
+
     private void Awake()
     {
         pauseMenu = GetComponent<Pause>();
         pv = GetComponent<PhotonView>();
-        startAmmo = amountOfAmmoForCooldownBar;
         startAmountOfAmmoForRPG = amountOfAmmoForRPG;
         rb = GetComponent<Rigidbody>();
+
+        startAmmo = amountOfAmmoForCooldownBar;
         barrelRotationSpeed = barrelRotationStartSpeed;
     }
 
