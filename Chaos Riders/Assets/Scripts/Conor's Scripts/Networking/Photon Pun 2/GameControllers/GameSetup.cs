@@ -80,12 +80,12 @@ public class GameSetup : MonoBehaviour
             }
         }
 
-        //spawn AI
+        //spawn AI cars for shooters to attach to if there are not enough driver players
         foreach (PhotonMenuPlayer p in PlayerDataManager.Players)
         {
             if (p.shooter)
             {
-                if (amountOfDrivers == 0)
+                if (amountOfDrivers == 0) //needs to be instansiated here too in the case of there being only 1 shooter and no drivers
                 {
                     GameObject aiCar = Instantiate(aiCars[Random.Range(0, aiCars.Length)], spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
                 }
