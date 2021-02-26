@@ -2084,6 +2084,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   downforce: 800
+  rb: {fileID: 0}
   maxMotorTorque: 600
   currentSpeed: 0
   maxSpeed: 2000
@@ -2095,6 +2096,7 @@ MonoBehaviour:
   FR: {fileID: 3328310971132180599}
   waypoints: []
   centerOfMass: {x: 0, y: -0.2, z: 2}
+  Shooter: {fileID: 0}
 --- !u!65 &4029253875945408200
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2232,7 +2234,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2011213230151948855}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 36

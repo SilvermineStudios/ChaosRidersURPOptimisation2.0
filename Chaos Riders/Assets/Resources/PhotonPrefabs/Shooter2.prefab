@@ -6082,7 +6082,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 3095
+    m_Bits: 7191
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 367350adc6cb56f4f9fd953d2b571118, type: 2}
   m_TargetDisplay: 0
@@ -13639,6 +13639,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7634238392847830459}
   - component: {fileID: 7634238392847830434}
+  - component: {fileID: 7295222728725222640}
   - component: {fileID: 7634238392847830456}
   - component: {fileID: 7634238392847830457}
   - component: {fileID: 7634238392847830462}
@@ -13694,47 +13695,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adffd39c4f2d5bd46a3d010868d66c07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  barrelToRotate: {fileID: 1682963324}
-  barrelRotationStartSpeed: 100
-  barrelRotationMaxSpeed: 800
-  cineCamera: {fileID: 5207396787800693346}
   car: {fileID: 0}
   layerMask:
     serializedVersion: 2
     m_Bits: 1024
-  playerNumber: 1
-  connectCar: 0
   rpgGo: {fileID: 1094957983}
   rocketspawn: {fileID: 3665872840329177399}
   rocket: {fileID: 14798063656109763, guid: 74ea11e91b020954b88db6eaa0e77b7e, type: 3}
   rpgcount: {fileID: 7634238393029834588}
+  cineCamera: {fileID: 5207396787800693346}
+  connectCar: 0
   RPG: 0
   pickedUpRPG: 0
-  minigunDamage: 30
+  playerNumber: 1
   bulletSpawnPoint: {fileID: 7634238392448286943}
   maxDeviation: 10
   deviationIncrease: 0.25
   currentSpread: 0
-  range: 9999
-  minigunFireRate: 0.12
   shootButton: 323
   RPGButton: 32
-  amountOfAmmoForCooldownBar: 1000
   amountOfAmmoForRPG: 3
-  coolDownBarUi: {fileID: 7634238392297675920}
-  gunBarrel: {fileID: 7634238392110369385}
-  horizontalRotationSpeed: 100
-  verticalRotationSpeed: 80
   trail: {fileID: 811231400246012879, guid: d9cb9feb506fa704e8572bb98f0ebff4, type: 3}
   trailPercentage: 50
   muzzleFlash: {fileID: 7634238392497245262}
   impactEffect: {fileID: 7938478309457529535, guid: 0c9781b5140952b42ae2c6af77491dfc, type: 3}
   CasingSpawn: {fileID: 6319989313829350448}
-  Casing: {fileID: 0}
+  Casing: {fileID: 861391098359841573, guid: 26e80ede9ba2652449e5169bf69301aa, type: 3}
   minRotationHeight: -20
   maxRotationHeight: 20
   impactEffectHolder: {fileID: 322621240}
   hitmarker: {fileID: 8931214932920015701}
+  noCarNeeded: 0
+  barrelToRotate: {fileID: 1682963324}
+  barrelRotationStartSpeed: 100
+  barrelRotationMaxSpeed: 800
+  minigunDamage: 5
+  range: 9999
+  minigunFireRate: 0.12
+  amountOfAmmoForCooldownBar: 1000
+  coolDownBarUi: {fileID: 7634238392297675920}
+  gunBarrel: {fileID: 7634238392110369385}
+  horizontalRotationSpeed: 100
+  verticalRotationSpeed: 80
+--- !u!114 &7295222728725222640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7634238392847830435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b67f47ec8b8a7094ab0241cf36ebc939, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7634238392847830456
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -23,8 +23,7 @@ public class PlayerDataManager : MonoBehaviour
     void Update()
     {
         UpdatePlayerList();
-        
-        AssignPlayerNumbers();
+        AssignPlayerNumbers(); //give each player the index of the spawnpoint they will be spawned at
     }
 
     private void FixedUpdate()
@@ -74,7 +73,6 @@ public class PlayerDataManager : MonoBehaviour
                 drivers[i].GetComponent<PhotonMenuPlayer>().teamNumber = i;
             }
         }
-
 
         //shooters
         if (shooters.Count != 0)
