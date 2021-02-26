@@ -11378,11 +11378,8 @@ MonoBehaviour:
   - {fileID: 439900636}
   - {fileID: 439900635}
   - {fileID: 439900634}
-  BrakerPrefab: {fileID: 4468230371053281714, guid: c50582e8a03590b43b5875b514a6a8a7, type: 3}
-  ShreddedPrefab: {fileID: 3079805553201249466, guid: 7bb47235afb49a746a79843502999602, type: 3}
-  ColtPrefab: {fileID: 3079805553201249466, guid: 7bb47235afb49a746a79843502999602, type: 3}
-  StandardGunPrefab: {fileID: 7634238392847830435, guid: 2a0127179681d564699c69930481b9be, type: 3}
-  GoldenGunPrefab: {fileID: 800629919530156414, guid: 1f7022922ac229747af4230a7d9d7265, type: 3}
+  amountOfShooters: 0
+  amountOfDrivers: 0
 --- !u!1 &441288499
 GameObject:
   m_ObjectHideFlags: 0
@@ -32057,7 +32054,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1283247745
 Transform:
   m_ObjectHideFlags: 0
@@ -42377,13 +42374,25 @@ PrefabInstance:
       propertyPath: m_AngularSpeed
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 1407414511388674112, guid: c7d771049c583ed4d8583216cccd3132, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1407414511388674112, guid: c7d771049c583ed4d8583216cccd3132, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1407414511388674112, guid: c7d771049c583ed4d8583216cccd3132, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1407414511947848912, guid: c7d771049c583ed4d8583216cccd3132, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1407414511947848912, guid: c7d771049c583ed4d8583216cccd3132, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1407414512137103672, guid: c7d771049c583ed4d8583216cccd3132, type: 3}
       propertyPath: m_Name

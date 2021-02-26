@@ -361,7 +361,7 @@ public class Shooter : MonoBehaviour
 
         GameObject a = PhotonNetwork.Instantiate("BulletCasing", CasingSpawn.transform.position, CasingSpawn.transform.rotation);
 
-        if(car.gameObject.tag == "car")
+        if(car.transform.tag == "car")
             a.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
         else
             a.GetComponent<Rigidbody>().velocity = aiCarController.rb.velocity;
@@ -389,7 +389,7 @@ public class Shooter : MonoBehaviour
         {
             GameObject b = PhotonNetwork.Instantiate("Trail", bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.rotation);
             FMODUnity.RuntimeManager.PlayOneShotAttached("event:/GunFX/Minigun/BulletWhistle", b);
-            if (car.gameObject.tag == "car")
+            if (car.transform.tag == "car")
                 b.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
             else
                 b.GetComponent<Rigidbody>().velocity = aiCarController.rb.velocity;
@@ -418,7 +418,7 @@ public class Shooter : MonoBehaviour
 
         GameObject a = Instantiate(Casing, CasingSpawn.transform.position, CasingSpawn.transform.rotation);
 
-        if (car.gameObject.tag == "car")
+        if (car.transform.tag == "car")
             a.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
         else
             a.GetComponent<Rigidbody>().velocity = aiCarController.rb.velocity;
@@ -448,7 +448,7 @@ public class Shooter : MonoBehaviour
         {
             GameObject b = Instantiate(trail, bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.rotation);
             FMODUnity.RuntimeManager.PlayOneShotAttached("event:/GunFX/Minigun/BulletWhistle", b);
-            if (car.gameObject.tag == "car")
+            if (car.transform.tag == "car")
                 b.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
             else
                 b.GetComponent<Rigidbody>().velocity = aiCarController.rb.velocity;
@@ -463,5 +463,13 @@ public class Shooter : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
 
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "car")
+        {
+            car = other.gameObject;
+        }
     }
 }

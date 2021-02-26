@@ -18,6 +18,7 @@ public class GameSetup : MonoBehaviour
     [SerializeField] private int menuSceneIndex = 0;
 
     public Transform[] spawnPoints;
+    [SerializeField] private int amountOfShooters = 0, amountOfDrivers = 0;
 
 
     private void OnDrawGizmos()
@@ -32,6 +33,7 @@ public class GameSetup : MonoBehaviour
     private void Awake()
     {
         pv = GetComponent<PhotonView>();
+        CalculateDriverAndShooterCount();
     }
 
     private void Start()
@@ -47,9 +49,19 @@ public class GameSetup : MonoBehaviour
         if (!IsThisMultiplayer.Instance.multiplayer) { return; }
     }
 
-    private void calculateDriverAndShooterCount()
+    private void CalculateDriverAndShooterCount()
     {
-
+        foreach(PhotonMenuPlayer p in PlayerDataManager.Players)
+        {
+            if(p.driver)
+            {
+                amountOfDrivers++;
+            }
+            if(p.shooter)
+            {
+                amountOfShooters++;
+            }
+        }
     }
 
     public void RPC_SpawnPlayers() //happens in start
