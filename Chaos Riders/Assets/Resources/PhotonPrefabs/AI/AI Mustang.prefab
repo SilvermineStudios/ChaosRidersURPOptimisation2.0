@@ -9073,6 +9073,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   downforce: 800
+  rb: {fileID: 0}
   maxMotorTorque: 600
   currentSpeed: 0
   maxSpeed: 2000
@@ -9196,13 +9197,13 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1407414512137103672}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 45
-  m_Acceleration: 60
+  m_Speed: 20
+  m_Acceleration: 40
   avoidancePriority: 50
-  m_AngularSpeed: 40
+  m_AngularSpeed: 20
   m_StoppingDistance: 3.39
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1

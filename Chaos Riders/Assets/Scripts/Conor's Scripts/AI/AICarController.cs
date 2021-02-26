@@ -53,8 +53,8 @@ public class AICarController : MonoBehaviour
         if (healthScript.isDead) { Die(); return; }
 
         ////////////////////////////////////////////////////////////////////////////////<---------------------------------------------------------
-        //ApplySteer();
-        //Drive();
+        ApplySteer();
+        Drive();
         CheckWaypointDistance();
         AddDownForce();
         //////////////////////////////////////////////////////////////////////////////////////////////////////            TURNED OFF FOR NAV AGENT
