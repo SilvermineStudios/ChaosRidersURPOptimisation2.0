@@ -17,7 +17,7 @@ public class MasterClientRaceStart : MonoBehaviour
 
     private void Awake()
     {
-        if (!IsThisMultiplayer.Instance.multiplayer) { return; }
+        //if (!IsThisMultiplayer.Instance.multiplayer) { return; }
         if (_instance != null && _instance != this)
         {
             Destroy(this.gameObject);
@@ -47,12 +47,6 @@ public class MasterClientRaceStart : MonoBehaviour
     [SerializeField] TextMeshProUGUI countStart;
     [SerializeField] TextMeshProUGUI countWeaponsFree;
 
-    [SerializeField] GameObject GBackgroundPanel;
-    [SerializeField] GameObject Gcount3;
-    [SerializeField] GameObject Gcount2;
-    [SerializeField] GameObject Gcount1;
-    [SerializeField] GameObject GcountStart;
-    [SerializeField] GameObject GcountWeaponsFree;
 
     private TextMeshProUGUI currentText;
 

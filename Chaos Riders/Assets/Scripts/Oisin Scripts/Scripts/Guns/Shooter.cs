@@ -147,7 +147,7 @@ public class Shooter : MonoBehaviour
                     if (car.layer == LayerMask.NameToLayer("Cars"))
                     {
                         //ONLINE PLAYERS
-                        if (car.tag == "car")
+                        if (car.GetComponent<Controller>())
                         {
                             if (car.GetComponent<CarPickup>().hasRPG)
                                 RPG = true;
@@ -161,16 +161,17 @@ public class Shooter : MonoBehaviour
                         }
 
                         //AI CARS
-                        if (car.tag != "car")
+                        if (car.GetComponent<AICarController>())
                         {
                             Debug.Log("Put AI car RPG STUFF HERE");///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
                             if (car.GetComponent<AICarPickups>().hasRPG)
                             {
-                                RPG = true;
-                                aiCarController = car.GetComponent<AICarController>();
+                                RPG = true; 
                             }
+
+                            aiCarController = car.GetComponent<AICarController>();
 
                             if (amountOfAmmoForRPG <= 0 && car.GetComponent<AICarPickups>().hasRPG)
                             {
@@ -404,7 +405,7 @@ public class Shooter : MonoBehaviour
 
         if (!noCarNeeded)
         {
-            if (car.transform.tag == "car")
+            if (car.GetComponent<CarController>() && pv.IsMine)
             {
                 a.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
             }
@@ -412,6 +413,7 @@ public class Shooter : MonoBehaviour
             {
                 a.GetComponent<Rigidbody>().velocity = aiCarController.rb.velocity;
             }
+
             a.GetComponent<Rigidbody>().AddForce((a.transform.right + (a.transform.up * 2)) * 0.3f, ForceMode.Impulse);
         }
 
@@ -439,7 +441,7 @@ public class Shooter : MonoBehaviour
             FMODUnity.RuntimeManager.PlayOneShotAttached("event:/GunFX/Minigun/BulletWhistle", b);
             if (!noCarNeeded)
             {
-                if (car.transform.tag == "car")
+                if (car.GetComponent<CarController>() && pv.IsMine)
                     b.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
                 else
                     b.GetComponent<Rigidbody>().velocity = aiCarController.rb.velocity;
