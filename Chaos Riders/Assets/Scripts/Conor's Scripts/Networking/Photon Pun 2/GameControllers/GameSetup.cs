@@ -18,7 +18,9 @@ public class GameSetup : MonoBehaviour
     [SerializeField] private int menuSceneIndex = 0;
 
     public Transform[] spawnPoints;
-    [SerializeField] private int amountOfShooters = 0, amountOfDrivers = 0;
+
+    private int amountOfShooters = 0, amountOfDrivers = 0;
+    public GameObject[] aiCars;
 
 
     private void OnDrawGizmos()
@@ -77,6 +79,25 @@ public class GameSetup : MonoBehaviour
                 pv.RPC("RPC_SpawnShooter", p.Player, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
             }
         }
+
+        //spawn AI
+        foreach (PhotonMenuPlayer p in PlayerDataManager.Players)
+        {
+            if (p.shooter)
+            {
+                if (amountOfDrivers == 0)
+                {
+                    GameObject aiCar = Instantiate(aiCars[Random.Range(0, aiCars.Length)], spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
+                }
+
+                if (p.teamNumber > amountOfDrivers)
+                {
+                    GameObject aiCar = Instantiate(aiCars[Random.Range(0, aiCars.Length)], spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
+                }
+                
+            }
+        }
+
     }
 
     [PunRPC]
