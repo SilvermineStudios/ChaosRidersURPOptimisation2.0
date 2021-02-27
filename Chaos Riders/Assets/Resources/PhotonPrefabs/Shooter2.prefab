@@ -13653,7 +13653,6 @@ GameObject:
   - component: {fileID: 930781084}
   - component: {fileID: 1791419875}
   - component: {fileID: 757208674}
-  - component: {fileID: 99373608}
   - component: {fileID: 413523565}
   m_Layer: 0
   m_Name: Shooter2
@@ -13703,40 +13702,42 @@ MonoBehaviour:
   rocketspawn: {fileID: 3665872840329177399}
   rocket: {fileID: 14798063656109763, guid: 74ea11e91b020954b88db6eaa0e77b7e, type: 3}
   rpgcount: {fileID: 7634238393029834588}
+  gunBarrel: {fileID: 7634238392110369385}
+  bulletSpawnPoint: {fileID: 7634238392448286943}
   cineCamera: {fileID: 5207396787800693346}
   connectCar: 0
   RPG: 0
   pickedUpRPG: 0
+  noCarNeeded: 1
+  hasAmmo: 0
   playerNumber: 1
-  bulletSpawnPoint: {fileID: 7634238392448286943}
-  maxDeviation: 10
-  deviationIncrease: 0.25
-  currentSpread: 0
+  minRotationHeight: -20
+  maxRotationHeight: 20
+  horizontalRotationSpeed: 100
+  verticalRotationSpeed: 80
+  maxBulletDeviation: 10
+  maxCrosshairDeviation: 10
+  bulletDeviationIncrease: 0.25
+  crosshairDeviationIncrease: 0.25
+  currentBulletSpread: 0
+  currentCrosshairSpread: 0
   shootButton: 323
   RPGButton: 32
   amountOfAmmoForRPG: 3
   trail: {fileID: 811231400246012879, guid: d9cb9feb506fa704e8572bb98f0ebff4, type: 3}
   trailPercentage: 50
-  muzzleFlash: {fileID: 7634238392497245262}
   impactEffect: {fileID: 7938478309457529535, guid: 0c9781b5140952b42ae2c6af77491dfc, type: 3}
+  impactEffectHolder: {fileID: 322621240}
   CasingSpawn: {fileID: 6319989313829350448}
   Casing: {fileID: 861391098359841573, guid: 26e80ede9ba2652449e5169bf69301aa, type: 3}
-  minRotationHeight: -20
-  maxRotationHeight: 20
-  impactEffectHolder: {fileID: 322621240}
   hitmarker: {fileID: 8931214932920015701}
-  noCarNeeded: 0
-  barrelToRotate: {fileID: 1682963324}
-  barrelRotationStartSpeed: 100
-  barrelRotationMaxSpeed: 800
-  minigunDamage: 5
-  range: 9999
-  minigunFireRate: 0.12
-  amountOfAmmoForCooldownBar: 1000
-  coolDownBarUi: {fileID: 7634238392297675920}
-  gunBarrel: {fileID: 7634238392110369385}
-  horizontalRotationSpeed: 100
-  verticalRotationSpeed: 80
+  shooterClass: 0
+  reticle: {fileID: 1617670277}
+  CrossHairGameobject: {fileID: 1617670276}
+  restingSize: 50
+  maxSize: 250
+  speed: 1
+  currentSize: 50
 --- !u!114 &7295222728725222640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13749,6 +13750,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b67f47ec8b8a7094ab0241cf36ebc939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  muzzleFlash: {fileID: 7634238392497245262}
+  barrelToRotate: {fileID: 1682963324}
+  barrelRotationStartSpeed: 100
+  barrelRotationMaxSpeed: 800
+  minigunDamage: 5
+  range: 9999
+  minigunFireRate: 0.12
+  amountOfAmmoForCooldownBar: 500
+  coolDownBarUi: {fileID: 7634238392297675920}
+  sound: event:/GunFX/Minigun/MinigunShot
+  bulletWhistle: event:/GunFX/Minigun/BulletWhistle
 --- !u!114 &7634238392847830456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13968,24 +13980,6 @@ MonoBehaviour:
   rpgUI: {fileID: 7634238393611303291}
   gunbarrelHolder: {fileID: 5937172025844165292}
   gunPartsToMakeInvisible: []
---- !u!114 &99373608
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7634238392847830435}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b7190b8346475443a0b986fb556ffeb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reticle: {fileID: 1617670277}
-  CrossHairGameobject: {fileID: 1617670276}
-  restingSize: 50
-  maxSize: 250
-  speed: 1
-  currentSize: 50
 --- !u!114 &413523565
 MonoBehaviour:
   m_ObjectHideFlags: 0
