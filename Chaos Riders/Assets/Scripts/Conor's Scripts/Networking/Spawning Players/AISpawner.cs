@@ -1,11 +1,14 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using Photon.Realtime;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class AISpawner : MonoBehaviour
 {
     //get the amount of ai cars to spawn from Game Variables script *********
-
+    private PhotonView pv;
 
     public Transform[] spawnPoints;
     public GameObject[] aiCars;
@@ -25,6 +28,8 @@ public class AISpawner : MonoBehaviour
 
     private void Awake()
     {
+        pv = GetComponent<PhotonView>();
+
         ////////////turn these off to test in offline///////////
         spawnAI = GameVariables.ToggleAI;
         amountOfAI = GameVariables.AmountOfAICars;
@@ -33,6 +38,18 @@ public class AISpawner : MonoBehaviour
 
     void Start()
     {
+        foreach(Player p in PhotonNetwork.PlayerList)
+        {
+            if (p.IsMasterClient)
+            {
+                for (int i = 0; i < amountOfAI; i++)
+                {
+                    pv.RPC("RPCSpawnAI", p, spawnPoints[i].position, spawnPoints[i].rotation);
+                }
+            }
+        }
+
+        /*
         if (spawnAI)
         {
             for (int i = 0; i < amountOfAI; i++)
@@ -42,10 +59,15 @@ public class AISpawner : MonoBehaviour
         }
         else
             return;
+        */
     }
 
-    void Update()
+    [PunRPC]
+    void RPCSpawnAI(Vector3 spawnPos, Quaternion spawnRot)
     {
-        
+        Quaternion spawnRotation = Quaternion.Euler(spawnRot.x, spawnRot.y - 90, spawnRot.z);
+
+        //PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "AI", "AI Mustang"), spawnPos, spawnRotation, 0);
+        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "AI", aiCars[Random.Range(0, aiCars.Length)].name), spawnPos, spawnRotation, 0);
     }
 }
