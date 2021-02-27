@@ -11296,47 +11296,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adffd39c4f2d5bd46a3d010868d66c07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  barrelToRotate: {fileID: 7128683594833393569}
-  barrelRotationStartSpeed: 100
-  barrelRotationMaxSpeed: 800
-  cineCamera: {fileID: 3074349120100751039}
   car: {fileID: 0}
   layerMask:
     serializedVersion: 2
     m_Bits: 1024
-  playerNumber: 1
-  connectCar: 0
   rpgGo: {fileID: 7128683595454920514}
   rocketspawn: {fileID: 5778646196380739050}
   rocket: {fileID: 14798063656109763, guid: 74ea11e91b020954b88db6eaa0e77b7e, type: 3}
   rpgcount: {fileID: 800629919381732225}
+  gunBarrel: {fileID: 800629917583558324}
+  bulletSpawnPoint: {fileID: 800629917799320578}
+  MinigunHolder: {fileID: 0}
+  RifleHolder: {fileID: 0}
+  cineCamera: {fileID: 3074349120100751039}
+  connectCar: 0
   RPG: 0
   pickedUpRPG: 0
-  minigunDamage: 30
-  bulletSpawnPoint: {fileID: 800629917799320578}
-  maxDeviation: 10
-  deviationIncrease: 0.25
-  currentSpread: 0
-  range: 9999
-  minigunFireRate: 0.12
-  shootButton: 323
-  RPGButton: 32
-  amountOfAmmoForCooldownBar: 1000
-  amountOfAmmoForRPG: 3
-  coolDownBarUi: {fileID: 800629917446328397}
-  gunBarrel: {fileID: 800629917583558324}
-  horizontalRotationSpeed: 100
-  verticalRotationSpeed: 80
-  trail: {fileID: 0}
-  trailPercentage: 0
-  muzzleFlash: {fileID: 800629917767139475}
-  impactEffect: {fileID: 7938478309457529535, guid: 0c9781b5140952b42ae2c6af77491dfc, type: 3}
-  CasingSpawn: {fileID: 2669719863399298095}
-  Casing: {fileID: 861391098359841573, guid: 26e80ede9ba2652449e5169bf69301aa, type: 3}
+  noCarNeeded: 0
+  hasAmmo: 0
+  playerNumber: 1
   minRotationHeight: -20
   maxRotationHeight: 20
+  horizontalRotationSpeed: 100
+  verticalRotationSpeed: 80
+  currentBulletSpread: 0
+  currentCrosshairSpread: 0
+  shootButton: 323
+  RPGButton: 32
+  changeWeapon: 126
+  amountOfAmmoForRPG: 3
+  trail: {fileID: 0}
+  trailPercentage: 0
+  impactEffect: {fileID: 7938478309457529535, guid: 0c9781b5140952b42ae2c6af77491dfc, type: 3}
   impactEffectHolder: {fileID: 7128683594616652773}
+  CasingSpawn: {fileID: 2669719863399298095}
+  Casing: {fileID: 861391098359841573, guid: 26e80ede9ba2652449e5169bf69301aa, type: 3}
   hitmarker: {fileID: 1809364430130091912}
+  shooterClass: 0
+  reticle: {fileID: 0}
+  CrossHairGameobject: {fileID: 0}
+  restingSize: 0
+  maxSize: 0
+  speed: 0
+  currentSize: 0
 --- !u!114 &800629919530156389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11664,12 +11666,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b7190b8346475443a0b986fb556ffeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reticle: {fileID: 7128683594898652248}
-  CrossHairGameobject: {fileID: 7128683594898652249}
-  restingSize: 50
-  maxSize: 250
-  speed: 1
-  currentSize: 50
 --- !u!114 &7206053803061651099
 MonoBehaviour:
   m_ObjectHideFlags: 0
