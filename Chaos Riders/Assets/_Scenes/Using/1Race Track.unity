@@ -43249,6 +43249,10 @@ PrefabInstance:
       propertyPath: viewIdField
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 913156958082615894, guid: 2a0127179681d564699c69930481b9be, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1826536347662466522, guid: 2a0127179681d564699c69930481b9be, type: 3}
       propertyPath: viewIdField
       value: 17
@@ -43260,6 +43264,22 @@ PrefabInstance:
     - target: {fileID: 6365413490110004830, guid: 2a0127179681d564699c69930481b9be, type: 3}
       propertyPath: viewIdField
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7295222728725222640, guid: 2a0127179681d564699c69930481b9be, type: 3}
+      propertyPath: bulletDeviationIncrease
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7295222728725222640, guid: 2a0127179681d564699c69930481b9be, type: 3}
+      propertyPath: crosshairDeviationIncrease
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7295222728725222640, guid: 2a0127179681d564699c69930481b9be, type: 3}
+      propertyPath: maxCrosshairDeviation
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7295222728725222640, guid: 2a0127179681d564699c69930481b9be, type: 3}
+      propertyPath: maxBulletDeviation
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7634238391621420200, guid: 2a0127179681d564699c69930481b9be, type: 3}
       propertyPath: m_AnchorMin.x
@@ -43289,6 +43309,14 @@ PrefabInstance:
       propertyPath: shooterClass
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7634238392847830434, guid: 2a0127179681d564699c69930481b9be, type: 3}
+      propertyPath: MinigunHolder
+      value: 
+      objectReference: {fileID: 1934517359}
+    - target: {fileID: 7634238392847830434, guid: 2a0127179681d564699c69930481b9be, type: 3}
+      propertyPath: RifleHolder
+      value: 
+      objectReference: {fileID: 1934517360}
     - target: {fileID: 7634238392847830435, guid: 2a0127179681d564699c69930481b9be, type: 3}
       propertyPath: m_Name
       value: Shooter2
@@ -43381,8 +43409,34 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8674048636984203078, guid: 2a0127179681d564699c69930481b9be, type: 3}
+      propertyPath: maxBulletDeviation
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8674048636984203078, guid: 2a0127179681d564699c69930481b9be, type: 3}
+      propertyPath: maxCrosshairDeviation
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8674048636984203078, guid: 2a0127179681d564699c69930481b9be, type: 3}
+      propertyPath: bulletDeviationIncrease
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8674048636984203078, guid: 2a0127179681d564699c69930481b9be, type: 3}
+      propertyPath: crosshairDeviationIncrease
+      value: 0.25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2a0127179681d564699c69930481b9be, type: 3}
+--- !u!1 &1934517359 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7476097870388229043, guid: 2a0127179681d564699c69930481b9be, type: 3}
+  m_PrefabInstance: {fileID: 1934517358}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1934517360 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 913156958082615894, guid: 2a0127179681d564699c69930481b9be, type: 3}
+  m_PrefabInstance: {fileID: 1934517358}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1936872529
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -46562,6 +46616,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2109867049}
     m_Modifications:
+    - target: {fileID: -2911147335296234789, guid: 2b33b9ff98ba11f4a90550effc628674, type: 3}
+      propertyPath: viewIdField
+      value: 18
+      objectReference: {fileID: 0}
     - target: {fileID: 51905266517422156, guid: 2b33b9ff98ba11f4a90550effc628674, type: 3}
       propertyPath: m_Name
       value: MCliebnt
