@@ -14,6 +14,11 @@ public class Rifle : MonoBehaviour
     [SerializeField] public float range = 100f;
     [SerializeField] public float rifleFireRate;
 
+    public float maxBulletDeviation;
+    public float maxCrosshairDeviation;
+    public float bulletDeviationIncrease;
+    public float crosshairDeviationIncrease;
+
 
     public string sound = "event:/GunFX/Rifle/RifleShot";
     public string bulletWhistle = "event:/GunFX/Minigun/BulletWhistle";

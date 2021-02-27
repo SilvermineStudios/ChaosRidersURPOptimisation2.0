@@ -23,6 +23,9 @@ public class Shooter : MonoBehaviour
     [SerializeField] private Transform gunBarrel; //barrel that is going to rotate to face the correct direction
     [SerializeField] private GameObject bulletSpawnPoint;
     ParticleSystem muzzleFlash;
+    [SerializeField] GameObject MinigunHolder;
+    [SerializeField] GameObject RifleHolder;
+
     #endregion
 
     #region Camera
@@ -47,15 +50,16 @@ public class Shooter : MonoBehaviour
     private float xAngle, yAngle; //angle of rotation for the gun axis
     [SerializeField] private float horizontalRotationSpeed = 5f, verticalRotationSpeed = 3f; //rotation speeds for the gun
     private float fireCooldown;
+    float fireRate;
     private float weaponDamage;
     private float weaponRange;
     #endregion
 
     #region Spread
-    [SerializeField] private float maxBulletDeviation;
-    [SerializeField] private float maxCrosshairDeviation;
-    [SerializeField] private float bulletDeviationIncrease;
-    [SerializeField] private float crosshairDeviationIncrease;
+    private float maxBulletDeviation;
+    private float maxCrosshairDeviation;
+    private float bulletDeviationIncrease;
+    private float crosshairDeviationIncrease;
     [SerializeField] float currentBulletSpread = 0;
     [SerializeField] float currentCrosshairSpread = 0;
 
@@ -101,6 +105,7 @@ public class Shooter : MonoBehaviour
     #region ShooterClass
     private enum ShooterClass { minigun, rifle};
     [SerializeField] ShooterClass shooterClass;
+    ShooterClass previousShooterClass;
     #endregion
 
     #region Sound
@@ -121,30 +126,72 @@ public class Shooter : MonoBehaviour
     void Start()
     {
         hitmarker.ChangeAlpha(0);
-
         pauseMenu = GetComponent<Pause>();
         pv = GetComponent<PhotonView>();
         startAmountOfAmmoForRPG = amountOfAmmoForRPG;
         rb = GetComponent<Rigidbody>();
-
+        previousShooterClass = shooterClass;
         if(shooterClass == ShooterClass.minigun)
         {
-            minigunScript = GetComponent<Minigun>();
-            muzzleFlash = minigunScript.muzzleFlash;
-            weaponDamage = minigunScript.minigunDamage;
-            weaponRange = minigunScript.range;
-            sound = minigunScript.sound;
-            bulletWhistle = minigunScript.bulletWhistle;
+            SetupMinigun();
         }
         else if (shooterClass == ShooterClass.rifle)
         {
-            rifleScript = GetComponent<Rifle>();
+            SetupRifle();
         }
+        fireCooldown = fireCooldown - fireRate;
     }
-    
+
+
+    void SetupMinigun()
+    {
+        MinigunHolder.SetActive(true);
+        RifleHolder.SetActive(false);
+        minigunScript = GetComponent<Minigun>();
+        muzzleFlash = minigunScript.muzzleFlash;
+        weaponDamage = minigunScript.minigunDamage;
+        weaponRange = minigunScript.range;
+        fireRate = minigunScript.minigunFireRate;
+        sound = minigunScript.sound;
+        bulletWhistle = minigunScript.bulletWhistle;
+        maxBulletDeviation = minigunScript.maxBulletDeviation;
+        maxCrosshairDeviation = minigunScript.maxCrosshairDeviation;
+        bulletDeviationIncrease = minigunScript.bulletDeviationIncrease;
+        crosshairDeviationIncrease = minigunScript.crosshairDeviationIncrease;
+    }
+
+    void SetupRifle()
+    {
+        MinigunHolder.SetActive(false);
+        RifleHolder.SetActive(true);
+        rifleScript = GetComponent<Rifle>();
+        muzzleFlash = rifleScript.muzzleFlash;
+        weaponDamage = rifleScript.rifleDamage;
+        weaponRange = rifleScript.range;
+        fireRate = rifleScript.rifleFireRate;
+        sound = rifleScript.sound;
+        bulletWhistle = rifleScript.bulletWhistle;
+        maxBulletDeviation = rifleScript.maxBulletDeviation;
+        maxCrosshairDeviation = rifleScript.maxCrosshairDeviation;
+        bulletDeviationIncrease = rifleScript.bulletDeviationIncrease;
+        crosshairDeviationIncrease = rifleScript.crosshairDeviationIncrease;
+    }
+
     void Update()
     {
         if (pauseMenu.paused) { return; }
+        if(shooterClass != previousShooterClass)
+        {
+            if(shooterClass == ShooterClass.minigun)
+            {
+                SetupMinigun();
+            }
+            else if (shooterClass == ShooterClass.rifle)
+            {
+                SetupRifle();
+            }
+            previousShooterClass = shooterClass;
+        }
         if(Input.GetKey(shootButton))
         {
             shootButtonHeld = true;
@@ -229,7 +276,7 @@ public class Shooter : MonoBehaviour
                 if (Input.GetKey(shootButton) && minigunScript.amountOfAmmoForCooldownBar > 0 && !RPG)
                 {
 
-                    if (Time.time >= fireCooldown + minigunScript.minigunFireRate)
+                    if (Time.time >= fireCooldown + fireRate)
                     {
                         currentlyShooting = true;
                         if (currentBulletSpread < maxBulletDeviation)
@@ -261,7 +308,37 @@ public class Shooter : MonoBehaviour
 
             if (shooterClass == ShooterClass.rifle)
             {
+                if (Input.GetKey(shootButton) && !RPG)
+                {
 
+                    if (Time.time >= fireCooldown + fireRate)
+                    {
+                        currentlyShooting = true;
+                        if (currentBulletSpread < maxBulletDeviation)
+                        {
+                            currentBulletSpread += bulletDeviationIncrease;
+                        }
+
+                        if (currentCrosshairSpread < maxCrosshairDeviation)
+                        {
+                            currentCrosshairSpread += crosshairDeviationIncrease;
+                        }
+                        pv.RPC("Shoot", RpcTarget.All);
+                        fireCooldown = Time.time;
+                    }
+                }
+                else
+                {
+                    currentlyShooting = false;
+                    if (currentBulletSpread > 0)
+                    {
+                        currentBulletSpread -= bulletDeviationIncrease;
+                    }
+                    if (currentCrosshairSpread > 0)
+                    {
+                        currentCrosshairSpread -= crosshairDeviationIncrease;
+                    }
+                }
             }
 
             if(RPG)
@@ -291,7 +368,7 @@ public class Shooter : MonoBehaviour
                 //if you are shooting and have ammo
                 if (Input.GetKey(shootButton) && minigunScript.amountOfAmmoForCooldownBar > 0 && !RPG)
                 {
-                    if (Time.time >= fireCooldown + minigunScript.minigunFireRate)
+                    if (Time.time >= fireCooldown + fireRate)
                     {
                         currentlyShooting = true;
                         if (currentBulletSpread < maxBulletDeviation)
@@ -323,7 +400,38 @@ public class Shooter : MonoBehaviour
 
             if (shooterClass == ShooterClass.rifle)
             {
+                //if you are shooting and have ammo
+                if (Input.GetKeyDown(shootButton) && !RPG)
+                {
+                    if (Time.time >= fireCooldown + fireRate)
+                    {
+                        currentlyShooting = true;
+                        
+                        if (currentBulletSpread < maxBulletDeviation)
+                        {
+                            currentBulletSpread += bulletDeviationIncrease;
+                        }
 
+                        if (currentCrosshairSpread < maxCrosshairDeviation)
+                        {
+                            currentCrosshairSpread += crosshairDeviationIncrease;
+                        }
+                        OfflineShoot();
+                        fireCooldown = Time.time;
+                    }
+                }
+                else
+                {
+                    currentlyShooting = false;
+                    if (currentBulletSpread > 0)
+                    {
+                        currentBulletSpread -= bulletDeviationIncrease;
+                    }
+                    if (currentCrosshairSpread > 0)
+                    {
+                        currentCrosshairSpread -= crosshairDeviationIncrease;
+                    }
+                }
             }
 
             if (!RPG)
@@ -421,8 +529,6 @@ public class Shooter : MonoBehaviour
 
     #endregion
 
-
-
     private void FollowMouse()
     {
         xAngle += Input.GetAxis("Mouse X") * horizontalRotationSpeed * Time.deltaTime;
@@ -442,7 +548,6 @@ public class Shooter : MonoBehaviour
     }
 
 
-
     Vector3 Spread(float maxDeviation)
     {
         Vector3 forwardVector = cineCamera.transform.forward;
@@ -452,8 +557,7 @@ public class Shooter : MonoBehaviour
         forwardVector = Quaternion.AngleAxis(angle, cineCamera.transform.forward) * forwardVector;
         return forwardVector;
     }
-
-    
+ 
 
     #region Shooting Functions
     [PunRPC]
@@ -574,7 +678,6 @@ public class Shooter : MonoBehaviour
     #endregion
 
 
-
     #region BulletImpacts
     private IEnumerator DeleteImpactEffect(float time)
     {
@@ -583,8 +686,6 @@ public class Shooter : MonoBehaviour
     }
 
     #endregion
-
-
 
 
     private void OnTriggerEnter(Collider other)
