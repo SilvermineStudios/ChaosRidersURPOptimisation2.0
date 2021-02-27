@@ -53,13 +53,12 @@ public class AICarController : MonoBehaviour
         if (healthScript.isDead) { Die(); return; }
         // if Countdown for race start hasn't finished, dont move
         if (!MasterClientRaceStart.Instance.countdownTimerStart) { return; }
-        ////////////////////////////////////////////////////////////////////////////////<---------------------------------------------------------
+
         ApplySteer();
         Drive();
         CheckWaypointDistance();
         AddDownForce();
-        //////////////////////////////////////////////////////////////////////////////////////////////////////            TURNED OFF FOR NAV AGENT
-        NavMeshMoveToWaypoint();
+        //NavMeshMoveToWaypoint();
     }
 
     private void NavMeshMoveToWaypoint()
