@@ -183,31 +183,6 @@ public class Shooter : MonoBehaviour
         if (pauseMenu.paused) { return; }
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
-            if (Input.GetKeyDown(changeWeapon) && pv.IsMine)
-            {
-                Debug.Log(12342314);
-                if (shooterClass == ShooterClass.minigun)
-                {
-                    SetupRifle();
-                    shooterClass = ShooterClass.rifle;
-                }
-                else if (shooterClass == ShooterClass.rifle)
-                {
-                    SetupMinigun();
-                    shooterClass = ShooterClass.minigun;
-                }
-                previousShooterClass = shooterClass;
-
-
-            }
-            if (Input.GetKey(shootButton) && pv.IsMine)
-            {
-                shootButtonHeld = true;
-            }
-            else
-            {
-                shootButtonHeld = false;
-            }
             FollowMouse();
             if (connectCar)
             {
@@ -217,8 +192,6 @@ public class Shooter : MonoBehaviour
             }
 
             rpgcount.text = amountOfAmmoForRPG + " / " + startAmountOfAmmoForRPG;
-
-
             if (!noCarNeeded)
             {
                 if (car != null && car.layer == LayerMask.NameToLayer("Cars"))
@@ -269,6 +242,30 @@ public class Shooter : MonoBehaviour
         //online shooting
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer)
         {
+            if (Input.GetKeyDown(changeWeapon) && pv.IsMine)
+            {
+                Debug.Log(12342314);
+                if (shooterClass == ShooterClass.minigun)
+                {
+                    SetupRifle();
+                    shooterClass = ShooterClass.rifle;
+                }
+                else if (shooterClass == ShooterClass.rifle)
+                {
+                    SetupMinigun();
+                    shooterClass = ShooterClass.minigun;
+                }
+                previousShooterClass = shooterClass;
+            }
+            if (Input.GetKey(shootButton) && pv.IsMine)
+            {
+                shootButtonHeld = true;
+            }
+            else
+            {
+                shootButtonHeld = false;
+            }
+
             if (!RPG)
             {
                 pv.RPC("HideRPG", RpcTarget.All);
@@ -371,6 +368,30 @@ public class Shooter : MonoBehaviour
         //offline Shooting
         if (!IsThisMultiplayer.Instance.multiplayer)
         {
+            if (Input.GetKeyDown(changeWeapon))
+            {
+                if (shooterClass == ShooterClass.minigun)
+                {
+                    SetupRifle();
+                    shooterClass = ShooterClass.rifle;
+                }
+                else if (shooterClass == ShooterClass.rifle)
+                {
+                    SetupMinigun();
+                    shooterClass = ShooterClass.minigun;
+                }
+                previousShooterClass = shooterClass;
+            }
+
+            if (Input.GetKey(shootButton))
+            {
+                shootButtonHeld = true;
+            }
+            else
+            {
+                shootButtonHeld = false;
+            }
+
             if (shooterClass == ShooterClass.minigun)
             {
                 //if you are shooting and have ammo
