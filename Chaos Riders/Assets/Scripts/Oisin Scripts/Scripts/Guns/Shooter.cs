@@ -41,7 +41,7 @@ public class Shooter : MonoBehaviour
     public bool isShooting { get { return currentlyShooting; } private set { isShooting = currentlyShooting; } }
     public bool isPressingShootbutton { get { return shootButtonHeld; } private set { isPressingShootbutton = shootButtonHeld; } }
     [SerializeField] bool noCarNeeded;
-    public bool hasAmmo;
+    bool usingAmmo;
     #endregion
 
     #region Floats
@@ -104,8 +104,9 @@ public class Shooter : MonoBehaviour
     #endregion
 
     #region ShooterClass
-    private enum ShooterClass { minigun, rifle};
-    [SerializeField] ShooterClass shooterClass;
+    public enum ShooterClass { minigun, rifle};
+    ShooterClass shooterClass;
+    public ShooterClass currentShooterClass { get { return shooterClass; } private set { currentShooterClass = shooterClass; } }
     ShooterClass previousShooterClass;
     #endregion
 
@@ -159,6 +160,7 @@ public class Shooter : MonoBehaviour
         maxCrosshairDeviation = minigunScript.maxCrosshairDeviation;
         bulletDeviationIncrease = minigunScript.bulletDeviationIncrease;
         crosshairDeviationIncrease = minigunScript.crosshairDeviationIncrease;
+        usingAmmo = true;
     }
 
     void SetupRifle()
@@ -176,6 +178,7 @@ public class Shooter : MonoBehaviour
         maxCrosshairDeviation = rifleScript.maxCrosshairDeviation;
         bulletDeviationIncrease = rifleScript.bulletDeviationIncrease;
         crosshairDeviationIncrease = rifleScript.crosshairDeviationIncrease;
+        usingAmmo = false;
     }
 
     void Update()
@@ -244,7 +247,7 @@ public class Shooter : MonoBehaviour
         {
             if (Input.GetKeyDown(changeWeapon) && pv.IsMine)
             {
-                Debug.Log(12342314);
+                
                 if (shooterClass == ShooterClass.minigun)
                 {
                     SetupRifle();
@@ -256,8 +259,9 @@ public class Shooter : MonoBehaviour
                     shooterClass = ShooterClass.minigun;
                 }
                 previousShooterClass = shooterClass;
+                currentCrosshairSpread = 0;
             }
-            if (Input.GetKey(shootButton) && pv.IsMine)
+            if (Input.GetKey(shootButton) && pv.IsMine && usingAmmo)
             {
                 shootButtonHeld = true;
             }
@@ -381,9 +385,10 @@ public class Shooter : MonoBehaviour
                     shooterClass = ShooterClass.minigun;
                 }
                 previousShooterClass = shooterClass;
+                currentCrosshairSpread = 0;
             }
 
-            if (Input.GetKey(shootButton))
+            if (Input.GetKey(shootButton) && usingAmmo)
             {
                 shootButtonHeld = true;
             }
@@ -429,7 +434,7 @@ public class Shooter : MonoBehaviour
 
             if (shooterClass == ShooterClass.rifle)
             {
-                //if you are shooting and have ammo
+                //if you are shooting
                 if (Input.GetKeyDown(shootButton) && !RPG)
                 {
                     if (Time.time >= fireCooldown + fireRate)
@@ -646,7 +651,7 @@ public class Shooter : MonoBehaviour
     void OfflineShoot()
     {
         muzzleFlash.Play();
-        FMODUnity.RuntimeManager.PlayOneShotAttached(sound, gameObject);
+        FMODUnity.RuntimeManager.PlayOneShotAttached( sound, gameObject);
         Vector3 direction = Spread(currentBulletSpread);
 
         GameObject a = Instantiate(Casing, CasingSpawn.transform.position, CasingSpawn.transform.rotation);
