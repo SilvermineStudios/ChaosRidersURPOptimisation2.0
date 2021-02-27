@@ -181,7 +181,6 @@ RectTransform:
   - {fileID: 2121696632091157593}
   - {fileID: 2321777303462557998}
   - {fileID: 800629918878880395}
-  - {fileID: 6165963479010009567}
   - {fileID: 800629918817105319}
   m_Father: {fileID: 800629918120089076}
   m_RootOrder: 2
@@ -613,7 +612,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 800629917726647090}
-  viewIdField: 29
+  viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &800629917726647090
@@ -9126,81 +9125,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!1 &800629918774827912
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 800629918774827913}
-  - component: {fileID: 800629918774827915}
-  - component: {fileID: 800629918774827914}
-  m_Layer: 5
-  m_Name: Gun
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &800629918774827913
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 800629918774827912}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0712332, y: 0.27199793, z: 0.3347708}
-  m_Children: []
-  m_Father: {fileID: 800629918878880395}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &800629918774827915
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 800629918774827912}
-  m_CullTransparentMesh: 0
---- !u!114 &800629918774827914
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 800629918774827912}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e7d87b9c43394834bad838eab1ea92f8, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &800629918817105318
 GameObject:
   m_ObjectHideFlags: 0
@@ -9234,7 +9158,7 @@ RectTransform:
   - {fileID: 7127344063113789295}
   - {fileID: 3420540764028213228}
   m_Father: {fileID: 8429163269926736511}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -9363,7 +9287,6 @@ RectTransform:
   - {fileID: 3238748960676666376}
   - {fileID: 8671043624036393557}
   - {fileID: 4840291802224368760}
-  - {fileID: 800629918774827913}
   - {fileID: 6969155887462276966}
   m_Father: {fileID: 8429163269926736511}
   m_RootOrder: 3
@@ -11039,6 +10962,8 @@ GameObject:
   m_Component:
   - component: {fileID: 800629919530156390}
   - component: {fileID: 800629919530156415}
+  - component: {fileID: 1380420776726467749}
+  - component: {fileID: 3808963887911549155}
   - component: {fileID: 800629919530156389}
   - component: {fileID: 800629919530156388}
   - component: {fileID: 800629919530156387}
@@ -11055,6 +10980,7 @@ GameObject:
   - component: {fileID: 7128683593645103807}
   - component: {fileID: 7128683594319486709}
   - component: {fileID: 7206053803061651099}
+  - component: {fileID: 5406248177818558122}
   m_Layer: 0
   m_Name: Golden Shooter
   m_TagString: shooter
@@ -11138,6 +11064,55 @@ MonoBehaviour:
   maxSize: 250
   speed: 1
   currentSize: 50
+--- !u!114 &1380420776726467749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800629919530156414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b67f47ec8b8a7094ab0241cf36ebc939, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  muzzleFlash: {fileID: 800629917767139475}
+  barrelToRotate: {fileID: 7128683594833393569}
+  barrelRotationStartSpeed: 100
+  barrelRotationMaxSpeed: 800
+  minigunDamage: 5
+  range: 9999
+  minigunFireRate: 0.12
+  amountOfAmmoForCooldownBar: 500
+  coolDownBarUi: {fileID: 800629917446328397}
+  sound: event:/GunFX/Minigun/MinigunShot
+  bulletWhistle: event:/GunFX/Minigun/BulletWhistle
+  maxBulletDeviation: 10
+  maxCrosshairDeviation: 10
+  bulletDeviationIncrease: 0.25
+  crosshairDeviationIncrease: 0.25
+--- !u!114 &3808963887911549155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800629919530156414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab66b88f9529e664da29bc2d6ea87690, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  muzzleFlash: {fileID: 7174540303721780129}
+  rifleDamage: 30
+  range: 9999
+  rifleFireRate: 2
+  maxBulletDeviation: 10
+  maxCrosshairDeviation: 10
+  bulletDeviationIncrease: 0.25
+  crosshairDeviationIncrease: 900
+  sound: event:/GunFX/Rifle/RifleShot
+  bulletWhistle: event:/GunFX/Minigun/BulletWhistle
 --- !u!114 &800629919530156389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11158,7 +11133,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 800629919530156388}
-  viewIdField: 19
+  viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &800629919530156388
@@ -11482,6 +11457,28 @@ MonoBehaviour:
   driverModelIndex: -1
   AIBraker: {fileID: 1407414512137103672, guid: c7d771049c583ed4d8583216cccd3132, type: 3}
   AIColt: {fileID: 2011213230151948855, guid: 4fef911cd4b7a114bb4c2b67b8861e47, type: 3}
+--- !u!114 &5406248177818558122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800629919530156414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab66b88f9529e664da29bc2d6ea87690, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  muzzleFlash: {fileID: 0}
+  rifleDamage: 30
+  range: 9999
+  rifleFireRate: 2
+  maxBulletDeviation: 10
+  maxCrosshairDeviation: 10
+  bulletDeviationIncrease: 0.25
+  crosshairDeviationIncrease: 900
+  sound: event:/GunFX/Rifle/RifleShot
+  bulletWhistle: event:/GunFX/Minigun/BulletWhistle
 --- !u!1 &800629919540994649
 GameObject:
   m_ObjectHideFlags: 0
@@ -11921,7 +11918,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 2322195967676331615}
-  viewIdField: 15
+  viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &2322195967676331615
@@ -12666,7 +12663,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 6241229383339251806}
   - {fileID: 403222619348787007}
-  viewIdField: 18
+  viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &403222619348787007
@@ -12705,7 +12702,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 6241229383339251806}
   - {fileID: 403222619348787007}
-  viewIdField: 16
+  viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!1 &3663723573632552876
@@ -18225,7 +18222,7 @@ RectTransform:
   m_Children:
   - {fileID: 800629917446328397}
   m_Father: {fileID: 800629918878880395}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -20374,7 +20371,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 3654286296575111763}
-  viewIdField: 17
+  viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &3654286296575111763
@@ -21953,41 +21950,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &7885188913980659467
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6165963479010009567}
-  m_Layer: 5
-  m_Name: Rocket Launcher
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &6165963479010009567
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7885188913980659467}
-  m_LocalRotation: {x: -0, y: -0.0000000037252894, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 8429163269926736511}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 31.1, y: -40.7}
-  m_SizeDelta: {x: 100, y: 36.586884}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7908180952236067914
 GameObject:
   m_ObjectHideFlags: 0
