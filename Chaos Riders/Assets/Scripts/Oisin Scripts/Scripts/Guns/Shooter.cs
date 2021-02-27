@@ -105,6 +105,7 @@ public class Shooter : MonoBehaviour
     #region ShooterClass
     private enum ShooterClass { minigun, rifle};
     [SerializeField] ShooterClass shooterClass;
+    ShooterClass previousShooterClass;
     #endregion
 
     #region Sound
@@ -125,12 +126,11 @@ public class Shooter : MonoBehaviour
     void Start()
     {
         hitmarker.ChangeAlpha(0);
-
         pauseMenu = GetComponent<Pause>();
         pv = GetComponent<PhotonView>();
         startAmountOfAmmoForRPG = amountOfAmmoForRPG;
         rb = GetComponent<Rigidbody>();
-
+        previousShooterClass = shooterClass;
         if(shooterClass == ShooterClass.minigun)
         {
             SetupMinigun();
@@ -139,12 +139,14 @@ public class Shooter : MonoBehaviour
         {
             SetupRifle();
         }
+        fireCooldown = fireCooldown - fireRate;
     }
 
 
     void SetupMinigun()
     {
         MinigunHolder.SetActive(true);
+        RifleHolder.SetActive(false);
         minigunScript = GetComponent<Minigun>();
         muzzleFlash = minigunScript.muzzleFlash;
         weaponDamage = minigunScript.minigunDamage;
@@ -160,6 +162,7 @@ public class Shooter : MonoBehaviour
 
     void SetupRifle()
     {
+        MinigunHolder.SetActive(false);
         RifleHolder.SetActive(true);
         rifleScript = GetComponent<Rifle>();
         muzzleFlash = rifleScript.muzzleFlash;
@@ -177,6 +180,18 @@ public class Shooter : MonoBehaviour
     void Update()
     {
         if (pauseMenu.paused) { return; }
+        if(shooterClass != previousShooterClass)
+        {
+            if(shooterClass == ShooterClass.minigun)
+            {
+                SetupMinigun();
+            }
+            else if (shooterClass == ShooterClass.rifle)
+            {
+                SetupRifle();
+            }
+            previousShooterClass = shooterClass;
+        }
         if(Input.GetKey(shootButton))
         {
             shootButtonHeld = true;
@@ -391,7 +406,7 @@ public class Shooter : MonoBehaviour
                     if (Time.time >= fireCooldown + fireRate)
                     {
                         currentlyShooting = true;
-                        CrossHair();
+                        
                         if (currentBulletSpread < maxBulletDeviation)
                         {
                             currentBulletSpread += bulletDeviationIncrease;
@@ -448,7 +463,7 @@ public class Shooter : MonoBehaviour
         {
             //RPG = !RPG;
         }
-        
+        CrossHair();
         Hitmarker();
     }
 
@@ -514,8 +529,6 @@ public class Shooter : MonoBehaviour
 
     #endregion
 
-
-
     private void FollowMouse()
     {
         xAngle += Input.GetAxis("Mouse X") * horizontalRotationSpeed * Time.deltaTime;
@@ -535,7 +548,6 @@ public class Shooter : MonoBehaviour
     }
 
 
-
     Vector3 Spread(float maxDeviation)
     {
         Vector3 forwardVector = cineCamera.transform.forward;
@@ -545,8 +557,7 @@ public class Shooter : MonoBehaviour
         forwardVector = Quaternion.AngleAxis(angle, cineCamera.transform.forward) * forwardVector;
         return forwardVector;
     }
-
-    
+ 
 
     #region Shooting Functions
     [PunRPC]
@@ -667,7 +678,6 @@ public class Shooter : MonoBehaviour
     #endregion
 
 
-
     #region BulletImpacts
     private IEnumerator DeleteImpactEffect(float time)
     {
@@ -676,8 +686,6 @@ public class Shooter : MonoBehaviour
     }
 
     #endregion
-
-
 
 
     private void OnTriggerEnter(Collider other)
