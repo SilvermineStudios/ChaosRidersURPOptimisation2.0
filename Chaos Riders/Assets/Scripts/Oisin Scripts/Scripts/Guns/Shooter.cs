@@ -68,6 +68,7 @@ public class Shooter : MonoBehaviour
     #region Input
     [SerializeField] private KeyCode shootButton = KeyCode.Mouse0;
     [SerializeField] private KeyCode RPGButton = KeyCode.Tab;
+    [SerializeField] private KeyCode changeWeapon = KeyCode.F1;
     #endregion
 
     #region RPG
@@ -180,17 +181,21 @@ public class Shooter : MonoBehaviour
     void Update()
     {
         if (pauseMenu.paused) { return; }
-        if(shooterClass != previousShooterClass)
+        if(Input.GetKeyDown(changeWeapon))
         {
             if(shooterClass == ShooterClass.minigun)
             {
-                SetupMinigun();
+                SetupRifle();
+                shooterClass = ShooterClass.rifle;
             }
             else if (shooterClass == ShooterClass.rifle)
             {
-                SetupRifle();
+                SetupMinigun();
+                shooterClass = ShooterClass.minigun;
             }
             previousShooterClass = shooterClass;
+
+            Debug.Log(12342314);
         }
         if(Input.GetKey(shootButton))
         {
