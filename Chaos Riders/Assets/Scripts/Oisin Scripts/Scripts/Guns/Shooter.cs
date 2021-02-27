@@ -181,33 +181,33 @@ public class Shooter : MonoBehaviour
     void Update()
     {
         if (pauseMenu.paused) { return; }
-        if(Input.GetKeyDown(changeWeapon))
-        {
-            Debug.Log(12342314);
-            if (shooterClass == ShooterClass.minigun)
-            {
-                SetupRifle();
-                shooterClass = ShooterClass.rifle;
-            }
-            else if (shooterClass == ShooterClass.rifle)
-            {
-                SetupMinigun();
-                shooterClass = ShooterClass.minigun;
-            }
-            previousShooterClass = shooterClass;
-
-            
-        }
-        if(Input.GetKey(shootButton))
-        {
-            shootButtonHeld = true;
-        }
-        else
-        {
-            shootButtonHeld = false;
-        }
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
-        {       
+        {
+            if (Input.GetKeyDown(changeWeapon) && pv.IsMine)
+            {
+                Debug.Log(12342314);
+                if (shooterClass == ShooterClass.minigun)
+                {
+                    SetupRifle();
+                    shooterClass = ShooterClass.rifle;
+                }
+                else if (shooterClass == ShooterClass.rifle)
+                {
+                    SetupMinigun();
+                    shooterClass = ShooterClass.minigun;
+                }
+                previousShooterClass = shooterClass;
+
+
+            }
+            if (Input.GetKey(shootButton) && pv.IsMine)
+            {
+                shootButtonHeld = true;
+            }
+            else
+            {
+                shootButtonHeld = false;
+            }
             FollowMouse();
             if (connectCar)
             {
@@ -591,22 +591,16 @@ public class Shooter : MonoBehaviour
 
             a.GetComponent<Rigidbody>().AddForce((a.transform.right + (a.transform.up * 2)) * 0.3f, ForceMode.Impulse);
         }
-
-
-        RaycastHit hit; //gets the information on whats hit
+        RaycastHit hit; 
         if (Physics.Raycast(cineCamera.transform.position, direction, out hit, weaponRange))
         {
-            //Debug.Log("You Hit The: " + hit.transform.name);
             Target target = hit.transform.GetComponent<Target>();
             if (target != null && target.gameObject != car)
             {
                 target.TakeDamage(weaponDamage);
-                //<-------------------------------------------------------------------------------------HIT MARKER STUFFS
             }
 
             GameObject impactGo = PhotonNetwork.Instantiate("Impact Particle Effect", hit.point, Quaternion.LookRotation(hit.normal), 0);
-            //impactGo.transform.parent = impactEffectHolder;
-            //PhotonNetwork.Destroy(impactGo);
         }
 
         float chance = Random.Range(0, 100);
