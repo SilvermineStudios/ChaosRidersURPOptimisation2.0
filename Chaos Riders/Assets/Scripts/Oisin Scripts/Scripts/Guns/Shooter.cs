@@ -294,7 +294,8 @@ public class Shooter : MonoBehaviour
                         {
                             currentCrosshairSpread += crosshairDeviationIncrease;
                         }
-                        pv.RPC("Shoot", RpcTarget.All);
+                        //pv.RPC("Shoot", RpcTarget.All);
+                        Shoot();
                         fireCooldown = Time.time;
                     }
                 }
@@ -329,7 +330,8 @@ public class Shooter : MonoBehaviour
                         {
                             currentCrosshairSpread += crosshairDeviationIncrease;
                         }
-                        pv.RPC("Shoot", RpcTarget.All);
+                        //pv.RPC("Shoot", RpcTarget.All);
+                        Shoot();
                         fireCooldown = Time.time;
                     }
                 }
@@ -566,7 +568,7 @@ public class Shooter : MonoBehaviour
  
 
     #region Shooting Functions
-    [PunRPC]
+    
     void Shoot()
     {
         muzzleFlash.Play();
@@ -578,7 +580,7 @@ public class Shooter : MonoBehaviour
 
         if (!noCarNeeded)
         {
-            if (car.GetComponent<CarController>() && pv.IsMine)
+            if (car.GetComponent<CarController>())
             {
                 a.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
             }
