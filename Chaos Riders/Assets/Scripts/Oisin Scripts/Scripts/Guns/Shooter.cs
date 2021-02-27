@@ -10,8 +10,8 @@ using UnityEngine.UI;
 public class Shooter : MonoBehaviour
 {
 
-    //General
-    #region GameObjects
+    //Variables
+    #region General GameObjects
     public GameObject car;
     private GameObject carCollision;
     [SerializeField] private LayerMask layerMask;
@@ -19,6 +19,10 @@ public class Shooter : MonoBehaviour
     [SerializeField] GameObject rocketspawn;
     [SerializeField] GameObject rocket;
     [SerializeField] TMP_Text rpgcount;
+    Rigidbody rb;
+    [SerializeField] private Transform gunBarrel; //barrel that is going to rotate to face the correct direction
+    [SerializeField] private GameObject bulletSpawnPoint;
+    ParticleSystem muzzleFlash;
     #endregion
 
     #region Camera
@@ -29,96 +33,129 @@ public class Shooter : MonoBehaviour
     public bool connectCar = false;
     public bool RPG;
     [SerializeField] private bool pickedUpRPG = false;
+    private bool currentlyShooting;
+    private bool shootButtonHeld;
+    public bool isShooting { get { return currentlyShooting; } private set { isShooting = currentlyShooting; } }
+    public bool isPressingShootbutton { get { return shootButtonHeld; } private set { isPressingShootbutton = shootButtonHeld; } }
+    [SerializeField] bool noCarNeeded;
+    public bool hasAmmo;
     #endregion
 
     #region Floats
     [SerializeField] float playerNumber = 1;
+    [SerializeField] private float minRotationHeight = -20f, maxRotationHeight = 20f;
+    private float xAngle, yAngle; //angle of rotation for the gun axis
+    [SerializeField] private float horizontalRotationSpeed = 5f, verticalRotationSpeed = 3f; //rotation speeds for the gun
+    private float fireCooldown;
+    private float weaponDamage;
+    private float weaponRange;
     #endregion
 
+    #region Spread
+    [SerializeField] private float maxBulletDeviation;
+    [SerializeField] private float maxCrosshairDeviation;
+    [SerializeField] private float bulletDeviationIncrease;
+    [SerializeField] private float crosshairDeviationIncrease;
+    [SerializeField] float currentBulletSpread = 0;
+    [SerializeField] float currentCrosshairSpread = 0;
 
-    //shooting
+    #endregion
 
-    [SerializeField] private GameObject bulletSpawnPoint;
-    [SerializeField] private float maxDeviation;
-    [SerializeField] private float deviationIncrease;
-    public float spread { get { return currentSpread; } private set { spread = currentSpread; } }
-    private bool currentlyShooting;
-    public bool isShooting { get { return currentlyShooting; } private set { isShooting = currentlyShooting; } }
-    public float currentSpread = 0;
-    
+    #region Input
     [SerializeField] private KeyCode shootButton = KeyCode.Mouse0;
     [SerializeField] private KeyCode RPGButton = KeyCode.Tab;
-    
+    #endregion
+
+    #region RPG
     [SerializeField] private float amountOfAmmoForRPG = 10;
     private float startAmountOfAmmoForRPG;
-    
+    #endregion
+
+    #region BulletTrails
     [SerializeField] GameObject trail;
     [SerializeField] float trailPercentage;
-    [SerializeField] private ParticleSystem muzzleFlash;
-    public GameObject impactEffect;
-    [SerializeField] GameObject CasingSpawn, Casing;
-    [SerializeField] private float minRotationHeight = -20f, maxRotationHeight = 20f;
-    Rigidbody rb;
-    [SerializeField] private Transform impactEffectHolder;
-    [SerializeField] Image hitmarker;
+    #endregion
 
-    [SerializeField] bool noCarNeeded;
-
-    //Pause Menu
-    Pause pauseMenu;
-
+    #region Photon
     private PhotonView pv;
-    private float fireCooldown;
+    #endregion
+
+    #region Scripts
+    Pause pauseMenu;
     Controller carController;
     AICarController aiCarController;
+    Minigun minigunScript;
+    Rifle rifleScript;
+    #endregion
 
-    //z rotation positive ++
-    [SerializeField] private Transform barrelToRotate;
-    private float barrelRotationSpeed;
-    [SerializeField] private float barrelRotationStartSpeed = 100f, barrelRotationMaxSpeed = 800f;
-    [SerializeField] private float minigunDamage;
-    [SerializeField] private float range = 100f;
-    [SerializeField] private float minigunFireRate;
-    [SerializeField] private float amountOfAmmoForCooldownBar = 1000;
+    #region Bullet Decoration
+    public GameObject impactEffect;
+    [SerializeField] private Transform impactEffectHolder;
+    
 
-    private float startAmmo; //the amount of ammo for the cooldown bar at the start of the game
-    private float ammoNormalized; //normalized the ammo value to be between 0 and 1 for the cooldown bar scale
-    [SerializeField] private Transform coolDownBarUi; //ui bar that shows the cooldown of the minigun
-    [SerializeField] private Transform gunBarrel; //barrel that is going to rotate to face the correct direction
-    [SerializeField] private float horizontalRotationSpeed = 5f, verticalRotationSpeed = 3f; //rotation speeds for the gun
-    private float xAngle, yAngle; //angle of rotation for the gun axis
+    [SerializeField] GameObject CasingSpawn, Casing;
 
+    [SerializeField] Image hitmarker;
+    #endregion
 
-    private void Awake()
+    #region ShooterClass
+    private enum ShooterClass { minigun, rifle};
+    [SerializeField] ShooterClass shooterClass;
+    #endregion
+
+    #region Sound
+    string sound;
+    string bulletWhistle;
+    #endregion
+
+    #region Crosshair
+    [SerializeField] RectTransform reticle; // The RecTransform of reticle UI element.
+    [SerializeField] GameObject CrossHairGameobject;
+    public float restingSize;
+    public float maxSize;
+    public float speed;
+    public float currentSize;
+    private float spreadSize;
+    #endregion
+
+    void Start()
     {
+        hitmarker.ChangeAlpha(0);
+
         pauseMenu = GetComponent<Pause>();
         pv = GetComponent<PhotonView>();
         startAmountOfAmmoForRPG = amountOfAmmoForRPG;
         rb = GetComponent<Rigidbody>();
 
-        startAmmo = amountOfAmmoForCooldownBar;
-        barrelRotationSpeed = barrelRotationStartSpeed;
+        if(shooterClass == ShooterClass.minigun)
+        {
+            minigunScript = GetComponent<Minigun>();
+            muzzleFlash = minigunScript.muzzleFlash;
+            weaponDamage = minigunScript.minigunDamage;
+            weaponRange = minigunScript.range;
+            sound = minigunScript.sound;
+            bulletWhistle = minigunScript.bulletWhistle;
+        }
+        else if (shooterClass == ShooterClass.rifle)
+        {
+            rifleScript = GetComponent<Rifle>();
+        }
     }
-
-    void Start()
-    {
-        var tempColor = hitmarker.color;
-        tempColor.a = 0;
-        hitmarker.color = tempColor;
-    }
-
-
-
-    // Update is called once per frame
+    
     void Update()
     {
         if (pauseMenu.paused) { return; }
-        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
+        if(Input.GetKey(shootButton))
         {
-            RotateGunBarrel();
+            shootButtonHeld = true;
+        }
+        else
+        {
+            shootButtonHeld = false;
+        }
+        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
+        {       
             FollowMouse();
-
-
             if (connectCar)
             {
                 connectCar = false;
@@ -126,18 +163,8 @@ public class Shooter : MonoBehaviour
                 carCollision = GetComponentInParent<MoveTurretPosition>().car.transform.GetChild(0).gameObject;
             }
 
-            if ((IsThisMultiplayer.Instance.multiplayer && MasterClientRaceStart.Instance.weaponsFree) || !IsThisMultiplayer.Instance.multiplayer)
-            {
-                CooldownBarValues();
-                ammoNormalized = amountOfAmmoForCooldownBar / startAmmo; //normalized the ammo value to be between 0 and 1 for the cooldown bar scale
-                CoolDownBar(ammoNormalized); //scale the size of the cooldown bar to match the ammo count
-            }
-
-
-
             rpgcount.text = amountOfAmmoForRPG + " / " + startAmountOfAmmoForRPG;
 
-            //NEW
 
             if (!noCarNeeded)
             {
@@ -184,24 +211,6 @@ public class Shooter : MonoBehaviour
 
                 }
             }
-            /*
-            if (car.tag == "car")
-            {
-                if (car.GetComponent<CarPickup>().hasRPG)
-                    RPG = true;
-            }
-            if(car &&  carController == null)
-            {
-                carController = car.GetComponent<Controller>();
-            }
-
-            if(amountOfAmmoForRPG <= 0 && car.GetComponent<CarPickup>().hasRPG)
-            {
-                RPG = false;
-                car.GetComponent<CarPickup>().hasRPG = false;
-                amountOfAmmoForRPG = startAmountOfAmmoForRPG;
-            }
-            */
         }
 
         //online shooting
@@ -214,31 +223,47 @@ public class Shooter : MonoBehaviour
 
             //Wait for weapons Free
             if (!MasterClientRaceStart.Instance.weaponsFree) { return; }
-            
-            //if you are shooting and have ammo (MINIGUN)
-            if (Input.GetKey(shootButton) && amountOfAmmoForCooldownBar > 0 && !RPG)
+            if (shooterClass == ShooterClass.minigun)
             {
-                
-                if (Time.time >= fireCooldown + minigunFireRate)
+                //if you are shooting and have ammo (MINIGUN)
+                if (Input.GetKey(shootButton) && minigunScript.amountOfAmmoForCooldownBar > 0 && !RPG)
                 {
-                    currentlyShooting = true;
-                    if (currentSpread < maxDeviation)
+
+                    if (Time.time >= fireCooldown + minigunScript.minigunFireRate)
                     {
-                        currentSpread += deviationIncrease;
+                        currentlyShooting = true;
+                        if (currentBulletSpread < maxBulletDeviation)
+                        {
+                            currentBulletSpread += bulletDeviationIncrease;
+                        }
+
+                        if(currentCrosshairSpread < maxCrosshairDeviation)
+                        {
+                            currentCrosshairSpread += crosshairDeviationIncrease;
+                        }
+                        pv.RPC("Shoot", RpcTarget.All);
+                        fireCooldown = Time.time;
                     }
-                    pv.RPC("Shoot", RpcTarget.All);
-                    fireCooldown = Time.time;
                 }
-            }
-            else
-            {
-                currentlyShooting = false;
-                if (currentSpread > 0)
+                else
                 {
-                    currentSpread -= deviationIncrease ;
+                    currentlyShooting = false;
+                    if (currentBulletSpread > 0)
+                    {
+                        currentBulletSpread -= bulletDeviationIncrease;
+                    }
+                    if (currentCrosshairSpread > 0)
+                    {
+                        currentCrosshairSpread -= crosshairDeviationIncrease;
+                    }
                 }
             }
-            
+
+            if (shooterClass == ShooterClass.rifle)
+            {
+
+            }
+
             if(RPG)
             {
                 pv.RPC("ShowRPG", RpcTarget.All);
@@ -261,28 +286,46 @@ public class Shooter : MonoBehaviour
         //offline Shooting
         if (!IsThisMultiplayer.Instance.multiplayer)
         {
-            //if you are shooting and have ammo
-            if (Input.GetKey(shootButton) && amountOfAmmoForCooldownBar > 0 && !RPG)
+            if (shooterClass == ShooterClass.minigun)
             {
-                if (Time.time >= fireCooldown + minigunFireRate)
+                //if you are shooting and have ammo
+                if (Input.GetKey(shootButton) && minigunScript.amountOfAmmoForCooldownBar > 0 && !RPG)
                 {
-                    currentlyShooting = true;
-                    if (currentSpread < maxDeviation)
+                    if (Time.time >= fireCooldown + minigunScript.minigunFireRate)
                     {
-                        currentSpread += deviationIncrease;
+                        currentlyShooting = true;
+                        if (currentBulletSpread < maxBulletDeviation)
+                        {
+                            currentBulletSpread += bulletDeviationIncrease;
+                        }
+
+                        if (currentCrosshairSpread < maxCrosshairDeviation)
+                        {
+                            currentCrosshairSpread += crosshairDeviationIncrease;
+                        }
+                        OfflineShoot();
+                        fireCooldown = Time.time;
                     }
-                    OfflineShoot();
-                    fireCooldown = Time.time;
                 }
-            }
-            else
-            {
-                currentlyShooting = false;
-                if (currentSpread > 0)
+                else
                 {
-                    currentSpread -= deviationIncrease;
+                    currentlyShooting = false;
+                    if (currentBulletSpread > 0)
+                    {
+                        currentBulletSpread -= bulletDeviationIncrease;
+                    }
+                    if (currentCrosshairSpread > 0)
+                    {
+                        currentCrosshairSpread -= crosshairDeviationIncrease;
+                    }
                 }
             }
+
+            if (shooterClass == ShooterClass.rifle)
+            {
+
+            }
+
             if (!RPG)
             {
                 rpgGo.SetActive(false);
@@ -312,8 +355,39 @@ public class Shooter : MonoBehaviour
         {
             //RPG = !RPG;
         }
+        CrossHair();
         Hitmarker();
     }
+
+    void CrossHair()
+    {
+        if (pauseMenu.paused)
+        {
+            CrossHairGameobject.SetActive(false);
+        }
+        else
+        {
+            CrossHairGameobject.SetActive(true);
+        }
+        if (isShooting)
+        {
+            spreadSize = currentCrosshairSpread * 10 + restingSize;
+            if (spreadSize < restingSize)
+            {
+                spreadSize = restingSize;
+            }
+            currentSize = Mathf.Lerp(currentSize, spreadSize, Time.deltaTime * speed);
+        }
+        else
+        {
+            currentSize = Mathf.Lerp(currentSize, restingSize, Time.deltaTime * speed);
+        }
+
+        reticle.sizeDelta = new Vector2(currentSize, currentSize);
+
+    }
+
+    #region RPG Functions
 
     [PunRPC]
     void ShowRPG()
@@ -345,12 +419,9 @@ public class Shooter : MonoBehaviour
         }
     }
 
-    
+    #endregion
 
-    private void RotateGunBarrel()
-    {
-        barrelToRotate.Rotate(0, 0, barrelRotationSpeed * Time.deltaTime);
-    }
+
 
     private void FollowMouse()
     {
@@ -363,29 +434,6 @@ public class Shooter : MonoBehaviour
         gunBarrel.localRotation = Quaternion.Euler(yAngle, xAngle, 0);
     }
 
-    private void CoolDownBar(float sizeNormalized)
-    {
-       coolDownBarUi.localScale = new Vector3(sizeNormalized, 1f); //scale the ui cooldown bar to match the ammo count
-    }
-
-    void CooldownBarValues()
-    {
-        //if you are shooting and have ammo
-        if (Input.GetKey(shootButton) && amountOfAmmoForCooldownBar > 0)
-        {
-            amountOfAmmoForCooldownBar--;
-            barrelRotationSpeed = barrelRotationMaxSpeed;
-        }
-        else
-            barrelRotationSpeed = barrelRotationStartSpeed;
-
-        //if you are not shooting and the ammo isnt full
-        if (amountOfAmmoForCooldownBar < startAmmo && !Input.GetKey(shootButton))
-        {
-            amountOfAmmoForCooldownBar++;
-        }
-    }
-
     void Hitmarker()
     {
         var tempColor = hitmarker.color;
@@ -393,13 +441,28 @@ public class Shooter : MonoBehaviour
         hitmarker.color = tempColor;
     }
 
+
+
+    Vector3 Spread(float maxDeviation)
+    {
+        Vector3 forwardVector = cineCamera.transform.forward;
+        float deviation = Random.Range(0f, maxDeviation);
+        float angle = Random.Range(0f, 360f);
+        forwardVector = Quaternion.AngleAxis(deviation, cineCamera.transform.up) * forwardVector;
+        forwardVector = Quaternion.AngleAxis(angle, cineCamera.transform.forward) * forwardVector;
+        return forwardVector;
+    }
+
+    
+
+    #region Shooting Functions
     [PunRPC]
     void Shoot()
     {
         muzzleFlash.Play();
-        FMODUnity.RuntimeManager.PlayOneShotAttached("event:/GunFX/Minigun/MinigunShot", gameObject);
+        FMODUnity.RuntimeManager.PlayOneShotAttached(sound, gameObject);
 
-        Vector3 direction = Spread(currentSpread);
+        Vector3 direction = Spread(currentBulletSpread);
 
         GameObject a = PhotonNetwork.Instantiate("BulletCasing", CasingSpawn.transform.position, CasingSpawn.transform.rotation);
 
@@ -419,13 +482,13 @@ public class Shooter : MonoBehaviour
 
 
         RaycastHit hit; //gets the information on whats hit
-        if (Physics.Raycast(cineCamera.transform.position, direction, out hit, range))
+        if (Physics.Raycast(cineCamera.transform.position, direction, out hit, weaponRange))
         {
             //Debug.Log("You Hit The: " + hit.transform.name);
             Target target = hit.transform.GetComponent<Target>();
-            if(target != null && target.gameObject != car)
+            if (target != null && target.gameObject != car)
             {
-                target.TakeDamage(minigunDamage);
+                target.TakeDamage(weaponDamage);
                 //<-------------------------------------------------------------------------------------HIT MARKER STUFFS
             }
 
@@ -438,7 +501,7 @@ public class Shooter : MonoBehaviour
         if (chance <= trailPercentage)
         {
             GameObject b = PhotonNetwork.Instantiate("Trail", bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.rotation);
-            FMODUnity.RuntimeManager.PlayOneShotAttached("event:/GunFX/Minigun/BulletWhistle", b);
+            FMODUnity.RuntimeManager.PlayOneShotAttached(bulletWhistle, b);
             if (!noCarNeeded)
             {
                 if (car.GetComponent<CarController>() && pv.IsMine)
@@ -453,25 +516,15 @@ public class Shooter : MonoBehaviour
 
     }
 
-    Vector3 Spread(float maxDeviation)
-    {
-        Vector3 forwardVector = cineCamera.transform.forward;
-        float deviation = Random.Range(0f, maxDeviation);
-        float angle = Random.Range(0f, 360f);
-        forwardVector = Quaternion.AngleAxis(deviation, cineCamera.transform.up) * forwardVector;
-        forwardVector = Quaternion.AngleAxis(angle, cineCamera.transform.forward) * forwardVector;
-        return forwardVector;
-    }
-
     void OfflineShoot()
     {
         muzzleFlash.Play();
-        FMODUnity.RuntimeManager.PlayOneShotAttached("event:/GunFX/Minigun/MinigunShot", gameObject);
-        Vector3 direction = Spread(currentSpread);
+        FMODUnity.RuntimeManager.PlayOneShotAttached(sound, gameObject);
+        Vector3 direction = Spread(currentBulletSpread);
 
         GameObject a = Instantiate(Casing, CasingSpawn.transform.position, CasingSpawn.transform.rotation);
 
-        a.GetComponent<Rigidbody>().AddForce((a.transform.right + (a.transform.up * 2)) * 0.3f  , ForceMode.Impulse);
+        a.GetComponent<Rigidbody>().AddForce((a.transform.right + (a.transform.up * 2)) * 0.3f, ForceMode.Impulse);
 
 
         if (!noCarNeeded)
@@ -484,12 +537,12 @@ public class Shooter : MonoBehaviour
             a.GetComponent<Rigidbody>().AddForce((a.transform.right + (a.transform.up * 2)) * 0.3f, ForceMode.Impulse);
         }
         RaycastHit hit; //gets the information on whats hit
-        if (Physics.Raycast(cineCamera.transform.position, direction, out hit, range))
+        if (Physics.Raycast(cineCamera.transform.position, direction, out hit, weaponRange))
         {
             Target target = hit.transform.GetComponent<Target>();
             if (target != null && target.gameObject != car)
             {
-                target.TakeDamage(minigunDamage);
+                target.TakeDamage(weaponDamage);
                 var tempColor = hitmarker.color;
                 tempColor.a = 1f;
                 hitmarker.color = tempColor;
@@ -504,26 +557,35 @@ public class Shooter : MonoBehaviour
         if (chance <= trailPercentage)
         {
             GameObject b = Instantiate(trail, bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.rotation);
-            FMODUnity.RuntimeManager.PlayOneShotAttached("event:/GunFX/Minigun/BulletWhistle", b);
+            FMODUnity.RuntimeManager.PlayOneShotAttached(bulletWhistle, b);
             if (!noCarNeeded)
             {
                 if (car.transform.tag == "car")
                     b.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
                 else
                     b.GetComponent<Rigidbody>().velocity = aiCarController.rb.velocity;
-            }  
+            }
 
             b.GetComponent<Rigidbody>().AddForce(b.transform.forward * 300, ForceMode.Impulse);
             b.GetComponent<DeleteMe>().enabled = true;
         }
 
     }
+    #endregion
 
+
+
+    #region BulletImpacts
     private IEnumerator DeleteImpactEffect(float time)
     {
         yield return new WaitForSeconds(time);
 
     }
+
+    #endregion
+
+
+
 
     private void OnTriggerEnter(Collider other)
     {
