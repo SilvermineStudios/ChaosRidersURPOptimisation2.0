@@ -87,12 +87,14 @@ public class GameSetup : MonoBehaviour
             {
                 if (amountOfDrivers == 0) //needs to be instansiated here too in the case of there being only 1 shooter and no drivers
                 {
-                    GameObject aiCar = Instantiate(aiCars[Random.Range(0, aiCars.Length)], spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
+                    //GameObject aiCar = Instantiate(aiCars[Random.Range(0, aiCars.Length)], spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
+                    pv.RPC("RPCSpawnAI", p.Player, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
                 }
 
                 if (p.teamNumber > amountOfDrivers)
                 {
-                    GameObject aiCar = Instantiate(aiCars[Random.Range(0, aiCars.Length)], spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
+                    //GameObject aiCar = Instantiate(aiCars[Random.Range(0, aiCars.Length)], spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
+                    pv.RPC("RPCSpawnAI", p.Player, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
                 }
                 
             }
@@ -110,5 +112,11 @@ public class GameSetup : MonoBehaviour
     void RPC_SpawnShooter(Vector3 spawnPos, Quaternion spawnRot)
     {
         PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "ShooterPlayer"), spawnPos, spawnRot, 0);
+    }
+
+    [PunRPC]
+    void RPCSpawnAI(Vector3 spawnPos, Quaternion spawnRot)
+    {
+        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "AI", "AI Mustang"), spawnPos, spawnRot, 0);
     }
 }
