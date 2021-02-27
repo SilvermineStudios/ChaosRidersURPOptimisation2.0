@@ -72,7 +72,8 @@ public class CheckpointManager : MonoBehaviour
         //spawns the waypoint prefab at each waypoint
         for (int i = 0; i < checkPointLocations.Length; i++)
         {
-            Vector3 spawnPos = new Vector3(checkPointLocations[i].position.x, checkPointLocations[i].position.y + yOffset, checkPointLocations[i].position.z);
+            //Vector3 spawnPos = new Vector3(checkPointLocations[i].position.x, checkPointLocations[i].position.y + yOffset, checkPointLocations[i].position.z);
+            Vector3 spawnPos = new Vector3(checkPointLocations[i].position.x, checkPointLocations[i].position.y, checkPointLocations[i].position.z);
             checkPoints[i] = Instantiate(checkpointPrefab, spawnPos, checkPointLocations[i].rotation); //instanciate a checkpoint and add it to the array
             checkPoints[i].name = "Checkpoint " + i;
         }
