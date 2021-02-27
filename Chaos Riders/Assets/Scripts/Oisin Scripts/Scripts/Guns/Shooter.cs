@@ -25,6 +25,7 @@ public class Shooter : MonoBehaviour
     ParticleSystem muzzleFlash;
     [SerializeField] GameObject MinigunHolder;
     [SerializeField] GameObject RifleHolder;
+    [SerializeField] GameObject MinigunIcon, RifleIcon;
 
     #endregion
 
@@ -161,6 +162,8 @@ public class Shooter : MonoBehaviour
         bulletDeviationIncrease = minigunScript.bulletDeviationIncrease;
         crosshairDeviationIncrease = minigunScript.crosshairDeviationIncrease;
         usingAmmo = true;
+        MinigunIcon.SetActive(true);
+        RifleIcon.SetActive(false);
     }
 
     void SetupRifle()
@@ -179,6 +182,8 @@ public class Shooter : MonoBehaviour
         bulletDeviationIncrease = rifleScript.bulletDeviationIncrease;
         crosshairDeviationIncrease = rifleScript.crosshairDeviationIncrease;
         usingAmmo = false;
+        MinigunIcon.SetActive(false);
+        RifleIcon.SetActive(true);
     }
 
     void Update()
