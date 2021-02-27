@@ -314,7 +314,7 @@ public class Shooter : MonoBehaviour
 
             if (shooterClass == ShooterClass.rifle)
             {
-                if (Input.GetKey(shootButton) && !RPG)
+                if (Input.GetKeyDown(shootButton) && !RPG)
                 {
 
                     if (Time.time >= fireCooldown + fireRate)
