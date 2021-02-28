@@ -203,7 +203,6 @@ public class Shooter : MonoBehaviour
             if (!noCarNeeded)
             {
                 if (car != null && car.layer == LayerMask.NameToLayer("Cars"))
-
                 {
                     if (car.layer == LayerMask.NameToLayer("Cars"))
                     {
