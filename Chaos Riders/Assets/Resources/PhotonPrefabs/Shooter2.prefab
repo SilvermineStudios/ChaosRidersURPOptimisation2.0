@@ -1398,7 +1398,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1617670277
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18934,6 +18934,7 @@ MonoBehaviour:
   coolDownBarUi: {fileID: 7634238392297675920}
   sound: event:/GunFX/Minigun/MinigunShot
   bulletWhistle: event:/GunFX/Minigun/BulletWhistle
+  hitmarker: event:/GunFX/Hitmarker
   maxBulletDeviation: 10
   maxCrosshairDeviation: 10
   bulletDeviationIncrease: 0.25
@@ -18960,6 +18961,7 @@ MonoBehaviour:
   crosshairDeviationIncrease: 900
   sound: event:/GunFX/Rifle/RifleShot
   bulletWhistle: event:/GunFX/Minigun/BulletWhistle
+  hitmarker: event:/GunFX/Hitmarker
 --- !u!114 &7634238392847830456
 MonoBehaviour:
   m_ObjectHideFlags: 0

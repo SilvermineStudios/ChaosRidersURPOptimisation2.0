@@ -102,6 +102,7 @@ public class Shooter : MonoBehaviour
     [SerializeField] GameObject CasingSpawn, Casing;
 
     [SerializeField] Image hitmarker;
+
     #endregion
 
     #region ShooterClass
@@ -114,6 +115,7 @@ public class Shooter : MonoBehaviour
     #region Sound
     string sound;
     string bulletWhistle;
+    string hitmarkerSound;
     #endregion
 
     #region Crosshair
@@ -158,6 +160,7 @@ public class Shooter : MonoBehaviour
         fireRate = minigunScript.minigunFireRate;
         sound = minigunScript.sound;
         bulletWhistle = minigunScript.bulletWhistle;
+        hitmarkerSound = minigunScript.hitmarker;
         maxBulletDeviation = minigunScript.maxBulletDeviation;
         maxCrosshairDeviation = minigunScript.maxCrosshairDeviation;
         bulletDeviationIncrease = minigunScript.bulletDeviationIncrease;
@@ -178,6 +181,7 @@ public class Shooter : MonoBehaviour
         fireRate = rifleScript.rifleFireRate;
         sound = rifleScript.sound;
         bulletWhistle = rifleScript.bulletWhistle;
+        hitmarkerSound = rifleScript.hitmarker;
         maxBulletDeviation = rifleScript.maxBulletDeviation;
         maxCrosshairDeviation = rifleScript.maxCrosshairDeviation;
         bulletDeviationIncrease = rifleScript.bulletDeviationIncrease;
@@ -515,7 +519,7 @@ public class Shooter : MonoBehaviour
 
     void CrossHair()
     {
-        if (pauseMenu.paused)
+        if (pauseMenu.paused || !MasterClientRaceStart.Instance.weaponsFree)
         {
             CrossHairGameobject.SetActive(false);
         }
@@ -588,9 +592,7 @@ public class Shooter : MonoBehaviour
 
     void Hitmarker()
     {
-        var tempColor = hitmarker.color;
-        tempColor.a -= 0.1f;
-        hitmarker.color = tempColor;
+        hitmarker.SubtractAlpha(0.1f);
     }
 
 
@@ -629,8 +631,6 @@ public class Shooter : MonoBehaviour
 
             a.GetComponent<Rigidbody>().AddForce((a.transform.right + (a.transform.up * 2)) * 0.3f, ForceMode.Impulse);
         }
-        //Detect all layers exept Ignore Bullets
-        
 
         RaycastHit hit; 
         if (Physics.Raycast(cineCamera.transform.position, direction, out hit, weaponRange, everythingButIgnoreBullets))
@@ -639,6 +639,8 @@ public class Shooter : MonoBehaviour
             if (target != null && target.gameObject != car)
             {
                 target.TakeDamage(weaponDamage);
+                hitmarker.ChangeAlpha(1);
+                FMODUnity.RuntimeManager.PlayOneShot(hitmarkerSound, transform.position);
             }
 
             GameObject impactGo = PhotonNetwork.Instantiate("Impact Particle Effect", hit.point, Quaternion.LookRotation(hit.normal), 0);
@@ -692,9 +694,8 @@ public class Shooter : MonoBehaviour
             if (target != null && target.gameObject != car)
             {
                 target.TakeDamage(weaponDamage);
-                var tempColor = hitmarker.color;
-                tempColor.a = 1f;
-                hitmarker.color = tempColor;
+                hitmarker.ChangeAlpha(1);
+                FMODUnity.RuntimeManager.PlayOneShot(hitmarkerSound, transform.position);
             }
 
             GameObject impactGo = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
