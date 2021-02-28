@@ -27,6 +27,7 @@ public class Minigun : MonoBehaviour
 
     public string sound = "event:/GunFX/Minigun/MinigunShot 2";
     public string bulletWhistle = "event:/GunFX/Minigun/BulletWhistle";
+    public string hitmarker = "event:/GunFX/Hitmarker";
 
     public float maxBulletDeviation;
     public float maxCrosshairDeviation;
