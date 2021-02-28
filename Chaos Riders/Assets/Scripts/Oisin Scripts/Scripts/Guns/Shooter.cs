@@ -267,6 +267,17 @@ public class Shooter : MonoBehaviour
                 previousShooterClass = shooterClass;
                 currentCrosshairSpread = 0;
             }
+
+            if (!RPG)
+            {
+                pv.RPC("HideRPG", RpcTarget.All);
+            }
+
+
+
+            //Wait for weapons Free
+            if (!MasterClientRaceStart.Instance.weaponsFree) { return; }
+            
             if (Input.GetKey(shootButton) && pv.IsMine && usingAmmo)
             {
                 shootButtonHeld = true;
@@ -276,13 +287,7 @@ public class Shooter : MonoBehaviour
                 shootButtonHeld = false;
             }
 
-            if (!RPG)
-            {
-                pv.RPC("HideRPG", RpcTarget.All);
-            }
 
-            //Wait for weapons Free
-            if (!MasterClientRaceStart.Instance.weaponsFree) { return; }
             if (shooterClass == ShooterClass.minigun)
             {
                 //if you are shooting and have ammo (MINIGUN)
