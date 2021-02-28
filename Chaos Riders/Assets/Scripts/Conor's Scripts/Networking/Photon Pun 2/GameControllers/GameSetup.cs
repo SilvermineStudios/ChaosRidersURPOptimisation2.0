@@ -43,7 +43,16 @@ public class GameSetup : MonoBehaviour
         if (pv.IsMine)
         {
             RPC_SpawnPlayers();
-        } 
+
+            foreach (Player p in PhotonNetwork.PlayerList)
+            {
+                if(p == PhotonNetwork.MasterClient)
+                {
+                    //RPC_SpawnPlayers();
+                }
+            }
+        }
+        //Debug.Log("AI CAR LENGTH = " + aiCars.Length);
     }
 
     private void Update()
@@ -72,13 +81,11 @@ public class GameSetup : MonoBehaviour
         {
             if (p.driver)
             {
-                //pv.RPC("RPC_SpawnDriver", p.Player, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
-                pv.RPC("RPC_SpawnDriver", PhotonNetwork.MasterClient, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
+                pv.RPC("RPC_SpawnDriver", p.Player, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
             }
             if (p.shooter)
             {
-                //pv.RPC("RPC_SpawnShooter", p.Player, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
-                pv.RPC("RPC_SpawnShooter", PhotonNetwork.MasterClient, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
+                pv.RPC("RPC_SpawnShooter", p.Player, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
             }
         }
 
@@ -92,6 +99,7 @@ public class GameSetup : MonoBehaviour
                     //GameObject aiCar = Instantiate(aiCars[Random.Range(0, aiCars.Length)], spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
                     //pv.RPC("RPCSpawnAI", p.Player, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
                     pv.RPC("RPCSpawnAI", PhotonNetwork.MasterClient, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
+                    //pv.RPC("RPCSpawnAI", RpcTarget.AllBuffered, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
                 }
 
                 if (p.teamNumber > amountOfDrivers)
@@ -99,6 +107,7 @@ public class GameSetup : MonoBehaviour
                     //GameObject aiCar = Instantiate(aiCars[Random.Range(0, aiCars.Length)], spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
                     //pv.RPC("RPCSpawnAI", p.Player, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
                     pv.RPC("RPCSpawnAI", PhotonNetwork.MasterClient, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
+                    //pv.RPC("RPCSpawnAI", RpcTarget.AllBuffered, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
                 }
                 
             }
@@ -124,6 +133,6 @@ public class GameSetup : MonoBehaviour
         Quaternion spawnRotation = Quaternion.Euler(spawnRot.x, spawnRot.y - 90, spawnRot.z);
 
         //PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "AI", "AI Mustang"), spawnPos, spawnRotation, 0);
-        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "AI", aiCars[Random.Range(0, 1)].name), spawnPos, spawnRotation, 0);
+        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "AI", aiCars[Random.Range(0, aiCars.Length-1)].name), spawnPos, spawnRotation, 0);
     }
 }

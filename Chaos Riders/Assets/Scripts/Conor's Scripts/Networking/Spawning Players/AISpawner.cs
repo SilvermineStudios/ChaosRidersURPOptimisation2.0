@@ -38,28 +38,13 @@ public class AISpawner : MonoBehaviour
 
     void Start()
     {
-        foreach(Player p in PhotonNetwork.PlayerList)
-        {
-            if (p.IsMasterClient)
-            {
-                for (int i = 0; i < amountOfAI; i++)
-                {
-                    pv.RPC("RPCSpawnAI", p, spawnPoints[i].position, spawnPoints[i].rotation);
-                }
-            }
-        }
-
-        /*
-        if (spawnAI)
+        if(pv.IsMine)
         {
             for (int i = 0; i < amountOfAI; i++)
             {
-                GameObject aiCar = Instantiate(aiCars[Random.Range(0, aiCars.Length)], spawnPoints[i].position, spawnPoints[i].rotation);
+                pv.RPC("RPCSpawnAI", RpcTarget.MasterClient, spawnPoints[i].position, spawnPoints[i].rotation);
             }
         }
-        else
-            return;
-        */
     }
 
     [PunRPC]
