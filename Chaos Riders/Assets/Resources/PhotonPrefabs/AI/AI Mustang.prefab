@@ -9072,11 +9072,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d6532e1d2a565d48a623f2c53384a43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  downforce: 1000
+  downforce: 1800
   rb: {fileID: 0}
-  maxMotorTorque: 1250
+  maxMotorTorque: 950
   currentSpeed: 0
-  maxSpeed: 3000
+  maxSpeed: 1600
   maxSteerAngle: 55
   currentWaypoint: 0
   nearestWaypoint: 0
@@ -9086,6 +9086,7 @@ MonoBehaviour:
   waypoints: []
   centerOfMass: {x: 0, y: -0.2, z: 2}
   Shooter: {fileID: 0}
+  timeBeforeCarFreezes: 1
 --- !u!114 &4477362338368450644
 MonoBehaviour:
   m_ObjectHideFlags: 0

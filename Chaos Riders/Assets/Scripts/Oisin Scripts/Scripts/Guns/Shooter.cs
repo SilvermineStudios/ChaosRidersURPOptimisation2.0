@@ -26,7 +26,7 @@ public class Shooter : MonoBehaviour
     [SerializeField] GameObject MinigunHolder;
     [SerializeField] GameObject RifleHolder;
     [SerializeField] GameObject MinigunIcon, RifleIcon;
-
+    LayerMask everythingButIgnoreBullets;
     #endregion
 
     #region Camera
@@ -102,6 +102,7 @@ public class Shooter : MonoBehaviour
     [SerializeField] GameObject CasingSpawn, Casing;
 
     [SerializeField] Image hitmarker;
+
     #endregion
 
     #region ShooterClass
@@ -114,6 +115,7 @@ public class Shooter : MonoBehaviour
     #region Sound
     string sound;
     string bulletWhistle;
+    string hitmarkerSound;
     #endregion
 
     #region Crosshair
@@ -128,6 +130,7 @@ public class Shooter : MonoBehaviour
 
     void Start()
     {
+        everythingButIgnoreBullets = ~(1 << LayerMask.NameToLayer("Ignore Bullets"));
         hitmarker.ChangeAlpha(0);
         pauseMenu = GetComponent<Pause>();
         pv = GetComponent<PhotonView>();
@@ -157,6 +160,7 @@ public class Shooter : MonoBehaviour
         fireRate = minigunScript.minigunFireRate;
         sound = minigunScript.sound;
         bulletWhistle = minigunScript.bulletWhistle;
+        hitmarkerSound = minigunScript.hitmarker;
         maxBulletDeviation = minigunScript.maxBulletDeviation;
         maxCrosshairDeviation = minigunScript.maxCrosshairDeviation;
         bulletDeviationIncrease = minigunScript.bulletDeviationIncrease;
@@ -177,6 +181,7 @@ public class Shooter : MonoBehaviour
         fireRate = rifleScript.rifleFireRate;
         sound = rifleScript.sound;
         bulletWhistle = rifleScript.bulletWhistle;
+        hitmarkerSound = rifleScript.hitmarker;
         maxBulletDeviation = rifleScript.maxBulletDeviation;
         maxCrosshairDeviation = rifleScript.maxCrosshairDeviation;
         bulletDeviationIncrease = rifleScript.bulletDeviationIncrease;
@@ -189,6 +194,8 @@ public class Shooter : MonoBehaviour
 
     void Update()
     {
+        CrossHair();
+        Hitmarker();
         if (pauseMenu.paused) { return; }
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
@@ -267,6 +274,17 @@ public class Shooter : MonoBehaviour
                 previousShooterClass = shooterClass;
                 currentCrosshairSpread = 0;
             }
+
+            if (!RPG)
+            {
+                pv.RPC("HideRPG", RpcTarget.All);
+            }
+
+
+
+            //Wait for weapons Free
+            if (!MasterClientRaceStart.Instance.weaponsFree) { return; }
+            
             if (Input.GetKey(shootButton) && pv.IsMine && usingAmmo)
             {
                 shootButtonHeld = true;
@@ -276,13 +294,7 @@ public class Shooter : MonoBehaviour
                 shootButtonHeld = false;
             }
 
-            if (!RPG)
-            {
-                pv.RPC("HideRPG", RpcTarget.All);
-            }
 
-            //Wait for weapons Free
-            if (!MasterClientRaceStart.Instance.weaponsFree) { return; }
             if (shooterClass == ShooterClass.minigun)
             {
                 //if you are shooting and have ammo (MINIGUN)
@@ -503,13 +515,11 @@ public class Shooter : MonoBehaviour
         {
             //RPG = !RPG;
         }
-        CrossHair();
-        Hitmarker();
     }
 
     void CrossHair()
     {
-        if (pauseMenu.paused)
+        if (pauseMenu.paused || !MasterClientRaceStart.Instance.weaponsFree)
         {
             CrossHairGameobject.SetActive(false);
         }
@@ -582,9 +592,7 @@ public class Shooter : MonoBehaviour
 
     void Hitmarker()
     {
-        var tempColor = hitmarker.color;
-        tempColor.a -= 0.1f;
-        hitmarker.color = tempColor;
+        hitmarker.SubtractAlpha(0.1f);
     }
 
 
@@ -623,13 +631,16 @@ public class Shooter : MonoBehaviour
 
             a.GetComponent<Rigidbody>().AddForce((a.transform.right + (a.transform.up * 2)) * 0.3f, ForceMode.Impulse);
         }
+
         RaycastHit hit; 
-        if (Physics.Raycast(cineCamera.transform.position, direction, out hit, weaponRange))
+        if (Physics.Raycast(cineCamera.transform.position, direction, out hit, weaponRange, everythingButIgnoreBullets))
         {
             Target target = hit.transform.GetComponent<Target>();
             if (target != null && target.gameObject != car)
             {
                 target.TakeDamage(weaponDamage);
+                hitmarker.ChangeAlpha(1);
+                FMODUnity.RuntimeManager.PlayOneShot(hitmarkerSound, transform.position);
             }
 
             GameObject impactGo = PhotonNetwork.Instantiate("Impact Particle Effect", hit.point, Quaternion.LookRotation(hit.normal), 0);
@@ -677,15 +688,14 @@ public class Shooter : MonoBehaviour
             a.GetComponent<Rigidbody>().AddForce((a.transform.right + (a.transform.up * 2)) * 0.3f, ForceMode.Impulse);
         }
         RaycastHit hit; //gets the information on whats hit
-        if (Physics.Raycast(cineCamera.transform.position, direction, out hit, weaponRange))
+        if (Physics.Raycast(cineCamera.transform.position, direction, out hit, weaponRange, everythingButIgnoreBullets))
         {
             Target target = hit.transform.GetComponent<Target>();
             if (target != null && target.gameObject != car)
             {
                 target.TakeDamage(weaponDamage);
-                var tempColor = hitmarker.color;
-                tempColor.a = 1f;
-                hitmarker.color = tempColor;
+                hitmarker.ChangeAlpha(1);
+                FMODUnity.RuntimeManager.PlayOneShot(hitmarkerSound, transform.position);
             }
 
             GameObject impactGo = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
