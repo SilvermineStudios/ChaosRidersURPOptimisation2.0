@@ -26,7 +26,7 @@ public class Shooter : MonoBehaviour
     [SerializeField] GameObject MinigunHolder;
     [SerializeField] GameObject RifleHolder;
     [SerializeField] GameObject MinigunIcon, RifleIcon;
-
+    LayerMask everythingButIgnoreBullets;
     #endregion
 
     #region Camera
@@ -128,6 +128,7 @@ public class Shooter : MonoBehaviour
 
     void Start()
     {
+        everythingButIgnoreBullets = ~(1 << LayerMask.NameToLayer("Ignore Bullets"));
         hitmarker.ChangeAlpha(0);
         pauseMenu = GetComponent<Pause>();
         pv = GetComponent<PhotonView>();
@@ -628,8 +629,11 @@ public class Shooter : MonoBehaviour
 
             a.GetComponent<Rigidbody>().AddForce((a.transform.right + (a.transform.up * 2)) * 0.3f, ForceMode.Impulse);
         }
+        //Detect all layers exept Ignore Bullets
+        
+
         RaycastHit hit; 
-        if (Physics.Raycast(cineCamera.transform.position, direction, out hit, weaponRange))
+        if (Physics.Raycast(cineCamera.transform.position, direction, out hit, weaponRange, everythingButIgnoreBullets))
         {
             Target target = hit.transform.GetComponent<Target>();
             if (target != null && target.gameObject != car)
@@ -682,7 +686,7 @@ public class Shooter : MonoBehaviour
             a.GetComponent<Rigidbody>().AddForce((a.transform.right + (a.transform.up * 2)) * 0.3f, ForceMode.Impulse);
         }
         RaycastHit hit; //gets the information on whats hit
-        if (Physics.Raycast(cineCamera.transform.position, direction, out hit, weaponRange))
+        if (Physics.Raycast(cineCamera.transform.position, direction, out hit, weaponRange, everythingButIgnoreBullets))
         {
             Target target = hit.transform.GetComponent<Target>();
             if (target != null && target.gameObject != car)
