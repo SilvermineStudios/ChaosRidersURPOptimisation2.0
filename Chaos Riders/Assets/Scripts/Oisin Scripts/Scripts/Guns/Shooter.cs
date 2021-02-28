@@ -202,47 +202,38 @@ public class Shooter : MonoBehaviour
             rpgcount.text = amountOfAmmoForRPG + " / " + startAmountOfAmmoForRPG;
             if (!noCarNeeded)
             {
-                if (car != null && car.layer == LayerMask.NameToLayer("Cars"))
-
+                if (car != null)
                 {
-                    if (car.layer == LayerMask.NameToLayer("Cars"))
+                    //ONLINE PLAYERS
+                    if (car.GetComponent<Controller>())
                     {
-                        //ONLINE PLAYERS
-                        if (car.GetComponent<Controller>())
+                        if (car.GetComponent<CarPickup>().hasRPG)
+                            RPG = true;
+
+                        if (amountOfAmmoForRPG <= 0 && car.GetComponent<CarPickup>().hasRPG)
                         {
-                            if (car.GetComponent<CarPickup>().hasRPG)
-                                RPG = true;
-
-                            if (amountOfAmmoForRPG <= 0 && car.GetComponent<CarPickup>().hasRPG)
-                            {
-                                RPG = false;
-                                car.GetComponent<CarPickup>().hasRPG = false;
-                                amountOfAmmoForRPG = startAmountOfAmmoForRPG;
-                            }
-                        }
-
-                        //AI CARS
-                        if (car.GetComponent<AICarController>())
-                        {
-                            Debug.Log("Put AI car RPG STUFF HERE");///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-                            if (car.GetComponent<AICarPickups>().hasRPG)
-                            {
-                                RPG = true; 
-                            }
-
-                            aiCarController = car.GetComponent<AICarController>();
-
-                            if (amountOfAmmoForRPG <= 0 && car.GetComponent<AICarPickups>().hasRPG)
-                            {
-                                RPG = false;
-                                car.GetComponent<AICarPickups>().hasRPG = false;
-                                amountOfAmmoForRPG = startAmountOfAmmoForRPG;
-                            }
+                            RPG = false;
+                            car.GetComponent<CarPickup>().hasRPG = false;
+                            amountOfAmmoForRPG = startAmountOfAmmoForRPG;
                         }
                     }
 
+                    //AI CARS
+                    if (car.GetComponent<AICarController>())
+                    {
+                        if (car.GetComponent<AICarPickups>().hasRPG)
+                            RPG = true;
+
+                        aiCarController = car.GetComponent<AICarController>();
+
+                        if (amountOfAmmoForRPG <= 1 && car.GetComponent<AICarPickups>().hasRPG)
+                        {
+                            Debug.Log("Turn OFf RPG!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                            RPG = false;
+                            car.GetComponent<AICarPickups>().hasRPG = false;
+                            amountOfAmmoForRPG = startAmountOfAmmoForRPG;
+                        }
+                    }
                 }
             }
         }
