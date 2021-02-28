@@ -1398,7 +1398,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1617670277
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18927,13 +18927,14 @@ MonoBehaviour:
   barrelToRotate: {fileID: 1682963324}
   barrelRotationStartSpeed: 100
   barrelRotationMaxSpeed: 800
-  minigunDamage: 5
+  minigunDamage: 10
   range: 9999
   minigunFireRate: 0.12
   amountOfAmmoForCooldownBar: 500
   coolDownBarUi: {fileID: 7634238392297675920}
   sound: event:/GunFX/Minigun/MinigunShot
   bulletWhistle: event:/GunFX/Minigun/BulletWhistle
+  hitmarker: event:/GunFX/Hitmarker
   maxBulletDeviation: 10
   maxCrosshairDeviation: 10
   bulletDeviationIncrease: 0.25
@@ -18951,15 +18952,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   muzzleFlash: {fileID: 2949780119046888163}
-  rifleDamage: 40
+  rifleDamage: 75
   range: 9999
-  rifleFireRate: 2
-  maxBulletDeviation: 10
+  rifleFireRate: 1
+  maxBulletDeviation: 1
   maxCrosshairDeviation: 10
-  bulletDeviationIncrease: 0.25
+  bulletDeviationIncrease: 0.1
   crosshairDeviationIncrease: 900
   sound: event:/GunFX/Rifle/RifleShot
   bulletWhistle: event:/GunFX/Minigun/BulletWhistle
+  hitmarker: event:/GunFX/Hitmarker
 --- !u!114 &7634238392847830456
 MonoBehaviour:
   m_ObjectHideFlags: 0

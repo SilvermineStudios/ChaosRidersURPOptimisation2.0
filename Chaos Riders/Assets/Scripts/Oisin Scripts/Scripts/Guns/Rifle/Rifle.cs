@@ -22,6 +22,7 @@ public class Rifle : MonoBehaviour
 
     public string sound = "event:/GunFX/Rifle/RifleShot";
     public string bulletWhistle = "event:/GunFX/Minigun/BulletWhistle";
+    public string hitmarker = "event:/GunFX/Hitmarker";
 
     Shooter shooterScript;
 
