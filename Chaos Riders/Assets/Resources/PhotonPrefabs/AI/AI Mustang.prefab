@@ -9072,15 +9072,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d6532e1d2a565d48a623f2c53384a43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  downforce: 800
+  downforce: 1000
   rb: {fileID: 0}
-  maxMotorTorque: 600
+  maxMotorTorque: 1250
   currentSpeed: 0
-  maxSpeed: 2000
-  maxSteerAngle: 45
+  maxSpeed: 3000
+  maxSteerAngle: 55
   currentWaypoint: 0
   nearestWaypoint: 0
-  changeWaypointDistance: 60.78
+  changeWaypointDistance: 30
   FL: {fileID: 2652499756507993981}
   FR: {fileID: 4583228938035943459}
   waypoints: []
@@ -9154,7 +9154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myHealthBar: {fileID: 1407414511772850379}
-  health: 100
+  health: 200
   startHealth: 0
   healthNormalized: 0
   lastHit: 0
@@ -12871,6 +12871,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MiniGun export
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e149200f973b6244f91fa12b984338af, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e149200f973b6244f91fa12b984338af, type: 3}
 --- !u!4 &1441887967864924488 stripped
@@ -13022,6 +13026,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: e149200f973b6244f91fa12b984338af, type: 3}
       propertyPath: m_Name
       value: MiniGun export
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e149200f973b6244f91fa12b984338af, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e149200f973b6244f91fa12b984338af, type: 3}

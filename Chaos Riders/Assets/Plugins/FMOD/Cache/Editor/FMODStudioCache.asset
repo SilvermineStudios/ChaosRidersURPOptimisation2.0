@@ -45,7 +45,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 0
   MaxDistance: 0
-  Length: 658
+  Length: 1368
 --- !u!114 &-7636924816389521059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,7 +125,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/Master.bank
   Name: Master
-  lastModified: 637500389412826637
+  lastModified: 637501260282669817
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -212,11 +212,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/Master.strings.bank
   Name: Master.strings
-  lastModified: 637500389412836342
+  lastModified: 637501260282879602
   LoadResult: 0
   FileSizes:
   - Name: Desktop
-    Value: 1816
+    Value: 1902
+  Exists: 1
+--- !u!114 &-2624649675606900976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/CarNoise.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Chaos Riders/Build/Desktop/CarNoise.bank
+  Name: CarNoise
+  lastModified: 637501260282020449
+  LoadResult: 0
+  FileSizes: []
   Exists: 1
 --- !u!114 &-2379609175019932448
 MonoBehaviour:
@@ -300,6 +318,24 @@ MonoBehaviour:
   LoadResult: 0
   FileSizes: []
   Exists: 1
+--- !u!114 &-906827504900247971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/CarNoise.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Chaos Riders/Build/Desktop/CarNoise.bank
+  Name: CarNoise
+  lastModified: 637500433226860830
+  LoadResult: 0
+  FileSizes: []
+  Exists: 1
 --- !u!114 &-901828986925691195
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -322,7 +358,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 0
   MaxDistance: 0
-  Length: 981
+  Length: 1296
 --- !u!114 &-738458561647045439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -406,6 +442,7 @@ MonoBehaviour:
   EditorBanks:
   - {fileID: -2954939187940535496}
   - {fileID: -4466803539278922483}
+  - {fileID: -2624649675606900976}
   EditorEvents:
   - {fileID: -4789631137126399954}
   - {fileID: -2173327587602132150}
@@ -424,12 +461,14 @@ MonoBehaviour:
   - {fileID: -901828986925691195}
   - {fileID: -8075725593753776570}
   - {fileID: -4372692443979137554}
+  - {fileID: 4474931729081467063}
+  - {fileID: 7046008408831150712}
   EditorParameters: []
   MasterBanks:
   - {fileID: -4466803539278922483}
   StringsBanks:
   - {fileID: -2954939187940535496}
-  stringsBankWriteTime: 637500389412836342
+  stringsBankWriteTime: 637501260282879602
   cacheVersion: 5
 --- !u!114 &481966967742989797
 MonoBehaviour:
@@ -757,6 +796,29 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 4416
+--- !u!114 &4474931729081467063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/GunFX/Minigun/MinigunShot 2
+  m_EditorClassIdentifier: 
+  Path: event:/GunFX/Minigun/MinigunShot 2
+  guid: 9a72d04b107ec343859c191bbbb7e928
+  Banks:
+  - {fileID: -4466803539278922483}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 2000
 --- !u!114 &4507873241952277348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -798,6 +860,29 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 981
+--- !u!114 &7046008408831150712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/RaceStart/WeaponsFree
+  m_EditorClassIdentifier: 
+  Path: event:/RaceStart/WeaponsFree
+  guid: 5fe7249928e9034f9de4e3695cd7da10
+  Banks:
+  - {fileID: -4466803539278922483}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 5018
 --- !u!114 &7425718266395928888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -878,6 +963,7 @@ MonoBehaviour:
   guid: 1afa13fc8c97a2449ffc3c1f3041719a
   Banks:
   - {fileID: 8390316997883208087}
+  - {fileID: -2624649675606900976}
   - {fileID: -4466803539278922483}
   IsStream: 0
   Is3D: 1
