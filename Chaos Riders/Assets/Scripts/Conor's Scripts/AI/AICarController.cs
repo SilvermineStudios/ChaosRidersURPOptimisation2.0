@@ -54,14 +54,9 @@ public class AICarController : MonoBehaviour
 
         // if Countdown for race start hasn't finished, dont move
         if (!MasterClientRaceStart.Instance.countdownTimerStart)
-        {
-            //rb.isKinematic = true;
-            StartCoroutine(SpawnCourotine(0.5f));
-        }
+            StartCoroutine(SpawnCourotine(0.5f)); //makes the rb kinematic so the car doesnt roll at the start of the race
         else
-        {
             rb.isKinematic = false;
-        }
 
         if (!MasterClientRaceStart.Instance.countdownTimerStart) { return; }
 
