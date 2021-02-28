@@ -51,7 +51,18 @@ public class AICarController : MonoBehaviour
     {
         //if dead bring to a stop and dont steer or update waypoints
         if (healthScript.isDead) { Die(); return; }
+
         // if Countdown for race start hasn't finished, dont move
+        if (!MasterClientRaceStart.Instance.countdownTimerStart)
+        {
+            //rb.isKinematic = true;
+            StartCoroutine(SpawnCourotine(0.5f));
+        }
+        else
+        {
+            rb.isKinematic = false;
+        }
+
         if (!MasterClientRaceStart.Instance.countdownTimerStart) { return; }
 
         ApplySteer();
@@ -155,5 +166,11 @@ public class AICarController : MonoBehaviour
         {
             Shooter = other.gameObject;
         }
+    }
+
+    public IEnumerator SpawnCourotine(float time)
+    {
+        yield return new WaitForSeconds(time);
+        rb.isKinematic = true;
     }
 }
