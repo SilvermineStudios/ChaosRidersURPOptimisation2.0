@@ -14,7 +14,7 @@ public class MasterClientRaceStart : MonoBehaviour
 
     public bool countdownTimerStart;
     public bool weaponsFree;
-
+    bool n3, n2, n1, n0, nWF;
     private void Awake()
     {
         //if (!IsThisMultiplayer.Instance.multiplayer) { return; }
@@ -89,54 +89,41 @@ public class MasterClientRaceStart : MonoBehaviour
     IEnumerator StartTime()
     {
         yield return new WaitForSeconds(4);
-        pv.RPC("CountDown", RpcTarget.All, 16);
+        pv.RPC("CountDown", RpcTarget.All, 3);
         yield return new WaitForSeconds(2);
-        pv.RPC("CountDown", RpcTarget.All, 14);
+        pv.RPC("CountDown", RpcTarget.All, 2);
         yield return new WaitForSeconds(2);
-        pv.RPC("CountDown", RpcTarget.All, 12);
+        pv.RPC("CountDown", RpcTarget.All, 1);
         yield return new WaitForSeconds(2);
-        pv.RPC("CountDown", RpcTarget.All, 10);
+        pv.RPC("CountDown", RpcTarget.All, 0);
         yield return new WaitForSeconds(5);
-        pv.RPC("CountDown", RpcTarget.All, 5);
+        pv.RPC("CountDown", RpcTarget.All, -1);
     }
 
     void FixedUpdate()
     {
         if (!IsThisMultiplayer.Instance.multiplayer) { return; }
 
-        /*
-        if (PhotonNetwork.IsMasterClient)
+        if(count3.alpha > 0 && n3)
         {
-
-            
-
-
-            if (timer <= 10 && !countdownTimerStart)
-            {
-                pv.RPC("CountDownStart", RpcTarget.All);
-            }
-
-            else if (timer <= 5 && !weaponsFree)
-            {
-                pv.RPC("WeaponsFree", RpcTarget.All);
-            }
-
-            timer -= Time.deltaTime;
+            count3.SubtractAlpha(0.004f);
         }
-
-        */
-        if (currentText != null && currentText.alpha > 0 && !weaponsFree)
+        if (count2.alpha > 0 && n2)
         {
-            currentText.SubtractAlpha(0.008f);
-            if (fadePanelOut)
-            {
-                BackgroundPanel.SubtractAlpha(0.008f);
-            }
+            count2.SubtractAlpha(0.004f);
         }
-
-        else if (currentText != null && currentText.alpha > 0 && weaponsFree)
+        if (count1.alpha > 0 && n1)
         {
-            currentText.SubtractAlpha(0.004f);
+            count1.SubtractAlpha(0.004f);
+        }
+        if (countStart.alpha > 0 && n0)
+        {
+            countStart.SubtractAlpha(0.004f);
+            BackgroundPanel.SubtractAlpha(0.004f);
+        }
+        if (countWeaponsFree.alpha > 0 && nWF)
+        {
+            countWeaponsFree.SubtractAlpha(0.004f);
             BackgroundPanel.SubtractAlpha(0.004f);
         }
     }
@@ -149,40 +136,38 @@ public class MasterClientRaceStart : MonoBehaviour
 
         switch (time)
         {
-            case 16:
+            case 3:
+                n3 = true;
                 BackgroundPanel.ChangeAlpha(0.5f);
-                currentText = count3;
-                currentText.ChangeAlpha(1);
+                count3.ChangeAlpha(1);
                 FMODUnity.RuntimeManager.PlayOneShot("event:/RaceStart/CountDown");
                 break;
 
-            case 14:
-                currentText = count2;
-                currentText.ChangeAlpha(1);
+            case 2:
+                n2 = true;
+                count2.ChangeAlpha(1);
                 FMODUnity.RuntimeManager.PlayOneShot("event:/RaceStart/CountDown");
                 break;
 
-            case 12:
-                currentText = count1;
-                currentText.ChangeAlpha(1);
+            case 1:
+                n1 = true;
+                count1.ChangeAlpha(1);
                 FMODUnity.RuntimeManager.PlayOneShot("event:/RaceStart/CountDown");
                 break;
 
-            case 10:
-                currentText = countStart;
-                currentText.ChangeAlpha(1);
+            case 0:
+                n0 = true;
+                countStart.ChangeAlpha(1);
                 FMODUnity.RuntimeManager.PlayOneShot("event:/RaceStart/Start");
-                fadePanelOut = true;
                 MasterClientRaceStart.Instance.countdownTimerStart = true;
                 break;
 
-            case 5:
-                currentText = countWeaponsFree;
-                currentText.ChangeAlpha(1);
+            case -1:
+                nWF = true;
+                countWeaponsFree.ChangeAlpha(1);
                 BackgroundPanel.ChangeAlpha(0.5f);
-                FMODUnity.RuntimeManager.PlayOneShot("event:/RaceStart/Start");
+                FMODUnity.RuntimeManager.PlayOneShot("event:/RaceStart/WeaponsFree");
                 MasterClientRaceStart.Instance.weaponsFree = true;
-                fadePanelOut = true;
                 break;
         }
 

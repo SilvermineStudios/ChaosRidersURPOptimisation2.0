@@ -62,5 +62,6 @@ public class PhotonShooter : MonoBehaviour
 
         //pv.RPC("RPC_SpawnMyCharacter", PhotonNetwork.PlayerList[myNumberInRoom], GameSetup.SpawnPoints[myDriverNumber].position, GameSetup.SpawnPoints[myDriverNumber].rotation);
         PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", myCharacter.name), this.transform.position, this.transform.rotation, 0);
+
     }
 }
