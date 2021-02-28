@@ -125,7 +125,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/Master.bank
   Name: Master
-  lastModified: 637501260282669817
+  lastModified: 637501290113753447
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -197,7 +197,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 1000
+  Length: 1119
 --- !u!114 &-2954939187940535496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -212,11 +212,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/Master.strings.bank
   Name: Master.strings
-  lastModified: 637501260282879602
+  lastModified: 637501290113833354
   LoadResult: 0
   FileSizes:
   - Name: Desktop
-    Value: 1902
+    Value: 1936
   Exists: 1
 --- !u!114 &-2624649675606900976
 MonoBehaviour:
@@ -232,7 +232,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/CarNoise.bank
   Name: CarNoise
-  lastModified: 637501260282020449
+  lastModified: 637501290113094114
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -277,6 +277,29 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1850
+--- !u!114 &-1697617239266563794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Pickups/Use
+  m_EditorClassIdentifier: 
+  Path: event:/Pickups/Use
+  guid: 1da819f585b2dc4baf6d55682620e7f0
+  Banks:
+  - {fileID: -4466803539278922483}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 4142
 --- !u!114 &-1408049179336847372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -463,12 +486,13 @@ MonoBehaviour:
   - {fileID: -4372692443979137554}
   - {fileID: 4474931729081467063}
   - {fileID: 7046008408831150712}
+  - {fileID: -1697617239266563794}
   EditorParameters: []
   MasterBanks:
   - {fileID: -4466803539278922483}
   StringsBanks:
   - {fileID: -2954939187940535496}
-  stringsBankWriteTime: 637501260282879602
+  stringsBankWriteTime: 637501290113833354
   cacheVersion: 5
 --- !u!114 &481966967742989797
 MonoBehaviour:
@@ -859,7 +883,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 981
+  Length: 1640
 --- !u!114 &7046008408831150712
 MonoBehaviour:
   m_ObjectHideFlags: 0
