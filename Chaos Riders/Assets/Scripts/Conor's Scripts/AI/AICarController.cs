@@ -29,6 +29,7 @@ public class AICarController : MonoBehaviour
     private NavMeshAgent navMeshAgent;
 
     public GameObject Shooter;
+    [SerializeField] private float timeBeforeCarFreezes = 1f; //the amount of time before the ai car freezes in place at the start line
 
     private void Awake()
     {
@@ -54,7 +55,7 @@ public class AICarController : MonoBehaviour
 
         // if Countdown for race start hasn't finished, dont move
         if (!MasterClientRaceStart.Instance.countdownTimerStart)
-            StartCoroutine(SpawnCourotine(0.5f)); //makes the rb kinematic so the car doesnt roll at the start of the race
+            StartCoroutine(SpawnCourotine(timeBeforeCarFreezes)); //makes the rb kinematic so the car doesnt roll at the start of the race
         else
             rb.isKinematic = false;
         // if Countdown for race start hasn't finished, dont move
