@@ -42,13 +42,13 @@ public class GameSetup : MonoBehaviour
     {
         if (pv.IsMine)
         {
-            RPC_SpawnPlayers();
+            //RPC_SpawnPlayers();
 
             foreach (Player p in PhotonNetwork.PlayerList)
             {
                 if(p == PhotonNetwork.MasterClient)
                 {
-                    //RPC_SpawnPlayers();
+                    RPC_SpawnPlayers();
                 }
             }
         }
@@ -83,36 +83,25 @@ public class GameSetup : MonoBehaviour
             {
                 pv.RPC("RPC_SpawnDriver", p.Player, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
             }
+
             if (p.shooter)
             {
                 pv.RPC("RPC_SpawnShooter", p.Player, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
-            }
-        }
 
-        //spawn AI cars for shooters to attach to if there are not enough driver players
-        foreach (PhotonMenuPlayer p in PlayerDataManager.Players)
-        {
-            if (p.shooter)
-            {
-                if (amountOfDrivers == 0) //needs to be instansiated here too in the case of there being only 1 shooter and no drivers
+
+                //if there are no drivers
+                if (amountOfDrivers == 0)
                 {
-                    //GameObject aiCar = Instantiate(aiCars[Random.Range(0, aiCars.Length)], spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
-                    //pv.RPC("RPCSpawnAI", p.Player, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
-                    pv.RPC("RPCSpawnAI", PhotonNetwork.MasterClient, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
-                    //pv.RPC("RPCSpawnAI", RpcTarget.AllBuffered, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
+                    pv.RPC("RPCSpawnAI", p.Player, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
                 }
 
-                if (p.teamNumber > amountOfDrivers)
+                //if there are more shooters than drivers
+                if (p.teamNumber > amountOfDrivers - 1 && amountOfDrivers != 0)
                 {
-                    //GameObject aiCar = Instantiate(aiCars[Random.Range(0, aiCars.Length)], spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
-                    //pv.RPC("RPCSpawnAI", p.Player, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
-                    pv.RPC("RPCSpawnAI", PhotonNetwork.MasterClient, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
-                    //pv.RPC("RPCSpawnAI", RpcTarget.AllBuffered, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
+                    pv.RPC("RPCSpawnAI", p.Player, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
                 }
-                
             }
         }
-
     }
 
     [PunRPC]
@@ -132,7 +121,7 @@ public class GameSetup : MonoBehaviour
     {
         Quaternion spawnRotation = Quaternion.Euler(spawnRot.x, spawnRot.y - 90, spawnRot.z);
 
-        //PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "AI", "AI Mustang"), spawnPos, spawnRotation, 0);
-        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "AI", aiCars[Random.Range(0, aiCars.Length-1)].name), spawnPos, spawnRotation, 0);
+        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "AI", "AI Mustang"), spawnPos, spawnRotation, 0);
+        //PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "AI", aiCars[Random.Range(0, aiCars.Length-1)].name), spawnPos, spawnRotation, 0);
     }
 }
