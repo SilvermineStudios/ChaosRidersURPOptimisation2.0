@@ -186,19 +186,19 @@ public class Shooter : MonoBehaviour
         RifleIcon.SetActive(true);
     }
 
+
     void Update()
     {
         if (pauseMenu.paused) { return; }
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
-            FollowMouse();
-            if (connectCar)
+            if (connectCar && GetComponentInParent<MoveTurretPosition>() != null)
             {
                 connectCar = false;
                 car = GetComponentInParent<MoveTurretPosition>().car;
                 carCollision = GetComponentInParent<MoveTurretPosition>().car.transform.GetChild(0).gameObject;
             }
-
+            FollowMouse();
             rpgcount.text = amountOfAmmoForRPG + " / " + startAmountOfAmmoForRPG;
             if (!noCarNeeded)
             {
@@ -213,6 +213,8 @@ public class Shooter : MonoBehaviour
                             if (car.GetComponent<CarPickup>().hasRPG)
                                 RPG = true;
 
+                            carController = car.GetComponent<Controller>();
+
                             if (amountOfAmmoForRPG <= 0 && car.GetComponent<CarPickup>().hasRPG)
                             {
                                 RPG = false;
@@ -224,7 +226,7 @@ public class Shooter : MonoBehaviour
                         //AI CARS
                         if (car.GetComponent<AICarController>())
                         {
-                            Debug.Log("Put AI car RPG STUFF HERE");///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                            //Debug.Log("Put AI car RPG STUFF HERE");///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
                             if (car.GetComponent<AICarPickups>().hasRPG)
@@ -611,7 +613,7 @@ public class Shooter : MonoBehaviour
 
         if (!noCarNeeded)
         {
-            if (car.GetComponent<CarController>())
+            if (car.GetComponent<Controller>())
             {
                 a.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
             }
@@ -641,8 +643,10 @@ public class Shooter : MonoBehaviour
             FMODUnity.RuntimeManager.PlayOneShotAttached(bulletWhistle, b);
             if (!noCarNeeded)
             {
-                if (car.GetComponent<CarController>() && pv.IsMine)
+                if (car.GetComponent<Controller>() && pv.IsMine)
+                {
                     b.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
+                }
                 else
                     b.GetComponent<Rigidbody>().velocity = aiCarController.rb.velocity;
             }
