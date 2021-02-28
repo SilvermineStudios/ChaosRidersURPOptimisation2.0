@@ -194,6 +194,8 @@ public class Shooter : MonoBehaviour
 
     void Update()
     {
+        CrossHair();
+        Hitmarker();
         if (pauseMenu.paused) { return; }
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
@@ -513,8 +515,6 @@ public class Shooter : MonoBehaviour
         {
             //RPG = !RPG;
         }
-        CrossHair();
-        Hitmarker();
     }
 
     void CrossHair()

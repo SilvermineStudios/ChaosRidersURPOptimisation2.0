@@ -12,6 +12,7 @@ public class MasterClientRaceStart : MonoBehaviour
 
     public static MasterClientRaceStart Instance { get { return _instance; } }
 
+    public bool raceStart;
     public bool countdownTimerStart;
     public bool weaponsFree;
     bool n3, n2, n1, n0, nWF;
@@ -160,6 +161,7 @@ public class MasterClientRaceStart : MonoBehaviour
                 countStart.ChangeAlpha(1);
                 FMODUnity.RuntimeManager.PlayOneShot("event:/RaceStart/Start");
                 MasterClientRaceStart.Instance.countdownTimerStart = true;
+                MasterClientRaceStart.Instance.raceStart = true;
                 break;
 
             case -1:
