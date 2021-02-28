@@ -235,7 +235,7 @@ public class Shooter : MonoBehaviour
 
                             aiCarController = car.GetComponent<AICarController>();
 
-                            if (amountOfAmmoForRPG <= 0 && car.GetComponent<AICarPickups>().hasRPG)
+                            if (amountOfAmmoForRPG <= 1 && car.GetComponent<AICarPickups>().hasRPG)
                             {
                                 RPG = false;
                                 car.GetComponent<AICarPickups>().hasRPG = false;
