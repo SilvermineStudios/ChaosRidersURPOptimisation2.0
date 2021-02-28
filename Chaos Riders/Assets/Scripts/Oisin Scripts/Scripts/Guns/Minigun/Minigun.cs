@@ -25,7 +25,7 @@ public class Minigun : MonoBehaviour
     private float ammoNormalized; //normalized the ammo value to be between 0 and 1 for the cooldown bar scale
     [SerializeField] private Transform coolDownBarUi; //ui bar that shows the cooldown of the minigun
 
-    public string sound = "event:/GunFX/Minigun/MinigunShot";
+    public string sound = "event:/GunFX/Minigun/MinigunShot 2";
     public string bulletWhistle = "event:/GunFX/Minigun/BulletWhistle";
 
     public float maxBulletDeviation;
@@ -50,14 +50,6 @@ public class Minigun : MonoBehaviour
         CooldownBarValues();
         ammoNormalized = amountOfAmmoForCooldownBar / startAmmo; //normalized the ammo value to be between 0 and 1 for the cooldown bar scale
         CoolDownBar(ammoNormalized); //scale the size of the cooldown bar to match the ammo count
-        if(amountOfAmmoForCooldownBar <= 1)
-        {
-            shooterScript.hasAmmo = false;
-        }
-        else
-        {
-            shooterScript.hasAmmo = true;
-        }
         
     }
 
