@@ -72,7 +72,6 @@ public class Shooter : MonoBehaviour
     private float crosshairDeviationIncrease;
     [SerializeField] float currentBulletSpread = 0;
     [SerializeField] float currentCrosshairSpread = 0;
-
     #endregion
 
     #region Input
@@ -146,9 +145,12 @@ public class Shooter : MonoBehaviour
     [SerializeField] GameObject CrossHairGameobject;
     public float restingSize;
     public float maxSize;
-    public float speed;
+    private float increaseSpeed;
+    private float resetSpeed;
     public float currentSize;
     private float spreadSize;
+    [SerializeField] float lastShotTime;
+    [SerializeField] float crosshairWaitTime;
     #endregion
 
     #region UI
@@ -203,6 +205,8 @@ public class Shooter : MonoBehaviour
         }
 
         //Assign values
+        increaseSpeed = data.crossshairIncreaseSpeed;
+        resetSpeed = data.crossshairResetSpeed;
         weaponDamage = data.damage;
         weaponRange = data.range;
         fireRate = data.fireRate;
@@ -219,17 +223,22 @@ public class Shooter : MonoBehaviour
         rotate = data.rotate;
     }
 
+    private void FixedUpdate()
+    {
+        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
+        {
+            //Run General Functions
+            CrossHair();
+            Hitmarker();
+            RotateGunBarrel();
+            CooldownBarValues();
+            ammoNormalized = amountOfAmmoForCooldownBar / startAmmo; //normalized the ammo value to be between 0 and 1 for the cooldown bar scale
+            CoolDownBar(ammoNormalized); //scale the size of the cooldown bar to match the ammo count
+        }
+    }
 
     void Update()
     {
-        //Run General Functions
-        CrossHair();
-        Hitmarker();
-        RotateGunBarrel();
-        CooldownBarValues();
-        ammoNormalized = amountOfAmmoForCooldownBar / startAmmo; //normalized the ammo value to be between 0 and 1 for the cooldown bar scale
-        CoolDownBar(ammoNormalized); //scale the size of the cooldown bar to match the ammo count
-
         //Pause Menu
         if (pauseMenu.paused) { return; }
 
@@ -252,7 +261,7 @@ public class Shooter : MonoBehaviour
                 {
                     if (car.layer == LayerMask.NameToLayer("Cars"))
                     {
-                        //ONLINE PLAYERS
+                        //PLAYERS
                         if (car.GetComponent<Controller>())
                         {
                             if (car.GetComponent<CarPickup>().hasRPG)
@@ -271,14 +280,10 @@ public class Shooter : MonoBehaviour
                         //AI CARS
                         if (car.GetComponent<AICarController>())
                         {
-                            //Debug.Log("Put AI car RPG STUFF HERE");///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
                             if (car.GetComponent<AICarPickups>().hasRPG)
                             {
                                 RPG = true;
                             }
-
                             aiCarController = car.GetComponent<AICarController>();
 
                             if (amountOfAmmoForRPG <= 0 && car.GetComponent<AICarPickups>().hasRPG)
@@ -435,8 +440,6 @@ public class Shooter : MonoBehaviour
         {
             //RPG = !RPG;
         }
-        CrossHair();
-        Hitmarker();
     }
 
     void CrossHair()
@@ -449,18 +452,18 @@ public class Shooter : MonoBehaviour
         {
             CrossHairGameobject.SetActive(true);
         }
-        if (currentlyShooting)
+        if (currentlyShooting )
         {
             spreadSize = currentCrosshairSpread * 10 + restingSize;
             if (spreadSize < restingSize)
             {
                 spreadSize = restingSize;
             }
-            currentSize = Mathf.Lerp(currentSize, spreadSize, Time.deltaTime * speed);
+            currentSize = Mathf.Lerp(currentSize, spreadSize, Time.deltaTime * increaseSpeed);
         }
-        else
+        else if (Time.time >= fireCooldown + crosshairWaitTime)
         {
-            currentSize = Mathf.Lerp(currentSize, restingSize, Time.deltaTime * speed);
+            currentSize = Mathf.Lerp(currentSize, restingSize, Time.deltaTime * resetSpeed);
         }
 
         reticle.sizeDelta = new Vector2(currentSize, currentSize);
@@ -654,7 +657,7 @@ public class Shooter : MonoBehaviour
             barrelRotationSpeed = barrelRotationStartSpeed;
         }
         //if you are not shooting and the ammo isnt full
-        if (amountOfAmmoForCooldownBar < startAmmo && !isShooting)
+        if (amountOfAmmoForCooldownBar < startAmmo && !isShooting && Time.time >= fireCooldown + crosshairWaitTime)
         {
             amountOfAmmoForCooldownBar++;
         }

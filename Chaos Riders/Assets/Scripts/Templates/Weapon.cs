@@ -28,6 +28,8 @@ public class Weapon : ScriptableObject
     [Header("Crosshair")]
     public float maxCrosshairDeviation;
     public float crosshairDeviationIncrease;
+    public float crossshairIncreaseSpeed = 1;
+    public float crossshairResetSpeed = 1;
 
     [Header("Spread")]
     public float maxBulletDeviation;
