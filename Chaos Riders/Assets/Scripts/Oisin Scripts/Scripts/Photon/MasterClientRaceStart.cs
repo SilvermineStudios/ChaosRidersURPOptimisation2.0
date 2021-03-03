@@ -102,7 +102,12 @@ public class MasterClientRaceStart : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!IsThisMultiplayer.Instance.multiplayer) { return; }
+        if (!IsThisMultiplayer.Instance.multiplayer)
+        {
+            MasterClientRaceStart.Instance.raceStart = true;
+            MasterClientRaceStart.Instance.weaponsFree = true;
+            return;
+        }
 
         if(count3.alpha > 0 && n3)
         {
