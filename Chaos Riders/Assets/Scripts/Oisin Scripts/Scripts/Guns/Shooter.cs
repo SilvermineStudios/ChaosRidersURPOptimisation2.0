@@ -166,8 +166,6 @@ public class Shooter : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         previousShooterClass = shooterClass;
         SetupGun(currentShooterClass);
-        fireCooldown = fireCooldown - fireRate;
-
         startAmmo = amountOfAmmoForCooldownBar;
         barrelRotationSpeed = barrelRotationStartSpeed;
     }
@@ -221,6 +219,7 @@ public class Shooter : MonoBehaviour
         weaponAmmoUsage = data.ammoUsage;
         usingAmmo = data.usingAmmo;
         rotate = data.rotate;
+        fireCooldown = fireCooldown - fireRate;
     }
 
     private void FixedUpdate()
@@ -438,7 +437,7 @@ public class Shooter : MonoBehaviour
 
         if (Input.GetKeyDown(RPGButton) && pickedUpRPG)
         {
-            //RPG = !RPG;
+            RPG = !RPG;
         }
     }
 
@@ -455,9 +454,9 @@ public class Shooter : MonoBehaviour
         if (currentlyShooting )
         {
             spreadSize = currentCrosshairSpread * 10 + restingSize;
-            if (spreadSize < restingSize)
+            if (spreadSize < maxCrosshairDeviation)
             {
-                spreadSize = restingSize;
+                spreadSize = maxCrosshairDeviation;
             }
             currentSize = Mathf.Lerp(currentSize, spreadSize, Time.deltaTime * increaseSpeed);
         }
