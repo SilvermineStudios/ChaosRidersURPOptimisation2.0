@@ -27126,6 +27126,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1142562203}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!224 &1144540517 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7634238392369128444, guid: 2a0127179681d564699c69930481b9be, type: 3}
+  m_PrefabInstance: {fileID: 1934517358}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1146788451
 GameObject:
   m_ObjectHideFlags: 0
@@ -39229,6 +39234,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1686766384}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1688662504 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1682963324, guid: 2a0127179681d564699c69930481b9be, type: 3}
+  m_PrefabInstance: {fileID: 1934517358}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1691759582
 Mesh:
   m_ObjectHideFlags: 0
@@ -43247,15 +43257,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 670384005629049964, guid: 2a0127179681d564699c69930481b9be, type: 3}
       propertyPath: viewIdField
-      value: 8
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 913156958082615894, guid: 2a0127179681d564699c69930481b9be, type: 3}
-      propertyPath: m_IsActive
-      value: 0
+      propertyPath: m_TagString
+      value: Rifle
       objectReference: {fileID: 0}
     - target: {fileID: 1826536347662466522, guid: 2a0127179681d564699c69930481b9be, type: 3}
       propertyPath: viewIdField
-      value: 17
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4724015228536371061, guid: 2a0127179681d564699c69930481b9be, type: 3}
       propertyPath: viewIdField
@@ -43265,29 +43275,9 @@ PrefabInstance:
       propertyPath: viewIdField
       value: 6
       objectReference: {fileID: 0}
-    - target: {fileID: 7295222728725222640, guid: 2a0127179681d564699c69930481b9be, type: 3}
-      propertyPath: bulletDeviationIncrease
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 7295222728725222640, guid: 2a0127179681d564699c69930481b9be, type: 3}
-      propertyPath: crosshairDeviationIncrease
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 7295222728725222640, guid: 2a0127179681d564699c69930481b9be, type: 3}
-      propertyPath: maxCrosshairDeviation
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 7295222728725222640, guid: 2a0127179681d564699c69930481b9be, type: 3}
-      propertyPath: maxBulletDeviation
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 7295222728725222640, guid: 2a0127179681d564699c69930481b9be, type: 3}
-      propertyPath: minigunFireRate
-      value: 0.12
-      objectReference: {fileID: 0}
-    - target: {fileID: 7295222728725222640, guid: 2a0127179681d564699c69930481b9be, type: 3}
-      propertyPath: sound
-      value: event:/GunFX/Minigun/MinigunShot 2
+    - target: {fileID: 7476097870388229043, guid: 2a0127179681d564699c69930481b9be, type: 3}
+      propertyPath: m_TagString
+      value: Minigun
       objectReference: {fileID: 0}
     - target: {fileID: 7634238391621420200, guid: 2a0127179681d564699c69930481b9be, type: 3}
       propertyPath: m_AnchorMin.x
@@ -43314,25 +43304,25 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7634238392847830434, guid: 2a0127179681d564699c69930481b9be, type: 3}
-      propertyPath: shooterClass
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7634238392847830434, guid: 2a0127179681d564699c69930481b9be, type: 3}
-      propertyPath: MinigunHolder
+      propertyPath: minigunData
       value: 
-      objectReference: {fileID: 1934517359}
+      objectReference: {fileID: 11400000, guid: e85f6dc064f0ed4429cbc0d3bcac5507, type: 2}
     - target: {fileID: 7634238392847830434, guid: 2a0127179681d564699c69930481b9be, type: 3}
-      propertyPath: RifleHolder
+      propertyPath: coolDownBarUi
       value: 
-      objectReference: {fileID: 1934517360}
+      objectReference: {fileID: 1144540517}
     - target: {fileID: 7634238392847830434, guid: 2a0127179681d564699c69930481b9be, type: 3}
-      propertyPath: changeWeapon
-      value: 324
-      objectReference: {fileID: 0}
+      propertyPath: rifleBarrel
+      value: 
+      objectReference: {fileID: 1934517362}
     - target: {fileID: 7634238392847830434, guid: 2a0127179681d564699c69930481b9be, type: 3}
-      propertyPath: noCarNeeded
-      value: 1
-      objectReference: {fileID: 0}
+      propertyPath: minigunBarrel
+      value: 
+      objectReference: {fileID: 1688662504}
+    - target: {fileID: 7634238392847830434, guid: 2a0127179681d564699c69930481b9be, type: 3}
+      propertyPath: rifleData
+      value: 
+      objectReference: {fileID: 11400000, guid: 7191b86a9eae21e479b244f69ddb8c87, type: 2}
     - target: {fileID: 7634238392847830435, guid: 2a0127179681d564699c69930481b9be, type: 3}
       propertyPath: m_Name
       value: Shooter2
@@ -43425,32 +43415,13 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8674048636984203078, guid: 2a0127179681d564699c69930481b9be, type: 3}
-      propertyPath: maxBulletDeviation
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 8674048636984203078, guid: 2a0127179681d564699c69930481b9be, type: 3}
-      propertyPath: maxCrosshairDeviation
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 8674048636984203078, guid: 2a0127179681d564699c69930481b9be, type: 3}
-      propertyPath: bulletDeviationIncrease
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 8674048636984203078, guid: 2a0127179681d564699c69930481b9be, type: 3}
-      propertyPath: crosshairDeviationIncrease
-      value: 900
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7295222728725222640, guid: 2a0127179681d564699c69930481b9be, type: 3}
+    - {fileID: 8674048636984203078, guid: 2a0127179681d564699c69930481b9be, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 2a0127179681d564699c69930481b9be, type: 3}
---- !u!1 &1934517359 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7476097870388229043, guid: 2a0127179681d564699c69930481b9be, type: 3}
-  m_PrefabInstance: {fileID: 1934517358}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1934517360 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 913156958082615894, guid: 2a0127179681d564699c69930481b9be, type: 3}
+--- !u!4 &1934517362 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 911955151638522626, guid: 2a0127179681d564699c69930481b9be, type: 3}
   m_PrefabInstance: {fileID: 1934517358}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1936872529

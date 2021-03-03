@@ -18869,9 +18869,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   car: {fileID: 0}
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 1024
   rpgGo: {fileID: 1094957983}
   rocketspawn: {fileID: 3665872840329177399}
   rocket: {fileID: 14798063656109763, guid: 74ea11e91b020954b88db6eaa0e77b7e, type: 3}
@@ -18882,11 +18879,12 @@ MonoBehaviour:
   RifleHolder: {fileID: 913156958082615894}
   MinigunIcon: {fileID: 8764531232459400661}
   RifleIcon: {fileID: 8152229863375869798}
+  muzzleFlash: {fileID: 7634238392497245262}
   cineCamera: {fileID: 5207396787800693346}
   connectCar: 0
   RPG: 0
   pickedUpRPG: 0
-  noCarNeeded: 0
+  noCarNeeded: 1
   playerNumber: 1
   minRotationHeight: -20
   maxRotationHeight: 20
@@ -18898,6 +18896,7 @@ MonoBehaviour:
   RPGButton: 32
   changeWeapon: 324
   amountOfAmmoForRPG: 3
+  minigunData: {fileID: 0}
   trail: {fileID: 811231400246012879, guid: d9cb9feb506fa704e8572bb98f0ebff4, type: 3}
   trailPercentage: 50
   impactEffect: {fileID: 7938478309457529535, guid: 0c9781b5140952b42ae2c6af77491dfc, type: 3}
@@ -18911,6 +18910,7 @@ MonoBehaviour:
   maxSize: 250
   speed: 1
   currentSize: 50
+  coolDownBarUi: {fileID: 0}
 --- !u!114 &7295222728725222640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18932,7 +18932,7 @@ MonoBehaviour:
   minigunFireRate: 0.12
   amountOfAmmoForCooldownBar: 500
   coolDownBarUi: {fileID: 7634238392297675920}
-  sound: event:/GunFX/Minigun/MinigunShot
+  sound: event:/GunFX/Minigun/MinigunShot 2
   bulletWhistle: event:/GunFX/Minigun/BulletWhistle
   maxBulletDeviation: 10
   maxCrosshairDeviation: 10
@@ -18953,7 +18953,11 @@ MonoBehaviour:
   muzzleFlash: {fileID: 2949780119046888163}
   rifleDamage: 40
   range: 9999
+<<<<<<< Updated upstream
   rifleFireRate: 2
+=======
+  rifleFireRate: 1
+>>>>>>> Stashed changes
   maxBulletDeviation: 10
   maxCrosshairDeviation: 10
   bulletDeviationIncrease: 0.25
