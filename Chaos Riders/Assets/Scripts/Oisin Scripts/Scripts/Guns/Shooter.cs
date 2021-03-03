@@ -168,7 +168,6 @@ public class Shooter : MonoBehaviour
         barrelRotationSpeed = barrelRotationStartSpeed;
     }
 
-
     void SetupGun(ShooterClass shooterClass)
     {
         //What weapon to switch to 
@@ -448,6 +447,17 @@ public class Shooter : MonoBehaviour
         }
     }
 
+    private void FollowMouse()
+    {
+        xAngle += Input.GetAxis("Mouse X") * horizontalRotationSpeed * Time.deltaTime;
+        //xAngle = Mathf.Clamp(xAngle, 0, 180); //use this if you want to clamp the rotation. second var = min angle, third var = max angle
+
+        yAngle += Input.GetAxis("Mouse Y") * verticalRotationSpeed * -Time.deltaTime;
+        yAngle = Mathf.Clamp(yAngle, minRotationHeight, maxRotationHeight); //use this if you want to clamp the rotation. second var = min angle, third var = max angle
+
+        gunBarrel.localRotation = Quaternion.Euler(yAngle, xAngle, 0);
+    }
+
     #region UI
 
     void CrossHair()
@@ -534,16 +544,7 @@ public class Shooter : MonoBehaviour
 
     #endregion
 
-    private void FollowMouse()
-    {
-        xAngle += Input.GetAxis("Mouse X") * horizontalRotationSpeed * Time.deltaTime;
-        //xAngle = Mathf.Clamp(xAngle, 0, 180); //use this if you want to clamp the rotation. second var = min angle, third var = max angle
-
-        yAngle += Input.GetAxis("Mouse Y") * verticalRotationSpeed * -Time.deltaTime;
-        yAngle = Mathf.Clamp(yAngle, minRotationHeight, maxRotationHeight); //use this if you want to clamp the rotation. second var = min angle, third var = max angle
-
-        gunBarrel.localRotation = Quaternion.Euler(yAngle, xAngle, 0);
-    }
+    #region Shooting Functions
 
     Vector3 Spread(float maxDeviation)
     {
@@ -554,9 +555,6 @@ public class Shooter : MonoBehaviour
         forwardVector = Quaternion.AngleAxis(angle, cineCamera.transform.forward) * forwardVector;
         return forwardVector;
     }
-
-
-    #region Shooting Functions
 
     void Shoot()
     {
@@ -643,12 +641,10 @@ public class Shooter : MonoBehaviour
     }
     #endregion
 
-
     #region BulletImpacts
     private IEnumerator DeleteImpactEffect(float time)
     {
         yield return new WaitForSeconds(time);
-
     }
 
     #endregion
