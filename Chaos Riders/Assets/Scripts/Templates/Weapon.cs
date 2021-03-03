@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class Weapon : ScriptableObject
 {
-    [Header("GameObjects")]
 
 
     [Header("Bools")]

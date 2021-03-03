@@ -12,17 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 282a607c0b806bd43bb8ddb2196b5320, type: 3}
   m_Name: Rifle
   m_EditorClassIdentifier: 
-  usingAmmo: 0
+  usingAmmo: 1
   rotate: 0
-  damage: 0
+  damage: 40
   range: 9999
-  fireRate: 0
-  amountOfAmmoForCooldownBar: 1000
-  trailPercentage: 0
-  sound: 
-  bulletWhistle: 
+  fireRate: 1
+  ammoUsage: 200
+  trailPercentage: 100
+  sound: event:/GunFX/Rifle/RifleShot
+  bulletWhistle: event:/GunFX/Minigun/BulletWhistle
   hitmarker: event:/GunFX/Hitmarker
-  maxCrosshairDeviation: 0
-  crosshairDeviationIncrease: 0
-  maxBulletDeviation: 0
-  bulletDeviationIncrease: 0
+  maxCrosshairDeviation: 10
+  crosshairDeviationIncrease: 300
+  crosshairWaitTime: 0.2
+  crossshairIncreaseSpeed: 1
+  crossshairResetSpeed: 3
+  maxBulletDeviation: 10
+  bulletDeviationIncrease: 0.25

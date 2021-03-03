@@ -112,7 +112,6 @@ public class Shooter : MonoBehaviour
     Pause pauseMenu;
     Controller carController;
     AICarController aiCarController;
-    Rifle rifleScript;
     #endregion
 
     #region Bullet Decoration
@@ -148,7 +147,7 @@ public class Shooter : MonoBehaviour
     private float increaseSpeed;
     private float resetSpeed;
     [SerializeField] float currentSize;
-    private float spreadSize;
+    [SerializeField] private float spreadSize;
     float crosshairWaitTime;
     #endregion
 
@@ -363,7 +362,15 @@ public class Shooter : MonoBehaviour
             // Weapon Specific functions
             if (shooterClass == ShooterClass.minigun)
             {
-                
+                //if you are shooting the minigun
+                if (shootButtonHeld)
+                {
+                    barrelRotationSpeed = barrelRotationMaxSpeed;
+                }
+                else
+                {
+                    barrelRotationSpeed = barrelRotationStartSpeed;
+                }
             }
 
             if (shooterClass == ShooterClass.rifle)
@@ -457,7 +464,7 @@ public class Shooter : MonoBehaviour
         if (currentlyShooting )
         {
             spreadSize = currentCrosshairSpread * 10 + restingSize;
-            if (spreadSize < maxCrosshairDeviation)
+            if (spreadSize > maxCrosshairDeviation)
             {
                 spreadSize = maxCrosshairDeviation;
             }
@@ -484,15 +491,6 @@ public class Shooter : MonoBehaviour
 
     void CooldownBarValues()
     {
-        //if you are shooting the minigun
-        if (amountOfAmmoForCooldownBar > weaponAmmoUsage && isShooting)
-        {
-            barrelRotationSpeed = barrelRotationMaxSpeed;
-        }
-        else
-        {
-            barrelRotationSpeed = barrelRotationStartSpeed;
-        }
         //if you are not shooting and the ammo isnt full
         if (amountOfAmmoForCooldownBar < startAmmo && !isShooting && Time.time >= fireCooldown + crosshairWaitTime)
         {
