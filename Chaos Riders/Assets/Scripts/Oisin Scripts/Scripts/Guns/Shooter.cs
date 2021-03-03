@@ -143,14 +143,13 @@ public class Shooter : MonoBehaviour
     [Header("Crosshair")]
     [SerializeField] RectTransform reticle; // The RecTransform of reticle UI element.
     [SerializeField] GameObject CrossHairGameobject;
-    public float restingSize;
-    public float maxSize;
+    float restingSize = 50;
+    float maxSize;
     private float increaseSpeed;
     private float resetSpeed;
-    public float currentSize;
+    [SerializeField] float currentSize;
     private float spreadSize;
-    [SerializeField] float lastShotTime;
-    [SerializeField] float crosshairWaitTime;
+    float crosshairWaitTime;
     #endregion
 
     #region UI
@@ -203,6 +202,7 @@ public class Shooter : MonoBehaviour
         }
 
         //Assign values
+        crosshairWaitTime = data.crosshairWaitTime;
         increaseSpeed = data.crossshairIncreaseSpeed;
         resetSpeed = data.crossshairResetSpeed;
         weaponDamage = data.damage;
@@ -441,6 +441,8 @@ public class Shooter : MonoBehaviour
         }
     }
 
+    #region UI
+
     void CrossHair()
     {
         if (pauseMenu.paused || (!MasterClientRaceStart.Instance.weaponsFree && IsThisMultiplayer.Instance.multiplayer))
@@ -451,6 +453,7 @@ public class Shooter : MonoBehaviour
         {
             CrossHairGameobject.SetActive(true);
         }
+
         if (currentlyShooting )
         {
             spreadSize = currentCrosshairSpread * 10 + restingSize;
@@ -468,6 +471,36 @@ public class Shooter : MonoBehaviour
         reticle.sizeDelta = new Vector2(currentSize, currentSize);
 
     }
+
+    void Hitmarker()
+    {
+        hitmarker.SubtractAlpha(0.1f);
+    }
+
+    private void CoolDownBar(float sizeNormalized)
+    {
+        coolDownBarUi.localScale = new Vector3(sizeNormalized, 1f); //scale the ui cooldown bar to match the ammo count
+    }
+
+    void CooldownBarValues()
+    {
+        //if you are shooting the minigun
+        if (amountOfAmmoForCooldownBar > weaponAmmoUsage && isShooting)
+        {
+            barrelRotationSpeed = barrelRotationMaxSpeed;
+        }
+        else
+        {
+            barrelRotationSpeed = barrelRotationStartSpeed;
+        }
+        //if you are not shooting and the ammo isnt full
+        if (amountOfAmmoForCooldownBar < startAmmo && !isShooting && Time.time >= fireCooldown + crosshairWaitTime)
+        {
+            amountOfAmmoForCooldownBar++;
+        }
+    }
+
+    #endregion
 
     #region RPG Functions
 
@@ -513,14 +546,6 @@ public class Shooter : MonoBehaviour
 
         gunBarrel.localRotation = Quaternion.Euler(yAngle, xAngle, 0);
     }
-
-    void Hitmarker()
-    {
-        var tempColor = hitmarker.color;
-        tempColor.a -= 0.1f;
-        hitmarker.color = tempColor;
-    }
-
 
     Vector3 Spread(float maxDeviation)
     {
@@ -638,30 +663,6 @@ public class Shooter : MonoBehaviour
             barrelToRotate.Rotate(0, 0, barrelRotationSpeed * Time.deltaTime);
         }
     }
-
-    private void CoolDownBar(float sizeNormalized)
-    {
-        coolDownBarUi.localScale = new Vector3(sizeNormalized, 1f); //scale the ui cooldown bar to match the ammo count
-    }
-
-    void CooldownBarValues()
-    {
-        //if you are shooting and have ammo
-        if (amountOfAmmoForCooldownBar > weaponAmmoUsage && isShooting)
-        {
-            barrelRotationSpeed = barrelRotationMaxSpeed;
-        }
-        else
-        {
-            barrelRotationSpeed = barrelRotationStartSpeed;
-        }
-        //if you are not shooting and the ammo isnt full
-        if (amountOfAmmoForCooldownBar < startAmmo && !isShooting && Time.time >= fireCooldown + crosshairWaitTime)
-        {
-            amountOfAmmoForCooldownBar++;
-        }
-    }
-
     #endregion
 
     private void OnTriggerEnter(Collider other)
