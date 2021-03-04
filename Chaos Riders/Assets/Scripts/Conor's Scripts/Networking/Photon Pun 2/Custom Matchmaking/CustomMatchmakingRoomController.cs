@@ -34,6 +34,7 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
     [SerializeField] private TextMeshProUGUI loadingPercentageText;
     private float loadAmount = 0;
     private float loadingValueNormalized;
+    [SerializeField] private float loadPercentage = 0;
     #endregion
 
 
@@ -42,23 +43,26 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
         loadingScreen.SetActive(false);
         loadingCircle.fillAmount = 0;
         loadingBar.fillAmount = 0;
+        loadingPercentageText.text = "0";
     }
 
     private void Update()
     {
+        //counter for the loading bars
         if(startLoadingBars && loadAmount < loadingTime)
         {
             loadAmount += 1 *Time.deltaTime;
             loadingValueNormalized = (loadAmount / loadingTime);
+            loadPercentage = loadingValueNormalized * 100;
         }
-        FillLoadingBars(loadingValueNormalized);
-    }
-
-    private void FillLoadingBars(float loadamount)
-    {
+        //fill the loading bars with the normalized loading value
         loadingCircle.fillAmount = loadingValueNormalized;
         loadingBar.fillAmount = loadingValueNormalized;
+
+        //update load percentage
+        loadingPercentageText.text = (loadingValueNormalized * 100).ToString("f0");
     }
+
 
     void ClearPlayerListings()
     {
@@ -130,8 +134,6 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
     public void StartGame() //paired to the start button
     {
         loadingScreen.SetActive(true);
-
-        FillLoadingBars(loadingTime);
         StartCoroutine(LoadingCouroutine(loadingTime));
     }
 
