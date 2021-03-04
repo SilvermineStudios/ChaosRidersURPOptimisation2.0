@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using Lovatto.SceneLoader;
-#if UNITY_5_3|| UNITY_5_4 || UNITY_5_3_OR_NEWER || UNITY_2017
+#if UNITY_5_3 || UNITY_5_4 || UNITY_5_3_OR_NEWER || UNITY_2017
 using UnityEngine.SceneManagement;
 #endif
 
@@ -44,6 +44,7 @@ public static class bl_SceneLoaderUtils
     {
 #if UNITY_5_3 || UNITY_5_4|| UNITY_5_3_OR_NEWER || UNITY_2017
        return SceneManager.LoadSceneAsync(scene);
+        //return PhotonNetwork.LoadLevel(scene);
 #else
         return Application.LoadLevelAsync(scene);
 #endif
