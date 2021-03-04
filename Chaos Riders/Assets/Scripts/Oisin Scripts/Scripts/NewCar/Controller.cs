@@ -1,17 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Cinemachine;
 using Photon.Pun;
 
 public class Controller : MonoBehaviour
 {
+    #region Other
     enum CarClass { Braker, Shredder };
     public Rigidbody rb { get; private set; }
+    public enum DriverEquipment { SmokeScreen, Mine }
+    public enum DriverUltimate { Brake, Shred }
+    private Animator anim;
+    GameObject abilitySpawn;
+    #endregion
 
     #region Cars
     [Header("Car Data")]
     [SerializeField] CarClass currentCarClass;
+    CarClass oldCarClass;
     Vehicle carData;
     [SerializeField] Vehicle[] VehicleData;
     [SerializeField] GameObject[] Models;
@@ -27,6 +35,8 @@ public class Controller : MonoBehaviour
     public bool braking { get; private set; }
     public bool drifting { get; private set; }
     private bool brake;
+    [SerializeField] private bool canUseEquipment = false, canUseAbility = false;
+    private bool useOverCharge; //Currently unused
     #endregion
 
     #region Floats
@@ -57,6 +67,7 @@ public class Controller : MonoBehaviour
     DriverAbilities driverAbilities;
     PhotonView pv;
     Health healthScript;
+    ShredUltimate shredUltimate;
     [HideInInspector] public TurretTester ShooterAttached; //Does this need to still be here?
     [HideInInspector] public GameObject Shooter;
     #endregion
@@ -79,20 +90,44 @@ public class Controller : MonoBehaviour
     private float gearFactor;
     #endregion
 
+    #region Driver Abilities
+    [Header("Driver Abilities")]
+    public DriverEquipment CurrentEquipment;
+    DriverEquipment OldEquipment;
+    public DriverUltimate CurrentUltimate;
+    DriverUltimate OldUltimate;
+    [SerializeField] private KeyCode abilityKeyCode = KeyCode.Q, equipmentKeyCode = KeyCode.E; //Create Keycode Variables for the buttons
+    #endregion
+
+    #region Ability Data
+    [Header("Ability Data")] 
+    public Equipment[] DriverEquipmentData;
+    Equipment equipmentData;
+    public Ultimate[] DriverUltimateData;
+    Ultimate ultimateData;
+
+    #endregion
+
+    #region Driver Abilities UI
+    [Header("Driver Abilities UI")]
+    [SerializeField] private Transform equipmentChargeBar; //equipment chargebar
+    [SerializeField] private Transform abilityChargeBar; //ability chargebar
+    private Transform equipmentOverChargeBar, abilityOverChargeBar; //not in use
+    private float equipmentChargeAmount, equipmentOverchargeAmount, abilityChargeAmount, abilityOverChargeAmount; //equipment/ability charge Amount
+    [SerializeField] private float equipmentChargeSpeed = 8f, abilityChargeSpeed = 2f;
     
-   
+    #endregion
+
 
     private void Awake()
     {
+        anim = GetComponentInChildren<Animator>();
         driverAbilities = GetComponent<DriverAbilities>();
         skidSound = FMODUnity.RuntimeManager.CreateInstance("event:/CarFX/All/Skid");
         FMODUnity.RuntimeManager.AttachInstanceToGameObject(skidSound, transform, rb);
         skidSound.start();
         skidSound.setVolume(0);
     }
-
-    
-
 
     private void Start()
     {
@@ -107,14 +142,6 @@ public class Controller : MonoBehaviour
         skidmarks[2] = skidmarksController;
         skidmarks[3] = skidmarksController;
 
-        /*
-        defaultForwardFrictionCurve.extremumSlip = 0.2f;
-        defaultForwardFrictionCurve.extremumValue = 1;
-        defaultForwardFrictionCurve.asymptoteSlip = 0.8f;
-        defaultForwardFrictionCurve.asymptoteValue = 0.5f;
-        defaultForwardFrictionCurve.stiffness = 1;
-        */
-
         rb = GetComponent<Rigidbody>();
         rb.centerOfMass = carData.centerOfMass;
         rb.mass = carData.vehicleMass;
@@ -125,6 +152,12 @@ public class Controller : MonoBehaviour
         cineCamera = gameObject.transform.GetChild(0).gameObject.GetComponent<CinemachineVirtualCamera>();
         cineCamTransposer = cineCamera.GetCinemachineComponent<CinemachineTransposer>();
         cineCamTransposer.m_FollowOffset = carData.stationaryCamOffset;
+
+        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
+        {
+            ResetAllBars(); //set all the bars to 0
+            CheckIfCanUseEquipmentAndAbility(); //check if the player can use their equipment
+        }
     }
 
     void SetupCar(CarClass car)
@@ -172,16 +205,19 @@ public class Controller : MonoBehaviour
         {
             if (currentCarClass == CarClass.Braker)
             {
-                driverAbilities.CurrentAbility = DriverAbilities.Abilities.SmokeScreen;
-                driverAbilities.CurrentUltimate = DriverAbilities.Ultimates.Brake;
+                CurrentEquipment = DriverEquipment.SmokeScreen;
+                CurrentUltimate = DriverUltimate.Brake;
             }
 
             if (currentCarClass == CarClass.Shredder)
             {
-                driverAbilities.CurrentAbility = DriverAbilities.Abilities.Mine;
-                driverAbilities.CurrentUltimate = DriverAbilities.Ultimates.Shred;
+                CurrentEquipment = DriverEquipment.Mine;
+                CurrentUltimate = DriverUltimate.Shred;
             }
         }
+        SetupEquipment(CurrentEquipment);
+        SetupUltimate(CurrentUltimate);
+        oldCarClass = car;
     }
 
     void SetupWheel(WheelCollider wheel)
@@ -202,6 +238,42 @@ public class Controller : MonoBehaviour
 
         //Side Friction
         wheel.sidewaysFriction = carData.sideFriction;
+    }
+
+    void SetupEquipment(DriverEquipment equipment)
+    {
+        //switch to right equipment
+        switch (equipment)
+        {
+            case DriverEquipment.SmokeScreen:
+                equipmentData = DriverEquipmentData[0];
+                break;
+            case DriverEquipment.Mine:
+                equipmentData = DriverEquipmentData[1];
+                break;
+            default:
+                equipmentData = DriverEquipmentData[0];
+                break;
+        }
+        OldEquipment = equipment;
+    }
+
+    void SetupUltimate(DriverUltimate ultimate)
+    {
+        //switch to right ultimate
+        switch (ultimate)
+        {
+            case DriverUltimate.Brake:
+                ultimateData = DriverUltimateData[0];
+                break;
+            case DriverUltimate.Shred:
+                ultimateData = DriverUltimateData[1];
+                break;
+            default:
+                ultimateData = DriverUltimateData[0];
+                break;
+        }
+        OldUltimate = ultimate;
     }
 
     private void FixedUpdate()
@@ -263,21 +335,166 @@ public class Controller : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse1) && canChangeCar)
+        if ((Input.GetKeyDown(KeyCode.Mouse1) && canChangeCar))
         {
             if(currentCarClass == CarClass.Braker)
             {
-                SetupCar(CarClass.Shredder);
                 currentCarClass = CarClass.Shredder;
             }
             else
             {
-                SetupCar(CarClass.Braker);
                 currentCarClass = CarClass.Braker;
             }
         }
+
+        if (oldCarClass != currentCarClass)
+        {
+            SetupCar(currentCarClass);
+        }
+
+        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
+        {
+            DriverAbilities();
+        }
+    }
+
+    #region Driver Abilities
+
+    void DriverAbilities()
+    {
+        ChargeBars(); //charge the equipment and ability bars
+        CheckIfCanUseEquipmentAndAbility(); //check if the player can use their equipment
+
+        //if you use the equipment
+        if (Input.GetKeyDown(equipmentKeyCode) && canUseEquipment)
+        {
+            FMODUnity.RuntimeManager.PlayOneShotAttached(equipmentData.sound, gameObject);
+            //spawn the smoke grenade accross the network
+            if (IsThisMultiplayer.Instance.multiplayer)
+            {
+                PhotonNetwork.Instantiate(equipmentData.photonPrefab, abilitySpawn.transform.position, abilitySpawn.transform.rotation, 0);
+            }
+            //spawn the smoke grenade in single player
+            if (!IsThisMultiplayer.Instance.multiplayer)
+            {
+                Instantiate(equipmentData.prefab, abilitySpawn.transform.position, abilitySpawn.transform.rotation);
+            }
+            equipmentChargeAmount = 0; //reset the cooldownbar after the equipment is used
+        }
+
+        //if you use the Ability
+        if (Input.GetKeyDown(abilityKeyCode) && canUseAbility)
+        {
+
+            if (CurrentUltimate == DriverUltimate.Brake)
+            {
+                StartCoroutine(UseBrakerAbility());
+            }
+            if (CurrentUltimate == DriverUltimate.Shred)
+            {
+                StartCoroutine(UseShredderAbility());
+            }
+            abilityChargeAmount = 0; //reset the cooldownbar after the ability is used
+        }
         
     }
+
+    private IEnumerator UseBrakerAbility()
+    {
+        anim.SetTrigger("BreakerTransTrigger");
+        //brake
+        ApplyBrake(30000000);
+
+        yield return new WaitForSeconds(1.5f);
+        ReleaseBrake();
+        anim.SetTrigger("LeaveBreakerTrigger");
+        //speed
+
+        boost = true;
+
+        yield return new WaitForSeconds(5.5f);
+        boost = false;
+    }
+
+    private IEnumerator UseShredderAbility()
+    {
+        FMODUnity.RuntimeManager.PlayOneShotAttached("event:/CarFX/Shredder/ShredFX", gameObject);
+        shredUltimate.enabled = true;
+
+        yield return new WaitForSeconds(4.5f);
+        shredUltimate.enabled = false;
+
+    }
+
+
+
+    //sets all bars to 0
+    private void ResetAllBars()
+    {
+        equipmentChargeBar.GetComponent<Image>().fillAmount = 0;
+        //equipmentOverChargeBar.GetComponent<Image>().fillAmount = 0;
+        abilityChargeBar.GetComponent<Image>().fillAmount = 0;
+        //abilityOverChargeBar.GetComponent<Image>().fillAmount = 0;
+    }
+
+    //check if the player can use their equipment
+    private void CheckIfCanUseEquipmentAndAbility()
+    {
+        //check if the equipment bar is full
+        if (equipmentChargeAmount >= 100)
+            canUseEquipment = true;
+        else
+            canUseEquipment = false;
+
+
+        //check if the ability bar is full
+        if (abilityChargeAmount >= 100)
+            canUseAbility = true;
+        else
+            canUseAbility = false;
+    }
+
+
+    //charge the equipment and ability bars
+    private void ChargeBars()
+    {
+        //if the qeuipment bar isnt full add to it
+        if (equipmentChargeAmount < 100)
+        {
+            equipmentChargeAmount += equipmentData.chargeRate * Time.deltaTime;
+            equipmentChargeBar.GetComponent<Image>().fillAmount = equipmentChargeAmount / 100;
+        }
+
+        if (useOverCharge)
+        {
+            //if the equipment bar is full add to the overcharge bar
+            if (equipmentChargeAmount >= 100)
+            {
+                equipmentOverchargeAmount += equipmentChargeSpeed * Time.deltaTime;
+                equipmentOverChargeBar.GetComponent<Image>().fillAmount = equipmentOverchargeAmount / 100;
+            }
+        }
+
+
+
+        //if the ability bar isnt full add to it
+        if (abilityChargeAmount < 100)
+        {
+            abilityChargeAmount += abilityChargeSpeed * Time.deltaTime;
+            abilityChargeBar.GetComponent<Image>().fillAmount = abilityChargeAmount / 100;
+        }
+
+        if (useOverCharge)
+        {
+            //if the ability bar is full add to the overcharge bar
+            if (abilityChargeAmount >= 100)
+            {
+                abilityOverChargeAmount += abilityChargeSpeed * Time.deltaTime;
+                abilityOverChargeBar.GetComponent<Image>().fillAmount = abilityOverChargeAmount / 100;
+            }
+        }
+    }
+    #endregion
 
     private void CalculateRevs()
     {
@@ -327,8 +544,6 @@ public class Controller : MonoBehaviour
     {
         return 1 - (1 - factor) * (1 - factor);
     }
-
-
 
     private void GetInput()
     {
@@ -455,7 +670,6 @@ public class Controller : MonoBehaviour
         }
     }
 
-
     private void TractionControl()
     {
         WheelHit wheelHit;
@@ -467,7 +681,6 @@ public class Controller : MonoBehaviour
         }
         
     }
-
 
     // Debug GUI.
     void OnGUI()
@@ -525,7 +738,6 @@ public class Controller : MonoBehaviour
         }
     }
 
-
     private void AdjustTorque(float forwardSlip)
     {
         if(boost)
@@ -559,7 +771,6 @@ public class Controller : MonoBehaviour
             }
         }
     }
-
 
     private void CapSpeed()
     {
@@ -601,10 +812,6 @@ public class Controller : MonoBehaviour
         transform.position = pos;
         transform.rotation = quat;
     }
-
-
-
-    
 
     private void Skid()
     {

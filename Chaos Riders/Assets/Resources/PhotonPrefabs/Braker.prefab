@@ -29275,6 +29275,7 @@ GameObject:
   - component: {fileID: 4468230371053281713}
   - component: {fileID: 6398917699678288573}
   - component: {fileID: 4468230371053281712}
+  - component: {fileID: 7546407881508317749}
   - component: {fileID: 740856649}
   - component: {fileID: 4468230371053281705}
   - component: {fileID: 4468230371053281706}
@@ -29371,7 +29372,11 @@ MonoBehaviour:
   - {fileID: 5145431776617554981}
   - {fileID: 152860564}
   displayGui: 0
+  canChangeCar: 1
+  lockAbilitiesToCar: 1
   boost: 0
+  canUseEquipment: 0
+  canUseAbility: 0
   wheelColliders:
   - {fileID: 708257731095964703}
   - {fileID: 7595011238983831582}
@@ -29379,6 +29384,29 @@ MonoBehaviour:
   - {fileID: 8663297477343428066}
   ShooterAttached: {fileID: 0}
   Shooter: {fileID: 0}
+  CurrentEquipment: 0
+  CurrentUltimate: 0
+  abilityKeyCode: 113
+  equipmentKeyCode: 101
+  DriverAbilityData: 0000000000000000
+  equipmentChargeBar: {fileID: 602698599526412428}
+  abilityChargeBar: {fileID: 602698598232801635}
+  equipmentChargeSpeed: 8
+  abilityChargeSpeed: 5
+--- !u!114 &7546407881508317749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4468230371053281714}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37d4db0638a869d4cba049f69c16a58a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  radius: 4.5
 --- !u!114 &740856649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29484,7 +29512,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4468230371053281714}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7c4093c9a1edda546a252a93184abd0c, type: 3}
   m_Name: 
@@ -30205,7 +30233,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4468230371967256650}
-  m_LocalRotation: {x: 0.000000021420417, y: 0.99901783, z: -0.044309754, w: 0.0000005066394}
+  m_LocalRotation: {x: 0.000000019557772, y: 0.99901783, z: -0.044309743, w: 0.0000005066394}
   m_LocalPosition: {x: -0.0000032186508, y: 1.5499998, z: 4.000007}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -43679,13 +43707,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd2d69656cbb3ab4dbd3965be91e94eb, type: 3}
---- !u!4 &1926881227362742131 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 9147135579071462041, guid: fd2d69656cbb3ab4dbd3965be91e94eb, type: 3}
-  m_PrefabInstance: {fileID: 7227308852976752106}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1926881227362742130 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9147135579071462040, guid: fd2d69656cbb3ab4dbd3965be91e94eb, type: 3}
+  m_PrefabInstance: {fileID: 7227308852976752106}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1926881227362742131 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9147135579071462041, guid: fd2d69656cbb3ab4dbd3965be91e94eb, type: 3}
   m_PrefabInstance: {fileID: 7227308852976752106}
   m_PrefabAsset: {fileID: 0}
