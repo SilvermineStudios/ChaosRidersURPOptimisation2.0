@@ -26,20 +26,38 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject startButton; //only for the master client
 
     [Header("Loading")]
+    [SerializeField] private bool startLoadingBars = false;
     [SerializeField] private float loadingTime = 6;
-    private float startLoadingValue;
-    private float loadingValueNormalized;
     [SerializeField] private GameObject loadingScreen; //activate when the start button is pressed
     [SerializeField] private Image loadingCircle; //increase the fill amount to complete
     [SerializeField] private Image loadingBar; //increase the fill amount to complete
     [SerializeField] private TextMeshProUGUI loadingPercentageText;
+    private float loadAmount = 0;
+    private float loadingValueNormalized;
     #endregion
 
 
     private void Awake()
     {
         loadingScreen.SetActive(false);
-        startLoadingValue = loadingTime;
+        loadingCircle.fillAmount = 0;
+        loadingBar.fillAmount = 0;
+    }
+
+    private void Update()
+    {
+        if(startLoadingBars && loadAmount < loadingTime)
+        {
+            loadAmount += 1 *Time.deltaTime;
+            loadingValueNormalized = (loadAmount / loadingTime);
+        }
+        FillLoadingBars(loadingValueNormalized);
+    }
+
+    private void FillLoadingBars(float loadamount)
+    {
+        loadingCircle.fillAmount = loadingValueNormalized;
+        loadingBar.fillAmount = loadingValueNormalized;
     }
 
     void ClearPlayerListings()
@@ -113,6 +131,7 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
     {
         loadingScreen.SetActive(true);
 
+        FillLoadingBars(loadingTime);
         StartCoroutine(LoadingCouroutine(loadingTime));
     }
 
@@ -134,9 +153,7 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
 
     private IEnumerator LoadingCouroutine(float time)
     {
-        loadingValueNormalized = (startLoadingValue / time);
-        loadingCircle.fillAmount = loadingValueNormalized;
-        loadingBar.fillAmount = loadingValueNormalized;
+        startLoadingBars = true;
 
         yield return new WaitForSeconds(time);
 
