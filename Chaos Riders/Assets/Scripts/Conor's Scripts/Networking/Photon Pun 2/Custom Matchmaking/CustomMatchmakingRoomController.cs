@@ -10,21 +10,38 @@ using System.IO;
 public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
 {
     #region Variables
+    [SerializeField] private TMP_Text roomNameDisplay; //display for the name of the room
     [SerializeField] private int multiplayerSceneIndex; //scene index for loading multiplayer scene
 
+    [Header("Panels")]
     [SerializeField] private GameObject lobbyPanel; //display for when in lobby
-    [SerializeField] private GameObject roomPanel; //display for when in room
+    [SerializeField] private GameObject roomPanel; //display for when in room#
 
-    [SerializeField] private GameObject startButton; //only for the master client
-
+    [Header("Player Listings")]
     [SerializeField] private Transform playersContainer; //used to display all the players in the current room
     [SerializeField] private GameObject playerListingPrefab; //Instansiate to display each player in the room
-
-    [SerializeField] private TMP_Text roomNameDisplay; //display for the name of the room
     [SerializeField] private GameObject photonMenuPlayer; //each player will be given one of these when they join the room
-    [SerializeField] private Transform playerHolder; //this game object will be the parent object for each player in the lobby
+
+    [Header("Buttons")]
+    [SerializeField] private GameObject startButton; //only for the master client
+
+    [Header("Loading")]
+    [SerializeField] private float loadingTime = 6;
+    private float startLoadingValue;
+    private float loadingValueNormalized;
+    [SerializeField] private GameObject loadingScreen; //activate when the start button is pressed
+    [SerializeField] private Image loadingCircle; //increase the fill amount to complete
+    [SerializeField] private Image loadingBar; //increase the fill amount to complete
+    [SerializeField] private TextMeshProUGUI loadingPercentageText;
     #endregion
-   
+
+
+    private void Awake()
+    {
+        loadingScreen.SetActive(false);
+        startLoadingValue = loadingTime;
+    }
+
     void ClearPlayerListings()
     {
         for(int i = playersContainer.childCount -1; i >= 0; i--)
@@ -91,19 +108,12 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
         }
     }
 
+    #region Buttons
     public void StartGame() //paired to the start button
     {
-        if(PhotonNetwork.IsMasterClient)
-        {
-            PhotonNetwork.CurrentRoom.IsOpen = false; //close the room
-            PhotonNetwork.LoadLevel(multiplayerSceneIndex);
-        }
-    }
+        loadingScreen.SetActive(true);
 
-    IEnumerator rejoinLobby()
-    {
-        yield return new WaitForSeconds(1);
-        PhotonNetwork.JoinLobby();
+        StartCoroutine(LoadingCouroutine(loadingTime));
     }
 
     public void BackClick() //paired to the back button in the room panel
@@ -114,4 +124,27 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveLobby();
         StartCoroutine(rejoinLobby());
     }
+    #endregion
+    #region Couroutines
+    IEnumerator rejoinLobby()
+    {
+        yield return new WaitForSeconds(1);
+        PhotonNetwork.JoinLobby();
+    }
+
+    private IEnumerator LoadingCouroutine(float time)
+    {
+        loadingValueNormalized = (startLoadingValue / time);
+        loadingCircle.fillAmount = loadingValueNormalized;
+        loadingBar.fillAmount = loadingValueNormalized;
+
+        yield return new WaitForSeconds(time);
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.CurrentRoom.IsOpen = false; //close the room
+            PhotonNetwork.LoadLevel(multiplayerSceneIndex);
+        }
+    }
+    #endregion
 }
