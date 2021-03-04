@@ -10,6 +10,7 @@ using System.IO;
 public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
 {
     #region Variables
+    private PhotonView pv;
     [SerializeField] private TMP_Text roomNameDisplay; //display for the name of the room
     [SerializeField] private int multiplayerSceneIndex; //scene index for loading multiplayer scene
 
@@ -40,6 +41,7 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
+        pv = GetComponent<PhotonView>();
         loadingScreen.SetActive(false);
         loadingCircle.fillAmount = 0;
         loadingBar.fillAmount = 0;
@@ -133,8 +135,16 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
     #region Buttons
     public void StartGame() //paired to the start button
     {
-        loadingScreen.SetActive(true);
         StartCoroutine(LoadingCouroutine(loadingTime));
+
+        loadingScreen.SetActive(true);
+        pv.RPC("RPC_TurnOnLoadingScreen", RpcTarget.AllBuffered);
+    }
+
+    [PunRPC]
+    private void RPC_TurnOnLoadingScreen()
+    {
+        loadingScreen.SetActive(true);
     }
 
     public void BackClick() //paired to the back button in the room panel
