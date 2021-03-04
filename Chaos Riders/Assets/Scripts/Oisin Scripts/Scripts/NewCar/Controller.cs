@@ -7,7 +7,7 @@ using Photon.Pun;
 public class Controller : MonoBehaviour
 {
     enum CarClass { Braker, Shredder };
-    public Rigidbody rb;
+    public Rigidbody rb { get; private set; }
 
     #region Cars
     [Header("Car Data")]
@@ -15,6 +15,7 @@ public class Controller : MonoBehaviour
     Vehicle carData;
     [SerializeField] Vehicle[] VehicleData;
     [SerializeField] GameObject[] Models;
+    GameObject model;
     #endregion
 
     #region Bools
@@ -28,19 +29,18 @@ public class Controller : MonoBehaviour
     #region Floats
     [Header("Floats")]
     private float horizontalInput;
-    public float verticalInput;
+    private float verticalInput;
     private float steeringAngle;
-    float oldRot;
+    private float oldRot;
     private float currentTorque;
     private float boostTorque;
     public float currentSpeed { get { return rb.velocity.magnitude * 2.23693629f; } private set { } }
-    float num = 0.002f;
     #endregion
 
     #region Wheels
     [Header("Wheels")]
     [SerializeField] private WheelCollider[] wheelColliders = new WheelCollider[4];
-    [SerializeField] private Transform[] wheelMeshes = new Transform[4];
+    private Transform[] wheelMeshes = new Transform[4];
     #endregion
 
     #region Camera
@@ -62,7 +62,8 @@ public class Controller : MonoBehaviour
     Skidmarks[] skidmarks = new Skidmarks[4];
     int[] lastSkid = new int[4];
     WheelFrictionCurve drift;
-    WheelFrictionCurve normal;
+    WheelFrictionCurve defaultForwardFrictionCurve;
+    WheelFrictionCurve defaultSidewaysFrictionCurve;
     #endregion
 
     #region Sound
@@ -90,14 +91,7 @@ public class Controller : MonoBehaviour
 
     private void Start()
     {
-        if(currentCarClass == CarClass.Braker)
-        {
-            carData = VehicleData[0];
-        }
-        else if (currentCarClass == CarClass.Shredder)
-        {
-            carData = VehicleData[1];
-        }
+        SetupCar(currentCarClass);
 
         skidmarksController = FindObjectOfType<Skidmarks>();
         pv = GetComponent<PhotonView>();
@@ -108,13 +102,13 @@ public class Controller : MonoBehaviour
         skidmarks[2] = skidmarksController;
         skidmarks[3] = skidmarksController;
 
-
-        normal.extremumSlip = 0.2f;
-        normal.extremumValue = 1;
-        normal.asymptoteSlip = 0.8f;
-        normal.asymptoteValue = 0.5f;
-        normal.stiffness = 1;
-
+        /*
+        defaultForwardFrictionCurve.extremumSlip = 0.2f;
+        defaultForwardFrictionCurve.extremumValue = 1;
+        defaultForwardFrictionCurve.asymptoteSlip = 0.8f;
+        defaultForwardFrictionCurve.asymptoteValue = 0.5f;
+        defaultForwardFrictionCurve.stiffness = 1;
+        */
 
         rb = GetComponent<Rigidbody>();
         rb.centerOfMass = carData.centerOfMass;
@@ -126,6 +120,74 @@ public class Controller : MonoBehaviour
         cineCamera = gameObject.transform.GetChild(0).gameObject.GetComponent<CinemachineVirtualCamera>();
         cineCamTransposer = cineCamera.GetCinemachineComponent<CinemachineTransposer>();
         cineCamTransposer.m_FollowOffset = carData.stationaryCamOffset;
+    }
+
+    void SetupCar(CarClass car)
+    {
+        //turn all models off
+        foreach(GameObject model in Models)
+        {
+            model.SetActive(false);
+        }
+
+        //switch to right car and car data
+        switch (car)
+        {
+            case CarClass.Braker:
+                carData = VehicleData[0];
+                model = Models[0];
+                break;
+            case CarClass.Shredder:
+                carData = VehicleData[1];
+                model = Models[1];
+                break;
+            default:
+                carData = VehicleData[0];
+                model = Models[0];
+                break;
+        }
+
+        //turn model on
+        model.SetActive(true);
+
+        //add models wheel meshes to array
+        for (int i = 0; i < 4; i++)
+        {
+            wheelMeshes[i] = model.transform.GetChild(0).GetChild(i);
+        }
+
+        //set wheel colliders at wheel mesh positions
+        for (int i = 0; i < 4; i++)
+        {
+            wheelColliders[i].transform.position = wheelMeshes[i].transform.position;
+        }
+
+        foreach (WheelCollider wheelCollider in wheelColliders)
+        {
+            SetupWheel(wheelCollider);
+        }
+        defaultForwardFrictionCurve = carData.forwardFriction;
+        defaultSidewaysFrictionCurve = carData.sideFriction;
+    }
+
+    void SetupWheel(WheelCollider wheel)
+    {
+        //Main
+        wheel.mass = carData.wheelMass;
+        wheel.radius = carData.wheelRadius;
+        wheel.wheelDampingRate = carData.wheelDampingRate;
+        wheel.suspensionDistance = carData.wheelSuspensionDistance;
+        wheel.forceAppPointDistance = carData.wheelForceAppPontDistance;
+        wheel.center = carData.wheelCenter;
+
+        //Suspension
+        wheel.suspensionSpring = carData.suspension;
+
+        //Forward Friction
+        wheel.forwardFriction = carData.forwardFriction;
+
+        //Side Friction
+        wheel.sidewaysFriction = carData.sideFriction;
     }
 
     private void FixedUpdate()
@@ -238,7 +300,6 @@ public class Controller : MonoBehaviour
         return 1 - (1 - factor) * (1 - factor);
     }
 
-    //=========================================================================================================================
 
 
     private void GetInput()
@@ -338,22 +399,22 @@ public class Controller : MonoBehaviour
         float speed = rb.velocity.magnitude;
         a = currentSpeed / carData.topSpeed;
         a = 1 - a;
-        
-        normal.stiffness = a;
+
+        defaultForwardFrictionCurve.stiffness = a;
 
         if (verticalInput == 0)
         {
-            normal.stiffness = 0.75f; ;
+            defaultForwardFrictionCurve.stiffness = 0.75f; ;
             rb.drag = 0.2f;
         }
 
         else if (verticalInput < 0)
         {
-            normal.stiffness = 1;
+            defaultForwardFrictionCurve.stiffness = 1;
             rb.drag = 0.5f;
             if(currentSpeed >= 100)
             {
-                normal.stiffness = 2;
+                defaultForwardFrictionCurve.stiffness = 2;
             }
         }
         else
@@ -362,7 +423,7 @@ public class Controller : MonoBehaviour
         }
         foreach (WheelCollider wheel in wheelColliders)
         {
-            wheel.forwardFriction = normal;
+            wheel.forwardFriction = defaultForwardFrictionCurve;
         }
     }
 
@@ -419,11 +480,11 @@ public class Controller : MonoBehaviour
     public void ApplyBrake(float brakeAmount)
     {
         braking = true;
-        normal.stiffness = 1;
+        defaultForwardFrictionCurve.stiffness = 1;
         foreach (WheelCollider wheel in wheelColliders)
         {
             wheel.brakeTorque = brakeAmount;
-            wheel.forwardFriction = normal;
+            wheel.forwardFriction = defaultForwardFrictionCurve;
         }
     }
 
@@ -630,8 +691,8 @@ public class Controller : MonoBehaviour
         else
         {
 
-            wheelColliders[2].sidewaysFriction = normal;
-            wheelColliders[3].sidewaysFriction = normal;
+            wheelColliders[2].sidewaysFriction = defaultSidewaysFrictionCurve;
+            wheelColliders[3].sidewaysFriction = defaultSidewaysFrictionCurve;
             drifting = false;
         }
     }

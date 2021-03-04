@@ -12,11 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6616ee9bac656374abf63fbede27c0e5, type: 3}
   m_Name: Shredder
   m_EditorClassIdentifier: 
-  centerOfMass: {x: 0, y: 0.22, z: -1.35}
-  vehicleMass: 2000
-  vehicleDrag: 0.05
-  vehicleAngularDrag: 0.1
-  wheelMass: 20
   gearRatio:
   - 0
   - 0
@@ -45,3 +40,26 @@ MonoBehaviour:
   stationaryCamOffset: {x: 0, y: 2, z: 6}
   movingCamOffset: {x: 0, y: 1.55, z: 3}
   boostCamOffset: {x: 0, y: 1.55, z: 5}
+  centerOfMass: {x: 0, y: 0.22, z: -1.35}
+  vehicleMass: 2000
+  vehicleDrag: 0.05
+  vehicleAngularDrag: 0.1
+  wheelMass: 20
+  wheelRadius: 0.55
+  wheelDampingRate: 0.05
+  wheelSuspensionDistance: 0.2
+  wheelForceAppPontDistance: 0.1
+  wheelCenter: {x: 0, y: 0, z: 0}
+  spring: 70000
+  damper: 5500
+  targetPosition: 0.1
+  forwardExtremumSlip: 0.2
+  forwardExtremumValue: 1
+  forwardAsymptoteSlip: 0.8
+  forwardAsymptoteValue: 0.5
+  forwardStiffness: 1.5
+  sideExtremumSlip: 0.3
+  sideExtremumValue: 1
+  sideAsymptoteSlip: 0.5
+  sideAsymptoteValue: 0.75
+  sideStiffness: 1

@@ -778,8 +778,8 @@ Transform:
   m_LocalPosition: {x: -0.46, y: -0.34, z: -3.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 294612420}
   - {fileID: 2121413547}
+  - {fileID: 294612420}
   m_Father: {fileID: 4468230371053281715}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1417,7 +1417,7 @@ Transform:
   - {fileID: 804145667}
   - {fileID: 117785769}
   m_Father: {fileID: 152860565}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &299657871
 GameObject:
@@ -8632,7 +8632,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 1327968797}
-  viewIdField: 14
+  viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &1327968797
@@ -17362,7 +17362,7 @@ Transform:
   - {fileID: 272355442}
   - {fileID: 1143934956}
   m_Father: {fileID: 152860565}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2122863254
 GameObject:
@@ -22817,7 +22817,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5486490854132268703}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7356631493159563808
 MeshFilter:
@@ -23208,7 +23208,7 @@ Transform:
   - {fileID: 4468230371168109686}
   - {fileID: 4468230371967685038}
   m_Father: {fileID: 5486490854132268703}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3674856452346163382
 GameObject:
@@ -23240,7 +23240,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5486490854132268703}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4990666720076522323
 MeshFilter:
@@ -29330,7 +29330,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efe8b6672059e8a4dac0fd7e59e0b4b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
   currentCarClass: 0
   VehicleData:
   - {fileID: 11400000, guid: 5945cc5f357fead40bafea468094598b, type: 2}
@@ -29343,7 +29342,6 @@ MonoBehaviour:
   brake: 0
   braking: 0
   drifting: 0
-  verticalInput: 0
   wheelColliders:
   - {fileID: 708257731095964703}
   - {fileID: 7595011238983831582}
@@ -29515,7 +29513,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 4468230371053281370}
   - {fileID: 4468230371053281373}
-  viewIdField: 13
+  viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &4468230371053281370
@@ -30265,7 +30263,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4468230371967256650}
-  m_LocalRotation: {x: 0.000000018626451, y: 0.9990179, z: -0.044309743, w: 0.00000047683716}
+  m_LocalRotation: {x: 0.000000019557772, y: 0.99901783, z: -0.044309743, w: 0.0000005066394}
   m_LocalPosition: {x: -0.0000032186508, y: 1.5499998, z: 4.000007}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -40875,11 +40873,11 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.72, z: -1.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 5669195878498245259}
   - {fileID: 1503600553433629183}
   - {fileID: 2737901049930243110}
   - {fileID: 2292356594198440256}
   - {fileID: 3005489091510920136}
-  - {fileID: 5669195878498245259}
   m_Father: {fileID: 4468230371053281715}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: -90, y: -90, z: 0}
@@ -41506,7 +41504,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5486490854132268703}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4386716626272313227
 MeshFilter:
@@ -41854,7 +41852,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5486490854132268703}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7588099391449671683
 MeshFilter:
@@ -43589,7 +43587,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -2674143812773984224, guid: fd2d69656cbb3ab4dbd3965be91e94eb, type: 3}
       propertyPath: viewIdField
-      value: 12
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8949424835312931035, guid: fd2d69656cbb3ab4dbd3965be91e94eb, type: 3}
       propertyPath: m_Materials.Array.size
