@@ -20,10 +20,13 @@ public class Controller : MonoBehaviour
 
     #region Bools
     [Header("Bools")]
-    [SerializeField] private bool displayGui = false;
-    public bool boost;
-    public bool brake, braking;
-    public bool drifting;
+    [SerializeField] bool displayGui = false;
+    [SerializeField] bool canChangeCar = false;
+    [SerializeField] bool lockAbilitiesToCar = true;
+    [HideInInspector] public bool boost;
+    public bool braking { get; private set; }
+    public bool drifting { get; private set; }
+    private bool brake;
     #endregion
 
     #region Floats
@@ -51,6 +54,7 @@ public class Controller : MonoBehaviour
 
     #region Scripts
     Skidmarks skidmarksController;
+    DriverAbilities driverAbilities;
     PhotonView pv;
     Health healthScript;
     [HideInInspector] public TurretTester ShooterAttached; //Does this need to still be here?
@@ -80,6 +84,7 @@ public class Controller : MonoBehaviour
 
     private void Awake()
     {
+        driverAbilities = GetComponent<DriverAbilities>();
         skidSound = FMODUnity.RuntimeManager.CreateInstance("event:/CarFX/All/Skid");
         FMODUnity.RuntimeManager.AttachInstanceToGameObject(skidSound, transform, rb);
         skidSound.start();
@@ -156,18 +161,27 @@ public class Controller : MonoBehaviour
             wheelMeshes[i] = model.transform.GetChild(0).GetChild(i);
         }
 
-        //set wheel colliders at wheel mesh positions
-        for (int i = 0; i < 4; i++)
-        {
-            wheelColliders[i].transform.position = wheelMeshes[i].transform.position;
-        }
-
         foreach (WheelCollider wheelCollider in wheelColliders)
         {
             SetupWheel(wheelCollider);
         }
         defaultForwardFrictionCurve = carData.forwardFriction;
         defaultSidewaysFrictionCurve = carData.sideFriction;
+
+        if (lockAbilitiesToCar)
+        {
+            if (currentCarClass == CarClass.Braker)
+            {
+                driverAbilities.CurrentAbility = DriverAbilities.Abilities.SmokeScreen;
+                driverAbilities.CurrentUltimate = DriverAbilities.Ultimates.Brake;
+            }
+
+            if (currentCarClass == CarClass.Shredder)
+            {
+                driverAbilities.CurrentAbility = DriverAbilities.Abilities.Mine;
+                driverAbilities.CurrentUltimate = DriverAbilities.Ultimates.Shred;
+            }
+        }
     }
 
     void SetupWheel(WheelCollider wheel)
@@ -246,6 +260,20 @@ public class Controller : MonoBehaviour
             if (ShooterAttached != null)
             {
                 ShooterAttached.ResetPos();
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Mouse1) && canChangeCar)
+        {
+            if(currentCarClass == CarClass.Braker)
+            {
+                SetupCar(CarClass.Shredder);
+                currentCarClass = CarClass.Shredder;
+            }
+            else
+            {
+                SetupCar(CarClass.Braker);
+                currentCarClass = CarClass.Braker;
             }
         }
         
