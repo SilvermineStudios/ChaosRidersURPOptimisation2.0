@@ -1,75 +1,138 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Cinemachine;
 using Photon.Pun;
 
 public class Controller : MonoBehaviour
 {
-    [SerializeField] private bool displayGui = false;
-    [SerializeField] private float[] gearRatio = new float[5];
-    [SerializeField] private WheelCollider[] wheelColliders = new WheelCollider[4];
-    [SerializeField] private Transform[] wheelMeshes = new Transform[4];
-    [SerializeField] private Vector3 centerOfMass;
-    [Range(0, 1)] [SerializeField] private float steerHelper;
-    [SerializeField] private float tractionControl = 0;
-    [SerializeField] private float fullTorqueOverAllWheels;
-    [SerializeField] private float boostFullTorqueOverAllWheels;
-    [SerializeField] private float brakeTorque;
-    [SerializeField] private float reverseTorque;
-    [SerializeField] private float topSpeed;
-    [SerializeField] private float boostSpeed;
-    [SerializeField] private float downforce;
-    [SerializeField] float maxSteerAngle = 30;
-    [SerializeField] float maxFOV;
-    [SerializeField] float boostFOV;
-    [SerializeField] private Vector3 stationaryCamOffset;
-    [SerializeField] private Vector3 movingCamOffset;
-    [SerializeField] private Vector3 boostCamOffset;
-    private CinemachineVirtualCamera cineCamera;
-    Skidmarks skidmarksController;
-    private float horizontalInput;
-    public float verticalInput;
-    private float steeringAngle;
-    public bool boost;
-    public bool brake, braking;
+    #region Cars
+    [Header("Car Data")]
+    [SerializeField] CarClass currentCarClass;
+    CarClass oldCarClass;
+    Vehicle carData;
+    [SerializeField] Vehicle[] VehicleData;
+    [SerializeField] GameObject[] Models;
+    GameObject model;
+    #endregion
 
-    PhotonView pv;
-    Health healthScript;
-    public Rigidbody rb;
-    float oldRot;
-    float steerAngle;
+    #region Bools
+    [Header("Bools")]
+    [SerializeField] bool displayGui = false;
+    [SerializeField] bool canChangeCar = false;
+    [SerializeField] bool lockAbilitiesToCar = true;
+    [HideInInspector] public bool boost;
+    public bool braking { get; private set; }
+    public bool drifting { get; private set; }
+    private bool brake;
+    [SerializeField] private bool canUseEquipment = false, canUseAbility = false;
+    private bool useOverCharge; //Currently unused
+    #endregion
+
+    #region Floats
+    [Header("Floats")]
+    private float horizontalInput;
+    private float verticalInput;
+    private float steeringAngle;
+    private float oldRot;
     private float currentTorque;
     private float boostTorque;
     public float currentSpeed { get { return rb.velocity.magnitude * 2.23693629f; } private set { } }
-    float slipLimit = 0.3f;
-    [SerializeField ]float forwardSkidLimit = 0.5f;
-    [SerializeField ]float sideSkidLimit = 0.5f;
+    #endregion
+
+    #region Wheels
+    [Header("Wheels")]
+    [SerializeField] private WheelCollider[] wheelColliders = new WheelCollider[4];
+    private Transform[] wheelMeshes = new Transform[4];
+    #endregion
+
+    #region Camera
+    [Header("Camera")]
+    private CinemachineVirtualCamera cineCamera;
+    CinemachineTransposer cineCamTransposer;
+    #endregion
+
+    #region Scripts
+    Skidmarks skidmarksController;
+    DriverAbilities driverAbilities;
+    PhotonView pv;
+    Health healthScript;
+    ShredUltimate shredUltimate;
+    [HideInInspector] public TurretTester ShooterAttached; //Does this need to still be here?
+    [HideInInspector] public GameObject Shooter;
+    #endregion
+
+    #region Skidmarks
+    [Header("Skidmarks")]
     Skidmarks[] skidmarks = new Skidmarks[4];
     int[] lastSkid = new int[4];
-    CinemachineTransposer cineCamTransposer;
     WheelFrictionCurve drift;
-    WheelFrictionCurve normal;
-    float num = 0.002f;
-    public TurretTester ShooterAttached;
-    public GameObject Shooter;
+    WheelFrictionCurve defaultForwardFrictionCurve;
+    WheelFrictionCurve defaultSidewaysFrictionCurve;
+    #endregion
 
+    #region Sound
+    [Header("Sound")]
     FMOD.Studio.Bus SkidBus;
     FMOD.Studio.EventInstance skidSound;
+    public float Revs { get; private set; }
+    private int gearNum;
+    private float gearFactor;
+    #endregion
 
+    #region Driver Abilities
+    [Header("Driver Abilities")]
+    public DriverEquipment CurrentEquipment;
+    DriverEquipment OldEquipment;
+    public DriverUltimate CurrentUltimate;
+    DriverUltimate OldUltimate;
+    [SerializeField] private KeyCode abilityKeyCode = KeyCode.Q, equipmentKeyCode = KeyCode.E; //Create Keycode Variables for the buttons
+    #endregion
+
+    #region Ability Data
+    [Header("Ability Data")] 
+    public Equipment[] DriverEquipmentData;
+    Equipment equipmentData;
+    public Ultimate[] DriverUltimateData;
+    Ultimate ultimateData;
+
+    #endregion
+
+    #region Driver Abilities UI
+    [Header("Driver Abilities UI")]
+    [SerializeField] private Transform equipmentChargeBar; //equipment chargebar
+    [SerializeField] private Transform abilityChargeBar; //ability chargebar
+    private Transform equipmentOverChargeBar, abilityOverChargeBar; //not in use
+    private float equipmentChargeAmount, equipmentOverchargeAmount, abilityChargeAmount, abilityOverChargeAmount; //equipment/ability charge Amount
+    [SerializeField] private float equipmentChargeSpeed = 8f, abilityChargeSpeed = 2f;
+
+    #endregion
+
+    #region Other
+    enum CarClass { Braker, Shredder };
+    public Rigidbody rb { get; private set; }
+    public enum DriverEquipment { SmokeScreen, Mine }
+    public enum DriverUltimate { Brake, Shred }
+    private Animator anim;
+    GameObject abilitySpawn;
+    #endregion
+
+    #region Default Functions
     private void Awake()
     {
+        anim = GetComponentInChildren<Animator>();
+        driverAbilities = GetComponent<DriverAbilities>();
         skidSound = FMODUnity.RuntimeManager.CreateInstance("event:/CarFX/All/Skid");
         FMODUnity.RuntimeManager.AttachInstanceToGameObject(skidSound, transform, rb);
         skidSound.start();
         skidSound.setVolume(0);
     }
 
-    
-
-
     private void Start()
     {
+        SetupCar(currentCarClass);
+
         skidmarksController = FindObjectOfType<Skidmarks>();
         pv = GetComponent<PhotonView>();
         healthScript = GetComponent<Health>();
@@ -79,22 +142,59 @@ public class Controller : MonoBehaviour
         skidmarks[2] = skidmarksController;
         skidmarks[3] = skidmarksController;
 
-
-        normal.extremumSlip = 0.2f;
-        normal.extremumValue = 1;
-        normal.asymptoteSlip = 0.8f;
-        normal.asymptoteValue = 0.5f;
-        normal.stiffness = 1;
-
-        
-
-        cineCamera = gameObject.transform.GetChild(1).gameObject.GetComponent<CinemachineVirtualCamera>();
-        cineCamTransposer = cineCamera.GetCinemachineComponent<CinemachineTransposer>();
-        cineCamTransposer.m_FollowOffset = stationaryCamOffset;
         rb = GetComponent<Rigidbody>();
-        rb.centerOfMass = centerOfMass;
-        currentTorque = fullTorqueOverAllWheels - (tractionControl * fullTorqueOverAllWheels);
-        boostTorque = boostFullTorqueOverAllWheels;
+        rb.centerOfMass = carData.centerOfMass;
+        rb.mass = carData.vehicleMass;
+        rb.drag = carData.vehicleDrag;
+        rb.angularDrag = carData.vehicleAngularDrag;
+        currentTorque = carData.fullTorqueOverAllWheels - (carData.tractionControl * carData.fullTorqueOverAllWheels);
+        boostTorque = carData.boostFullTorqueOverAllWheels;
+        cineCamera = gameObject.transform.GetChild(0).gameObject.GetComponent<CinemachineVirtualCamera>();
+        cineCamTransposer = cineCamera.GetCinemachineComponent<CinemachineTransposer>();
+        cineCamTransposer.m_FollowOffset = carData.stationaryCamOffset;
+
+        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
+        {
+            ResetAllBars(); //set all the bars to 0
+            CheckIfCanUseEquipmentAndAbility(); //check if the player can use their equipment
+        }
+    }
+
+    private void Update()
+    {
+        GetInput();
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z - 1f);
+            transform.rotation = Quaternion.Euler(0, transform.localRotation.y, 0);
+
+            if (ShooterAttached != null)
+            {
+                ShooterAttached.ResetPos();
+            }
+        }
+
+        if ((Input.GetKeyDown(KeyCode.Mouse1) && canChangeCar))
+        {
+            if (currentCarClass == CarClass.Braker)
+            {
+                currentCarClass = CarClass.Shredder;
+            }
+            else
+            {
+                currentCarClass = CarClass.Braker;
+            }
+        }
+
+        if (oldCarClass != currentCarClass)
+        {
+            SetupCar(currentCarClass);
+        }
+
+        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
+        {
+            DriverAbilities();
+        }
     }
 
     private void FixedUpdate()
@@ -129,64 +229,313 @@ public class Controller : MonoBehaviour
             
         }
     }
-    
+
+    private void GetInput()
+    {
+        horizontalInput = Input.GetAxis("Horizontal");
+        verticalInput = Input.GetAxis("Vertical");
+        if (!braking)
+        {
+            brake = Input.GetKey(KeyCode.T);
+            //Debug.Log(98989898989898989);
+        }
+        if (Input.GetKeyUp(KeyCode.T))
+        {
+            brake = false;
+            ReleaseBrake();
+            //Debug.Log(234234324);
+        }
+
+        //boost = Input.GetKey(KeyCode.LeftShift);
+    }
+    #endregion
+
+    #region Setup
+    void SetupCar(CarClass car)
+    {
+        //turn all models off
+        foreach (GameObject model in Models)
+        {
+            model.SetActive(false);
+        }
+
+        //switch to right car and car data
+        switch (car)
+        {
+            case CarClass.Braker:
+                carData = VehicleData[0];
+                model = Models[0];
+                break;
+            case CarClass.Shredder:
+                carData = VehicleData[1];
+                model = Models[1];
+                break;
+            default:
+                carData = VehicleData[0];
+                model = Models[0];
+                break;
+        }
+
+        //turn model on
+        model.SetActive(true);
+
+        //add models wheel meshes to array
+        for (int i = 0; i < 4; i++)
+        {
+            wheelMeshes[i] = model.transform.GetChild(0).GetChild(i);
+        }
+
+        foreach (WheelCollider wheelCollider in wheelColliders)
+        {
+            SetupWheel(wheelCollider);
+        }
+        defaultForwardFrictionCurve = carData.forwardFriction;
+        defaultSidewaysFrictionCurve = carData.sideFriction;
+
+        if (lockAbilitiesToCar)
+        {
+            if (currentCarClass == CarClass.Braker)
+            {
+                CurrentEquipment = DriverEquipment.SmokeScreen;
+                CurrentUltimate = DriverUltimate.Brake;
+            }
+
+            if (currentCarClass == CarClass.Shredder)
+            {
+                CurrentEquipment = DriverEquipment.Mine;
+                CurrentUltimate = DriverUltimate.Shred;
+            }
+        }
+        SetupEquipment(CurrentEquipment);
+        SetupUltimate(CurrentUltimate);
+        oldCarClass = car;
+    }
+
+    void SetupWheel(WheelCollider wheel)
+    {
+        //Main
+        wheel.mass = carData.wheelMass;
+        wheel.radius = carData.wheelRadius;
+        wheel.wheelDampingRate = carData.wheelDampingRate;
+        wheel.suspensionDistance = carData.wheelSuspensionDistance;
+        wheel.forceAppPointDistance = carData.wheelForceAppPontDistance;
+        wheel.center = carData.wheelCenter;
+
+        //Suspension
+        wheel.suspensionSpring = carData.suspension;
+
+        //Forward Friction
+        wheel.forwardFriction = carData.forwardFriction;
+
+        //Side Friction
+        wheel.sidewaysFriction = carData.sideFriction;
+    }
+
+    void SetupEquipment(DriverEquipment equipment)
+    {
+        //switch to right equipment
+        switch (equipment)
+        {
+            case DriverEquipment.SmokeScreen:
+                equipmentData = DriverEquipmentData[0];
+                break;
+            case DriverEquipment.Mine:
+                equipmentData = DriverEquipmentData[1];
+                break;
+            default:
+                equipmentData = DriverEquipmentData[0];
+                break;
+        }
+        OldEquipment = equipment;
+    }
+
+    void SetupUltimate(DriverUltimate ultimate)
+    {
+        //switch to right ultimate
+        switch (ultimate)
+        {
+            case DriverUltimate.Brake:
+                ultimateData = DriverUltimateData[0];
+                break;
+            case DriverUltimate.Shred:
+                ultimateData = DriverUltimateData[1];
+                break;
+            default:
+                ultimateData = DriverUltimateData[0];
+                break;
+        }
+        OldUltimate = ultimate;
+    }
+
     private void StartRace()
     {
-        if(!MasterClientRaceStart.Instance.countdownTimerStart)
+        if (!MasterClientRaceStart.Instance.countdownTimerStart)
         {
-            ApplyBrake(brakeTorque);
+            ApplyBrake(carData.brakeTorque);
         }
         else
         {
             ReleaseBrake();
         }
     }
-    
-    private void Update()
-    {
-        GetInput();
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            transform.position = new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z - 1f);
-            transform.rotation = Quaternion.Euler(0, transform.localRotation.y, 0);
+    #endregion
 
-            if (ShooterAttached != null)
+    #region Driver Abilities
+
+    void DriverAbilities()
+    {
+        ChargeBars(); //charge the equipment and ability bars
+        CheckIfCanUseEquipmentAndAbility(); //check if the player can use their equipment
+
+        //if you use the equipment
+        if (Input.GetKeyDown(equipmentKeyCode) && canUseEquipment)
+        {
+            FMODUnity.RuntimeManager.PlayOneShotAttached(equipmentData.sound, gameObject);
+            //spawn the smoke grenade accross the network
+            if (IsThisMultiplayer.Instance.multiplayer)
             {
-                ShooterAttached.ResetPos();
+                PhotonNetwork.Instantiate(equipmentData.photonPrefab, abilitySpawn.transform.position, abilitySpawn.transform.rotation, 0);
             }
+            //spawn the smoke grenade in single player
+            if (!IsThisMultiplayer.Instance.multiplayer)
+            {
+                Instantiate(equipmentData.prefab, abilitySpawn.transform.position, abilitySpawn.transform.rotation);
+            }
+            equipmentChargeAmount = 0; //reset the cooldownbar after the equipment is used
+        }
+
+        //if you use the Ability
+        if (Input.GetKeyDown(abilityKeyCode) && canUseAbility)
+        {
+
+            if (CurrentUltimate == DriverUltimate.Brake)
+            {
+                StartCoroutine(UseBrakerAbility());
+            }
+            if (CurrentUltimate == DriverUltimate.Shred)
+            {
+                StartCoroutine(UseShredderAbility());
+            }
+            abilityChargeAmount = 0; //reset the cooldownbar after the ability is used
         }
         
     }
 
+    private IEnumerator UseBrakerAbility()
+    {
+        anim.SetTrigger("BreakerTransTrigger");
+        //brake
+        ApplyBrake(30000000);
 
-    //Stuff to feed to Audio Script, to be removed in alpha
-    //==================================================================================================
+        yield return new WaitForSeconds(1.5f);
+        ReleaseBrake();
+        anim.SetTrigger("LeaveBreakerTrigger");
+        //speed
+
+        boost = true;
+
+        yield return new WaitForSeconds(5.5f);
+        boost = false;
+    }
+
+    private IEnumerator UseShredderAbility()
+    {
+        FMODUnity.RuntimeManager.PlayOneShotAttached("event:/CarFX/Shredder/ShredFX", gameObject);
+        shredUltimate.enabled = true;
+
+        yield return new WaitForSeconds(4.5f);
+        shredUltimate.enabled = false;
+
+    }
+
+    //sets all bars to 0
+    private void ResetAllBars()
+    {
+        equipmentChargeBar.GetComponent<Image>().fillAmount = 0;
+        //equipmentOverChargeBar.GetComponent<Image>().fillAmount = 0;
+        abilityChargeBar.GetComponent<Image>().fillAmount = 0;
+        //abilityOverChargeBar.GetComponent<Image>().fillAmount = 0;
+    }
+
+    //check if the player can use their equipment
+    private void CheckIfCanUseEquipmentAndAbility()
+    {
+        //check if the equipment bar is full
+        if (equipmentChargeAmount >= 100)
+            canUseEquipment = true;
+        else
+            canUseEquipment = false;
+
+
+        //check if the ability bar is full
+        if (abilityChargeAmount >= 100)
+            canUseAbility = true;
+        else
+            canUseAbility = false;
+    }
+    
+    //charge the equipment and ability bars
+    private void ChargeBars()
+    {
+        //if the qeuipment bar isnt full add to it
+        if (equipmentChargeAmount < 100)
+        {
+            equipmentChargeAmount += equipmentData.chargeRate * Time.deltaTime;
+            equipmentChargeBar.GetComponent<Image>().fillAmount = equipmentChargeAmount / 100;
+        }
+
+        if (useOverCharge)
+        {
+            //if the equipment bar is full add to the overcharge bar
+            if (equipmentChargeAmount >= 100)
+            {
+                equipmentOverchargeAmount += equipmentChargeSpeed * Time.deltaTime;
+                equipmentOverChargeBar.GetComponent<Image>().fillAmount = equipmentOverchargeAmount / 100;
+            }
+        }
+
+
+
+        //if the ability bar isnt full add to it
+        if (abilityChargeAmount < 100)
+        {
+            abilityChargeAmount += abilityChargeSpeed * Time.deltaTime;
+            abilityChargeBar.GetComponent<Image>().fillAmount = abilityChargeAmount / 100;
+        }
+
+        if (useOverCharge)
+        {
+            //if the ability bar is full add to the overcharge bar
+            if (abilityChargeAmount >= 100)
+            {
+                abilityOverChargeAmount += abilityChargeSpeed * Time.deltaTime;
+                abilityOverChargeBar.GetComponent<Image>().fillAmount = abilityOverChargeAmount / 100;
+            }
+        }
+    }
+    #endregion
+
+    #region Audio
 
     private void CalculateRevs()
     {
         // calculate engine revs (for display / sound)
         // (this is done in retrospect - revs are not used in force/power calculations)
         CalculateGearFactor();
-        var gearNumFactor = m_GearNum / (float)NoOfGears;
-        var revsRangeMin = ULerp(0f, m_RevRangeBoundary, CurveFactor(gearNumFactor));
-        var revsRangeMax = ULerp(m_RevRangeBoundary, 1f, gearNumFactor);
-        Revs = ULerp(revsRangeMin, revsRangeMax, m_GearFactor);
+        var gearNumFactor = gearNum / (float)carData.numOfGears;
+        var revsRangeMin = ULerp(0f, carData.revRangeBoundary, CurveFactor(gearNumFactor));
+        var revsRangeMax = ULerp(carData.revRangeBoundary, 1f, gearNumFactor);
+        Revs = ULerp(revsRangeMin, revsRangeMax, gearFactor);
     }
 
     private void CalculateGearFactor()
     {
-        float f = (1 / (float)NoOfGears);
+        float f = (1 / (float)carData.numOfGears);
         // gear factor is a normalised representation of the current speed within the current gear's range of speeds.
         // We smooth towards the 'target' gear factor, so that revs don't instantly snap up or down when changing gear.
-        var targetGearFactor = Mathf.InverseLerp(f * m_GearNum, f * (m_GearNum + 1), Mathf.Abs(currentSpeed / topSpeed));
-        m_GearFactor = Mathf.Lerp(m_GearFactor, targetGearFactor, Time.deltaTime * 5f);
+        var targetGearFactor = Mathf.InverseLerp(f * gearNum, f * (gearNum + 1), Mathf.Abs(currentSpeed / carData.topSpeed));
+        gearFactor = Mathf.Lerp(gearFactor, targetGearFactor, Time.deltaTime * 5f);
     }
-
-    [SerializeField] private static int NoOfGears = 5;
-    private int m_GearNum;
-    private float m_GearFactor;
-    [SerializeField] private float m_RevRangeBoundary = 1f;
-    public float Revs { get; private set; }
 
     // unclamped version of Lerp, to allow value to exceed the from-to range
     private static float ULerp(float from, float to, float value)
@@ -196,20 +545,23 @@ public class Controller : MonoBehaviour
 
     private void GearChanging()
     {
-        float f = Mathf.Abs(currentSpeed / topSpeed);
-        float upgearlimit = (1 / (float)NoOfGears) * (m_GearNum + 1);
-        float downgearlimit = (1 / (float)NoOfGears) * m_GearNum;
+        float f = Mathf.Abs(currentSpeed / carData.topSpeed);
+        float upgearlimit = (1 / (float)carData.numOfGears) * (gearNum + 1);
+        float downgearlimit = (1 / (float)carData.numOfGears) * gearNum;
 
-        if (m_GearNum > 0 && f < downgearlimit)
+        if (gearNum > 0 && f < downgearlimit)
         {
-            m_GearNum--;
+            gearNum--;
         }
 
-        if (f > upgearlimit && (m_GearNum < (NoOfGears - 1)))
+        if (f > upgearlimit && (gearNum < (carData.numOfGears - 1)))
         {
-            m_GearNum++;
+            gearNum++;
         }
     }
+    #endregion
+
+    #region Driving
 
     // simple function to add a curved bias towards 1 for a value in the 0-1 range
     private static float CurveFactor(float factor)
@@ -217,33 +569,11 @@ public class Controller : MonoBehaviour
         return 1 - (1 - factor) * (1 - factor);
     }
 
-    //=========================================================================================================================
-
-
-    private void GetInput()
-    {
-        horizontalInput = Input.GetAxis("Horizontal");
-        verticalInput = Input.GetAxis("Vertical");
-        if(!braking)
-        {
-            brake = Input.GetKey(KeyCode.T);
-            //Debug.Log(98989898989898989);
-        }
-        if(Input.GetKeyUp(KeyCode.T))
-        {
-            brake = false;
-            ReleaseBrake();
-            //Debug.Log(234234324);
-        }
-
-        //boost = Input.GetKey(KeyCode.LeftShift);
-    }
-
     private void Steer()
     {
         if(horizontalInput != 0)
         {
-            steeringAngle = maxSteerAngle * horizontalInput * 0.75f;
+            steeringAngle = carData.maxSteerAngle * horizontalInput * 0.75f;
         }
         else
         {
@@ -291,7 +621,7 @@ public class Controller : MonoBehaviour
             
         }
         //Debug.Log(thrustTorque);
-        if (wheelColliders[0].brakeTorque == 0 && currentSpeed < topSpeed - 5)
+        if (wheelColliders[0].brakeTorque == 0 && currentSpeed < carData.topSpeed - 5)
         {
             for (int i = 0; i < 4; i++)
             {
@@ -300,7 +630,7 @@ public class Controller : MonoBehaviour
         }
 
 
-        if(rb.velocity.magnitude > topSpeed)
+        if(rb.velocity.magnitude > carData.topSpeed)
         {
             Debug.Log(12313);
         }
@@ -315,24 +645,24 @@ public class Controller : MonoBehaviour
         }
 
         float speed = rb.velocity.magnitude;
-        a = currentSpeed / topSpeed;
+        a = currentSpeed / carData.topSpeed;
         a = 1 - a;
-        
-        normal.stiffness = a;
+
+        defaultForwardFrictionCurve.stiffness = a;
 
         if (verticalInput == 0)
         {
-            normal.stiffness = 0.75f; ;
+            defaultForwardFrictionCurve.stiffness = 0.75f; ;
             rb.drag = 0.2f;
         }
 
         else if (verticalInput < 0)
         {
-            normal.stiffness = 1;
+            defaultForwardFrictionCurve.stiffness = 1;
             rb.drag = 0.5f;
             if(currentSpeed >= 100)
             {
-                normal.stiffness = 2;
+                defaultForwardFrictionCurve.stiffness = 2;
             }
         }
         else
@@ -341,10 +671,9 @@ public class Controller : MonoBehaviour
         }
         foreach (WheelCollider wheel in wheelColliders)
         {
-            wheel.forwardFriction = normal;
+            wheel.forwardFriction = defaultForwardFrictionCurve;
         }
     }
-
 
     private void TractionControl()
     {
@@ -358,35 +687,13 @@ public class Controller : MonoBehaviour
         
     }
 
-
-    // Debug GUI.
-    void OnGUI()
-    {
-        
-        if(displayGui)
-        {
-            //GUILayout.Label("FOV: " + cineCamera.m_Lens.FieldOfView);
-            GUILayout.Label("Speed: " + currentSpeed);
-
-            /*
-            GUILayout.Label("currentTorque: " + currentTorque);
-            GUILayout.Label("boostTorque: " + boostTorque);
-            GUILayout.Label("brakeTorque: " + wheelColliders[0].brakeTorque);
-            GUILayout.Label("rpm: " + wheelColliders[0].rpm);
-            GUILayout.Label("rb vel: " + rb.velocity.magnitude);
-            GUILayout.Label("rpm slip in radians per second: " + wheelColliders[0].rpm * 0.10472f * wheelColliders[0].radius);
-            GUILayout.Label("stiffeness " + wheelColliders[0].forwardFriction.stiffness);
-            */
-        }
-    }
-
     private void Brake()
     {
         if (MasterClientRaceStart.Instance.countdownTimerStart)
         {
             if (brake && !braking)
             {
-                ApplyBrake(brakeTorque);
+                ApplyBrake(carData.brakeTorque);
             }
             else if (!brake && !braking)
             {
@@ -398,11 +705,11 @@ public class Controller : MonoBehaviour
     public void ApplyBrake(float brakeAmount)
     {
         braking = true;
-        normal.stiffness = 1;
+        defaultForwardFrictionCurve.stiffness = 1;
         foreach (WheelCollider wheel in wheelColliders)
         {
             wheel.brakeTorque = brakeAmount;
-            wheel.forwardFriction = normal;
+            wheel.forwardFriction = defaultForwardFrictionCurve;
         }
     }
 
@@ -415,41 +722,39 @@ public class Controller : MonoBehaviour
         }
     }
 
-
     private void AdjustTorque(float forwardSlip)
     {
         if(boost)
         {
-            if (forwardSlip >= slipLimit && boostTorque >= 0)
+            if (forwardSlip >= carData.slipLimit && boostTorque >= 0)
             {
-                boostTorque -= 10 * tractionControl;
+                boostTorque -= 10 * carData.tractionControl;
             }
             else
             {
-                boostTorque += 10 * tractionControl;
-                if (boostTorque > boostFullTorqueOverAllWheels)
+                boostTorque += 10 * carData.tractionControl;
+                if (boostTorque > carData.boostFullTorqueOverAllWheels)
                 {
-                    boostTorque = boostFullTorqueOverAllWheels;
+                    boostTorque = carData.boostFullTorqueOverAllWheels;
                 }
             }
         }
         else
         {
-            if (forwardSlip >= slipLimit && currentTorque >= 0)
+            if (forwardSlip >= carData.slipLimit && currentTorque >= 0)
             {
-                currentTorque -= 10 * tractionControl;
+                currentTorque -= 10 * carData.tractionControl;
             }
             else
             {
-                currentTorque += 10 * tractionControl;
-                if (currentTorque > fullTorqueOverAllWheels)
+                currentTorque += 10 * carData.tractionControl;
+                if (currentTorque > carData.fullTorqueOverAllWheels)
                 {
-                    currentTorque = fullTorqueOverAllWheels;
+                    currentTorque = carData.fullTorqueOverAllWheels;
                 }
             }
         }
     }
-
 
     private void CapSpeed()
     {
@@ -458,20 +763,82 @@ public class Controller : MonoBehaviour
         speed *= 2.23693629f;
         if (boost)
         {
-            if (speed > boostSpeed)
+            if (speed > carData.boostSpeed)
             {
-                rb.velocity = boostSpeed / 2.23693629f * rb.velocity.normalized;
+                rb.velocity = carData.boostSpeed / 2.23693629f * rb.velocity.normalized;
             }
         }
         else
         {
-            if (speed > topSpeed)
+            if (speed > carData.topSpeed)
             {
-                rb.velocity = topSpeed / 2.23693629f * rb.velocity.normalized;
+                rb.velocity = carData.topSpeed / 2.23693629f * rb.velocity.normalized;
             }
         }
 
     }
+
+    private void Drift()
+    {
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+
+            wheelColliders[2].sidewaysFriction = drift;
+            wheelColliders[3].sidewaysFriction = drift;
+            drifting = true;
+        }
+        else
+        {
+
+            wheelColliders[2].sidewaysFriction = defaultSidewaysFrictionCurve;
+            wheelColliders[3].sidewaysFriction = defaultSidewaysFrictionCurve;
+            drifting = false;
+        }
+    }
+
+    private void AddDownForce()
+    {
+        rb.AddForce(-transform.up * carData.downforce * rb.velocity.magnitude);
+    }
+
+    private void HelpSteer()
+    {
+
+        for (int i = 0; i < 4; i++)
+        {
+            WheelHit wheelhit;
+            wheelColliders[i].GetGroundHit(out wheelhit);
+
+
+            // wheels arent on the ground so dont realign the rigidbody velocity
+            if (wheelhit.normal == Vector3.zero)
+            {
+                return;
+            }
+        }
+
+        // this if is needed to avoid gimbal lock problems that will make the car suddenly shift direction
+        if (Mathf.Abs(oldRot - transform.eulerAngles.y) < 10f)
+        {
+            if (drifting)
+            {
+                var turnadjust = (transform.eulerAngles.y - oldRot) * carData.steerHelperDrift;
+                Quaternion velRotation = Quaternion.AngleAxis(turnadjust, Vector3.up);
+                rb.velocity = velRotation * rb.velocity;
+            }
+            else
+            {
+                var turnadjust = (transform.eulerAngles.y - oldRot) * carData.steerHelper;
+                Quaternion velRotation = Quaternion.AngleAxis(turnadjust, Vector3.up);
+                rb.velocity = velRotation * rb.velocity;
+            }
+        }
+        oldRot = transform.eulerAngles.y;
+    }
+    #endregion
+
+    #region Driving Aesthetics
 
     private void UpdateWheelPoses()
     {
@@ -493,8 +860,46 @@ public class Controller : MonoBehaviour
     }
 
 
+    private void ChangeFOV()
+    {
+        //Debug.Log(currentSpeed);
+        if (currentSpeed > cineCamera.m_Lens.FieldOfView)
+        {
+            cineCamera.m_Lens.FieldOfView = Mathf.Lerp(cineCamera.m_Lens.FieldOfView, currentSpeed, Time.deltaTime);
 
+
+            if (cineCamera.m_Lens.FieldOfView > carData.maxFOV)
+            {
+                cineCamera.m_Lens.FieldOfView = carData.maxFOV;
+            }
+
+        }
+        else if (currentSpeed < 40 && cineCamera.m_Lens.FieldOfView > 60)
+        {
+            cineCamera.m_Lens.FieldOfView = Mathf.Lerp(cineCamera.m_Lens.FieldOfView, 60, Time.deltaTime * 1.5f);
+        }
+        else if (currentSpeed < cineCamera.m_Lens.FieldOfView - 10)
+        {
+            cineCamera.m_Lens.FieldOfView = Mathf.Lerp(cineCamera.m_Lens.FieldOfView, 60, Time.deltaTime * 0.1f);
+        }
+
+        if (boost)
+        {
+            cineCamTransposer.m_FollowOffset = Vector3.Lerp(cineCamTransposer.m_FollowOffset, carData.boostCamOffset, Time.deltaTime);
+        }
+        else if (currentSpeed < 50)
+        {
+            cineCamTransposer.m_FollowOffset = Vector3.Lerp(cineCamTransposer.m_FollowOffset, carData.stationaryCamOffset, Time.deltaTime);
+        }
+        else
+        {
+            cineCamTransposer.m_FollowOffset = Vector3.Lerp(cineCamTransposer.m_FollowOffset, carData.movingCamOffset, currentSpeed * carData.fovChangeSpeed * Time.deltaTime);
+        }
+
+    }
+    #endregion
     
+    #region Skidding
 
     private void Skid()
     {
@@ -505,14 +910,14 @@ public class Controller : MonoBehaviour
             wheelColliders[i].GetGroundHit(out wheelHit);
             //Debug.Log(wheelHit.sidewaysSlip);
 
-            if (((wheelHit.forwardSlip > forwardSkidLimit || wheelHit.forwardSlip < -forwardSkidLimit) && skidmarks[i] != null))
+            if (((wheelHit.forwardSlip > carData.forwardSkidLimit || wheelHit.forwardSlip < -carData.forwardSkidLimit) && skidmarks[i] != null))
             {
                 //Not quite ready yet, check back later
                 //Vector3 skidPoint = new Vector3(wheelColliders[i].transform.position.x, wheelHit.point.y, wheelColliders[i].transform.position.z) + (rb.velocity * Time.deltaTime);
                 //lastSkid[i] = skidmarksController.AddSkidMark(skidPoint, wheelHit.normal, 0.5f, lastSkid[i]);
                 //amount += 0.25f;
             }
-            else if (( (wheelHit.sidewaysSlip > sideSkidLimit || wheelHit.sidewaysSlip < -sideSkidLimit)) && skidmarks[i] != null)
+            else if (( (wheelHit.sidewaysSlip > carData.sideSkidLimit || wheelHit.sidewaysSlip < -carData.sideSkidLimit)) && skidmarks[i] != null)
             {
                 Vector3 skidPoint = new Vector3(wheelColliders[i].transform.position.x, wheelHit.point.y, wheelColliders[i].transform.position.z) + (rb.velocity * Time.deltaTime);
                 lastSkid[i] = skidmarksController.AddSkidMark(skidPoint, wheelHit.normal, 0.5f, lastSkid[i]);
@@ -546,108 +951,36 @@ public class Controller : MonoBehaviour
         skidSound.setVolume(amount);
     }
 
-    private void ChangeFOV()
-    {
-        //Debug.Log(currentSpeed);
-        if(currentSpeed > cineCamera.m_Lens.FieldOfView )
-        {
-            cineCamera.m_Lens.FieldOfView = Mathf.Lerp(cineCamera.m_Lens.FieldOfView, currentSpeed, Time.deltaTime);
+    #endregion
 
-
-            if (cineCamera.m_Lens.FieldOfView > maxFOV)
-            {
-                cineCamera.m_Lens.FieldOfView = maxFOV;
-            }
-            
-        }
-        else if (currentSpeed < 40 && cineCamera.m_Lens.FieldOfView > 60)
-        {
-            cineCamera.m_Lens.FieldOfView = Mathf.Lerp(cineCamera.m_Lens.FieldOfView, 60, Time.deltaTime * 1.5f);
-        }
-        else if(currentSpeed < cineCamera.m_Lens.FieldOfView - 10)
-        {
-            cineCamera.m_Lens.FieldOfView = Mathf.Lerp(cineCamera.m_Lens.FieldOfView, 60, Time.deltaTime * 0.1f);
-        }
-
-        if(boost)
-        {
-            cineCamTransposer.m_FollowOffset = Vector3.Lerp(cineCamTransposer.m_FollowOffset, boostCamOffset, Time.deltaTime);
-        }
-        else if(currentSpeed < 50)
-        {
-            cineCamTransposer.m_FollowOffset = Vector3.Lerp(cineCamTransposer.m_FollowOffset, stationaryCamOffset, Time.deltaTime);
-        }
-        else
-        {
-            cineCamTransposer.m_FollowOffset = Vector3.Lerp(cineCamTransposer.m_FollowOffset, movingCamOffset, currentSpeed * num * Time.deltaTime);
-        }
-
-    }
-
-   
-    
-
-    
-
-    private void AddDownForce()
-    {
-       rb.AddForce(-transform.up * downforce * rb.velocity.magnitude);
-    }
-
-   
-
-    private void Drift()
-    {
-        
-        if (Input.GetKey(KeyCode.Space))
-        {
-            
-            wheelColliders[2].sidewaysFriction = drift;
-            wheelColliders[3].sidewaysFriction = drift;
-            steerHelper = 1;
-        }
-        else
-        {
-
-            wheelColliders[2].sidewaysFriction = normal;
-            wheelColliders[3].sidewaysFriction = normal;
-            steerHelper = 0.662f;
-        }
-    }
-
-
-
-    private void HelpSteer()
-    {
-
-        for (int i = 0; i < 4; i++)
-        {
-            WheelHit wheelhit;
-            wheelColliders[i].GetGroundHit(out wheelhit);
-
-
-            // wheels arent on the ground so dont realign the rigidbody velocity
-            if (wheelhit.normal == Vector3.zero)
-            {
-                return;
-            }
-        }
-
-        // this if is needed to avoid gimbal lock problems that will make the car suddenly shift direction
-        if (Mathf.Abs(oldRot - transform.eulerAngles.y) < 10f)
-        {
-            var turnadjust = (transform.eulerAngles.y - oldRot) * steerHelper;
-            Quaternion velRotation = Quaternion.AngleAxis(turnadjust, Vector3.up);
-            rb.velocity = velRotation * rb.velocity;
-        }
-        oldRot = transform.eulerAngles.y;
-    }
-
+    #region Shooter Connect
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "shooter")
         {
             Shooter = other.gameObject;
+        }
+    }
+    #endregion
+
+    // Debug GUI.
+    void OnGUI()
+    {
+
+        if (displayGui)
+        {
+            //GUILayout.Label("FOV: " + cineCamera.m_Lens.FieldOfView);
+            GUILayout.Label("Speed: " + currentSpeed);
+
+            /*
+            GUILayout.Label("currentTorque: " + currentTorque);
+            GUILayout.Label("boostTorque: " + boostTorque);
+            GUILayout.Label("brakeTorque: " + wheelColliders[0].brakeTorque);
+            GUILayout.Label("rpm: " + wheelColliders[0].rpm);
+            GUILayout.Label("rb vel: " + rb.velocity.magnitude);
+            GUILayout.Label("rpm slip in radians per second: " + wheelColliders[0].rpm * 0.10472f * wheelColliders[0].radius);
+            GUILayout.Label("stiffeness " + wheelColliders[0].forwardFriction.stiffness);
+            */
         }
     }
 }

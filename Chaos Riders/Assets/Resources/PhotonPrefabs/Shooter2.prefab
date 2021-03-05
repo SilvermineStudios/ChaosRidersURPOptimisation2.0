@@ -1398,7 +1398,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1617670277
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3454,13 +3454,6 @@ MonoBehaviour:
     FarClipPlane: 5000
     Dutch: 0
     LensShift: {x: 0, y: 0}
-    Iso: 200
-    ShutterSpeed: 0.005
-    Aperture: 16
-    BladeCount: 5
-    Curvature: {x: 2, y: 11}
-    BarrelClipping: 0.25
-    Anamorphism: 0
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -18821,8 +18814,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7634238392847830459}
   - component: {fileID: 7634238392847830434}
-  - component: {fileID: 7295222728725222640}
-  - component: {fileID: 8674048636984203078}
   - component: {fileID: 7634238392847830456}
   - component: {fileID: 7634238392847830457}
   - component: {fileID: 7634238392847830462}
@@ -18876,9 +18867,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   car: {fileID: 0}
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 1024
+  minigunBarrel: {fileID: 1682963324}
+  rifleBarrel: {fileID: 911955151638522626}
   rpgGo: {fileID: 1094957983}
   rocketspawn: {fileID: 3665872840329177399}
   rocket: {fileID: 14798063656109763, guid: 74ea11e91b020954b88db6eaa0e77b7e, type: 3}
@@ -18889,11 +18879,12 @@ MonoBehaviour:
   RifleHolder: {fileID: 913156958082615894}
   MinigunIcon: {fileID: 8764531232459400661}
   RifleIcon: {fileID: 8152229863375869798}
+  muzzleFlash: {fileID: 7634238392497245262}
   cineCamera: {fileID: 5207396787800693346}
   connectCar: 0
   RPG: 0
   pickedUpRPG: 0
-  noCarNeeded: 0
+  noCarNeeded: 1
   playerNumber: 1
   minRotationHeight: -20
   maxRotationHeight: 20
@@ -18905,8 +18896,9 @@ MonoBehaviour:
   RPGButton: 32
   changeWeapon: 324
   amountOfAmmoForRPG: 3
+  minigunData: {fileID: 11400000, guid: e85f6dc064f0ed4429cbc0d3bcac5507, type: 2}
+  rifleData: {fileID: 11400000, guid: 7191b86a9eae21e479b244f69ddb8c87, type: 2}
   trail: {fileID: 811231400246012879, guid: d9cb9feb506fa704e8572bb98f0ebff4, type: 3}
-  trailPercentage: 50
   impactEffect: {fileID: 7938478309457529535, guid: 0c9781b5140952b42ae2c6af77491dfc, type: 3}
   impactEffectHolder: {fileID: 322621240}
   CasingSpawn: {fileID: 6319989313829350448}
@@ -18914,61 +18906,8 @@ MonoBehaviour:
   hitmarker: {fileID: 8931214932920015701}
   reticle: {fileID: 1617670277}
   CrossHairGameobject: {fileID: 1617670276}
-  restingSize: 50
-  maxSize: 250
-  speed: 1
   currentSize: 50
---- !u!114 &7295222728725222640
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7634238392847830435}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b67f47ec8b8a7094ab0241cf36ebc939, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  muzzleFlash: {fileID: 7634238392497245262}
-  barrelToRotate: {fileID: 1682963324}
-  barrelRotationStartSpeed: 100
-  barrelRotationMaxSpeed: 800
-  minigunDamage: 10
-  range: 9999
-  minigunFireRate: 0.12
-  amountOfAmmoForCooldownBar: 500
   coolDownBarUi: {fileID: 7634238392297675920}
-  sound: event:/GunFX/Minigun/MinigunShot
-  bulletWhistle: event:/GunFX/Minigun/BulletWhistle
-  hitmarker: event:/GunFX/Hitmarker
-  maxBulletDeviation: 10
-  maxCrosshairDeviation: 10
-  bulletDeviationIncrease: 0.25
-  crosshairDeviationIncrease: 0.25
---- !u!114 &8674048636984203078
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7634238392847830435}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab66b88f9529e664da29bc2d6ea87690, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  muzzleFlash: {fileID: 2949780119046888163}
-  rifleDamage: 75
-  range: 9999
-  rifleFireRate: 1
-  maxBulletDeviation: 1
-  maxCrosshairDeviation: 10
-  bulletDeviationIncrease: 0.1
-  crosshairDeviationIncrease: 900
-  sound: event:/GunFX/Rifle/RifleShot
-  bulletWhistle: event:/GunFX/Minigun/BulletWhistle
-  hitmarker: event:/GunFX/Hitmarker
 --- !u!114 &7634238392847830456
 MonoBehaviour:
   m_ObjectHideFlags: 0

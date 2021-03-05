@@ -78,7 +78,12 @@ public class MasterClientRaceStart : MonoBehaviour
 
     private void Start()
     {
-        if (!IsThisMultiplayer.Instance.multiplayer) { return; }
+        if (!IsThisMultiplayer.Instance.multiplayer)
+        {
+            MasterClientRaceStart.Instance.countdownTimerStart = true;
+            MasterClientRaceStart.Instance.weaponsFree = true;
+            return;
+        }
         pv = GetComponent<PhotonView>();
         panelTemp = BackgroundPanel.color;
         if(PhotonNetwork.IsMasterClient)
