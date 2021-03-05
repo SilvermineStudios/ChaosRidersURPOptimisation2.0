@@ -27,15 +27,8 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject startButton; //only for the master client
 
     [Header("Loading")]
-    [SerializeField] private bool startLoadingBars = false;
     [SerializeField] private float loadingTime = 6;
-    [SerializeField] private GameObject loadingScreen; //activate when the start button is pressed
-    [SerializeField] private Image loadingCircle; //increase the fill amount to complete
-    [SerializeField] private Image loadingBar; //increase the fill amount to complete
-    [SerializeField] private TextMeshProUGUI loadingPercentageText;
-    private float loadAmount = 0;
-    private float loadingValueNormalized;
-    [SerializeField] private float loadPercentage = 0;
+    [SerializeField] private GameObject loadingScreen;
     #endregion
 
 
@@ -43,28 +36,7 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
     {
         pv = GetComponent<PhotonView>();
         loadingScreen.SetActive(false);
-        loadingCircle.fillAmount = 0;
-        loadingBar.fillAmount = 0;
-        loadingPercentageText.text = "0";
     }
-
-    private void Update()
-    {
-        //counter for the loading bars
-        if(startLoadingBars && loadAmount < loadingTime)
-        {
-            loadAmount += 1 *Time.deltaTime;
-            loadingValueNormalized = (loadAmount / loadingTime);
-            loadPercentage = loadingValueNormalized * 100;
-        }
-        //fill the loading bars with the normalized loading value
-        loadingCircle.fillAmount = loadingValueNormalized;
-        loadingBar.fillAmount = loadingValueNormalized;
-
-        //update load percentage
-        loadingPercentageText.text = (loadingValueNormalized * 100).ToString("f0");
-    }
-
 
     void ClearPlayerListings()
     {
@@ -136,15 +108,22 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
     public void StartGame() //paired to the start button
     {
         StartCoroutine(LoadingCouroutine(loadingTime));
-
-        loadingScreen.SetActive(true);
-        pv.RPC("RPC_TurnOnLoadingScreen", RpcTarget.AllBuffered);
+        pv.RPC("RPC_TurnOnLoadingScreen", RpcTarget.All);
     }
 
     [PunRPC]
-    private void RPC_TurnOnLoadingScreen()
+    private void RPC_TurnOnLoadingScreen ()
     {
         loadingScreen.SetActive(true);
+        Debug.Log("ACTIVATING LOADING SCREEN");
+    }
+
+    [PunRPC]
+    private void Activate(int viewId)
+    {
+        Debug.Log("Activate");
+        PhotonView view = PhotonView.Find(viewId);
+        view.GetComponent<GameObject>().SetActive(true);
     }
 
     public void BackClick() //paired to the back button in the room panel
@@ -163,10 +142,9 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinLobby();
     }
 
+    //countdown until the game starts
     private IEnumerator LoadingCouroutine(float time)
     {
-        startLoadingBars = true;
-
         yield return new WaitForSeconds(time);
 
         if (PhotonNetwork.IsMasterClient)
