@@ -93,8 +93,6 @@ public class Vehicle : ScriptableObject
     public float sideStiffness = 1;
     #endregion
 
-    
-    
     //Setup Values
     private void OnEnable()
     {
