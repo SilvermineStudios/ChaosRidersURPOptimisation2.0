@@ -7,15 +7,6 @@ using Photon.Pun;
 
 public class Controller : MonoBehaviour
 {
-    #region Other
-    enum CarClass { Braker, Shredder };
-    public Rigidbody rb { get; private set; }
-    public enum DriverEquipment { SmokeScreen, Mine }
-    public enum DriverUltimate { Brake, Shred }
-    private Animator anim;
-    GameObject abilitySpawn;
-    #endregion
-
     #region Cars
     [Header("Car Data")]
     [SerializeField] CarClass currentCarClass;
@@ -115,10 +106,19 @@ public class Controller : MonoBehaviour
     private Transform equipmentOverChargeBar, abilityOverChargeBar; //not in use
     private float equipmentChargeAmount, equipmentOverchargeAmount, abilityChargeAmount, abilityOverChargeAmount; //equipment/ability charge Amount
     [SerializeField] private float equipmentChargeSpeed = 8f, abilityChargeSpeed = 2f;
-    
+
     #endregion
 
+    #region Other
+    enum CarClass { Braker, Shredder };
+    public Rigidbody rb { get; private set; }
+    public enum DriverEquipment { SmokeScreen, Mine }
+    public enum DriverUltimate { Brake, Shred }
+    private Animator anim;
+    GameObject abilitySpawn;
+    #endregion
 
+    #region Default Functions
     private void Awake()
     {
         anim = GetComponentInChildren<Animator>();
@@ -160,10 +160,101 @@ public class Controller : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        GetInput();
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z - 1f);
+            transform.rotation = Quaternion.Euler(0, transform.localRotation.y, 0);
+
+            if (ShooterAttached != null)
+            {
+                ShooterAttached.ResetPos();
+            }
+        }
+
+        if ((Input.GetKeyDown(KeyCode.Mouse1) && canChangeCar))
+        {
+            if (currentCarClass == CarClass.Braker)
+            {
+                currentCarClass = CarClass.Shredder;
+            }
+            else
+            {
+                currentCarClass = CarClass.Braker;
+            }
+        }
+
+        if (oldCarClass != currentCarClass)
+        {
+            SetupCar(currentCarClass);
+        }
+
+        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
+        {
+            DriverAbilities();
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (healthScript.isDead)
+        {
+            GetComponent<Rigidbody>().drag = 5;
+            return;
+        }
+        else
+        {
+            GetComponent<Rigidbody>().drag = 0;
+        }
+
+        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer|| !IsThisMultiplayer.Instance.multiplayer)
+        {
+            StartRace();
+            Brake();
+            AdjustStiffness();
+            Accelerate();
+            CalculateRevs();
+            GearChanging();
+            AddDownForce();
+            Skid();
+            //Drift();
+            TractionControl();
+            Steer();
+            HelpSteer();
+            CapSpeed();
+            UpdateWheelPoses();
+            ChangeFOV();
+            
+        }
+    }
+
+    private void GetInput()
+    {
+        horizontalInput = Input.GetAxis("Horizontal");
+        verticalInput = Input.GetAxis("Vertical");
+        if (!braking)
+        {
+            brake = Input.GetKey(KeyCode.T);
+            //Debug.Log(98989898989898989);
+        }
+        if (Input.GetKeyUp(KeyCode.T))
+        {
+            brake = false;
+            ReleaseBrake();
+            //Debug.Log(234234324);
+        }
+
+        //boost = Input.GetKey(KeyCode.LeftShift);
+    }
+    #endregion
+
+    #region Setup
     void SetupCar(CarClass car)
     {
         //turn all models off
-        foreach(GameObject model in Models)
+        foreach (GameObject model in Models)
         {
             model.SetActive(false);
         }
@@ -276,42 +367,9 @@ public class Controller : MonoBehaviour
         OldUltimate = ultimate;
     }
 
-    private void FixedUpdate()
-    {
-        if (healthScript.isDead)
-        {
-            GetComponent<Rigidbody>().drag = 5;
-            return;
-        }
-        else
-        {
-            GetComponent<Rigidbody>().drag = 0;
-        }
-
-        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer|| !IsThisMultiplayer.Instance.multiplayer)
-        {
-            StartRace();
-            Brake();
-            AdjustStiffness();
-            Accelerate();
-            CalculateRevs();
-            GearChanging();
-            AddDownForce();
-            Skid();
-            //Drift();
-            TractionControl();
-            Steer();
-            HelpSteer();
-            CapSpeed();
-            UpdateWheelPoses();
-            ChangeFOV();
-            
-        }
-    }
-    
     private void StartRace()
     {
-        if(!MasterClientRaceStart.Instance.countdownTimerStart)
+        if (!MasterClientRaceStart.Instance.countdownTimerStart)
         {
             ApplyBrake(carData.brakeTorque);
         }
@@ -320,43 +378,7 @@ public class Controller : MonoBehaviour
             ReleaseBrake();
         }
     }
-    
-    private void Update()
-    {
-        GetInput();
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            transform.position = new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z - 1f);
-            transform.rotation = Quaternion.Euler(0, transform.localRotation.y, 0);
-
-            if (ShooterAttached != null)
-            {
-                ShooterAttached.ResetPos();
-            }
-        }
-
-        if ((Input.GetKeyDown(KeyCode.Mouse1) && canChangeCar))
-        {
-            if(currentCarClass == CarClass.Braker)
-            {
-                currentCarClass = CarClass.Shredder;
-            }
-            else
-            {
-                currentCarClass = CarClass.Braker;
-            }
-        }
-
-        if (oldCarClass != currentCarClass)
-        {
-            SetupCar(currentCarClass);
-        }
-
-        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
-        {
-            DriverAbilities();
-        }
-    }
+    #endregion
 
     #region Driver Abilities
 
@@ -426,8 +448,6 @@ public class Controller : MonoBehaviour
 
     }
 
-
-
     //sets all bars to 0
     private void ResetAllBars()
     {
@@ -453,8 +473,7 @@ public class Controller : MonoBehaviour
         else
             canUseAbility = false;
     }
-
-
+    
     //charge the equipment and ability bars
     private void ChargeBars()
     {
@@ -495,6 +514,8 @@ public class Controller : MonoBehaviour
         }
     }
     #endregion
+
+    #region Audio
 
     private void CalculateRevs()
     {
@@ -538,30 +559,14 @@ public class Controller : MonoBehaviour
             gearNum++;
         }
     }
+    #endregion
+
+    #region Driving
 
     // simple function to add a curved bias towards 1 for a value in the 0-1 range
     private static float CurveFactor(float factor)
     {
         return 1 - (1 - factor) * (1 - factor);
-    }
-
-    private void GetInput()
-    {
-        horizontalInput = Input.GetAxis("Horizontal");
-        verticalInput = Input.GetAxis("Vertical");
-        if(!braking)
-        {
-            brake = Input.GetKey(KeyCode.T);
-            //Debug.Log(98989898989898989);
-        }
-        if(Input.GetKeyUp(KeyCode.T))
-        {
-            brake = false;
-            ReleaseBrake();
-            //Debug.Log(234234324);
-        }
-
-        //boost = Input.GetKey(KeyCode.LeftShift);
     }
 
     private void Steer()
@@ -682,27 +687,6 @@ public class Controller : MonoBehaviour
         
     }
 
-    // Debug GUI.
-    void OnGUI()
-    {
-        
-        if(displayGui)
-        {
-            //GUILayout.Label("FOV: " + cineCamera.m_Lens.FieldOfView);
-            GUILayout.Label("Speed: " + currentSpeed);
-
-            /*
-            GUILayout.Label("currentTorque: " + currentTorque);
-            GUILayout.Label("boostTorque: " + boostTorque);
-            GUILayout.Label("brakeTorque: " + wheelColliders[0].brakeTorque);
-            GUILayout.Label("rpm: " + wheelColliders[0].rpm);
-            GUILayout.Label("rb vel: " + rb.velocity.magnitude);
-            GUILayout.Label("rpm slip in radians per second: " + wheelColliders[0].rpm * 0.10472f * wheelColliders[0].radius);
-            GUILayout.Label("stiffeness " + wheelColliders[0].forwardFriction.stiffness);
-            */
-        }
-    }
-
     private void Brake()
     {
         if (MasterClientRaceStart.Instance.countdownTimerStart)
@@ -794,6 +778,68 @@ public class Controller : MonoBehaviour
 
     }
 
+    private void Drift()
+    {
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+
+            wheelColliders[2].sidewaysFriction = drift;
+            wheelColliders[3].sidewaysFriction = drift;
+            drifting = true;
+        }
+        else
+        {
+
+            wheelColliders[2].sidewaysFriction = defaultSidewaysFrictionCurve;
+            wheelColliders[3].sidewaysFriction = defaultSidewaysFrictionCurve;
+            drifting = false;
+        }
+    }
+
+    private void AddDownForce()
+    {
+        rb.AddForce(-transform.up * carData.downforce * rb.velocity.magnitude);
+    }
+
+    private void HelpSteer()
+    {
+
+        for (int i = 0; i < 4; i++)
+        {
+            WheelHit wheelhit;
+            wheelColliders[i].GetGroundHit(out wheelhit);
+
+
+            // wheels arent on the ground so dont realign the rigidbody velocity
+            if (wheelhit.normal == Vector3.zero)
+            {
+                return;
+            }
+        }
+
+        // this if is needed to avoid gimbal lock problems that will make the car suddenly shift direction
+        if (Mathf.Abs(oldRot - transform.eulerAngles.y) < 10f)
+        {
+            if (drifting)
+            {
+                var turnadjust = (transform.eulerAngles.y - oldRot) * carData.steerHelperDrift;
+                Quaternion velRotation = Quaternion.AngleAxis(turnadjust, Vector3.up);
+                rb.velocity = velRotation * rb.velocity;
+            }
+            else
+            {
+                var turnadjust = (transform.eulerAngles.y - oldRot) * carData.steerHelper;
+                Quaternion velRotation = Quaternion.AngleAxis(turnadjust, Vector3.up);
+                rb.velocity = velRotation * rb.velocity;
+            }
+        }
+        oldRot = transform.eulerAngles.y;
+    }
+    #endregion
+
+    #region Driving Aesthetics
+
     private void UpdateWheelPoses()
     {
         for(int i = 0; i< 4; i++)
@@ -812,6 +858,48 @@ public class Controller : MonoBehaviour
         transform.position = pos;
         transform.rotation = quat;
     }
+
+
+    private void ChangeFOV()
+    {
+        //Debug.Log(currentSpeed);
+        if (currentSpeed > cineCamera.m_Lens.FieldOfView)
+        {
+            cineCamera.m_Lens.FieldOfView = Mathf.Lerp(cineCamera.m_Lens.FieldOfView, currentSpeed, Time.deltaTime);
+
+
+            if (cineCamera.m_Lens.FieldOfView > carData.maxFOV)
+            {
+                cineCamera.m_Lens.FieldOfView = carData.maxFOV;
+            }
+
+        }
+        else if (currentSpeed < 40 && cineCamera.m_Lens.FieldOfView > 60)
+        {
+            cineCamera.m_Lens.FieldOfView = Mathf.Lerp(cineCamera.m_Lens.FieldOfView, 60, Time.deltaTime * 1.5f);
+        }
+        else if (currentSpeed < cineCamera.m_Lens.FieldOfView - 10)
+        {
+            cineCamera.m_Lens.FieldOfView = Mathf.Lerp(cineCamera.m_Lens.FieldOfView, 60, Time.deltaTime * 0.1f);
+        }
+
+        if (boost)
+        {
+            cineCamTransposer.m_FollowOffset = Vector3.Lerp(cineCamTransposer.m_FollowOffset, carData.boostCamOffset, Time.deltaTime);
+        }
+        else if (currentSpeed < 50)
+        {
+            cineCamTransposer.m_FollowOffset = Vector3.Lerp(cineCamTransposer.m_FollowOffset, carData.stationaryCamOffset, Time.deltaTime);
+        }
+        else
+        {
+            cineCamTransposer.m_FollowOffset = Vector3.Lerp(cineCamTransposer.m_FollowOffset, carData.movingCamOffset, currentSpeed * carData.fovChangeSpeed * Time.deltaTime);
+        }
+
+    }
+    #endregion
+    
+    #region Skidding
 
     private void Skid()
     {
@@ -863,117 +951,36 @@ public class Controller : MonoBehaviour
         skidSound.setVolume(amount);
     }
 
-    private void ChangeFOV()
-    {
-        //Debug.Log(currentSpeed);
-        if(currentSpeed > cineCamera.m_Lens.FieldOfView )
-        {
-            cineCamera.m_Lens.FieldOfView = Mathf.Lerp(cineCamera.m_Lens.FieldOfView, currentSpeed, Time.deltaTime);
+    #endregion
 
-
-            if (cineCamera.m_Lens.FieldOfView > carData.maxFOV)
-            {
-                cineCamera.m_Lens.FieldOfView = carData.maxFOV;
-            }
-            
-        }
-        else if (currentSpeed < 40 && cineCamera.m_Lens.FieldOfView > 60)
-        {
-            cineCamera.m_Lens.FieldOfView = Mathf.Lerp(cineCamera.m_Lens.FieldOfView, 60, Time.deltaTime * 1.5f);
-        }
-        else if(currentSpeed < cineCamera.m_Lens.FieldOfView - 10)
-        {
-            cineCamera.m_Lens.FieldOfView = Mathf.Lerp(cineCamera.m_Lens.FieldOfView, 60, Time.deltaTime * 0.1f);
-        }
-
-        if(boost)
-        {
-            cineCamTransposer.m_FollowOffset = Vector3.Lerp(cineCamTransposer.m_FollowOffset, carData.boostCamOffset, Time.deltaTime);
-        }
-        else if(currentSpeed < 50)
-        {
-            cineCamTransposer.m_FollowOffset = Vector3.Lerp(cineCamTransposer.m_FollowOffset, carData.stationaryCamOffset, Time.deltaTime);
-        }
-        else
-        {
-            cineCamTransposer.m_FollowOffset = Vector3.Lerp(cineCamTransposer.m_FollowOffset, carData.movingCamOffset, currentSpeed * carData.fovChangeSpeed * Time.deltaTime);
-        }
-
-    }
-
-   
-    
-
-    
-
-    private void AddDownForce()
-    {
-       rb.AddForce(-transform.up * carData.downforce * rb.velocity.magnitude);
-    }
-
-   
-
-    private void Drift()
-    {
-        
-        if (Input.GetKey(KeyCode.Space))
-        {
-            
-            wheelColliders[2].sidewaysFriction = drift;
-            wheelColliders[3].sidewaysFriction = drift;
-            drifting = true;
-        }
-        else
-        {
-
-            wheelColliders[2].sidewaysFriction = defaultSidewaysFrictionCurve;
-            wheelColliders[3].sidewaysFriction = defaultSidewaysFrictionCurve;
-            drifting = false;
-        }
-    }
-
-
-
-    private void HelpSteer()
-    {
-
-        for (int i = 0; i < 4; i++)
-        {
-            WheelHit wheelhit;
-            wheelColliders[i].GetGroundHit(out wheelhit);
-
-
-            // wheels arent on the ground so dont realign the rigidbody velocity
-            if (wheelhit.normal == Vector3.zero)
-            {
-                return;
-            }
-        }
-
-        // this if is needed to avoid gimbal lock problems that will make the car suddenly shift direction
-        if (Mathf.Abs(oldRot - transform.eulerAngles.y) < 10f)
-        {
-            if(drifting)
-            {
-                var turnadjust = (transform.eulerAngles.y - oldRot) * carData.steerHelperDrift;
-                Quaternion velRotation = Quaternion.AngleAxis(turnadjust, Vector3.up);
-                rb.velocity = velRotation * rb.velocity;
-            }
-            else
-            {
-                var turnadjust = (transform.eulerAngles.y - oldRot) * carData.steerHelper;
-                Quaternion velRotation = Quaternion.AngleAxis(turnadjust, Vector3.up);
-                rb.velocity = velRotation * rb.velocity;
-            }
-        }
-        oldRot = transform.eulerAngles.y;
-    }
-
+    #region Shooter Connect
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "shooter")
         {
             Shooter = other.gameObject;
+        }
+    }
+    #endregion
+
+    // Debug GUI.
+    void OnGUI()
+    {
+
+        if (displayGui)
+        {
+            //GUILayout.Label("FOV: " + cineCamera.m_Lens.FieldOfView);
+            GUILayout.Label("Speed: " + currentSpeed);
+
+            /*
+            GUILayout.Label("currentTorque: " + currentTorque);
+            GUILayout.Label("boostTorque: " + boostTorque);
+            GUILayout.Label("brakeTorque: " + wheelColliders[0].brakeTorque);
+            GUILayout.Label("rpm: " + wheelColliders[0].rpm);
+            GUILayout.Label("rb vel: " + rb.velocity.magnitude);
+            GUILayout.Label("rpm slip in radians per second: " + wheelColliders[0].rpm * 0.10472f * wheelColliders[0].radius);
+            GUILayout.Label("stiffeness " + wheelColliders[0].forwardFriction.stiffness);
+            */
         }
     }
 }
