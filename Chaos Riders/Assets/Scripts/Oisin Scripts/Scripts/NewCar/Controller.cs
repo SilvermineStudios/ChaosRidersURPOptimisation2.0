@@ -124,6 +124,7 @@ public class Controller : MonoBehaviour
     #region Default Functions
     private void Awake()
     {
+        shredUltimate = GetComponent<ShredUltimate>();
         anim = GetComponentInChildren<Animator>();
         pv = GetComponent<PhotonView>();
         healthScript = GetComponent<Health>();
@@ -456,7 +457,7 @@ public class Controller : MonoBehaviour
     private IEnumerator UseShredderAbility()
     {
         usingUltimate = true;
-        FMODUnity.RuntimeManager.PlayOneShotAttached("event:/CarFX/Shredder/ShredFX", gameObject);
+        FMODUnity.RuntimeManager.PlayOneShotAttached(ultimateData.sound, gameObject);
         shredUltimate.enabled = true;
         StartCoroutine(UseUltimateUI(ultimateData.ultimateUsetime));
         yield return new WaitForSeconds(ultimateData.ultimateUsetime);

@@ -15026,7 +15026,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 51585144032355877}
-  m_LocalRotation: {x: 0.000000022351742, y: 0.9990179, z: -0.044309773, w: 0.00000047683716}
+  m_LocalRotation: {x: 0.000000017695129, y: 0.9990179, z: -0.044309735, w: 0.00000047683716}
   m_LocalPosition: {x: -0.0000032186508, y: 1.5499998, z: 4.000007}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -15775,7 +15775,6 @@ GameObject:
   - component: {fileID: 51585144929783774}
   - component: {fileID: 7383816573838726354}
   - component: {fileID: 51585144929783775}
-  - component: {fileID: 6201221732406576218}
   - component: {fileID: 4518539461095374118}
   - component: {fileID: 51585144929783750}
   - component: {fileID: 51585144929783749}
@@ -15804,7 +15803,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 51585144929783773}
-  m_LocalRotation: {x: -0, y: -0.38127396, z: -0, w: 0.92446214}
+  m_LocalRotation: {x: 0, y: -0.38127202, z: 0, w: 0.9244629}
   m_LocalPosition: {x: -146.1, y: 1.11, z: 68.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -15896,22 +15895,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9048c51c50f6505498e45b95b42539b9, type: 2}
   equipmentChargeBar: {fileID: 3956452532465626892}
   abilityChargeBar: {fileID: 3956452533356044003}
-  equipmentChargeSpeed: 8
-  abilityChargeSpeed: 5
---- !u!114 &6201221732406576218
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 51585144929783773}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37d4db0638a869d4cba049f69c16a58a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 1
-  radius: 4.5
+  abilityOverChargeBar: {fileID: 3956452532487896297}
 --- !u!114 &4518539461095374118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20379,7 +20363,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3956452532487896297
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20420,7 +20404,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8490566, g: 0.12415449, b: 0.12415449, a: 1}
+  m_Color: {r: 0.23584908, g: 0.23584908, b: 0.23584908, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -20432,7 +20416,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
-  m_FillAmount: 0.171
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
