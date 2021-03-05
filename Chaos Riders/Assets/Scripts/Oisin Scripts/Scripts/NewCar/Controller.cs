@@ -28,6 +28,9 @@ public class Controller : MonoBehaviour
     private bool brake;
     [SerializeField] private bool canUseEquipment = false, canUseAbility = false;
     private bool useOverCharge; //Currently unused
+    bool usingEquipment;
+    bool usingUltimate;
+    bool usingUltimatePrep;
     #endregion
 
     #region Floats
@@ -103,9 +106,9 @@ public class Controller : MonoBehaviour
     [Header("Driver Abilities UI")]
     [SerializeField] private Transform equipmentChargeBar; //equipment chargebar
     [SerializeField] private Transform abilityChargeBar; //ability chargebar
-    private Transform equipmentOverChargeBar, abilityOverChargeBar; //not in use
+    private Transform equipmentOverChargeBar;//not in use
+    [SerializeField] private Transform abilityOverChargeBar; 
     private float equipmentChargeAmount, equipmentOverchargeAmount, abilityChargeAmount, abilityOverChargeAmount; //equipment/ability charge Amount
-    [SerializeField] private float equipmentChargeSpeed = 8f, abilityChargeSpeed = 2f;
 
     #endregion
 
@@ -122,7 +125,11 @@ public class Controller : MonoBehaviour
     private void Awake()
     {
         anim = GetComponentInChildren<Animator>();
+        pv = GetComponent<PhotonView>();
+        healthScript = GetComponent<Health>();
         driverAbilities = GetComponent<DriverAbilities>();
+        rb = GetComponent<Rigidbody>();
+        skidmarksController = FindObjectOfType<Skidmarks>();
         skidSound = FMODUnity.RuntimeManager.CreateInstance("event:/CarFX/All/Skid");
         FMODUnity.RuntimeManager.AttachInstanceToGameObject(skidSound, transform, rb);
         skidSound.start();
@@ -131,28 +138,24 @@ public class Controller : MonoBehaviour
 
     private void Start()
     {
-        SetupCar(currentCarClass);
 
-        skidmarksController = FindObjectOfType<Skidmarks>();
-        pv = GetComponent<PhotonView>();
-        healthScript = GetComponent<Health>();
+        SetupCar(currentCarClass);
+        cineCamera = gameObject.transform.GetChild(0).gameObject.GetComponent<CinemachineVirtualCamera>();
+        cineCamTransposer = cineCamera.GetCinemachineComponent<CinemachineTransposer>();
+        cineCamTransposer.m_FollowOffset = carData.stationaryCamOffset;
 
         skidmarks[0] = skidmarksController;
         skidmarks[1] = skidmarksController;
         skidmarks[2] = skidmarksController;
         skidmarks[3] = skidmarksController;
 
-        rb = GetComponent<Rigidbody>();
+        
         rb.centerOfMass = carData.centerOfMass;
         rb.mass = carData.vehicleMass;
         rb.drag = carData.vehicleDrag;
         rb.angularDrag = carData.vehicleAngularDrag;
         currentTorque = carData.fullTorqueOverAllWheels - (carData.tractionControl * carData.fullTorqueOverAllWheels);
         boostTorque = carData.boostFullTorqueOverAllWheels;
-        cineCamera = gameObject.transform.GetChild(0).gameObject.GetComponent<CinemachineVirtualCamera>();
-        cineCamTransposer = cineCamera.GetCinemachineComponent<CinemachineTransposer>();
-        cineCamTransposer.m_FollowOffset = carData.stationaryCamOffset;
-
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
             ResetAllBars(); //set all the bars to 0
@@ -279,6 +282,9 @@ public class Controller : MonoBehaviour
         //turn model on
         model.SetActive(true);
 
+        //Get position to spawn equipment from
+        abilitySpawn = model.transform.GetChild(1).gameObject;
+
         //add models wheel meshes to array
         for (int i = 0; i < 4; i++)
         {
@@ -390,6 +396,8 @@ public class Controller : MonoBehaviour
         //if you use the equipment
         if (Input.GetKeyDown(equipmentKeyCode) && canUseEquipment)
         {
+            usingEquipment = true;
+            StartCoroutine(UseEquipmentUI(equipmentData.equipmentUseTime));
             FMODUnity.RuntimeManager.PlayOneShotAttached(equipmentData.sound, gameObject);
             //spawn the smoke grenade accross the network
             if (IsThisMultiplayer.Instance.multiplayer)
@@ -401,7 +409,7 @@ public class Controller : MonoBehaviour
             {
                 Instantiate(equipmentData.prefab, abilitySpawn.transform.position, abilitySpawn.transform.rotation);
             }
-            equipmentChargeAmount = 0; //reset the cooldownbar after the equipment is used
+            //equipmentChargeAmount = 0; //reset the cooldownbar after the equipment is used
         }
 
         //if you use the Ability
@@ -411,6 +419,7 @@ public class Controller : MonoBehaviour
             if (CurrentUltimate == DriverUltimate.Brake)
             {
                 StartCoroutine(UseBrakerAbility());
+                StartCoroutine(UseEquipmentUI(equipmentData.equipmentUseTime));
             }
             if (CurrentUltimate == DriverUltimate.Shred)
             {
@@ -421,33 +430,45 @@ public class Controller : MonoBehaviour
         
     }
 
+    #region Ultimates
+
     private IEnumerator UseBrakerAbility()
     {
+        usingUltimate = true;
+        abilityOverChargeAmount = 100;
+        StartCoroutine(UseUltimateUIPrep(ultimateData.ultimatePrepTime));
         anim.SetTrigger("BreakerTransTrigger");
         //brake
         ApplyBrake(30000000);
 
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(ultimateData.ultimatePrepTime);
         ReleaseBrake();
         anim.SetTrigger("LeaveBreakerTrigger");
         //speed
-
+        StartCoroutine(UseUltimateUI(ultimateData.ultimateUsetime));
         boost = true;
 
-        yield return new WaitForSeconds(5.5f);
+        yield return new WaitForSeconds(ultimateData.ultimateUsetime);
         boost = false;
+        usingUltimate = false;
     }
 
     private IEnumerator UseShredderAbility()
     {
+        usingUltimate = true;
         FMODUnity.RuntimeManager.PlayOneShotAttached("event:/CarFX/Shredder/ShredFX", gameObject);
         shredUltimate.enabled = true;
-
-        yield return new WaitForSeconds(4.5f);
+        StartCoroutine(UseUltimateUI(ultimateData.ultimateUsetime));
+        yield return new WaitForSeconds(ultimateData.ultimateUsetime);
         shredUltimate.enabled = false;
-
+        usingUltimate = false;
     }
 
+    #endregion
+
+    float timeElapsed = 0;
+
+    #region Charge Bars
     //sets all bars to 0
     private void ResetAllBars()
     {
@@ -473,46 +494,93 @@ public class Controller : MonoBehaviour
         else
             canUseAbility = false;
     }
-    
+
+    IEnumerator UseEquipmentUI(float timeTomove)
+    {
+        var t = 0f;
+        while (t < 1)
+        {
+            t += Time.deltaTime / timeTomove;
+            equipmentChargeAmount = Mathf.Lerp(100, 0, t);
+            equipmentChargeBar.GetComponent<Image>().fillAmount = equipmentChargeAmount / 100;
+
+            if (equipmentChargeAmount == 0)
+            {
+                usingEquipment = false;
+            }
+            yield return null;
+        }
+
+    }
+
+    IEnumerator UseUltimateUIPrep(float timeTomove)
+    {
+        var t = 0f;
+        while (t < 1)
+        {
+            t += Time.deltaTime / timeTomove;
+            abilityOverChargeAmount = Mathf.Lerp(100, 0, t);
+            abilityOverChargeBar.GetComponent<Image>().fillAmount = abilityOverChargeAmount / 100;
+
+            if (abilityOverChargeAmount == 0)
+            {
+                usingUltimatePrep = false;
+            }
+            yield return null;
+        }
+
+    }
+
+    IEnumerator UseUltimateUI(float timeTomove)
+    {
+        var t = 0f;
+        while (t < 1)
+        {
+            t += Time.deltaTime / timeTomove;
+            abilityChargeAmount = Mathf.Lerp(100, 0, t);
+            abilityChargeBar.GetComponent<Image>().fillAmount = abilityChargeAmount / 100;
+
+            if (equipmentChargeAmount == 0)
+            {
+                usingUltimate = false;
+            }
+            yield return null;
+        }
+
+    }
+
     //charge the equipment and ability bars
     private void ChargeBars()
     {
-        //if the qeuipment bar isnt full add to it
-        if (equipmentChargeAmount < 100)
+        if(!usingEquipment)
         {
-            equipmentChargeAmount += equipmentData.chargeRate * Time.deltaTime;
-            equipmentChargeBar.GetComponent<Image>().fillAmount = equipmentChargeAmount / 100;
-        }
-
-        if (useOverCharge)
-        {
-            //if the equipment bar is full add to the overcharge bar
-            if (equipmentChargeAmount >= 100)
+            //if the qeuipment bar isnt full add to it
+            if (equipmentChargeAmount < 100)
             {
-                equipmentOverchargeAmount += equipmentChargeSpeed * Time.deltaTime;
-                equipmentOverChargeBar.GetComponent<Image>().fillAmount = equipmentOverchargeAmount / 100;
+                equipmentChargeAmount += equipmentData.chargeRate * Time.deltaTime;
+                equipmentChargeBar.GetComponent<Image>().fillAmount = equipmentChargeAmount / 100;
             }
         }
-
-
-
-        //if the ability bar isnt full add to it
-        if (abilityChargeAmount < 100)
+        if (!usingUltimate)
         {
-            abilityChargeAmount += abilityChargeSpeed * Time.deltaTime;
-            abilityChargeBar.GetComponent<Image>().fillAmount = abilityChargeAmount / 100;
+            //if the ability bar isnt full add to it
+            if (abilityChargeAmount < 100)
+            {
+                abilityChargeAmount += ultimateData.chargeRate * Time.deltaTime;
+                abilityChargeBar.GetComponent<Image>().fillAmount = abilityChargeAmount / 100;
+            }
         }
-
         if (useOverCharge)
         {
             //if the ability bar is full add to the overcharge bar
             if (abilityChargeAmount >= 100)
             {
-                abilityOverChargeAmount += abilityChargeSpeed * Time.deltaTime;
-                abilityOverChargeBar.GetComponent<Image>().fillAmount = abilityOverChargeAmount / 100;
+                //abilityOverChargeAmount += abilityChargeSpeed * Time.deltaTime;
+                
             }
         }
     }
+    #endregion
     #endregion
 
     #region Audio
