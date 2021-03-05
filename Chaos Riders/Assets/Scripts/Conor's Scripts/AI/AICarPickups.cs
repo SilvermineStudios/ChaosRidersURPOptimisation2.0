@@ -26,7 +26,14 @@ public class AICarPickups : MonoBehaviour
         {
             if (other.CompareTag("RPGPickup") && !hasRPG)
                 hasRPG = true;
+
+            if (other.CompareTag("RPGPickup") && !hasRPG)
+            {
+                pv.RPC("RPG", RpcTarget.All);
+            }
         }
+
+
 
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer)
         {

@@ -1,5 +1,23 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8566660639254198518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/CarNoise.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Chaos Riders/Build/Desktop/CarNoise.bank
+  Name: CarNoise
+  lastModified: 637501367315248030
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
 --- !u!114 &-8081485380875060407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,6 +106,24 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 3808
+--- !u!114 &-6594869999446534333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/CarNoise.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Chaos Riders/Build/Desktop/CarNoise.bank
+  Name: CarNoise
+  lastModified: 637501367315248030
+  LoadResult: 0
+  FileSizes: []
+  Exists: 1
 --- !u!114 &-4789631137126399954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,7 +161,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/Master.bank
   Name: Master
-  lastModified: 637503865531076287
+  lastModified: 637505604377916315
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -197,7 +233,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 1000
+  Length: 1119
 --- !u!114 &-2954939187940535496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -212,11 +248,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/Master.strings.bank
   Name: Master.strings
-  lastModified: 637503865531086272
+  lastModified: 637505604377926161
   LoadResult: 0
   FileSizes:
   - Name: Desktop
-    Value: 1902
+    Value: 1976
   Exists: 1
 --- !u!114 &-2624649675606900976
 MonoBehaviour:
@@ -232,7 +268,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/CarNoise.bank
   Name: CarNoise
-  lastModified: 637501367315248030
+  lastModified: 637501290113094114
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -277,6 +313,29 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1850
+--- !u!114 &-1697617239266563794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Pickups/Use
+  m_EditorClassIdentifier: 
+  Path: event:/Pickups/Use
+  guid: 1da819f585b2dc4baf6d55682620e7f0
+  Banks:
+  - {fileID: -4466803539278922483}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 4142
 --- !u!114 &-1408049179336847372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -442,7 +501,7 @@ MonoBehaviour:
   EditorBanks:
   - {fileID: -2954939187940535496}
   - {fileID: -4466803539278922483}
-  - {fileID: -2624649675606900976}
+  - {fileID: 8130772465141757307}
   EditorEvents:
   - {fileID: -4789631137126399954}
   - {fileID: -2173327587602132150}
@@ -463,12 +522,14 @@ MonoBehaviour:
   - {fileID: -4372692443979137554}
   - {fileID: 4474931729081467063}
   - {fileID: 7046008408831150712}
+  - {fileID: -1697617239266563794}
+  - {fileID: 6582687345382335072}
   EditorParameters: []
   MasterBanks:
   - {fileID: -4466803539278922483}
   StringsBanks:
   - {fileID: -2954939187940535496}
-  stringsBankWriteTime: 637503865531086272
+  stringsBankWriteTime: 637505604377926161
   cacheVersion: 5
 --- !u!114 &481966967742989797
 MonoBehaviour:
@@ -796,6 +857,24 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 4416
+--- !u!114 &4211068489366736326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/CarNoise.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Chaos Riders/Build/Desktop/CarNoise.bank
+  Name: CarNoise
+  lastModified: 637501367315248030
+  LoadResult: 0
+  FileSizes: []
+  Exists: 1
 --- !u!114 &4474931729081467063
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -859,7 +938,30 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 981
+  Length: 1640
+--- !u!114 &6582687345382335072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/GunFX/Hitmarker
+  m_EditorClassIdentifier: 
+  Path: event:/GunFX/Hitmarker
+  guid: 50abc5d636cec746b771d619e54220f7
+  Banks:
+  - {fileID: -4466803539278922483}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 500
 --- !u!114 &7046008408831150712
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -906,6 +1008,24 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 4416
+--- !u!114 &8130772465141757307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/CarNoise.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Chaos Riders/Build/Desktop/CarNoise.bank
+  Name: CarNoise
+  lastModified: 637501367315248030
+  LoadResult: 0
+  FileSizes: []
+  Exists: 1
 --- !u!114 &8390316997883208087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -963,7 +1083,7 @@ MonoBehaviour:
   guid: 1afa13fc8c97a2449ffc3c1f3041719a
   Banks:
   - {fileID: 8390316997883208087}
-  - {fileID: -2624649675606900976}
+  - {fileID: 8130772465141757307}
   - {fileID: -4466803539278922483}
   IsStream: 0
   Is3D: 1

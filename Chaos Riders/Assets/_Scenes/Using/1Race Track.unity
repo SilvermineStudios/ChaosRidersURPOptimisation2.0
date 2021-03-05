@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: cf09bdd74268f184498d51e302193dbf, type: 2}
+  m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -3904,9 +3904,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4379144686337846681, guid: bbc0d1be306206a48a8b8e857a224530, type: 3}
+      propertyPath: m_MaterialTemplate
+      value: 
+      objectReference: {fileID: 2100000, guid: c3f977453caf5d34a87098a4982a4f6e, type: 2}
+    - target: {fileID: 4379144686337846681, guid: bbc0d1be306206a48a8b8e857a224530, type: 3}
+      propertyPath: m_ShadowCastingMode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4379144686337846681, guid: bbc0d1be306206a48a8b8e857a224530, type: 3}
+      propertyPath: m_ReflectionProbeUsage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4379144686337846683, guid: bbc0d1be306206a48a8b8e857a224530, type: 3}
       propertyPath: m_Name
       value: Chaos Gauntlet Terrain
+      objectReference: {fileID: 0}
+    - target: {fileID: 4379144686337846683, guid: bbc0d1be306206a48a8b8e857a224530, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967294
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bbc0d1be306206a48a8b8e857a224530, type: 3}
