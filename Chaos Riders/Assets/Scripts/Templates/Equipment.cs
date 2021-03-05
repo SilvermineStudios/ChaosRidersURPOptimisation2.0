@@ -10,6 +10,7 @@ public class Equipment : ScriptableObject
     public GameObject prefab;
     public string photonPrefab;
 
+    public float equipmentUseTime;
     public float chargeRate;
     public string sound;
 

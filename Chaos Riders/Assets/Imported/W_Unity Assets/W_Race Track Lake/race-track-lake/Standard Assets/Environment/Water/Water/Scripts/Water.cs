@@ -109,7 +109,7 @@ namespace UnityStandardAssets.Water
                 reflectionCamera.transform.position = newpos;
                 Vector3 euler = cam.transform.eulerAngles;
                 reflectionCamera.transform.eulerAngles = new Vector3(-euler.x, euler.y, euler.z);
-                reflectionCamera.Render();
+                //reflectionCamera.Render();
                 reflectionCamera.transform.position = oldpos;
                 GL.invertCulling = oldCulling;
                 GetComponent<Renderer>().sharedMaterial.SetTexture("_ReflectionTex", m_ReflectionTexture);
