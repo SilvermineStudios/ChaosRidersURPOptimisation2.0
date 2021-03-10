@@ -93,7 +93,7 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
     void AddToDrivers()
     {
         gameVariables.amountOfDrivers++;
-        playerDataManager.drivers.Add(myPhotonMenuPlayer.gameObject);
+        //playerDataManager.drivers.Add(myPhotonMenuPlayer.gameObject);
 
         myPhotonMenuPlayer.driver = true;
         myPhotonMenuPlayer.shooter = false;
@@ -159,7 +159,7 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
     void AddToShooters()
     {
         gameVariables.amountOfShooters++;
-        playerDataManager.shooters.Add(myPhotonMenuPlayer.gameObject);
+        //playerDataManager.shooters.Add(myPhotonMenuPlayer.gameObject);
 
         myPhotonMenuPlayer.shooter = true;
         myPhotonMenuPlayer.driver = false;
