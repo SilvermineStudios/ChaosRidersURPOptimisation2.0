@@ -64,6 +64,7 @@ public class Controller : MonoBehaviour
     ShredUltimate shredUltimate;
     [HideInInspector] public TurretTester ShooterAttached; //Does this need to still be here?
     [HideInInspector] public GameObject Shooter;
+    protected PlayerInputs playerInputs;
     #endregion
 
     #region Skidmarks
@@ -129,6 +130,7 @@ public class Controller : MonoBehaviour
         pv = GetComponent<PhotonView>();
         healthScript = GetComponent<Health>();
         driverAbilities = GetComponent<DriverAbilities>();
+        playerInputs = GetComponent<PlayerInputs>();
         rb = GetComponent<Rigidbody>();
         skidmarksController = FindObjectOfType<Skidmarks>();
         skidSound = FMODUnity.RuntimeManager.CreateInstance("event:/CarFX/All/Skid");
@@ -251,6 +253,8 @@ public class Controller : MonoBehaviour
         }
 
         //boost = Input.GetKey(KeyCode.LeftShift);
+        playerInputs.Input.DriveX = verticalInput;
+        playerInputs.Input.DriveZ = horizontalInput;
     }
     #endregion
 
