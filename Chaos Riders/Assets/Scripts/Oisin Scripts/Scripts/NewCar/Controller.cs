@@ -9,7 +9,7 @@ public class Controller : MonoBehaviour
 {
     #region Cars
     [Header("Car Data")]
-    [SerializeField] CarClass currentCarClass;
+    public CarClass currentCarClass;
     CarClass oldCarClass;
     Vehicle carData;
     [SerializeField] Vehicle[] VehicleData;
@@ -113,7 +113,6 @@ public class Controller : MonoBehaviour
     #endregion
 
     #region Other
-    enum CarClass { Braker, Shredder };
     public Rigidbody rb { get; private set; }
     public enum DriverEquipment { SmokeScreen, Mine }
     public enum DriverUltimate { Brake, Shred }
@@ -139,7 +138,6 @@ public class Controller : MonoBehaviour
 
     private void Start()
     {
-
         SetupCar(currentCarClass);
         cineCamera = gameObject.transform.GetChild(0).gameObject.GetComponent<CinemachineVirtualCamera>();
         cineCamTransposer = cineCamera.GetCinemachineComponent<CinemachineTransposer>();

@@ -3454,6 +3454,13 @@ MonoBehaviour:
     FarClipPlane: 5000
     Dutch: 0
     LensShift: {x: 0, y: 0}
+    Iso: 200
+    ShutterSpeed: 0.005
+    Aperture: 16
+    BladeCount: 5
+    Curvature: {x: 2, y: 11}
+    BarrelClipping: 0.25
+    Anamorphism: 0
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -18829,7 +18836,7 @@ GameObject:
   - component: {fileID: 757208674}
   - component: {fileID: 413523565}
   m_Layer: 0
-  m_Name: Shooter2
+  m_Name: Shooter
   m_TagString: shooter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18904,9 +18911,11 @@ MonoBehaviour:
   CasingSpawn: {fileID: 6319989313829350448}
   Casing: {fileID: 861391098359841573, guid: 26e80ede9ba2652449e5169bf69301aa, type: 3}
   hitmarker: {fileID: 8931214932920015701}
+  minigunClass: 0
   reticle: {fileID: 1617670277}
   CrossHairGameobject: {fileID: 1617670276}
   currentSize: 50
+  spreadSize: 0
   coolDownBarUi: {fileID: 7634238392297675920}
 --- !u!114 &7634238392847830456
 MonoBehaviour:

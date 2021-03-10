@@ -35,11 +35,12 @@ public class GameSetup : MonoBehaviour
     private void Awake()
     {
         pv = GetComponent<PhotonView>();
-        CalculateDriverAndShooterCount();
+        
     }
 
     private void Start()
     {
+        CalculateDriverAndShooterCount();
         if (pv.IsMine)
         {
             //RPC_SpawnPlayers();
@@ -67,26 +68,31 @@ public class GameSetup : MonoBehaviour
             if(p.driver)
             {
                 amountOfDrivers++;
+                
             }
             if(p.shooter)
             {
                 amountOfShooters++;
             }
         }
+        Debug.Log("Amount of Drivers: " + amountOfDrivers);
+        Debug.Log("Amount of Shooters: " + amountOfShooters);
     }
 
     public void RPC_SpawnPlayers() //happens in start
     {
+        Debug.Log(PlayerDataManager.Players.Length);
         foreach (PhotonMenuPlayer p in PlayerDataManager.Players)
         {
+            Debug.Log("Spawn");
             if (p.driver)
             {
-                pv.RPC("RPC_SpawnDriver", p.Player, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
+                pv.RPC("RPC_SpawnDriver", p.Player, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation, p);
             }
 
             if (p.shooter)
             {
-                pv.RPC("RPC_SpawnShooter", p.Player, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
+                pv.RPC("RPC_SpawnShooter", p.Player, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation, p);
 
 
                 //if there are no drivers
@@ -105,15 +111,17 @@ public class GameSetup : MonoBehaviour
     }
 
     [PunRPC]
-    void RPC_SpawnDriver(Vector3 spawnPos, Quaternion spawnRot)
+    void RPC_SpawnDriver(Vector3 spawnPos, Quaternion spawnRot, PhotonMenuPlayer p)
     {
-        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "DriverPlayer"), spawnPos, spawnRot, 0);
+        GameObject GO = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Driver"), spawnPos, spawnRot, 0);
+        GO.GetComponent<Controller>().currentCarClass = p.currentCarClass;
     }
 
     [PunRPC]
-    void RPC_SpawnShooter(Vector3 spawnPos, Quaternion spawnRot)
+    void RPC_SpawnShooter(Vector3 spawnPos, Quaternion spawnRot, PhotonMenuPlayer p)
     {
-        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "ShooterPlayer"), spawnPos, spawnRot, 0);
+        GameObject GO = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Shooter"), spawnPos, spawnRot, 0);
+        GO.GetComponent<Shooter>().minigunClass = p.currentMinigunClass;
     }
 
     [PunRPC]

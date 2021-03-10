@@ -3,6 +3,7 @@ using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PhotonMenuPlayer : MonoBehaviour
 {
@@ -27,16 +28,22 @@ public class PhotonMenuPlayer : MonoBehaviour
     public enum shooterType { standardGun, goldenGun , None};
     public shooterType shooterModel;
 
+    public MinigunClass currentMinigunClass;
+    public CarClass currentCarClass;
+
     [SerializeField] private GameObject characterTypeSelectionScreen;
     [SerializeField] private GameObject driverSelectionScreen;
     [SerializeField] private GameObject shooterSelectionScreen;
+
+
+    [SerializeField] private Button BackButton;
 
     void Awake()
     {
         pv = GetComponent<PhotonView>();
         gameVariables = FindObjectOfType<GameVariables>();
         playerDataManager = FindObjectOfType<PlayerDataManager>();
-
+        BackButton = GameObject.FindGameObjectWithTag("Back").GetComponent<Button>();
         carModel = carType.None;
         shooterModel = shooterType.None;
     }
@@ -63,9 +70,13 @@ public class PhotonMenuPlayer : MonoBehaviour
     {
         //Debug.Log("Player = " + Player);
 
-        if(driver && playerDataManager.drivers.Count > 0)
+        if(!characterTypeSelectionScreen.activeInHierarchy)
         {
-            //foreach()
+            BackButton.interactable = true;
+        }
+        else
+        {
+            BackButton.interactable = false;
         }
     }
 
@@ -92,8 +103,6 @@ public class PhotonMenuPlayer : MonoBehaviour
             characterTypeSelectionScreen.SetActive(false);
             shooterSelectionScreen.SetActive(false);
             driverSelectionScreen.SetActive(true);
-
-            pv.RPC("AddToDrivers", RpcTarget.AllBuffered);
         }
     }
     [PunRPC]
@@ -106,6 +115,7 @@ public class PhotonMenuPlayer : MonoBehaviour
         //show that the player is a driver
         driver = true;
         shooter = false;
+        Debug.Log("Driver");
     }
 
 
@@ -114,12 +124,19 @@ public class PhotonMenuPlayer : MonoBehaviour
     {
         if(pv.IsMine)
         {
+            if (!driver)
+            {
+                pv.RPC("AddToDrivers", RpcTarget.AllBuffered);
+            }
             if (DriverPlayerInfo.pi != null) //check if a playerInfo singleton exists
             {
                 DriverPlayerInfo.pi.mySelectedCharacter = whichCharacter;
                 PlayerPrefs.SetInt("MyCharacter", whichCharacter);
             }
-
+            if (PhotonNetwork.IsMasterClient)
+            {
+                FindObjectOfType<CustomMatchmakingRoomController>().startButton.GetComponent<Button>().interactable = true;
+            }
             pv.RPC("AssignDriverCharacter", RpcTarget.AllBuffered, whichCharacter);
         }
     }
@@ -130,13 +147,13 @@ public class PhotonMenuPlayer : MonoBehaviour
         if (whichCharacter == 0)
         {
             Debug.Log("Braker");
-            carModel = carType.Braker;
+            currentCarClass = CarClass.Braker;
         }
         //shredder
         if (whichCharacter == 1)
         {
             Debug.Log("Shredder");
-            carModel = carType.Shredder;
+            currentCarClass = CarClass.Shredder;
         }
     }
     #endregion
@@ -156,7 +173,7 @@ public class PhotonMenuPlayer : MonoBehaviour
             shooterSelectionScreen.SetActive(true);
             driverSelectionScreen.SetActive(false);
 
-            pv.RPC("AddToShooters", RpcTarget.AllBuffered);
+            
         }
     }
     [PunRPC]
@@ -177,12 +194,19 @@ public class PhotonMenuPlayer : MonoBehaviour
     {
         if (pv.IsMine)
         {
+            if (!shooter)
+            {
+                pv.RPC("AddToShooters", RpcTarget.AllBuffered);
+            }
             if (ShooterPlayerInfo.pi != null) //check if a playerInfo singleton exists
             {
                 ShooterPlayerInfo.pi.mySelectedCharacter = whichCharacter;
                 PlayerPrefs.SetInt("MyCharacter", whichCharacter);
             }
-
+            if (PhotonNetwork.IsMasterClient)
+            {
+                FindObjectOfType<CustomMatchmakingRoomController>().startButton.GetComponent<Button>().interactable = true;
+            }
             pv.RPC("AssignShooterCharacter", RpcTarget.AllBuffered, whichCharacter);
         }
     }
@@ -193,14 +217,30 @@ public class PhotonMenuPlayer : MonoBehaviour
         if (whichCharacter == 0)
         {
             Debug.Log("standard gun");
-            shooterModel = shooterType.standardGun;
+            currentMinigunClass = MinigunClass.standard;
         }
         //golden gun
         if (whichCharacter == 1)
         {
             Debug.Log("golden gun");
-            shooterModel = shooterType.goldenGun;
+            currentMinigunClass = MinigunClass.gold;
         }
     }
     #endregion
+
+
+    public void BackButtonPress()
+    {
+        characterTypeSelectionScreen.SetActive(true);
+        shooterSelectionScreen.SetActive(false);
+        driverSelectionScreen.SetActive(false);
+    }
+
+
+    public void Starting()
+    {
+        characterTypeSelectionScreen.SetActive(false);
+        shooterSelectionScreen.SetActive(false);
+        driverSelectionScreen.SetActive(false);
+    }
 }

@@ -24,13 +24,26 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject photonMenuPlayer; //each player will be given one of these when they join the room
 
     [Header("Buttons")]
-    [SerializeField] private GameObject startButton; //only for the master client
+    public GameObject startButton; //only for the master client
 
     [Header("Loading")]
     [SerializeField] private float loadingTime = 6;
     [SerializeField] private GameObject loadingScreen;
+
+
+    PhotonMenuPlayer prefabToGet;
     #endregion
 
+    void Update()
+    {
+        if (prefabToGet == null)
+        {
+            if (FindObjectOfType<PhotonMenuPlayer>() != null)
+            {
+                prefabToGet = FindObjectOfType<PhotonMenuPlayer>();
+            }
+        }
+    }
 
     private void Awake()
     {
@@ -108,6 +121,7 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
     public void StartGame() //paired to the start button
     {
         StartCoroutine(LoadingCouroutine(loadingTime));
+        prefabToGet.Starting();
         pv.RPC("RPC_TurnOnLoadingScreen", RpcTarget.All);
     }
 

@@ -126,8 +126,8 @@ public class Shooter : MonoBehaviour
     #endregion
 
     #region ShooterClass
-    public enum ShooterClass { minigun, rifle };
     ShooterClass shooterClass;
+    public MinigunClass minigunClass;
     public ShooterClass currentShooterClass { get { return shooterClass; } private set { currentShooterClass = shooterClass; } }
     ShooterClass previousShooterClass;
     #endregion
