@@ -29,6 +29,7 @@ public class Shooter : MonoBehaviour
     [SerializeField] GameObject MinigunIcon, RifleIcon;
     LayerMask everythingButIgnoreBullets;
     [SerializeField] public ParticleSystem muzzleFlash;
+
     #endregion
 
     #region Camera
@@ -155,17 +156,44 @@ public class Shooter : MonoBehaviour
     [SerializeField] private Transform coolDownBarUi; //ui bar that shows the cooldown of the minigun
     #endregion
 
+    #region Golden
+    [Header("GoldenGun")]
+    [SerializeField] Material gold;
+    [SerializeField] GameObject gunHolder;
+    [SerializeField] GameObject standHolder;
+    MeshRenderer[] RenderersG;
+    MeshRenderer[] RenderersS;
+    #endregion
+
+
+    private void Awake()
+    {
+        RenderersG = gunHolder.GetComponentsInChildren<MeshRenderer>();
+        RenderersS = standHolder.GetComponentsInChildren<MeshRenderer>();
+        pauseMenu = GetComponent<Pause>();
+        pv = GetComponent<PhotonView>();
+        rb = GetComponent<Rigidbody>();
+    }
+
     void Start()
     {
         hitmarker.ChangeAlpha(0);
-        pauseMenu = GetComponent<Pause>();
-        pv = GetComponent<PhotonView>();
-        startAmountOfAmmoForRPG = amountOfAmmoForRPG;
-        rb = GetComponent<Rigidbody>();
+        startAmountOfAmmoForRPG = amountOfAmmoForRPG; 
         previousShooterClass = shooterClass;
         SetupGun(currentShooterClass);
         startAmmo = amountOfAmmoForCooldownBar;
         barrelRotationSpeed = barrelRotationStartSpeed;
+        if (minigunClass == MinigunClass.gold)
+        {
+            foreach (MeshRenderer mr in RenderersG)
+            {
+                mr.material = gold;
+            }
+            foreach (MeshRenderer mr in RenderersS)
+            {
+                //mr.material = gold;
+            }
+        }
     }
 
     void SetupGun(ShooterClass shooterClass)
