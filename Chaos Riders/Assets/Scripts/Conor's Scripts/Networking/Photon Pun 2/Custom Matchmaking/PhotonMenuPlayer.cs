@@ -27,9 +27,9 @@ public class PhotonMenuPlayer : MonoBehaviour
     public enum shooterType { standardGun, goldenGun , None};
     public shooterType shooterModel;
 
-    [SerializeField] private GameObject characterTypeSelectionScreen;
-    [SerializeField] private GameObject driverSelectionScreen;
-    [SerializeField] private GameObject shooterSelectionScreen;
+    //[SerializeField] private GameObject characterTypeSelectionScreen;
+    //[SerializeField] private GameObject driverSelectionScreen;
+    //[SerializeField] private GameObject shooterSelectionScreen;
 
     void Awake()
     {
@@ -43,6 +43,7 @@ public class PhotonMenuPlayer : MonoBehaviour
 
     private void Start()
     {
+        /*
         if (pv.IsMine)
         {
             characterTypeSelectionScreen.SetActive(true);
@@ -55,7 +56,7 @@ public class PhotonMenuPlayer : MonoBehaviour
             shooterSelectionScreen.SetActive(false);
             driverSelectionScreen.SetActive(false);
         }
-
+        */
         Player = pv.Owner;
     }
 
@@ -69,18 +70,6 @@ public class PhotonMenuPlayer : MonoBehaviour
         }
     }
 
-    void GetPlayeNumber()
-    {
-        foreach(Player p in PhotonNetwork.PlayerList)
-        {
-            if(p == PhotonNetwork.LocalPlayer)
-            {
-                
-            }
-        }
-    }
-
-
 
     #region Driver Buttons
     //button for choosing to be a driver
@@ -88,11 +77,12 @@ public class PhotonMenuPlayer : MonoBehaviour
     {
         if(pv.IsMine)
         {
+            /*
             //go to next selection screen
             characterTypeSelectionScreen.SetActive(false);
             shooterSelectionScreen.SetActive(false);
             driverSelectionScreen.SetActive(true);
-
+            */
             pv.RPC("AddToDrivers", RpcTarget.AllBuffered);
         }
     }
@@ -151,11 +141,12 @@ public class PhotonMenuPlayer : MonoBehaviour
     {
         if (pv.IsMine)
         {
+            /*
             //go to next selection screen
             characterTypeSelectionScreen.SetActive(false);
             shooterSelectionScreen.SetActive(true);
             driverSelectionScreen.SetActive(false);
-
+            */
             pv.RPC("AddToShooters", RpcTarget.AllBuffered);
         }
     }

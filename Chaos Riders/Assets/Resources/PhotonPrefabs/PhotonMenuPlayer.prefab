@@ -1011,7 +1011,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2100145395
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1045,6 +1045,7 @@ GameObject:
   - component: {fileID: 4765716784231101054}
   - component: {fileID: 4765716784231101048}
   - component: {fileID: 4765716784231101049}
+  - component: {fileID: 488357014}
   m_Layer: 0
   m_Name: PhotonMenuPlayer
   m_TagString: Untagged
@@ -1085,9 +1086,6 @@ MonoBehaviour:
   shooter: 0
   carModel: 0
   shooterModel: 0
-  characterTypeSelectionScreen: {fileID: 660332785}
-  driverSelectionScreen: {fileID: 1686730051}
-  shooterSelectionScreen: {fileID: 1084657153}
 --- !u!114 &4765716784231101049
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1110,3 +1108,16 @@ MonoBehaviour:
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &488357014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4765716784231101055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b28dd60f6abf16d4094cf0f642a043e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dontDestroyOnLoad: 0

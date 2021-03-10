@@ -8,44 +8,83 @@ using TMPro;
 
 public class CharacterScreenChanger : MonoBehaviourPunCallbacks
 {
+    private PhotonView pv;
+
     [SerializeField] private GameVariables gameVariables;
+    private PlayerDataManager playerDataManager;
+    [SerializeField] private PhotonMenuPlayer myPhotonMenuPlayer;
 
     public GameObject shooterCharacterScreen, driverCharacterScreen;
     public GameObject choosePlayerTypePanel; //panel for choosing whether to be a driver or shooter 
-    private PhotonView pv;
+    public GameObject backButton;
+
+    [SerializeField] private PhotonMenuPlayer[] photonMenuPlayers;
+
+    private void Awake()
+    {
+        playerDataManager = FindObjectOfType<PlayerDataManager>();
+        pv = GetComponent<PhotonView>();
+        gameVariables = FindObjectOfType<GameVariables>();
+    }
 
     private void Start()
     {
-        pv = GetComponent<PhotonView>();
-        gameVariables = FindObjectOfType<GameVariables>();
-
         choosePlayerTypePanel.SetActive(true);
         shooterCharacterScreen.SetActive(false);
         driverCharacterScreen.SetActive(false);
+        backButton.SetActive(false);
     }
 
     void Update()
     {
-
         //PlayerType();
+        photonMenuPlayers = FindObjectsOfType<PhotonMenuPlayer>();
+
+        if(photonMenuPlayers.Length > 0 && myPhotonMenuPlayer == null)
+        {
+            foreach(PhotonMenuPlayer pmp in photonMenuPlayers)
+            {
+                if(pmp.gameObject.GetComponent<PhotonView>().IsMine)
+                {
+                    myPhotonMenuPlayer = pmp;
+                }
+            }
+        }
     }
 
-    #region Buttons
+    public void BackButton()
+    {
+        foreach (Player p in PhotonNetwork.PlayerList)
+        {
+            if (p == PhotonNetwork.LocalPlayer)
+            {
+                choosePlayerTypePanel.SetActive(true);
+                shooterCharacterScreen.SetActive(false);
+                driverCharacterScreen.SetActive(false);
+                backButton.SetActive(false);
+
+                myPhotonMenuPlayer.carModel = PhotonMenuPlayer.carType.None;
+                myPhotonMenuPlayer.shooterModel = PhotonMenuPlayer.shooterType.None;
+                myPhotonMenuPlayer.driver = false;
+                myPhotonMenuPlayer.shooter = false;
+            }
+        }
+    }
+
+    #region Driver Buttons
     //button for choosing to be a driver
     public void DriverButton()
     {
-        choosePlayerTypePanel.SetActive(false);
-        shooterCharacterScreen.SetActive(false);
-        driverCharacterScreen.SetActive(true);
-
-        pv.RPC("AddToDrivers", PhotonNetwork.MasterClient);
-
-
         foreach (Player p in PhotonNetwork.PlayerList)
         {
-            if(p == PhotonNetwork.LocalPlayer)
+            if (p == PhotonNetwork.LocalPlayer)
             {
+                choosePlayerTypePanel.SetActive(false);
+                shooterCharacterScreen.SetActive(false);
+                driverCharacterScreen.SetActive(true);
+                backButton.SetActive(true);
 
+                pv.RPC("AddToDrivers", PhotonNetwork.MasterClient);
             }
         }
     }
@@ -54,146 +93,113 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
     void AddToDrivers()
     {
         gameVariables.amountOfDrivers++;
+        playerDataManager.drivers.Add(myPhotonMenuPlayer.gameObject);
+
+        myPhotonMenuPlayer.driver = true;
+        myPhotonMenuPlayer.shooter = false;
     }
 
+    //pick between driver characters (braker / shredder etc.)
+    public void DriverTypeButton(int whichCharacter)
+    {
+        foreach (Player p in PhotonNetwork.PlayerList)
+        {
+            if (p == PhotonNetwork.LocalPlayer)
+            {
+                if (DriverPlayerInfo.pi != null) //check if a playerInfo singleton exists
+                {
+                    DriverPlayerInfo.pi.mySelectedCharacter = whichCharacter;
+                    PlayerPrefs.SetInt("MyCharacter", whichCharacter);
+                }
+
+                pv.RPC("AssignDriverCharacter", RpcTarget.AllBuffered, whichCharacter);
+            }
+        }
+    }
+
+    [PunRPC]
+    void AssignDriverCharacter(int whichCharacter)
+    {
+        //braker
+        if (whichCharacter == 0)
+        {
+            Debug.Log("Braker");
+            myPhotonMenuPlayer.carModel = PhotonMenuPlayer.carType.Braker;
+            //carModel = carType.Braker;
+        }
+        //shredder
+        if (whichCharacter == 1)
+        {
+            Debug.Log("Shredder");
+            myPhotonMenuPlayer.carModel = PhotonMenuPlayer.carType.Shredder;
+            //carModel = carType.Shredder;
+        }
+    }
+    #endregion
+
+    #region Shooter Buttons
     //button for choosing to be a shooter
     public void ShooterButton()
     {
-        choosePlayerTypePanel.SetActive(false);
-        shooterCharacterScreen.SetActive(true);
-        driverCharacterScreen.SetActive(false);
+        foreach (Player p in PhotonNetwork.PlayerList)
+        {
+            if (p == PhotonNetwork.LocalPlayer)
+            {
+                choosePlayerTypePanel.SetActive(false);
+                shooterCharacterScreen.SetActive(true);
+                driverCharacterScreen.SetActive(false);
+                backButton.SetActive(true);
 
-        pv.RPC("AddToShooters", PhotonNetwork.MasterClient);
+                pv.RPC("AddToShooters", PhotonNetwork.MasterClient);
+            }
+        }
     }
 
     [PunRPC]
     void AddToShooters()
     {
         gameVariables.amountOfShooters++;
+        playerDataManager.shooters.Add(myPhotonMenuPlayer.gameObject);
+
+        myPhotonMenuPlayer.shooter = true;
+        myPhotonMenuPlayer.driver = false;
+    }
+
+    //pick between shooter characters (Dreagen Max / Celia Lock etc.)
+    public void ShooterTypeButton(int whichCharacter)
+    {
+        foreach (Player p in PhotonNetwork.PlayerList)
+        {
+            if (p == PhotonNetwork.LocalPlayer)
+            {
+                if (ShooterPlayerInfo.pi != null) //check if a playerInfo singleton exists
+                {
+                    ShooterPlayerInfo.pi.mySelectedCharacter = whichCharacter;
+                    PlayerPrefs.SetInt("MyCharacter", whichCharacter);
+                }
+
+                pv.RPC("AssignShooterCharacter", RpcTarget.AllBuffered, whichCharacter);
+            }
+        }
+    }
+
+    [PunRPC]
+    void AssignShooterCharacter(int whichCharacter)
+    {
+        //standard gun
+        if (whichCharacter == 0)
+        {
+            Debug.Log("standard gun");
+            myPhotonMenuPlayer.shooterModel = PhotonMenuPlayer.shooterType.standardGun;
+            //shooterModel = shooterType.standardGun;
+        }
+        //golden gun
+        if (whichCharacter == 1)
+        {
+            Debug.Log("golden gun");
+            myPhotonMenuPlayer.shooterModel = PhotonMenuPlayer.shooterType.goldenGun;
+            //shooterModel = shooterType.goldenGun;
+        }
     }
     #endregion
-
-    private void PlayerType()
-    {
-        //Player 1
-        if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
-        {
-            shooterCharacterScreen.SetActive(false);
-            driverCharacterScreen.SetActive(true);
-        }
-        //Player 2
-        if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
-        {
-            shooterCharacterScreen.SetActive(true);
-            driverCharacterScreen.SetActive(false);
-        }
-        //Player 3
-        if (PhotonNetwork.LocalPlayer.ActorNumber == 3)
-        {
-            shooterCharacterScreen.SetActive(false);
-            driverCharacterScreen.SetActive(true);
-        }
-        //Player 4
-        if (PhotonNetwork.LocalPlayer.ActorNumber == 4)
-        {
-            shooterCharacterScreen.SetActive(true);
-            driverCharacterScreen.SetActive(false);
-        }
-        //Player 5
-        if (PhotonNetwork.LocalPlayer.ActorNumber == 5)
-        {
-            shooterCharacterScreen.SetActive(false);
-            driverCharacterScreen.SetActive(true);
-        }
-        //Player 6
-        if (PhotonNetwork.LocalPlayer.ActorNumber == 6)
-        {
-            shooterCharacterScreen.SetActive(true);
-            driverCharacterScreen.SetActive(false);
-        }
-        //Player 7
-        if (PhotonNetwork.LocalPlayer.ActorNumber == 7)
-        {
-            shooterCharacterScreen.SetActive(false);
-            driverCharacterScreen.SetActive(true);
-        }
-        //Player 8
-        if (PhotonNetwork.LocalPlayer.ActorNumber == 8)
-        {
-            shooterCharacterScreen.SetActive(true);
-            driverCharacterScreen.SetActive(false);
-        }
-        //Player 9
-        if (PhotonNetwork.LocalPlayer.ActorNumber == 9)
-        {
-            shooterCharacterScreen.SetActive(false);
-            driverCharacterScreen.SetActive(true);
-        }
-        //Player 10
-        if (PhotonNetwork.LocalPlayer.ActorNumber == 10)
-        {
-            shooterCharacterScreen.SetActive(true);
-            driverCharacterScreen.SetActive(false);
-        }
-        //Player 11
-        if (PhotonNetwork.LocalPlayer.ActorNumber == 11)
-        {
-            shooterCharacterScreen.SetActive(false);
-            driverCharacterScreen.SetActive(true);
-        }
-        //Player 12
-        if (PhotonNetwork.LocalPlayer.ActorNumber == 12)
-        {
-            shooterCharacterScreen.SetActive(true);
-            driverCharacterScreen.SetActive(false);
-        }
-        //Player 13
-        if (PhotonNetwork.LocalPlayer.ActorNumber == 13)
-        {
-            shooterCharacterScreen.SetActive(false);
-            driverCharacterScreen.SetActive(true);
-        }
-        //Player 14
-        if (PhotonNetwork.LocalPlayer.ActorNumber == 14)
-        {
-            shooterCharacterScreen.SetActive(true);
-            driverCharacterScreen.SetActive(false);
-        }
-        //Player 15
-        if (PhotonNetwork.LocalPlayer.ActorNumber == 15)
-        {
-            shooterCharacterScreen.SetActive(false);
-            driverCharacterScreen.SetActive(true);
-        }
-        //Player 16
-        if (PhotonNetwork.LocalPlayer.ActorNumber == 16)
-        {
-            shooterCharacterScreen.SetActive(true);
-            driverCharacterScreen.SetActive(false);
-        }
-        //Player 17
-        if (PhotonNetwork.LocalPlayer.ActorNumber == 17)
-        {
-            shooterCharacterScreen.SetActive(false);
-            driverCharacterScreen.SetActive(true);
-        }
-        //Player 18
-        if (PhotonNetwork.LocalPlayer.ActorNumber == 18)
-        {
-            shooterCharacterScreen.SetActive(true);
-            driverCharacterScreen.SetActive(false);
-        }
-        //Player 19
-        if (PhotonNetwork.LocalPlayer.ActorNumber == 19)
-        {
-            shooterCharacterScreen.SetActive(false);
-            driverCharacterScreen.SetActive(true);
-        }
-        //Player 20
-        if (PhotonNetwork.LocalPlayer.ActorNumber == 20)
-        {
-            shooterCharacterScreen.SetActive(true);
-            driverCharacterScreen.SetActive(false);
-        }
-    }
 }
