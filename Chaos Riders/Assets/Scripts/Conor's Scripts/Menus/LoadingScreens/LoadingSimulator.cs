@@ -40,7 +40,11 @@ public class LoadingSimulator : MonoBehaviour
         loadingCircle.fillAmount = loadingValueNormalized;
         loadingBar.fillAmount = loadingValueNormalized;
 
+        float displayedTime = loadingValueNormalized * 100;
+        if (displayedTime > 100)
+            displayedTime = 100;
+
         //update load percentage
-        loadingPercentageText.text = (loadingValueNormalized * 100).ToString("f0"); //calculate the percentage loaded and display it without decimals
+        loadingPercentageText.text = displayedTime.ToString("f0"); //calculate the percentage loaded and display it without decimals
     }
 }
