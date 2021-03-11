@@ -9,7 +9,7 @@ public class LoadingSimulator : MonoBehaviour
 {
     private PhotonView pv;
 
-    [SerializeField] private float loadingTime = 6;
+    private float loadingTime;
     [SerializeField] private Image loadingCircle; //increase the fill amount to complete
     [SerializeField] private Image loadingBar; //increase the fill amount to complete
     [SerializeField] private TextMeshProUGUI loadingPercentageText;
@@ -19,6 +19,8 @@ public class LoadingSimulator : MonoBehaviour
     private void Awake()
     {
         pv = GetComponent<PhotonView>();
+
+        loadingTime = CustomMatchmakingRoomController.LoadingTime;
 
         loadingCircle.fillAmount = 0;
         loadingBar.fillAmount = 0;

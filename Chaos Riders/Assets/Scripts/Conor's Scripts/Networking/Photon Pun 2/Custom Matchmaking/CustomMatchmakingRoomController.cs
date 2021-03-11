@@ -27,8 +27,9 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
     public GameObject startButton; //only for the master client
 
     [Header("Loading")]
-    [SerializeField] private float loadingTime = 6;
     [SerializeField] private GameObject loadingScreen;
+    [SerializeField] private float loadingTime;
+    public static float LoadingTime;
 
     #endregion
 
@@ -36,6 +37,7 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
     {
         pv = GetComponent<PhotonView>();
         loadingScreen.SetActive(false);
+        LoadingTime = loadingTime;
     }
 
     void ClearPlayerListings()
