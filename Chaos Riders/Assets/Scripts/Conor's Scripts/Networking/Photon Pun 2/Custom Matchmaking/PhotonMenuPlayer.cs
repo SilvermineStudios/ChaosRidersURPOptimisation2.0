@@ -125,12 +125,14 @@ public class PhotonMenuPlayer : MonoBehaviour
         {
             Debug.Log("Braker");
             carModel = carType.Braker;
+            currentCarClass = CarClass.Braker;
         }
         //shredder
         if (whichCharacter == 1)
         {
             Debug.Log("Shredder");
             carModel = carType.Shredder;
+            currentCarClass = CarClass.Shredder;
         }
     }
     #endregion
@@ -189,12 +191,14 @@ public class PhotonMenuPlayer : MonoBehaviour
         {
             Debug.Log("standard gun");
             shooterModel = shooterType.standardGun;
+            currentMinigunClass = MinigunClass.standard;
         }
         //golden gun
         if (whichCharacter == 1)
         {
             Debug.Log("golden gun");
             shooterModel = shooterType.goldenGun;
+            currentMinigunClass = MinigunClass.gold;
         }
     }
     #endregion

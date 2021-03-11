@@ -95,7 +95,7 @@ public class Controller : MonoBehaviour
     #endregion
 
     #region Ability Data
-    [Header("Ability Data")] 
+    [Header("Ability Data")]
     public Equipment[] DriverEquipmentData;
     Equipment equipmentData;
     public Ultimate[] DriverUltimateData;
@@ -108,7 +108,7 @@ public class Controller : MonoBehaviour
     [SerializeField] private Transform equipmentChargeBar; //equipment chargebar
     [SerializeField] private Transform abilityChargeBar; //ability chargebar
     private Transform equipmentOverChargeBar;//not in use
-    [SerializeField] private Transform abilityOverChargeBar; 
+    [SerializeField] private Transform abilityOverChargeBar;
     private float equipmentChargeAmount, equipmentOverchargeAmount, abilityChargeAmount, abilityOverChargeAmount; //equipment/ability charge Amount
 
     #endregion
@@ -150,7 +150,7 @@ public class Controller : MonoBehaviour
         skidmarks[2] = skidmarksController;
         skidmarks[3] = skidmarksController;
 
-        
+
         rb.centerOfMass = carData.centerOfMass;
         rb.mass = carData.vehicleMass;
         rb.drag = carData.vehicleDrag;
@@ -230,7 +230,7 @@ public class Controller : MonoBehaviour
             CapSpeed();
             UpdateWheelPoses();
             ChangeFOV();
-            
+
         }
     }
 
@@ -422,7 +422,7 @@ public class Controller : MonoBehaviour
             if (CurrentUltimate == DriverUltimate.Brake)
             {
                 StartCoroutine(UseBrakerAbility());
-                
+
             }
             if (CurrentUltimate == DriverUltimate.Shred)
             {
@@ -430,7 +430,7 @@ public class Controller : MonoBehaviour
             }
             abilityChargeAmount = 0; //reset the cooldownbar after the ability is used
         }
-        
+
     }
 
     #region Ultimates
@@ -579,7 +579,7 @@ public class Controller : MonoBehaviour
             if (abilityChargeAmount >= 100)
             {
                 //abilityOverChargeAmount += abilityChargeSpeed * Time.deltaTime;
-                
+
             }
         }
     }
@@ -653,7 +653,7 @@ public class Controller : MonoBehaviour
         wheelColliders[0].steerAngle = steeringAngle;
         wheelColliders[1].steerAngle = steeringAngle;
     }
-    
+
     private void Accelerate()
     {
         if(verticalInput > 0)
@@ -686,10 +686,10 @@ public class Controller : MonoBehaviour
         {
             thrustTorque = -verticalInput * (currentTorque  / 4f * a);
         }
-        else 
+        else
         {
             thrustTorque = -verticalInput * (currentTorque  / 4f * a);
-            
+
         }
         //Debug.Log(thrustTorque);
         if (wheelColliders[0].brakeTorque == 0 && currentSpeed < carData.topSpeed - 5)
@@ -755,7 +755,7 @@ public class Controller : MonoBehaviour
 
             AdjustTorque(wheelHit.forwardSlip);
         }
-        
+
     }
 
     private void Brake()
@@ -772,7 +772,7 @@ public class Controller : MonoBehaviour
             }
         }
     }
-    
+
     public void ApplyBrake(float brakeAmount)
     {
         braking = true;
@@ -969,7 +969,7 @@ public class Controller : MonoBehaviour
 
     }
     #endregion
-    
+
     #region Skidding
 
     private void Skid()
@@ -996,10 +996,10 @@ public class Controller : MonoBehaviour
             }
             else
             {
-                
+
                 lastSkid[i] = -1;
             }
-            
+
         }
         if(braking)
         {
@@ -1013,9 +1013,9 @@ public class Controller : MonoBehaviour
         {
             skidSound.setVolume(amount);
         }
-        
+
     }
-    
+
     [PunRPC]
     void SetSkidVolume(float amount)
     {
