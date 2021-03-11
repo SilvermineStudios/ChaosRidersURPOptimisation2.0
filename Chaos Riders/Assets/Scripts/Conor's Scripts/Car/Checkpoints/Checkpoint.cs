@@ -21,6 +21,8 @@ public class Checkpoint : MonoBehaviour
 
     [SerializeField] private bool canCollect = true;
 
+    [SerializeField] GameObject Music;
+
     private PhotonView pv;
 
     private void Awake()
@@ -59,6 +61,14 @@ public class Checkpoint : MonoBehaviour
 
             //CarUIManager.lapsText.text = "Lap " + currentLap + " / " + amountOfLaps;
             lapsText.text = "Lap " + currentLap + " / " + amountOfLaps;
+
+
+            //Start the music on the last lap
+            if(currentLap == amountOfLaps && !Music.activeInHierarchy)
+            {
+                Music.SetActive(true);
+            }
+
             if (currentLap == amountOfLaps && canCrossFinish && currentCheckpoint == 0)
             {
                 LapCounter.FinishLine.SetActive(true);

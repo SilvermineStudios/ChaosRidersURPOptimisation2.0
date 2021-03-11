@@ -193,7 +193,7 @@ public class Controller : MonoBehaviour
             SetupCar(currentCarClass);
         }
 
-        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
+        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer && MasterClientRaceStart.Instance.weaponsFree || !IsThisMultiplayer.Instance.multiplayer)
         {
             DriverAbilities();
         }
@@ -418,7 +418,7 @@ public class Controller : MonoBehaviour
             if (CurrentUltimate == DriverUltimate.Brake)
             {
                 StartCoroutine(UseBrakerAbility());
-                StartCoroutine(UseEquipmentUI(equipmentData.equipmentUseTime));
+                
             }
             if (CurrentUltimate == DriverUltimate.Shred)
             {
