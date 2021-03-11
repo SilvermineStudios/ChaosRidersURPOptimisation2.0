@@ -15026,7 +15026,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 51585144032355877}
-  m_LocalRotation: {x: 0.000000023283064, y: 0.9990179, z: -0.04430999, w: 0.0000005066395}
+  m_LocalRotation: {x: 0.000000022351742, y: 0.99901783, z: -0.044310007, w: 0.0000005066395}
   m_LocalPosition: {x: -0.000004053116, y: 1.5499998, z: 4.0000014}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -15789,8 +15789,6 @@ GameObject:
   - component: {fileID: 51585144929783346}
   - component: {fileID: 51585144929783759}
   - component: {fileID: 3518398640836516323}
-  - component: {fileID: 560701823}
-  - component: {fileID: 560701824}
   m_Layer: 10
   m_Name: Driver
   m_TagString: car
@@ -15820,6 +15818,7 @@ Transform:
   - {fileID: 51585144268266909}
   - {fileID: 8257066173024145648}
   - {fileID: 4518539461714795002}
+  - {fileID: 7247217417419968586}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -44.825, z: 0}
@@ -16077,6 +16076,7 @@ MonoBehaviour:
   currentCheckpoint: 0
   youWinText: {fileID: 3956452533378851096}
   canCollect: 1
+  Music: {fileID: 2332333343584972560}
 --- !u!114 &4518539460837761674
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16113,8 +16113,6 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 51585144929783349}
   - {fileID: 51585144929783346}
-  - {fileID: 560701823}
-  - {fileID: 560701824}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -16178,30 +16176,6 @@ MonoBehaviour:
   cameras:
   - {fileID: 51585144032355877}
   - {fileID: 51585142961966214}
---- !u!114 &560701823
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 51585144929783773}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c277b6fc6d7d054a8de6b7df6388fa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &560701824
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 51585144929783773}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83041ee597c909e4d99702d6550e9357, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &130403462491944905
 GameObject:
   m_ObjectHideFlags: 0
@@ -17642,6 +17616,60 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &2332333343584972560
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7247217417419968586}
+  - component: {fileID: 4081364121905477973}
+  m_Layer: 0
+  m_Name: Music
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &7247217417419968586
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2332333343584972560}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 51585144929783772}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4081364121905477973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2332333343584972560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  Event: event:/Music/MainTrack
+  PlayEvent: 1
+  StopEvent: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 0
+  OverrideMaxDistance: 0
 --- !u!1 &2380818813491857496
 GameObject:
   m_ObjectHideFlags: 0
@@ -43731,13 +43759,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd2d69656cbb3ab4dbd3965be91e94eb, type: 3}
---- !u!4 &2596531856309944604 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 9147135579071462041, guid: fd2d69656cbb3ab4dbd3965be91e94eb, type: 3}
-  m_PrefabInstance: {fileID: 6555443008747289477}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2596531856309944605 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9147135579071462040, guid: fd2d69656cbb3ab4dbd3965be91e94eb, type: 3}
+  m_PrefabInstance: {fileID: 6555443008747289477}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2596531856309944604 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9147135579071462041, guid: fd2d69656cbb3ab4dbd3965be91e94eb, type: 3}
   m_PrefabInstance: {fileID: 6555443008747289477}
   m_PrefabAsset: {fileID: 0}

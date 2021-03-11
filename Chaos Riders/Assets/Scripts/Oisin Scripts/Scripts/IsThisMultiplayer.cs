@@ -4,44 +4,6 @@ using UnityEngine;
 
 public class IsThisMultiplayer : MonoBehaviour
 {
-    /*
-
-    private static IsThisMultiplayer instance;
-
-
-    public bool ThisIsMultiplayer;
-
-    
-    public static bool multiplayer
-
-    {
-        get
-        {
-            return ;
-        }
-        private set
-        {
-
-        }
-    }
-
-    private void Awake()
-    {
-        multiplayer = ThisIsMultiplayer;
-    }
-
-
-    public GameObject playerInstance;
-    public static GameObject player { get { return instance.playerInstance; } }
-    void Awake()
-    {
-        instance = this;
-    }
-    */
-
-    
-
-
     private static IsThisMultiplayer _instance;
 
     public static IsThisMultiplayer Instance { get { return _instance; } }
