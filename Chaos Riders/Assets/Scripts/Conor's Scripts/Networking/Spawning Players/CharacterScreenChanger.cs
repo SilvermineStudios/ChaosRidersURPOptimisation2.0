@@ -125,14 +125,14 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
         {
             Debug.Log("Braker");
             myPhotonMenuPlayer.carModel = PhotonMenuPlayer.carType.Braker;
-            //carModel = carType.Braker;
+            myPhotonMenuPlayer.currentCarClass = CarClass.Braker;
         }
         //shredder
         if (whichCharacter == 1)
         {
             Debug.Log("Shredder");
             myPhotonMenuPlayer.carModel = PhotonMenuPlayer.carType.Shredder;
-            //carModel = carType.Shredder;
+            myPhotonMenuPlayer.currentCarClass = CarClass.Shredder;
         }
     }
     #endregion
@@ -191,14 +191,14 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
         {
             Debug.Log("standard gun");
             myPhotonMenuPlayer.shooterModel = PhotonMenuPlayer.shooterType.standardGun;
-            //shooterModel = shooterType.standardGun;
+            myPhotonMenuPlayer.currentMinigunClass = MinigunClass.standard;
         }
         //golden gun
         if (whichCharacter == 1)
         {
             Debug.Log("golden gun");
             myPhotonMenuPlayer.shooterModel = PhotonMenuPlayer.shooterType.goldenGun;
-            //shooterModel = shooterType.goldenGun;
+            myPhotonMenuPlayer.currentMinigunClass = MinigunClass.gold;
         }
     }
     #endregion
