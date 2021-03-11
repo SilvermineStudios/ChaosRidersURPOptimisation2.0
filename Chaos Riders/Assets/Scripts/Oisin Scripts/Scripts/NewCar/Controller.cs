@@ -250,9 +250,6 @@ public class Controller : MonoBehaviour
             //Debug.Log(234234324);
         }
 
-        //boost = Input.GetKey(KeyCode.LeftShift);
-        playerInputs.Input.DriveX = verticalInput;
-        playerInputs.Input.DriveZ = horizontalInput;
     }
     #endregion
 
