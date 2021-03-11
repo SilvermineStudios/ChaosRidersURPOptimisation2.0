@@ -27,6 +27,10 @@ public class PhotonMenuPlayer : MonoBehaviour
     public enum shooterType { standardGun, goldenGun , None};
     public shooterType shooterModel;
 
+    public MinigunClass currentMinigunClass;
+    public CarClass currentCarClass;
+
+
     //[SerializeField] private GameObject characterTypeSelectionScreen;
     //[SerializeField] private GameObject driverSelectionScreen;
     //[SerializeField] private GameObject shooterSelectionScreen;

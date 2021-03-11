@@ -19,8 +19,5 @@ public class SendToPrefab : MonoBehaviour
         }
     }
 
-    public void SendtoPrefab()
-    {
-        prefabToGet.BackButtonPress();
-    }
+
 }
