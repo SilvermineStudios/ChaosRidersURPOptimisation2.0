@@ -78,9 +78,7 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
         {
             if(p == PhotonNetwork.LocalPlayer)
             {
-                //GameObject player = 
-                    PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", photonMenuPlayer.name), this.transform.position, this.transform.rotation, 0);
-                //player.transform.parent = playerHolder;
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", photonMenuPlayer.name), this.transform.position, this.transform.rotation, 0);
             }
         }
 
@@ -93,6 +91,7 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
     {
         ClearPlayerListings(); //remove all old player listings
         ListPlayers(); //relist all current player listings
+
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)

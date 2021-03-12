@@ -47,31 +47,12 @@ public class PhotonMenuPlayer : MonoBehaviour
 
     private void Start()
     {
-        /*
-        if (pv.IsMine)
-        {
-            characterTypeSelectionScreen.SetActive(true);
-            shooterSelectionScreen.SetActive(false);
-            driverSelectionScreen.SetActive(false);
-        }
-        else //make all other players selection screens invisible
-        {
-            characterTypeSelectionScreen.SetActive(false);
-            shooterSelectionScreen.SetActive(false);
-            driverSelectionScreen.SetActive(false);
-        }
-        */
         Player = pv.Owner;
     }
 
     void Update()
     {
-        //Debug.Log("Player = " + Player);
 
-        if(driver && playerDataManager.drivers.Count > 0)
-        {
-            //foreach()
-        }
     }
 
 

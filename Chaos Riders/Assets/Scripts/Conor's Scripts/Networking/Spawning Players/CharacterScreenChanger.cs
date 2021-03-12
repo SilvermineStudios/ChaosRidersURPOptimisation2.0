@@ -51,7 +51,7 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
             }
         }
     }
-
+    #region Buttons
     public void BackButton()
     {
         foreach (Player p in PhotonNetwork.PlayerList)
@@ -63,13 +63,25 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
                 driverCharacterScreen.SetActive(false);
                 backButton.SetActive(false);
 
-                myPhotonMenuPlayer.carModel = PhotonMenuPlayer.carType.None;
-                myPhotonMenuPlayer.shooterModel = PhotonMenuPlayer.shooterType.None;
-                myPhotonMenuPlayer.driver = false;
-                myPhotonMenuPlayer.shooter = false;
+                pv.RPC("RPC_BackButton", RpcTarget.AllBuffered, p);
             }
         }
     }
+    [PunRPC]
+    private void RPC_BackButton(Player p)
+    {
+        foreach (PhotonMenuPlayer pmp in photonMenuPlayers)
+        {
+            if (pmp.gameObject.GetComponent<PhotonView>().Owner == p)
+            {
+                pmp.carModel = PhotonMenuPlayer.carType.None;
+                pmp.shooterModel = PhotonMenuPlayer.shooterType.None;
+                pmp.driver = false;
+                pmp.shooter = false;
+            }
+        }
+    }
+    #endregion
 
     #region Driver Buttons
     //button for choosing to be a driver
@@ -84,20 +96,23 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
                 driverCharacterScreen.SetActive(true);
                 backButton.SetActive(true);
 
-                pv.RPC("AddToDrivers", PhotonNetwork.MasterClient);
+                pv.RPC("RPC_AddToDrivers", RpcTarget.AllBuffered, p);
             }
         }
     }
-
     [PunRPC]
-    void AddToDrivers()
+    void RPC_AddToDrivers(Player p)
     {
-        gameVariables.amountOfDrivers++;
-        //playerDataManager.drivers.Add(myPhotonMenuPlayer.gameObject);
-
-        myPhotonMenuPlayer.driver = true;
-        myPhotonMenuPlayer.shooter = false;
-    }
+        foreach (PhotonMenuPlayer pmp in photonMenuPlayers)
+        {
+            if (pmp.gameObject.GetComponent<PhotonView>().Owner == p)
+            {
+                gameVariables.amountOfDrivers++;
+                pmp.driver = true;
+                pmp.shooter = false;
+            }
+        }
+    }    
 
     //pick between driver characters (braker / shredder etc.)
     public void DriverTypeButton(int whichCharacter)
@@ -112,28 +127,34 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
                     PlayerPrefs.SetInt("MyCharacter", whichCharacter);
                 }
 
-                pv.RPC("AssignDriverCharacter", RpcTarget.AllBuffered, whichCharacter);
+                pv.RPC("RPC_AssignDriverCharacter", RpcTarget.AllBuffered, whichCharacter, p);
             }
         }
     }
-
     [PunRPC]
-    void AssignDriverCharacter(int whichCharacter)
+    void RPC_AssignDriverCharacter(int whichCharacter, Player p)
     {
-        //braker
-        if (whichCharacter == 0)
+        foreach (PhotonMenuPlayer pmp in photonMenuPlayers)
         {
-            Debug.Log("Braker");
-            myPhotonMenuPlayer.carModel = PhotonMenuPlayer.carType.Braker;
-            myPhotonMenuPlayer.currentCarClass = CarClass.Braker;
+            if (pmp.gameObject.GetComponent<PhotonView>().Owner == p)
+            {
+                //braker
+                if (whichCharacter == 0)
+                {
+                    Debug.Log("Braker");
+                    pmp.carModel = PhotonMenuPlayer.carType.Braker;
+                    pmp.currentCarClass = CarClass.Braker;
+                }
+                //shredder
+                if (whichCharacter == 1)
+                {
+                    Debug.Log("Shredder");
+                    pmp.carModel = PhotonMenuPlayer.carType.Shredder;
+                    pmp.currentCarClass = CarClass.Shredder;
+                }
+            }
         }
-        //shredder
-        if (whichCharacter == 1)
-        {
-            Debug.Log("Shredder");
-            myPhotonMenuPlayer.carModel = PhotonMenuPlayer.carType.Shredder;
-            myPhotonMenuPlayer.currentCarClass = CarClass.Shredder;
-        }
+        
     }
     #endregion
 
@@ -150,19 +171,22 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
                 driverCharacterScreen.SetActive(false);
                 backButton.SetActive(true);
 
-                pv.RPC("AddToShooters", PhotonNetwork.MasterClient);
+                pv.RPC("RPC_AddToShooters", RpcTarget.AllBuffered, p);
             }
         }
     }
-
     [PunRPC]
-    void AddToShooters()
+    void RPC_AddToShooters(Player p)
     {
-        gameVariables.amountOfShooters++;
-        //playerDataManager.shooters.Add(myPhotonMenuPlayer.gameObject);
-
-        myPhotonMenuPlayer.shooter = true;
-        myPhotonMenuPlayer.driver = false;
+        foreach (PhotonMenuPlayer pmp in photonMenuPlayers)
+        {
+            if (pmp.gameObject.GetComponent<PhotonView>().Owner == p)
+            {
+                gameVariables.amountOfShooters++;
+                pmp.shooter = true;
+                pmp.driver = false;
+            }
+        }
     }
 
     //pick between shooter characters (Dreagen Max / Celia Lock etc.)
@@ -178,28 +202,34 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
                     PlayerPrefs.SetInt("MyCharacter", whichCharacter);
                 }
 
-                pv.RPC("AssignShooterCharacter", RpcTarget.AllBuffered, whichCharacter);
+                pv.RPC("RPC_AssignShooterCharacter", RpcTarget.AllBuffered, whichCharacter, p);
             }
         }
     }
-
     [PunRPC]
-    void AssignShooterCharacter(int whichCharacter)
+    void RPC_AssignShooterCharacter(int whichCharacter, Player p)
     {
-        //standard gun
-        if (whichCharacter == 0)
+        foreach (PhotonMenuPlayer pmp in photonMenuPlayers)
         {
-            Debug.Log("standard gun");
-            myPhotonMenuPlayer.shooterModel = PhotonMenuPlayer.shooterType.standardGun;
-            myPhotonMenuPlayer.currentMinigunClass = MinigunClass.standard;
+            if (pmp.gameObject.GetComponent<PhotonView>().Owner == p)
+            {
+                //standard gun
+                if (whichCharacter == 0)
+                {
+                    Debug.Log("standard gun");
+                    pmp.shooterModel = PhotonMenuPlayer.shooterType.standardGun;
+                    pmp.currentMinigunClass = MinigunClass.standard;
+                }
+                //golden gun
+                if (whichCharacter == 1)
+                {
+                    Debug.Log("golden gun");
+                    pmp.shooterModel = PhotonMenuPlayer.shooterType.goldenGun;
+                    pmp.currentMinigunClass = MinigunClass.gold;
+                }
+            }
         }
-        //golden gun
-        if (whichCharacter == 1)
-        {
-            Debug.Log("golden gun");
-            myPhotonMenuPlayer.shooterModel = PhotonMenuPlayer.shooterType.goldenGun;
-            myPhotonMenuPlayer.currentMinigunClass = MinigunClass.gold;
-        }
+        
     }
     #endregion
 }
