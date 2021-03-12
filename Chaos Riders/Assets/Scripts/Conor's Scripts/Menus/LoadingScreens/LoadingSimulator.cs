@@ -9,7 +9,7 @@ public class LoadingSimulator : MonoBehaviour
 {
     private PhotonView pv;
 
-    [SerializeField] private float loadingTime = 6;
+    private float loadingTime;
     [SerializeField] private Image loadingCircle; //increase the fill amount to complete
     [SerializeField] private Image loadingBar; //increase the fill amount to complete
     [SerializeField] private TextMeshProUGUI loadingPercentageText;
@@ -19,6 +19,8 @@ public class LoadingSimulator : MonoBehaviour
     private void Awake()
     {
         pv = GetComponent<PhotonView>();
+
+        loadingTime = CustomMatchmakingRoomController.LoadingTime;
 
         loadingCircle.fillAmount = 0;
         loadingBar.fillAmount = 0;
@@ -38,7 +40,11 @@ public class LoadingSimulator : MonoBehaviour
         loadingCircle.fillAmount = loadingValueNormalized;
         loadingBar.fillAmount = loadingValueNormalized;
 
+        float displayedTime = loadingValueNormalized * 100;
+        if (displayedTime > 100)
+            displayedTime = 100;
+
         //update load percentage
-        loadingPercentageText.text = (loadingValueNormalized * 100).ToString("f0"); //calculate the percentage loaded and display it without decimals
+        loadingPercentageText.text = displayedTime.ToString("f0"); //calculate the percentage loaded and display it without decimals
     }
 }

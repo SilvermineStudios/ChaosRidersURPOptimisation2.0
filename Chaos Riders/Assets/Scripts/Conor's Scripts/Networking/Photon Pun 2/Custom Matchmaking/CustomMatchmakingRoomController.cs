@@ -24,18 +24,20 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject photonMenuPlayer; //each player will be given one of these when they join the room
 
     [Header("Buttons")]
-    [SerializeField] private GameObject startButton; //only for the master client
+    public GameObject startButton; //only for the master client
 
     [Header("Loading")]
-    [SerializeField] private float loadingTime = 6;
     [SerializeField] private GameObject loadingScreen;
-    #endregion
+    [SerializeField] private float loadingTime;
+    public static float LoadingTime;
 
+    #endregion
 
     private void Awake()
     {
         pv = GetComponent<PhotonView>();
         loadingScreen.SetActive(false);
+        LoadingTime = loadingTime;
     }
 
     void ClearPlayerListings()
@@ -76,9 +78,7 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
         {
             if(p == PhotonNetwork.LocalPlayer)
             {
-                //GameObject player = 
-                    PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", photonMenuPlayer.name), this.transform.position, this.transform.rotation, 0);
-                //player.transform.parent = playerHolder;
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", photonMenuPlayer.name), this.transform.position, this.transform.rotation, 0);
             }
         }
 
@@ -91,6 +91,7 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
     {
         ClearPlayerListings(); //remove all old player listings
         ListPlayers(); //relist all current player listings
+
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)

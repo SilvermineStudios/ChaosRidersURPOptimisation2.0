@@ -9,7 +9,7 @@ public class Controller : MonoBehaviour
 {
     #region Cars
     [Header("Car Data")]
-    [SerializeField] CarClass currentCarClass;
+    public CarClass currentCarClass;
     CarClass oldCarClass;
     Vehicle carData;
     [SerializeField] Vehicle[] VehicleData;
@@ -64,6 +64,7 @@ public class Controller : MonoBehaviour
     ShredUltimate shredUltimate;
     [HideInInspector] public TurretTester ShooterAttached; //Does this need to still be here?
     [HideInInspector] public GameObject Shooter;
+    protected PlayerInputs playerInputs;
     #endregion
 
     #region Skidmarks
@@ -94,7 +95,7 @@ public class Controller : MonoBehaviour
     #endregion
 
     #region Ability Data
-    [Header("Ability Data")] 
+    [Header("Ability Data")]
     public Equipment[] DriverEquipmentData;
     Equipment equipmentData;
     public Ultimate[] DriverUltimateData;
@@ -107,13 +108,12 @@ public class Controller : MonoBehaviour
     [SerializeField] private Transform equipmentChargeBar; //equipment chargebar
     [SerializeField] private Transform abilityChargeBar; //ability chargebar
     private Transform equipmentOverChargeBar;//not in use
-    [SerializeField] private Transform abilityOverChargeBar; 
+    [SerializeField] private Transform abilityOverChargeBar;
     private float equipmentChargeAmount, equipmentOverchargeAmount, abilityChargeAmount, abilityOverChargeAmount; //equipment/ability charge Amount
 
     #endregion
 
     #region Other
-    enum CarClass { Braker, Shredder };
     public Rigidbody rb { get; private set; }
     public enum DriverEquipment { SmokeScreen, Mine }
     public enum DriverUltimate { Brake, Shred }
@@ -129,6 +129,7 @@ public class Controller : MonoBehaviour
         pv = GetComponent<PhotonView>();
         healthScript = GetComponent<Health>();
         driverAbilities = GetComponent<DriverAbilities>();
+        playerInputs = GetComponent<PlayerInputs>();
         rb = GetComponent<Rigidbody>();
         skidmarksController = FindObjectOfType<Skidmarks>();
         skidSound = FMODUnity.RuntimeManager.CreateInstance("event:/CarFX/All/Skid");
@@ -139,7 +140,6 @@ public class Controller : MonoBehaviour
 
     private void Start()
     {
-
         SetupCar(currentCarClass);
         cineCamera = gameObject.transform.GetChild(0).gameObject.GetComponent<CinemachineVirtualCamera>();
         cineCamTransposer = cineCamera.GetCinemachineComponent<CinemachineTransposer>();
@@ -150,7 +150,7 @@ public class Controller : MonoBehaviour
         skidmarks[2] = skidmarksController;
         skidmarks[3] = skidmarksController;
 
-        
+
         rb.centerOfMass = carData.centerOfMass;
         rb.mass = carData.vehicleMass;
         rb.drag = carData.vehicleDrag;
@@ -195,7 +195,7 @@ public class Controller : MonoBehaviour
             SetupCar(currentCarClass);
         }
 
-        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
+        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer && MasterClientRaceStart.Instance.weaponsFree || !IsThisMultiplayer.Instance.multiplayer)
         {
             DriverAbilities();
         }
@@ -230,7 +230,7 @@ public class Controller : MonoBehaviour
             CapSpeed();
             UpdateWheelPoses();
             ChangeFOV();
-            
+
         }
     }
 
@@ -251,6 +251,8 @@ public class Controller : MonoBehaviour
         }
 
         //boost = Input.GetKey(KeyCode.LeftShift);
+        //playerInputs.Input.DriveX = verticalInput;
+        //playerInputs.Input.DriveZ = horizontalInput;
     }
     #endregion
 
@@ -420,7 +422,7 @@ public class Controller : MonoBehaviour
             if (CurrentUltimate == DriverUltimate.Brake)
             {
                 StartCoroutine(UseBrakerAbility());
-                StartCoroutine(UseEquipmentUI(equipmentData.equipmentUseTime));
+
             }
             if (CurrentUltimate == DriverUltimate.Shred)
             {
@@ -428,7 +430,7 @@ public class Controller : MonoBehaviour
             }
             abilityChargeAmount = 0; //reset the cooldownbar after the ability is used
         }
-        
+
     }
 
     #region Ultimates
@@ -577,7 +579,7 @@ public class Controller : MonoBehaviour
             if (abilityChargeAmount >= 100)
             {
                 //abilityOverChargeAmount += abilityChargeSpeed * Time.deltaTime;
-                
+
             }
         }
     }
@@ -651,7 +653,7 @@ public class Controller : MonoBehaviour
         wheelColliders[0].steerAngle = steeringAngle;
         wheelColliders[1].steerAngle = steeringAngle;
     }
-    
+
     private void Accelerate()
     {
         if(verticalInput > 0)
@@ -684,10 +686,10 @@ public class Controller : MonoBehaviour
         {
             thrustTorque = -verticalInput * (currentTorque  / 4f * a);
         }
-        else 
+        else
         {
             thrustTorque = -verticalInput * (currentTorque  / 4f * a);
-            
+
         }
         //Debug.Log(thrustTorque);
         if (wheelColliders[0].brakeTorque == 0 && currentSpeed < carData.topSpeed - 5)
@@ -753,7 +755,7 @@ public class Controller : MonoBehaviour
 
             AdjustTorque(wheelHit.forwardSlip);
         }
-        
+
     }
 
     private void Brake()
@@ -770,7 +772,7 @@ public class Controller : MonoBehaviour
             }
         }
     }
-    
+
     public void ApplyBrake(float brakeAmount)
     {
         braking = true;
@@ -967,7 +969,7 @@ public class Controller : MonoBehaviour
 
     }
     #endregion
-    
+
     #region Skidding
 
     private void Skid()
@@ -994,10 +996,10 @@ public class Controller : MonoBehaviour
             }
             else
             {
-                
+
                 lastSkid[i] = -1;
             }
-            
+
         }
         if(braking)
         {
@@ -1011,9 +1013,9 @@ public class Controller : MonoBehaviour
         {
             skidSound.setVolume(amount);
         }
-        
+
     }
-    
+
     [PunRPC]
     void SetSkidVolume(float amount)
     {

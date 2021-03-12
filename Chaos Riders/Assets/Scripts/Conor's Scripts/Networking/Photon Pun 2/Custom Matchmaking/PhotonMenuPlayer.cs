@@ -27,9 +27,13 @@ public class PhotonMenuPlayer : MonoBehaviour
     public enum shooterType { standardGun, goldenGun , None};
     public shooterType shooterModel;
 
-    [SerializeField] private GameObject characterTypeSelectionScreen;
-    [SerializeField] private GameObject driverSelectionScreen;
-    [SerializeField] private GameObject shooterSelectionScreen;
+    public MinigunClass currentMinigunClass;
+    public CarClass currentCarClass;
+
+
+    //[SerializeField] private GameObject characterTypeSelectionScreen;
+    //[SerializeField] private GameObject driverSelectionScreen;
+    //[SerializeField] private GameObject shooterSelectionScreen;
 
     void Awake()
     {
@@ -43,43 +47,13 @@ public class PhotonMenuPlayer : MonoBehaviour
 
     private void Start()
     {
-        if (pv.IsMine)
-        {
-            characterTypeSelectionScreen.SetActive(true);
-            shooterSelectionScreen.SetActive(false);
-            driverSelectionScreen.SetActive(false);
-        }
-        else //make all other players selection screens invisible
-        {
-            characterTypeSelectionScreen.SetActive(false);
-            shooterSelectionScreen.SetActive(false);
-            driverSelectionScreen.SetActive(false);
-        }
-
         Player = pv.Owner;
     }
 
     void Update()
     {
-        //Debug.Log("Player = " + Player);
 
-        if(driver && playerDataManager.drivers.Count > 0)
-        {
-            //foreach()
-        }
     }
-
-    void GetPlayeNumber()
-    {
-        foreach(Player p in PhotonNetwork.PlayerList)
-        {
-            if(p == PhotonNetwork.LocalPlayer)
-            {
-                
-            }
-        }
-    }
-
 
 
     #region Driver Buttons
@@ -88,11 +62,12 @@ public class PhotonMenuPlayer : MonoBehaviour
     {
         if(pv.IsMine)
         {
+            /*
             //go to next selection screen
             characterTypeSelectionScreen.SetActive(false);
             shooterSelectionScreen.SetActive(false);
             driverSelectionScreen.SetActive(true);
-
+            */
             pv.RPC("AddToDrivers", RpcTarget.AllBuffered);
         }
     }
@@ -131,12 +106,14 @@ public class PhotonMenuPlayer : MonoBehaviour
         {
             Debug.Log("Braker");
             carModel = carType.Braker;
+            currentCarClass = CarClass.Braker;
         }
         //shredder
         if (whichCharacter == 1)
         {
             Debug.Log("Shredder");
             carModel = carType.Shredder;
+            currentCarClass = CarClass.Shredder;
         }
     }
     #endregion
@@ -151,11 +128,12 @@ public class PhotonMenuPlayer : MonoBehaviour
     {
         if (pv.IsMine)
         {
+            /*
             //go to next selection screen
             characterTypeSelectionScreen.SetActive(false);
             shooterSelectionScreen.SetActive(true);
             driverSelectionScreen.SetActive(false);
-
+            */
             pv.RPC("AddToShooters", RpcTarget.AllBuffered);
         }
     }
@@ -194,12 +172,14 @@ public class PhotonMenuPlayer : MonoBehaviour
         {
             Debug.Log("standard gun");
             shooterModel = shooterType.standardGun;
+            currentMinigunClass = MinigunClass.standard;
         }
         //golden gun
         if (whichCharacter == 1)
         {
             Debug.Log("golden gun");
             shooterModel = shooterType.goldenGun;
+            currentMinigunClass = MinigunClass.gold;
         }
     }
     #endregion

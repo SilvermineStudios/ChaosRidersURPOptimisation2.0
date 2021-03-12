@@ -29290,6 +29290,7 @@ GameObject:
   - component: {fileID: 4468230371053281373}
   - component: {fileID: 4468230371053281696}
   - component: {fileID: 1037744771541710732}
+  - component: {fileID: 2162611987273233455}
   m_Layer: 10
   m_Name: Braker
   m_TagString: car
@@ -29396,8 +29397,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9048c51c50f6505498e45b95b42539b9, type: 2}
   equipmentChargeBar: {fileID: 602698599526412428}
   abilityChargeBar: {fileID: 602698598232801635}
-  equipmentChargeSpeed: 8
-  abilityChargeSpeed: 5
+  abilityOverChargeBar: {fileID: 0}
 --- !u!114 &7546407881508317749
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29621,12 +29621,11 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  observableSearch: 2
+  observableSearch: 0
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
-  - {fileID: 4468230371053281370}
-  - {fileID: 4468230371053281373}
+  - {fileID: 2162611987273233455}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -29690,6 +29689,18 @@ MonoBehaviour:
   cameras:
   - {fileID: 4468230371967256650}
   - {fileID: 4468230370896880361}
+--- !u!114 &2162611987273233455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4468230371053281714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c838b305071f7c44826b92a136ef779, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4468230371168109689
 GameObject:
   m_ObjectHideFlags: 0
@@ -43719,13 +43730,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd2d69656cbb3ab4dbd3965be91e94eb, type: 3}
---- !u!1 &1926881227362742130 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9147135579071462040, guid: fd2d69656cbb3ab4dbd3965be91e94eb, type: 3}
-  m_PrefabInstance: {fileID: 7227308852976752106}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1926881227362742131 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9147135579071462041, guid: fd2d69656cbb3ab4dbd3965be91e94eb, type: 3}
+  m_PrefabInstance: {fileID: 7227308852976752106}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1926881227362742130 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9147135579071462040, guid: fd2d69656cbb3ab4dbd3965be91e94eb, type: 3}
   m_PrefabInstance: {fileID: 7227308852976752106}
   m_PrefabAsset: {fileID: 0}
