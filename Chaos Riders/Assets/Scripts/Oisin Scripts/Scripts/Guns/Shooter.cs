@@ -127,7 +127,7 @@ public class Shooter : MonoBehaviour
     #endregion
 
     #region ShooterClass
-    ShooterClass shooterClass;
+    [SerializeField] ShooterClass shooterClass;
     public MinigunClass minigunClass;
     public ShooterClass currentShooterClass { get { return shooterClass; } private set { currentShooterClass = shooterClass; } }
     ShooterClass previousShooterClass;
