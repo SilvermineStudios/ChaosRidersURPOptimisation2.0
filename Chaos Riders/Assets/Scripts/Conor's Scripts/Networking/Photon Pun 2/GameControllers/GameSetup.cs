@@ -12,6 +12,9 @@ public class GameSetup : MonoBehaviour
     //public static GameSetup GS;
     public PhotonView pv;
 
+    [SerializeField] private PlayerDataManager playerDataManager;
+    [SerializeField] private PhotonMenuPlayer[] photonMenuPlayers;
+
     [SerializeField] private bool canSpawnPlayers = true;
 
     [SerializeField] private float spawnDelay = 5f;
@@ -35,23 +38,37 @@ public class GameSetup : MonoBehaviour
     private void Awake()
     {
         pv = GetComponent<PhotonView>();
-        
+        playerDataManager = FindObjectOfType<PlayerDataManager>();
+        photonMenuPlayers = FindObjectsOfType<PhotonMenuPlayer>();
     }
 
     private void Start()
     {
         CalculateDriverAndShooterCount();
-        if (pv.IsMine)
+
+        //if(photonMenuPlayers.Length > 0)
+            //SpawnPlayers();
+
+        if (pv.IsMine && photonMenuPlayers.Length > 0)
         {
-            //RPC_SpawnPlayers();
+            //Debug.Log("You Are the master and trying to spawn players");
+            //SpawnPlayers();
 
             foreach (Player p in PhotonNetwork.PlayerList)
             {
                 if(p == PhotonNetwork.MasterClient)
                 {
-                    RPC_SpawnPlayers();
+                    Debug.Log("You Are the master and trying to spawn players");
+                    SpawnPlayers();
                 }
             }
+        }
+
+        //Debug.Log("PlayerDatatManager player 1 = " + PlayerDataManager.Players[0]);
+
+        foreach (PhotonMenuPlayer p in PlayerDataManager.Players)
+        {
+            //Debug.Log("PhotonMenuPlayer p in PlayerDataManager.Players = " + p);
         }
         //Debug.Log("AI CAR LENGTH = " + aiCars.Length);
     }
@@ -63,7 +80,7 @@ public class GameSetup : MonoBehaviour
 
     private void CalculateDriverAndShooterCount()
     {
-        foreach(PhotonMenuPlayer p in PlayerDataManager.Players)
+        foreach(PhotonMenuPlayer p in photonMenuPlayers)
         {
             if(p.driver)
             {
@@ -79,21 +96,25 @@ public class GameSetup : MonoBehaviour
         Debug.Log("Amount of Shooters: " + amountOfShooters);
     }
 
-    public void RPC_SpawnPlayers() //happens in start
+    public void SpawnPlayers() //happens in start
     {
-        Debug.Log(PlayerDataManager.Players.Length);
-        foreach (PhotonMenuPlayer p in PlayerDataManager.Players)
+        //Debug.Log("Player Data Manager Lists Length = " + PlayerDataManager.Players.Length);
+        //Debug.Log("Player Data Manager Player 1 name = " + PlayerDataManager.Players[0].name);
+
+        foreach (PhotonMenuPlayer p in photonMenuPlayers)
         {
-            Debug.Log("Spawn");
+            //Debug.Log("Spawn");
             if (p.driver)
             {
+                Debug.Log(p.Player.NickName + " = Driver");
                 pv.RPC("RPC_SpawnDriver", p.Player, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation, p);
             }
 
             if (p.shooter)
             {
+                Debug.Log(p.Player.NickName + " = Shooter");
                 pv.RPC("RPC_SpawnShooter", p.Player, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation, p);
-
+                
 
                 //if there are no drivers
                 if (amountOfDrivers == 0)
@@ -113,6 +134,7 @@ public class GameSetup : MonoBehaviour
     [PunRPC]
     void RPC_SpawnDriver(Vector3 spawnPos, Quaternion spawnRot, PhotonMenuPlayer p)
     {
+        Debug.Log("Trying to spawn Driver for " + p.Player.NickName);
         GameObject GO = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Driver"), spawnPos, spawnRot, 0);
         GO.GetComponent<Controller>().currentCarClass = p.currentCarClass;
     }
@@ -120,6 +142,7 @@ public class GameSetup : MonoBehaviour
     [PunRPC]
     void RPC_SpawnShooter(Vector3 spawnPos, Quaternion spawnRot, PhotonMenuPlayer p)
     {
+        Debug.Log("Trying to spawn Shooter for " + p.Player.NickName);
         GameObject GO = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Shooter"), spawnPos, spawnRot, 0);
         GO.GetComponent<Shooter>().minigunClass = p.currentMinigunClass;
     }

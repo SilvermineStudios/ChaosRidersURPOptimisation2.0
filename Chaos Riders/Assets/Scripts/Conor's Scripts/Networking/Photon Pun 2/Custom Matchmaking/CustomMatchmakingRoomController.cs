@@ -116,7 +116,7 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
     private void RPC_TurnOnLoadingScreen ()
     {
         loadingScreen.SetActive(true);
-        Debug.Log("ACTIVATING LOADING SCREEN");
+        //Debug.Log("ACTIVATING LOADING SCREEN");
     }
 
     [PunRPC]

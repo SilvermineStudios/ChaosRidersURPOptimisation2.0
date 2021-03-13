@@ -108,6 +108,8 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
             if (pmp.gameObject.GetComponent<PhotonView>().Owner == p)
             {
                 gameVariables.amountOfDrivers++;
+                playerDataManager.drivers.Add(pmp.gameObject);
+
                 pmp.driver = true;
                 pmp.shooter = false;
             }
@@ -183,6 +185,7 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
             if (pmp.gameObject.GetComponent<PhotonView>().Owner == p)
             {
                 gameVariables.amountOfShooters++;
+                playerDataManager.shooters.Add(pmp.gameObject);
                 pmp.shooter = true;
                 pmp.driver = false;
             }
