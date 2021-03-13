@@ -29,9 +29,9 @@ public class PhotonMenuPlayer : MonoBehaviour
     
 
 
-    [SerializeField] private GameObject characterTypeSelectionScreen;
-    [SerializeField] private GameObject driverSelectionScreen;
-    [SerializeField] private GameObject shooterSelectionScreen;
+    //[SerializeField] private GameObject characterTypeSelectionScreen;
+    //[SerializeField] private GameObject driverSelectionScreen;
+    //[SerializeField] private GameObject shooterSelectionScreen;
 
     void Awake()
     {
@@ -43,11 +43,11 @@ public class PhotonMenuPlayer : MonoBehaviour
         currentCarClass = CarClass.none;
         currentMinigunClass = MinigunClass.none;
 
-        characterTypeSelectionScreen.SetActive(true);
-        driverSelectionScreen.SetActive(false);
-        shooterSelectionScreen.SetActive(false);
+        //characterTypeSelectionScreen.SetActive(true);
+        //driverSelectionScreen.SetActive(false);
+        //shooterSelectionScreen.SetActive(false);
 
-        //DontDestroyOnLoad(this);
+        DontDestroyOnLoad(this);
     }
 
     private void Start()
@@ -69,9 +69,9 @@ public class PhotonMenuPlayer : MonoBehaviour
         if(pv.IsMine)
         {
             //go to next selection screen
-            characterTypeSelectionScreen.SetActive(false);
-            shooterSelectionScreen.SetActive(false);
-            driverSelectionScreen.SetActive(true);
+            //characterTypeSelectionScreen.SetActive(false);
+            //shooterSelectionScreen.SetActive(false);
+            //driverSelectionScreen.SetActive(true);
 
             pv.RPC("AddToDrivers", RpcTarget.AllBuffered);
         }
@@ -132,9 +132,9 @@ public class PhotonMenuPlayer : MonoBehaviour
         if (pv.IsMine)
         {
             //go to next selection screen
-            characterTypeSelectionScreen.SetActive(false);
-            shooterSelectionScreen.SetActive(true);
-            driverSelectionScreen.SetActive(false);
+            //characterTypeSelectionScreen.SetActive(false);
+            //shooterSelectionScreen.SetActive(true);
+            //driverSelectionScreen.SetActive(false);
             
             pv.RPC("AddToShooters", RpcTarget.AllBuffered);
         }

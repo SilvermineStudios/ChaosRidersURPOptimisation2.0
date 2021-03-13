@@ -9,11 +9,10 @@ using System.IO;
 //Photon Room https://www.youtube.com/watch?v=IsiWRD1Xh5g
 public class GameSetup : MonoBehaviour
 {
+    [SerializeField] private PlayerDataManager playerDataManager;
+
     //public static GameSetup GS;
     public PhotonView pv;
-
-    [SerializeField] private PlayerDataManager playerDataManager;
-    [SerializeField] private PhotonMenuPlayer[] photonMenuPlayers;
 
     [SerializeField] private bool canSpawnPlayers = true;
 
@@ -39,38 +38,25 @@ public class GameSetup : MonoBehaviour
     {
         pv = GetComponent<PhotonView>();
         playerDataManager = FindObjectOfType<PlayerDataManager>();
-        photonMenuPlayers = FindObjectsOfType<PhotonMenuPlayer>();
     }
 
     private void Start()
     {
         CalculateDriverAndShooterCount();
 
-        //if(photonMenuPlayers.Length > 0)
-            //SpawnPlayers();
+        Debug.Log("The Amount of players in the PlayerDataManager is: " + PlayerDataManager.PhotonMenuPlayers.Length);
 
-        if (pv.IsMine && photonMenuPlayers.Length > 0)
+        if (pv.IsMine && PlayerDataManager.PhotonMenuPlayers.Length > 0)
         {
-            //Debug.Log("You Are the master and trying to spawn players");
-            //SpawnPlayers();
-
             foreach (Player p in PhotonNetwork.PlayerList)
             {
                 if(p == PhotonNetwork.MasterClient)
                 {
-                    Debug.Log("You Are the master and trying to spawn players");
+                    //Debug.Log("You Are the master and trying to spawn players");
                     SpawnPlayers();
                 }
             }
         }
-
-        //Debug.Log("PlayerDatatManager player 1 = " + PlayerDataManager.Players[0]);
-
-        foreach (PhotonMenuPlayer p in PlayerDataManager.PhotonMenuPlayers)
-        {
-            //Debug.Log("PhotonMenuPlayer p in PlayerDataManager.Players = " + p);
-        }
-        //Debug.Log("AI CAR LENGTH = " + aiCars.Length);
     }
 
     private void Update()
@@ -80,7 +66,7 @@ public class GameSetup : MonoBehaviour
 
     private void CalculateDriverAndShooterCount()
     {
-        foreach(PhotonMenuPlayer p in photonMenuPlayers)
+        foreach(PhotonMenuPlayer p in PlayerDataManager.PhotonMenuPlayers)
         {
             if(p.driver)
             {
@@ -92,8 +78,8 @@ public class GameSetup : MonoBehaviour
                 amountOfShooters++;
             }
         }
-        Debug.Log("Amount of Drivers: " + amountOfDrivers);
-        Debug.Log("Amount of Shooters: " + amountOfShooters);
+        //Debug.Log("Amount of Drivers: " + amountOfDrivers);
+        //Debug.Log("Amount of Shooters: " + amountOfShooters);
     }
 
     public void SpawnPlayers() //happens in start
@@ -101,18 +87,18 @@ public class GameSetup : MonoBehaviour
         //Debug.Log("Player Data Manager Lists Length = " + PlayerDataManager.Players.Length);
         //Debug.Log("Player Data Manager Player 1 name = " + PlayerDataManager.Players[0].name);
 
-        foreach (PhotonMenuPlayer p in photonMenuPlayers)
+        foreach (PhotonMenuPlayer p in playerDataManager.photonMenuPlayers)
         {
             //Debug.Log("Spawn");
             if (p.driver)
             {
-                Debug.Log(p.Player.NickName + " = Driver");
+                Debug.Log(p.Player.NickName + " is a Driver");
                 pv.RPC("RPC_SpawnDriver", p.Player, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation, p);
             }
 
             if (p.shooter)
             {
-                Debug.Log(p.Player.NickName + " = Shooter");
+                Debug.Log(p.Player.NickName + " is a Shooter");
                 pv.RPC("RPC_SpawnShooter", p.Player, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation, p);
                 
 
@@ -134,7 +120,9 @@ public class GameSetup : MonoBehaviour
     [PunRPC]
     void RPC_SpawnDriver(Vector3 spawnPos, Quaternion spawnRot, PhotonMenuPlayer p)
     {
-        Debug.Log("Trying to spawn Driver for " + p.Player.NickName);
+        Debug.Log(p.Player.NickName + " is trying to spawn a car at spawn position: " + spawnPos + " and at spawn rotation: " + spawnRot);
+        //Debug.Log("Trying to spawn Driver for " + p.Player.NickName);
+
         GameObject GO = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Driver"), spawnPos, spawnRot, 0);
         GO.GetComponent<Controller>().currentCarClass = p.currentCarClass;
     }
@@ -142,7 +130,9 @@ public class GameSetup : MonoBehaviour
     [PunRPC]
     void RPC_SpawnShooter(Vector3 spawnPos, Quaternion spawnRot, PhotonMenuPlayer p)
     {
-        Debug.Log("Trying to spawn Shooter for " + p.Player.NickName);
+        Debug.Log(p.Player.NickName + " is trying to spawn a gun at spawn position: " + spawnPos + " and at spawn rotation: " + spawnRot);
+        //Debug.Log("Trying to spawn Shooter for " + p.Player.NickName);
+
         GameObject GO = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Shooter"), spawnPos, spawnRot, 0);
         GO.GetComponent<Shooter>().minigunClass = p.currentMinigunClass;
     }

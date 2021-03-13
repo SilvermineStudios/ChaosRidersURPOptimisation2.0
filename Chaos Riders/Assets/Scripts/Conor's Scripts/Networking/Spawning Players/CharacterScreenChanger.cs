@@ -11,7 +11,7 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
     private PhotonView pv;
 
     [SerializeField] private GameVariables gameVariables;
-    private PlayerDataManager playerDataManager;
+    [SerializeField] private PlayerDataManager playerDataManager;
     [SerializeField] private PhotonMenuPlayer myPhotonMenuPlayer;
 
     public GameObject shooterCharacterScreen, driverCharacterScreen;
@@ -22,7 +22,7 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        playerDataManager = FindObjectOfType<PlayerDataManager>();
+        //playerDataManager = FindObjectOfType<PlayerDataManager>();
         pv = GetComponent<PhotonView>();
         gameVariables = FindObjectOfType<GameVariables>();
     }
@@ -37,6 +37,11 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
 
     void Update()
     {
+        if(playerDataManager == null)
+        {
+            playerDataManager = FindObjectOfType<PlayerDataManager>();
+        }
+
         //PlayerType();
         photonMenuPlayers = FindObjectsOfType<PhotonMenuPlayer>();
 

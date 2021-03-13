@@ -6,7 +6,7 @@ using Photon.Realtime;
 
 public class PlayerDataManager : MonoBehaviour
 {
-    [SerializeField] private PhotonMenuPlayer[] photonMenuPlayers;
+    public PhotonMenuPlayer[] photonMenuPlayers;
     public static PhotonMenuPlayer[] PhotonMenuPlayers;
 
     public List <GameObject> drivers = new List<GameObject>();
@@ -14,9 +14,9 @@ public class PlayerDataManager : MonoBehaviour
     public List <GameObject> shooters = new List<GameObject>();
     public static List<GameObject> Shooters;
 
-    void Start()
+    void Awake()
     {
-
+        DontDestroyOnLoad(this);
     }
 
     

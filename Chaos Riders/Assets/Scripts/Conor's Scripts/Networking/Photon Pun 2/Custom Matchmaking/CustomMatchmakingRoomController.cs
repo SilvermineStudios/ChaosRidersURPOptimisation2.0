@@ -22,6 +22,7 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
     [SerializeField] private Transform playersContainer; //used to display all the players in the current room
     [SerializeField] private GameObject playerListingPrefab; //Instansiate to display each player in the room
     [SerializeField] private GameObject photonMenuPlayer; //each player will be given one of these when they join the room
+    [SerializeField] private GameObject playerDataManager; //
 
     [Header("Buttons")]
     public GameObject startButton; //only for the master client
@@ -67,6 +68,7 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient) //for the host
         {
             startButton.SetActive(true);
+            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", playerDataManager.name), this.transform.position, this.transform.rotation, 0);
         }
         else
         {
