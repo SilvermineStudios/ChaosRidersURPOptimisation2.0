@@ -129,7 +129,7 @@ public class GameSetup : MonoBehaviour
         //GameObject GO = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Driver"), spawnPos, spawnRot, 0);
         //GO.GetComponent<Controller>().currentCarClass = p.currentCarClass;
 
-        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Driver"), spawnPos, spawnRot, 0);
+        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "DriverPlayer"), spawnPos, spawnRot, 0);
     }
 
     [PunRPC]
@@ -141,7 +141,7 @@ public class GameSetup : MonoBehaviour
         //GameObject GO = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Shooter"), spawnPos, spawnRot, 0);
         //GO.GetComponent<Shooter>().minigunClass = p.currentMinigunClass;
 
-        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Shooter"), spawnPos, spawnRot, 0);
+        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "ShooterPlayer"), spawnPos, spawnRot, 0);
     }
 
     [PunRPC]
