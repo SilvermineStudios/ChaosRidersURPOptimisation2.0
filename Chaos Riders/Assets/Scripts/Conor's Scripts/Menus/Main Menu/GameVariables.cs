@@ -21,7 +21,6 @@ public class GameVariables : MonoBehaviour
 
     public static int AmountOfAICars;
     [SerializeField] private int amountOfAICars = 2;
-    [SerializeField] private TMP_Dropdown amountOfAIDropdown;
 
     public static bool Pickups;
     [SerializeField] private bool pickups = true;
@@ -34,9 +33,6 @@ public class GameVariables : MonoBehaviour
 
     public static bool RPGPickup;
     [SerializeField] private bool rpgPickup = true;
-
-    public static int AmountOfDrivers, AmountOfShooters;
-    public int amountOfDrivers, amountOfShooters;
 
     void Awake()
     {
@@ -70,8 +66,6 @@ public class GameVariables : MonoBehaviour
         NitroPickup = nitroPickup;
         ShieldPickup = shieldPickup;
         RPGPickup = rpgPickup;
-        AmountOfDrivers = amountOfDrivers;
-        AmountOfShooters = amountOfShooters;
     }
 
 

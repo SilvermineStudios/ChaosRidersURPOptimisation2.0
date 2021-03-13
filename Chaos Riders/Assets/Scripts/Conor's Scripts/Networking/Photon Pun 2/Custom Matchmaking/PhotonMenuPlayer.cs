@@ -6,10 +6,7 @@ using UnityEngine;
 
 public class PhotonMenuPlayer : MonoBehaviour
 {
-    private int spawnNumberValue; //the index used for spawning this player (0 = at spawn 1, 1 = at spawn 2 etc.)
-
     private PhotonView pv;
-    private GameVariables gameVariables;
     [SerializeField] private PlayerDataManager playerDataManager;
 
     //decided by player data manager
@@ -24,12 +21,12 @@ public class PhotonMenuPlayer : MonoBehaviour
 
     public enum carType { Braker, Shredder, Colt, None };
     public carType carModel;
+    public CarClass currentCarClass;
 
     public enum shooterType { standardGun, goldenGun , None};
     public shooterType shooterModel;
-
     public MinigunClass currentMinigunClass;
-    public CarClass currentCarClass;
+    
 
 
     [SerializeField] private GameObject characterTypeSelectionScreen;
@@ -39,11 +36,12 @@ public class PhotonMenuPlayer : MonoBehaviour
     void Awake()
     {
         pv = GetComponent<PhotonView>();
-        gameVariables = FindObjectOfType<GameVariables>();
         playerDataManager = FindObjectOfType<PlayerDataManager>();
 
         carModel = carType.None;
         shooterModel = shooterType.None;
+        currentCarClass = CarClass.none;
+        currentMinigunClass = MinigunClass.none;
 
         characterTypeSelectionScreen.SetActive(true);
         driverSelectionScreen.SetActive(false);
@@ -81,9 +79,6 @@ public class PhotonMenuPlayer : MonoBehaviour
     [PunRPC]
     void AddToDrivers()
     {
-        Debug.Log("DRIVER BGUTTON!!!");
-        //increase the global amount of drivers
-        gameVariables.amountOfDrivers++;
         playerDataManager.drivers.Add(this.gameObject);
 
         //show that the player is a driver
@@ -147,8 +142,6 @@ public class PhotonMenuPlayer : MonoBehaviour
     [PunRPC]
     void AddToShooters()
     {
-        //increase the global amount of shooters
-        gameVariables.amountOfShooters++;
         playerDataManager.shooters.Add(this.gameObject);
 
         //show that the player is a shooter

@@ -111,7 +111,6 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
         StartCoroutine(LoadingCouroutine(loadingTime));
         pv.RPC("RPC_TurnOnLoadingScreen", RpcTarget.All);
     }
-
     [PunRPC]
     private void RPC_TurnOnLoadingScreen ()
     {

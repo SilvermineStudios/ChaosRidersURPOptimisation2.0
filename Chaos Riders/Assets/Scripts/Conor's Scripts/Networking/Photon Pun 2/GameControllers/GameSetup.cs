@@ -66,7 +66,7 @@ public class GameSetup : MonoBehaviour
 
         //Debug.Log("PlayerDatatManager player 1 = " + PlayerDataManager.Players[0]);
 
-        foreach (PhotonMenuPlayer p in PlayerDataManager.Players)
+        foreach (PhotonMenuPlayer p in PlayerDataManager.PhotonMenuPlayers)
         {
             //Debug.Log("PhotonMenuPlayer p in PlayerDataManager.Players = " + p);
         }
