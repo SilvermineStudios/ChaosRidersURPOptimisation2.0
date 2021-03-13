@@ -32,9 +32,9 @@ public class PhotonMenuPlayer : MonoBehaviour
     public CarClass currentCarClass;
 
 
-    //[SerializeField] private GameObject characterTypeSelectionScreen;
-    //[SerializeField] private GameObject driverSelectionScreen;
-    //[SerializeField] private GameObject shooterSelectionScreen;
+    [SerializeField] private GameObject characterTypeSelectionScreen;
+    [SerializeField] private GameObject driverSelectionScreen;
+    [SerializeField] private GameObject shooterSelectionScreen;
 
     void Awake()
     {
@@ -44,12 +44,18 @@ public class PhotonMenuPlayer : MonoBehaviour
 
         carModel = carType.None;
         shooterModel = shooterType.None;
-        DontDestroyOnLoad(this);
+
+        characterTypeSelectionScreen.SetActive(true);
+        driverSelectionScreen.SetActive(false);
+        shooterSelectionScreen.SetActive(false);
+
+        //DontDestroyOnLoad(this);
     }
 
     private void Start()
     {
         Player = pv.Owner;
+        //Debug.Log("My player is = " + Player.NickName);
     }
 
     void Update()
@@ -64,18 +70,18 @@ public class PhotonMenuPlayer : MonoBehaviour
     {
         if(pv.IsMine)
         {
-            /*
             //go to next selection screen
             characterTypeSelectionScreen.SetActive(false);
             shooterSelectionScreen.SetActive(false);
             driverSelectionScreen.SetActive(true);
-            */
+
             pv.RPC("AddToDrivers", RpcTarget.AllBuffered);
         }
     }
     [PunRPC]
     void AddToDrivers()
     {
+        Debug.Log("DRIVER BGUTTON!!!");
         //increase the global amount of drivers
         gameVariables.amountOfDrivers++;
         playerDataManager.drivers.Add(this.gameObject);
@@ -130,12 +136,11 @@ public class PhotonMenuPlayer : MonoBehaviour
     {
         if (pv.IsMine)
         {
-            /*
             //go to next selection screen
             characterTypeSelectionScreen.SetActive(false);
             shooterSelectionScreen.SetActive(true);
             driverSelectionScreen.SetActive(false);
-            */
+            
             pv.RPC("AddToShooters", RpcTarget.AllBuffered);
         }
     }

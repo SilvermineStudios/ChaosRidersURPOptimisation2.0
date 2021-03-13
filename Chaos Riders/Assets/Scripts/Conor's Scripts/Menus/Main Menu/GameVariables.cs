@@ -53,9 +53,7 @@ public class GameVariables : MonoBehaviour
     
     void Update()
     {
-        
-
-        if (PhotonNetwork.IsMasterClient) 
+        if (PhotonNetwork.IsMasterClient)
         {
             hostScreen.SetActive(true);
             nonHostScreen.SetActive(false);

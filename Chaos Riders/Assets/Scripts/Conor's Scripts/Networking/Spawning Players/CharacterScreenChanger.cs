@@ -40,13 +40,21 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
         //PlayerType();
         photonMenuPlayers = FindObjectsOfType<PhotonMenuPlayer>();
 
+        if(photonMenuPlayers.Length > 0)
+        {
+            for(int i = 0; i < photonMenuPlayers.Length; i++)
+            {
+                //photonMenuPlayers[i].playerNumber = i;
+            }
+        }
+
         if(photonMenuPlayers.Length > 0 && myPhotonMenuPlayer == null)
         {
             foreach(PhotonMenuPlayer pmp in photonMenuPlayers)
             {
                 if(pmp.gameObject.GetComponent<PhotonView>().IsMine)
                 {
-                    myPhotonMenuPlayer = pmp;
+                    //myPhotonMenuPlayer = pmp;
                 }
             }
         }
@@ -72,6 +80,12 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
     {
         foreach (PhotonMenuPlayer pmp in photonMenuPlayers)
         {
+            if (pmp.driver)
+                gameVariables.amountOfDrivers--;
+            if (pmp.shooter)
+                gameVariables.amountOfShooters--;
+
+
             if (pmp.gameObject.GetComponent<PhotonView>().Owner == p)
             {
                 pmp.carModel = PhotonMenuPlayer.carType.None;
