@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum CarClass { Braker, Shredder };
+public enum CarClass { Braker, Shredder, none };
 
-public enum ShooterClass { minigun, rifle };
+public enum ShooterClass { minigun, rifle, none };
 
-public enum MinigunClass { standard, gold };
+public enum MinigunClass { standard, gold, none };
