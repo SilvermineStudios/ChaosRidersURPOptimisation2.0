@@ -6,24 +6,26 @@ using Photon.Realtime;
 
 public class PlayerDataManager : MonoBehaviour
 {
-    private PhotonView pv;
-
-    [SerializeField] private PhotonMenuPlayer[] players;
-    public static PhotonMenuPlayer[] Players;
+    public PhotonMenuPlayer[] photonMenuPlayers;
+    public static PhotonMenuPlayer[] PhotonMenuPlayers;
 
     public List <GameObject> drivers = new List<GameObject>();
+    public static List <GameObject> Drivers;
     public List <GameObject> shooters = new List<GameObject>();
+    public static List<GameObject> Shooters;
 
-    void Start()
+    void Awake()
     {
-        
+        DontDestroyOnLoad(this);
     }
 
     
     void Update()
     {
         UpdatePlayerList();
-        AssignPlayerNumbers(); //give each player the index of the spawnpoint they will be spawned at
+
+        Drivers = drivers;
+        Shooters = shooters;
     }
 
     private void FixedUpdate()
@@ -33,8 +35,8 @@ public class PlayerDataManager : MonoBehaviour
 
     private void UpdatePlayerList()
     {
-        players = FindObjectsOfType<PhotonMenuPlayer>();
-        Players = players;
+        photonMenuPlayers = FindObjectsOfType<PhotonMenuPlayer>();
+        PhotonMenuPlayers = photonMenuPlayers;
     }
 
     private void UpdateDriverAndShooterLists()
@@ -63,24 +65,4 @@ public class PlayerDataManager : MonoBehaviour
         }
     }
 
-    private void AssignPlayerNumbers()
-    {
-        //drivers
-        if(drivers.Count != 0)
-        {
-            for (int i = 0; i < drivers.Count; i++)
-            {
-                drivers[i].GetComponent<PhotonMenuPlayer>().teamNumber = i;
-            }
-        }
-
-        //shooters
-        if (shooters.Count != 0)
-        {
-            for (int i = 0; i < shooters.Count; i++)
-            {
-                shooters[i].GetComponent<PhotonMenuPlayer>().teamNumber = i;
-            }
-        }
-    }
 }

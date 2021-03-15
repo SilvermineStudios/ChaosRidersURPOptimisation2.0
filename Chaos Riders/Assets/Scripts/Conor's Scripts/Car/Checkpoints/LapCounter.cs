@@ -36,7 +36,7 @@ public class LapCounter : MonoBehaviour
         //lapsTextGo.SetActive(false);
         lapsText.text = "";
 
-        Debug.Log("AMOUNT OF LAPS: " + AmountOfLaps);
+        //Debug.Log("AMOUNT OF LAPS: " + AmountOfLaps);
     }
 
     // Update is called once per frame
