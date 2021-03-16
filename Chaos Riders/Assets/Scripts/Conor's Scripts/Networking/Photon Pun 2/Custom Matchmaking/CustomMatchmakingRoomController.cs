@@ -21,6 +21,7 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
     [Header("Player Listings")]
     [SerializeField] private Transform playersContainer; //used to display all the players in the current room
     [SerializeField] private GameObject playerListingPrefab; //Instansiate to display each player in the room
+    [SerializeField] private List<GameObject> playerNameBoxes = new List<GameObject>();
     [SerializeField] private GameObject photonMenuPlayer; //each player will be given one of these when they join the room
     [SerializeField] private GameObject playerDataManager; //
 
@@ -45,6 +46,7 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
     {
         for(int i = playersContainer.childCount -1; i >= 0; i--)
         {
+            playerNameBoxes.Remove(playerNameBoxes[i]);
             Destroy(playersContainer.GetChild(i).gameObject);
         }
     }
@@ -56,6 +58,8 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
             GameObject tempListing = Instantiate(playerListingPrefab, playersContainer);
             TMP_Text tempText = tempListing.transform.GetChild(0).GetComponent<TMP_Text>();              
             tempText.text = player.NickName;
+
+            playerNameBoxes.Add(tempListing);
         }
     }
 
