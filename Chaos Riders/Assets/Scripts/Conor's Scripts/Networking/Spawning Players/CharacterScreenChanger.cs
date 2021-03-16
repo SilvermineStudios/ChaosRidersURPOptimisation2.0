@@ -11,7 +11,7 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
     private PhotonView pv;
 
     [SerializeField] private GameVariables gameVariables;
-    private PlayerDataManager playerDataManager;
+    [SerializeField] private PlayerDataManager playerDataManager;
     [SerializeField] private PhotonMenuPlayer myPhotonMenuPlayer;
 
     public GameObject shooterCharacterScreen, driverCharacterScreen;
@@ -22,7 +22,7 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        playerDataManager = FindObjectOfType<PlayerDataManager>();
+        //playerDataManager = FindObjectOfType<PlayerDataManager>();
         pv = GetComponent<PhotonView>();
         gameVariables = FindObjectOfType<GameVariables>();
     }
@@ -37,8 +37,21 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
 
     void Update()
     {
+        if(playerDataManager == null)
+        {
+            playerDataManager = FindObjectOfType<PlayerDataManager>();
+        }
+
         //PlayerType();
         photonMenuPlayers = FindObjectsOfType<PhotonMenuPlayer>();
+
+        if(photonMenuPlayers.Length > 0)
+        {
+            for(int i = 0; i < photonMenuPlayers.Length; i++)
+            {
+                //photonMenuPlayers[i].playerNumber = i;
+            }
+        }
 
         if(photonMenuPlayers.Length > 0 && myPhotonMenuPlayer == null)
         {
@@ -46,7 +59,7 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
             {
                 if(pmp.gameObject.GetComponent<PhotonView>().IsMine)
                 {
-                    myPhotonMenuPlayer = pmp;
+                    //myPhotonMenuPlayer = pmp;
                 }
             }
         }
@@ -76,6 +89,8 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
             {
                 pmp.carModel = PhotonMenuPlayer.carType.None;
                 pmp.shooterModel = PhotonMenuPlayer.shooterType.None;
+                pmp.currentCarClass = CarClass.none;
+                pmp.currentMinigunClass = MinigunClass.none;
                 pmp.driver = false;
                 pmp.shooter = false;
             }
@@ -107,7 +122,8 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
         {
             if (pmp.gameObject.GetComponent<PhotonView>().Owner == p)
             {
-                gameVariables.amountOfDrivers++;
+                playerDataManager.drivers.Add(pmp.gameObject);
+
                 pmp.driver = true;
                 pmp.shooter = false;
             }
@@ -182,7 +198,7 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
         {
             if (pmp.gameObject.GetComponent<PhotonView>().Owner == p)
             {
-                gameVariables.amountOfShooters++;
+                playerDataManager.shooters.Add(pmp.gameObject);
                 pmp.shooter = true;
                 pmp.driver = false;
             }

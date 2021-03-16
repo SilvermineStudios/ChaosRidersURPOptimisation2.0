@@ -6,29 +6,27 @@ using UnityEngine;
 
 public class PhotonMenuPlayer : MonoBehaviour
 {
-    private int spawnNumberValue; //the index used for spawning this player (0 = at spawn 1, 1 = at spawn 2 etc.)
-
     private PhotonView pv;
-    private GameVariables gameVariables;
-    private PlayerDataManager playerDataManager;
+    [SerializeField] private PlayerDataManager playerDataManager;
 
     //decided by player data manager
-    public int teamNumber; // from 0, decides which team you are in; driver 0 and shooter 0 will be in the same car, driver 1 and shooter 1 will be in the same car.
+    // from 0, decides which team you are in; driver 0 and shooter 0 will be in the same car, driver 1 and shooter 1 will be in the same car.
+    public int teamNumber; //<-------------------------------------------------------------------------------------------------------------------------------------------
 
     public Player Player;
-    public int playerNumber;
+    public int playerNumber; //<-----------------------------------------------------------------------------------------------------------------------------------------
 
     public bool driver = false;
     public bool shooter = false;
 
     public enum carType { Braker, Shredder, Colt, None };
     public carType carModel;
+    public CarClass currentCarClass;
 
     public enum shooterType { standardGun, goldenGun , None};
     public shooterType shooterModel;
-
     public MinigunClass currentMinigunClass;
-    public CarClass currentCarClass;
+    
 
 
     //[SerializeField] private GameObject characterTypeSelectionScreen;
@@ -38,16 +36,24 @@ public class PhotonMenuPlayer : MonoBehaviour
     void Awake()
     {
         pv = GetComponent<PhotonView>();
-        gameVariables = FindObjectOfType<GameVariables>();
         playerDataManager = FindObjectOfType<PlayerDataManager>();
 
         carModel = carType.None;
         shooterModel = shooterType.None;
+        currentCarClass = CarClass.none;
+        currentMinigunClass = MinigunClass.none;
+
+        //characterTypeSelectionScreen.SetActive(true);
+        //driverSelectionScreen.SetActive(false);
+        //shooterSelectionScreen.SetActive(false);
+
+        DontDestroyOnLoad(this);
     }
 
     private void Start()
     {
         Player = pv.Owner;
+        //Debug.Log("My player is = " + Player.NickName);
     }
 
     void Update()
@@ -62,20 +68,17 @@ public class PhotonMenuPlayer : MonoBehaviour
     {
         if(pv.IsMine)
         {
-            /*
             //go to next selection screen
-            characterTypeSelectionScreen.SetActive(false);
-            shooterSelectionScreen.SetActive(false);
-            driverSelectionScreen.SetActive(true);
-            */
+            //characterTypeSelectionScreen.SetActive(false);
+            //shooterSelectionScreen.SetActive(false);
+            //driverSelectionScreen.SetActive(true);
+
             pv.RPC("AddToDrivers", RpcTarget.AllBuffered);
         }
     }
     [PunRPC]
     void AddToDrivers()
     {
-        //increase the global amount of drivers
-        gameVariables.amountOfDrivers++;
         playerDataManager.drivers.Add(this.gameObject);
 
         //show that the player is a driver
@@ -128,20 +131,17 @@ public class PhotonMenuPlayer : MonoBehaviour
     {
         if (pv.IsMine)
         {
-            /*
             //go to next selection screen
-            characterTypeSelectionScreen.SetActive(false);
-            shooterSelectionScreen.SetActive(true);
-            driverSelectionScreen.SetActive(false);
-            */
+            //characterTypeSelectionScreen.SetActive(false);
+            //shooterSelectionScreen.SetActive(true);
+            //driverSelectionScreen.SetActive(false);
+            
             pv.RPC("AddToShooters", RpcTarget.AllBuffered);
         }
     }
     [PunRPC]
     void AddToShooters()
     {
-        //increase the global amount of shooters
-        gameVariables.amountOfShooters++;
         playerDataManager.shooters.Add(this.gameObject);
 
         //show that the player is a shooter
