@@ -21,7 +21,7 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
     [Header("Player Listings")]
     [SerializeField] private Transform playersContainer; //used to display all the players in the current room
     [SerializeField] private GameObject playerListingPrefab; //Instansiate to display each player in the room
-    [SerializeField] private List<GameObject> playerNameBoxes = new List<GameObject>();
+    public List<GameObject> playerNameBoxes = new List<GameObject>();
     [SerializeField] private GameObject photonMenuPlayer; //each player will be given one of these when they join the room
     [SerializeField] private GameObject playerDataManager; //
 
