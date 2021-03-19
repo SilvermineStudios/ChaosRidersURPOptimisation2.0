@@ -32,9 +32,8 @@ public class Shooter : MonoBehaviour
 
     #endregion
 
-    #region Camera
-    [Header("Camera GameObjects")]
-    [SerializeField] private CinemachineVirtualCamera cineCamera;
+    #region Camera  
+    public CinemachineVirtualCamera cineCamera { get; private set; }
     #endregion
 
     #region Bools
@@ -171,6 +170,7 @@ public class Shooter : MonoBehaviour
         RenderersG = gunHolder.GetComponentsInChildren<MeshRenderer>();
         RenderersS = standHolder.GetComponentsInChildren<MeshRenderer>();
         pauseMenu = GetComponent<Pause>();
+        cineCamera = transform.GetChild(0).GetChild(0).GetChild(0).gameObject.GetComponent<CinemachineVirtualCamera>();
         pv = GetComponent<PhotonView>();
         rb = GetComponent<Rigidbody>();
     }

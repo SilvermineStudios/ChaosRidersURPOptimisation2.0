@@ -167,6 +167,7 @@ public class Controller : MonoBehaviour
     private void Update()
     {
         GetInput();
+        /*
         if (Input.GetKeyDown(KeyCode.R))
         {
             transform.position = new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z - 1f);
@@ -177,7 +178,7 @@ public class Controller : MonoBehaviour
                 ShooterAttached.ResetPos();
             }
         }
-
+        */
         if ((Input.GetKeyDown(KeyCode.Mouse1) && canChangeCar))
         {
             if (currentCarClass == CarClass.Braker)
