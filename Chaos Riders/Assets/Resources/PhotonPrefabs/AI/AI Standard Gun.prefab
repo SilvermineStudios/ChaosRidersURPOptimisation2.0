@@ -765,7 +765,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 7210401022831963838}
-  viewIdField: 0
+  viewIdField: 3
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &7210401022831963838
@@ -940,7 +940,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 8541091826006969111}
-  viewIdField: 0
+  viewIdField: 7
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &8541091826006969111
@@ -1395,7 +1395,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 6753911985203150815}
-  viewIdField: 0
+  viewIdField: 4
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &6753911985203150815
@@ -6412,12 +6412,14 @@ MonoBehaviour:
   impactEffectHolder: {fileID: 3767529867846557448}
   CasingSpawn: {fileID: 7205170889615342592}
   Casing: {fileID: 861391098359841573, guid: 26e80ede9ba2652449e5169bf69301aa, type: 3}
-  targets: []
+  partToRotate: {fileID: 6753911985080015449}
   aiCarTag: Player
   carTag: car
   range: 100
   timeBeforeLookingForANewTarget: 2
   delayBeforeStartWorking: 3
+  targets: []
+  turnSpeed: 5
 --- !u!114 &6753911985949760914
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6704,7 +6706,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 16768167095714995}
   - {fileID: 5998327773591176146}
-  viewIdField: 0
+  viewIdField: 2
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &5998327773591176146
@@ -6743,7 +6745,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 16768167095714995}
   - {fileID: 5998327773591176146}
-  viewIdField: 0
+  viewIdField: 6
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!1 &8040265445530778415

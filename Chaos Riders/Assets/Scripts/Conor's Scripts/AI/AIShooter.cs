@@ -37,13 +37,15 @@ public class AIShooter : MonoBehaviour
     /// </summary>
     // https://www.youtube.com/watch?v=QKhn2kl9_8I
     [Header("Brackeys Stuff")]
-    private Transform target;
-    public List<GameObject> targets = new List<GameObject>();
+    public Transform partToRotate;
     public string aiCarTag = "Player";
     public string carTag = "car";
     public float range = 30f;
     [SerializeField] private float timeBeforeLookingForANewTarget = 2f;
     [SerializeField] private float delayBeforeStartWorking = 3f;
+    public List<GameObject> targets = new List<GameObject>();
+    public float turnSpeed = 5f;
+    private Transform target;
     #endregion
 
     void Start()
@@ -57,9 +59,10 @@ public class AIShooter : MonoBehaviour
         if (target == null)
             return;
 
-
+        TargetLockOn();
     }
 
+    //gets turned on in the GetTargets Courotine and repeats by what the "TimeBeforeLookingForANewTarget" is set too
     void UpdateTarget()
     {
         float shortestDistance = Mathf.Infinity;
@@ -86,6 +89,14 @@ public class AIShooter : MonoBehaviour
         {
             target = null; //if the enemy goes out of range remove them from being the target
         }
+    }
+
+    void TargetLockOn()
+    {
+        Vector3 dir = target.position - transform.position;
+        Quaternion lookRotation = Quaternion.LookRotation(dir);
+        Vector3 rotation = Quaternion.Lerp(partToRotate.rotation, lookRotation, Time.deltaTime * turnSpeed).eulerAngles;
+        partToRotate.rotation = Quaternion.Euler(rotation.x, rotation.y, 0f);
     }
 
     //draws a sphere to show the range of the gun
