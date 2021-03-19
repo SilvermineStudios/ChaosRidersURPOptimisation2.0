@@ -93,6 +93,7 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
                 pmp.currentMinigunClass = MinigunClass.none;
                 pmp.driver = false;
                 pmp.shooter = false;
+                pmp.picked = false;
             }
         }
     }
@@ -154,6 +155,8 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
         {
             if (pmp.gameObject.GetComponent<PhotonView>().Owner == p)
             {
+                pmp.picked = true;
+
                 //braker
                 if (whichCharacter == 0)
                 {
@@ -229,6 +232,8 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
         {
             if (pmp.gameObject.GetComponent<PhotonView>().Owner == p)
             {
+                pmp.picked = true;
+
                 //standard gun
                 if (whichCharacter == 0)
                 {
@@ -245,7 +250,6 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
                 }
             }
         }
-        
     }
     #endregion
 }

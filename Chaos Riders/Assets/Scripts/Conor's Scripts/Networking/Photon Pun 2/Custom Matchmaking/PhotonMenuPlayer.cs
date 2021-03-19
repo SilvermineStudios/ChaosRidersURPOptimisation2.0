@@ -18,6 +18,8 @@ public class PhotonMenuPlayer : MonoBehaviour
     public Player Player;
     public int playerNumber; //<-----------------------------------------------------------------------------------------------------------------------------------------
 
+
+    public bool picked = false;
     public bool driver = false;
     public bool shooter = false;
 
@@ -63,26 +65,29 @@ public class PhotonMenuPlayer : MonoBehaviour
 
     void Update()
     {
-        foreach(GameObject go in roomController.playerNameBoxes)
+        if(roomController != null)
         {
-            //Change the icon for the players in the playerlist
-            if(go.GetComponentInChildren<TMP_Text>().text == this.Player.NickName)
+            foreach (GameObject go in roomController.playerNameBoxes)
             {
-                //Debug.Log("Player Name Box nickname = " + go.GetComponentInChildren<TMP_Text>().text);
-                //Debug.Log("Player nickname = " + this.Player.NickName);
+                //Change the icon for the players in the playerlist
+                if (go.GetComponentInChildren<TMP_Text>().text == this.Player.NickName)
+                {
+                    //Debug.Log("Player Name Box nickname = " + go.GetComponentInChildren<TMP_Text>().text);
+                    //Debug.Log("Player nickname = " + this.Player.NickName);
 
-                if(carModel == carType.None && shooterModel == shooterType.None)
-                    go.GetComponent<PlayerNameBox>().NoneSelected();
+                    if (carModel == carType.None && shooterModel == shooterType.None)
+                        go.GetComponent<PlayerNameBox>().NoneSelected();
 
-                if (carModel == carType.Braker)
-                    go.GetComponent<PlayerNameBox>().BrakerSelected();
-                if(carModel == carType.Shredder)
-                    go.GetComponent<PlayerNameBox>().ShredderSelected();
+                    if (carModel == carType.Braker)
+                        go.GetComponent<PlayerNameBox>().BrakerSelected();
+                    if (carModel == carType.Shredder)
+                        go.GetComponent<PlayerNameBox>().ShredderSelected();
 
-                if(shooterModel == shooterType.standardGun)
-                    go.GetComponent<PlayerNameBox>().StandardGunSelected();
-                if (shooterModel == shooterType.goldenGun)
-                    go.GetComponent<PlayerNameBox>().GoldenGunSelected();
+                    if (shooterModel == shooterType.standardGun)
+                        go.GetComponent<PlayerNameBox>().StandardGunSelected();
+                    if (shooterModel == shooterType.goldenGun)
+                        go.GetComponent<PlayerNameBox>().GoldenGunSelected();
+                }
             }
         }
     }
