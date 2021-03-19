@@ -19,15 +19,25 @@ public class AIShooter : MonoBehaviour
     LayerMask everythingButIgnoreBullets;
     [SerializeField] public ParticleSystem muzzleFlash;
 
-    [Header ("Bullet Decoration")]
+    [Header("Bullet Decoration")]
     public GameObject impactEffect;
     [SerializeField] private Transform impactEffectHolder;
     [SerializeField] GameObject CasingSpawn;
     [SerializeField] GameObject Casing;
 
+    /// <summary>
+    /// /////////////////////////////////////////////////////////////////MAKE SURE TO NOT HAVE YOUR OWN CAR BE IN THE TARGETS ARRAY///////////////////////////////////////////////////////
+    ///                                                                      foreach(Gameobkect go in targets)
+    ///                                                                      {
+    ///                                                                         if(go.isMyCar)
+    ///                                                                         {
+    ///                                                                             targets.Remove(go);
+    ///                                                                         }
+    ///                                                                      }
+    /// </summary>
     // https://www.youtube.com/watch?v=QKhn2kl9_8I
     [Header("Brackeys Stuff")]
-    public Transform target;
+    private Transform target;
     public List<GameObject> targets = new List<GameObject>();
     public string aiCarTag = "Player";
     public string carTag = "car";
@@ -43,7 +53,11 @@ public class AIShooter : MonoBehaviour
 
     void Update()
     {
-        
+        //dont do anything if there is no target
+        if (target == null)
+            return;
+
+
     }
 
     void UpdateTarget()
@@ -68,6 +82,10 @@ public class AIShooter : MonoBehaviour
         {
             target = nearestEnemy.transform;
         }
+        else
+        {
+            target = null; //if the enemy goes out of range remove them from being the target
+        }
     }
 
     //draws a sphere to show the range of the gun
@@ -81,19 +99,22 @@ public class AIShooter : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
 
-        GameObject[] aicars = GameObject.FindGameObjectsWithTag(aiCarTag);
-        GameObject[] cars = GameObject.FindGameObjectsWithTag(carTag);
+        GameObject[] aicars = GameObject.FindGameObjectsWithTag(aiCarTag); //get an array of all of the ai cars 
+        GameObject[] cars = GameObject.FindGameObjectsWithTag(carTag); //get an array of all of the player cars
         
+        //add all of the ai cars to the targets array
         foreach(GameObject go in aicars)
         {
             targets.Add(go);
         }
+
+        //add all of the player cars to the targets array
         foreach(GameObject go in cars)
         {
             targets.Add(go);
         }
 
-        //starts too look for a target
+        //Starts lookinf for a target and then repeats it over and over again
         InvokeRepeating("UpdateTarget", 0f, timeBeforeLookingForANewTarget); //MOVE TO WHEN WEAPONS ARE ENABLED
     }
 }

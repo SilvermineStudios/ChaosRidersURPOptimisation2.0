@@ -6397,6 +6397,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1718a9507886be84bb214203589411b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  car: {fileID: 0}
+  minigunBarrel: {fileID: 3767529869141748556}
+  rifleBarrel: {fileID: 4102530861068565298}
+  rpgGo: {fileID: 3767529868687993775}
+  rocketspawn: {fileID: 474918211956209927}
+  rocket: {fileID: 14798063656109763, guid: 74ea11e91b020954b88db6eaa0e77b7e, type: 3}
+  gunBarrel: {fileID: 6753911985080015449}
+  bulletSpawnPoint: {fileID: 6753911985266905327}
+  MinigunHolder: {fileID: 6019231408425968515}
+  RifleHolder: {fileID: 4099642483785407078}
+  muzzleFlash: {fileID: 6753911985263565950}
+  impactEffect: {fileID: 7938478309457529535, guid: 0c9781b5140952b42ae2c6af77491dfc, type: 3}
+  impactEffectHolder: {fileID: 3767529867846557448}
+  CasingSpawn: {fileID: 7205170889615342592}
+  Casing: {fileID: 861391098359841573, guid: 26e80ede9ba2652449e5169bf69301aa, type: 3}
+  targets: []
+  aiCarTag: Player
+  carTag: car
+  range: 100
+  timeBeforeLookingForANewTarget: 2
+  delayBeforeStartWorking: 3
 --- !u!114 &6753911985949760914
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6404,7 +6425,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6753911985949760915}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: adffd39c4f2d5bd46a3d010868d66c07, type: 3}
   m_Name: 
