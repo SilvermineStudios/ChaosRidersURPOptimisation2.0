@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +8,8 @@ public class AIShooter : MonoBehaviour
     #region Variables
     [Header("General GameObjects")]
     public GameObject car;
+    [SerializeField] private Rigidbody carRigidBody;
+    public bool noCarNeeded = false;
     [SerializeField] private Transform minigunBarrel;
     [SerializeField] private Transform rifleBarrel;
     [SerializeField] GameObject rpgGo;
@@ -16,14 +19,17 @@ public class AIShooter : MonoBehaviour
     [SerializeField] private GameObject bulletSpawnPoint;
     [SerializeField] GameObject MinigunHolder;
     [SerializeField] GameObject RifleHolder;
-    LayerMask everythingButIgnoreBullets;
     [SerializeField] public ParticleSystem muzzleFlash;
+    private MoveTurretPosition mtp;
+    LayerMask everythingButIgnoreBullets;
+    
 
     [Header("Bullet Decoration")]
     public GameObject impactEffect;
     [SerializeField] private Transform impactEffectHolder;
     [SerializeField] GameObject CasingSpawn;
     [SerializeField] GameObject Casing;
+    [SerializeField] private float WeaponDamage;
 
     /// <summary>
     /// /////////////////////////////////////////////////////////////////MAKE SURE TO NOT HAVE YOUR OWN CAR BE IN THE TARGETS ARRAY///////////////////////////////////////////////////////
@@ -48,13 +54,26 @@ public class AIShooter : MonoBehaviour
     private Transform target;
     #endregion
 
+    private void Awake()
+    {
+        if(mtp == null)
+            mtp = this.gameObject.GetComponent<MoveTurretPosition>();
+    }
+
     void Start()
     {
         StartCoroutine(GetTargets(delayBeforeStartWorking));
+        
     }
 
     void Update()
     {
+        if (mtp.car != null && car == null)
+            car = mtp.car;
+
+        if (car != null && carRigidBody == null)
+            carRigidBody = car.GetComponent<Rigidbody>();
+
         //dont do anything if there is no target
         if (target == null)
             return;
@@ -62,6 +81,15 @@ public class AIShooter : MonoBehaviour
         TargetLockOn();
     }
 
+    private void FixedUpdate()
+    {
+        if(target != null)
+        {
+            //Shoot();
+        }
+    }
+
+    #region Targeting
     //gets turned on in the GetTargets Courotine and repeats by what the "TimeBeforeLookingForANewTarget" is set too
     void UpdateTarget()
     {
@@ -128,4 +156,57 @@ public class AIShooter : MonoBehaviour
         //Starts lookinf for a target and then repeats it over and over again
         InvokeRepeating("UpdateTarget", 0f, timeBeforeLookingForANewTarget); //MOVE TO WHEN WEAPONS ARE ENABLED
     }
+    #endregion
+
+    #region Shooting
+
+    void Shoot()
+    {
+        muzzleFlash.Play();
+        //FMODUnity.RuntimeManager.PlayOneShotAttached(sound, gameObject);
+
+        #region BulletCasing
+        GameObject bulletCasingGO;
+
+        if (IsThisMultiplayer.Instance.multiplayer)
+        {
+            bulletCasingGO = PhotonNetwork.Instantiate("BulletCasing", CasingSpawn.transform.position, CasingSpawn.transform.rotation);
+        }
+        else
+        {
+            bulletCasingGO = Instantiate(Casing, CasingSpawn.transform.position, CasingSpawn.transform.rotation);
+        }
+        bulletCasingGO.GetComponent<Rigidbody>().AddForce((bulletCasingGO.transform.right + (bulletCasingGO.transform.up * 2)) * 0.3f, ForceMode.Impulse);
+
+        if (!noCarNeeded)
+        {
+            bulletCasingGO.GetComponent<Rigidbody>().velocity = carRigidBody.velocity;
+            bulletCasingGO.GetComponent<Rigidbody>().AddForce((bulletCasingGO.transform.right + (bulletCasingGO.transform.up * 2)) * 0.3f, ForceMode.Impulse);
+        }
+        #endregion
+
+
+        Vector3 direction = Vector3.zero;
+        RaycastHit hit;
+        if (Physics.Raycast(bulletSpawnPoint.transform.position, direction, out hit, range))
+        {
+            Target target = hit.transform.GetComponent<Target>();
+            if (target != null && target.gameObject != car)
+            {
+                target.TakeDamage(WeaponDamage);
+            }
+
+            GameObject impactGo;
+            if (IsThisMultiplayer.Instance.multiplayer)
+            {
+                impactGo = PhotonNetwork.Instantiate("Impact Particle Effect", hit.point, Quaternion.LookRotation(hit.normal), 0);
+            }
+            else
+            {
+                impactGo = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+            }
+            //impactGo.transform.parent = impactEffectHolder;
+        }
+    }
+    #endregion
 }
