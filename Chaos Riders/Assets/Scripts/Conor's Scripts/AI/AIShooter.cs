@@ -20,6 +20,7 @@ public class AIShooter : MonoBehaviour
     [SerializeField] GameObject MinigunHolder;
     [SerializeField] GameObject RifleHolder;
     [SerializeField] public ParticleSystem muzzleFlash;
+    public bool removedMyCarFromTargets = false;
     private MoveTurretPosition mtp;
     LayerMask everythingButIgnoreBullets;
     
@@ -74,6 +75,18 @@ public class AIShooter : MonoBehaviour
         if (car != null && carRigidBody == null)
             carRigidBody = car.GetComponent<Rigidbody>();
 
+        if(car != null && !removedMyCarFromTargets && targets.Count > 0)
+        {
+            foreach(GameObject go in targets)
+            {
+                if(go.gameObject == car.gameObject)
+                {
+                    //targets.Remove(go);
+                    //removedMyCarFromTargets = true;
+                }
+            }
+        }
+
         //dont do anything if there is no target
         if (target == null)
             return;
@@ -85,7 +98,7 @@ public class AIShooter : MonoBehaviour
     {
         if(target != null)
         {
-            //Shoot();
+            Shoot();
         }
     }
 
@@ -144,13 +157,24 @@ public class AIShooter : MonoBehaviour
         //add all of the ai cars to the targets array
         foreach(GameObject go in aicars)
         {
-            targets.Add(go);
+            if(go.gameObject != car.gameObject)
+                targets.Add(go);
         }
 
         //add all of the player cars to the targets array
         foreach(GameObject go in cars)
         {
-            targets.Add(go);
+            if (go.gameObject != car.gameObject)
+                targets.Add(go);
+        }
+
+        foreach(GameObject go in targets)
+        {
+            if(car != null && go.gameObject == car.gameObject)
+            {
+                //targets.Remove(go);
+                //removedMyCarFromTargets = true;
+            }
         }
 
         //Starts lookinf for a target and then repeats it over and over again

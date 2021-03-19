@@ -35,7 +35,8 @@ public class MoveTurretPosition : MonoBehaviour
     private void Awake()
     {
         //pv.GetComponent<PhotonView>();
-        shooterScript = GetComponent<Shooter>();
+        if(this.GetComponent<Shooter>())
+            shooterScript = GetComponent<Shooter>();
     }
 
     private void Start()
@@ -112,16 +113,6 @@ public class MoveTurretPosition : MonoBehaviour
     {
         if (!canConnect) return;
 
-        /* OLD VERSION
-        if (other.gameObject.tag == "car" && canConnect)
-        {
-            canConnect = false;
-            car = other.gameObject;
-            car.GetComponent<Controller>().ShooterAttached = turretTester; ////HERE
-            FakeParent = other.gameObject.transform;
-            shooterScript.connectCar = true;
-        }
-        */
         if (other.gameObject.layer == LayerMask.NameToLayer("Cars") && canConnect)
         {
             canConnect = false;
@@ -133,12 +124,9 @@ public class MoveTurretPosition : MonoBehaviour
                 //car.GetComponent<AICarController>().ShooterAttached = turretTester;
 
             FakeParent = other.gameObject.transform;
-            shooterScript.connectCar = true;
-        }
-    }
 
-    private void OnTriggerExit(Collider other)
-    {
-        
+            if (shooterScript != null)
+                shooterScript.connectCar = true;
+        }
     }
 }
