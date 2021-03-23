@@ -136,7 +136,9 @@ public class Controller : MonoBehaviour
         FMODUnity.RuntimeManager.AttachInstanceToGameObject(skidSound, transform, rb);
         skidSound.start();
         skidSound.setVolume(0);
-        smokeTrail.SetActive(false);
+
+        if(smokeTrail != null)
+            smokeTrail.SetActive(false);
     }
 
     private void Start()

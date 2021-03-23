@@ -3341,6 +3341,7 @@ MonoBehaviour:
   startButton: {fileID: 693231904}
   loadingScreen: {fileID: 3050640146201333011}
   loadingTime: 1
+  hintText: {fileID: 1539279593}
 --- !u!114 &328847882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13245,10 +13246,10 @@ RectTransform:
   m_Father: {fileID: 3050640146181866729}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 94.4, y: -20}
-  m_SizeDelta: {x: 178.8, y: 30}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1331051490
 MonoBehaviour:
@@ -15203,7 +15204,7 @@ GameObject:
   - component: {fileID: 1539279594}
   - component: {fileID: 1539279593}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Hint Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15225,8 +15226,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 18.8, y: -5.3}
-  m_SizeDelta: {x: 414.0869, y: 23.034828}
+  m_AnchoredPosition: {x: 18.8, y: -0.56}
+  m_SizeDelta: {x: 414.0869, y: 29.318562}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1539279593
 MonoBehaviour:
@@ -15275,15 +15276,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 10.3
+  m_fontSize: 18
   m_fontSizeBase: 10.3
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 10
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -16014,6 +16015,29 @@ MonoBehaviour:
   choosePlayerTypePanel: {fileID: 1264031424}
   backButton: {fileID: 176387437}
   photonMenuPlayers: []
+  shooterHints:
+  - "Don\u2019t forget to watch your cooldown meter."
+  - "Not all rockets have to be fired (at least straight away), so switch to your
+    infinite gun if no one\u2019s around. Trust me, they won\u2019t mind (at least
+    initially)."
+  - Not only can Pick-Ups be picked up, but they can be Shot-Up as well, which will
+    disable them temporarily.
+  - 'You know bullets can make for great mine detectors. '
+  - Continuously shooting is great but burst shooting can be even better for your
+    hip fire.
+  driverHints:
+  - Hold onto your Shield for those RPG attacks
+  - 'Try not to get pushed off the tracks, or at least try to take someone down with
+    you. '
+  - 'Knock other Riders off the tracks if you can. Try not to go down with them though. '
+  - "Don\u2019t forget to use your abilities and equipment! "
+  - Use your smokescreen near walls, ledges and edges.
+  - Mines work great in the middle of a road or underneath a Pick-Up.
+  - 'Mines are great for diverting other Riders away from or towards certain areas. '
+  - Stop! Use your Emergency break just before a wall, ledge or edge.
+  - Cut them up! Use your Shred ability when up against other Sand Trackers.
+  - 'Boost is great when you need to get ahead of someone quickly. '
+  roomController: {fileID: 328847881}
 --- !u!114 &1595746699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36728,7 +36752,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -14.6, y: -8}
-  m_SizeDelta: {x: 188.8, y: 35}
+  m_SizeDelta: {x: 0, y: 35}
   m_Pivot: {x: 1, y: 1}
 --- !u!224 &3050640146181872171
 RectTransform:
@@ -37776,7 +37800,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &3050640146201333012
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -20,11 +20,19 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
 
     [SerializeField] private PhotonMenuPlayer[] photonMenuPlayers;
 
+    [Header("Loading Screen")]
+    [SerializeField] private string[] shooterHints;
+    [SerializeField] private string[] driverHints;
+    [SerializeField] private CustomMatchmakingRoomController roomController;
+
     private void Awake()
     {
         //playerDataManager = FindObjectOfType<PlayerDataManager>();
         pv = GetComponent<PhotonView>();
         gameVariables = FindObjectOfType<GameVariables>();
+
+        if (roomController == null)
+            roomController = FindObjectOfType<CustomMatchmakingRoomController>();
     }
 
     private void Start()
@@ -113,6 +121,9 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
                 backButton.SetActive(true);
 
                 pv.RPC("RPC_AddToDrivers", RpcTarget.AllBuffered, p);
+
+                roomController.hintText.text = driverHints[Random.Range(0, driverHints.Length)];
+                Debug.Log("Tip: " + driverHints[Random.Range(0, driverHints.Length)]);
             }
         }
     }
@@ -191,6 +202,9 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
                 backButton.SetActive(true);
 
                 pv.RPC("RPC_AddToShooters", RpcTarget.AllBuffered, p);
+
+                roomController.hintText.text = shooterHints[Random.Range(0, shooterHints.Length)];
+                Debug.Log("Tip: " + shooterHints[Random.Range(0, shooterHints.Length)]);
             }
         }
     }
