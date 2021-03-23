@@ -2983,6 +2983,9 @@ MonoBehaviour:
   RifleHolder: {fileID: 8582814112348102975}
   MinigunIcon: {fileID: 149100529497673404}
   RifleIcon: {fileID: 761918961114594319}
+  everythingButIgnoreBullets:
+    serializedVersion: 2
+    m_Bits: 57143
   muzzleFlash: {fileID: 1315662156967290663}
   connectCar: 0
   RPG: 0
@@ -3269,7 +3272,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canPing: {fileID: 11400000, guid: 66661ce22ea602e498c410f0a37b84f0, type: 2}
-  pingRadius: 1
+  pingRadius: 4
+  pingButton: 113
 --- !u!1 &1315662156551701997
 GameObject:
   m_ObjectHideFlags: 0

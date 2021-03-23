@@ -26585,6 +26585,7 @@ GameObject:
   - component: {fileID: 6316635416416359294}
   - component: {fileID: 2696793681618411681}
   - component: {fileID: 3779932371785770156}
+  - component: {fileID: 4554696445525736251}
   m_Layer: 0
   m_Name: Roof
   m_TagString: Untagged
@@ -26663,6 +26664,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4554696445525736251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8020090885568026538}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a34dce33c4213c4393266fbcd799d5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: 59e59fde4ec3891459b83e0fd6bd6db8, type: 2}
+  color: {r: 0, g: 0.18836021, b: 1, a: 1}
+  mask: {fileID: 0}
+  fresnelScale: 2
+  fresnelPower: 2
+  alphaThreshold: 0.5
 --- !u!1 &8171084175398436220
 GameObject:
   m_ObjectHideFlags: 0
@@ -42468,6 +42487,7 @@ GameObject:
   - component: {fileID: 9040616798976094940}
   - component: {fileID: 9040616798976095009}
   - component: {fileID: 5553538201569404173}
+  - component: {fileID: -8266661033905631652}
   m_Layer: 10
   m_Name: Braker
   m_TagString: car
@@ -42552,7 +42572,7 @@ MonoBehaviour:
   - {fileID: 296340637808326308}
   - {fileID: 4860772462432118037}
   displayGui: 0
-  canChangeCar: 1
+  canChangeCar: 0
   lockAbilitiesToCar: 1
   boost: 0
   canUseEquipment: 0
@@ -42858,6 +42878,19 @@ MonoBehaviour:
   cameras:
   - {fileID: 9040616799218981579}
   - {fileID: 9040616798142312552}
+--- !u!114 &-8266661033905631652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9040616798976095027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebfd5895e6992ff44a2f916d49602c5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineObject: {fileID: 4554696445525736251}
 --- !u!1 &9040616799060037772
 GameObject:
   m_ObjectHideFlags: 0

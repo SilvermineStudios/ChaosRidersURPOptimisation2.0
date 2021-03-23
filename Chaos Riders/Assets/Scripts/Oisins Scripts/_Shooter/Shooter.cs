@@ -27,7 +27,7 @@ public class Shooter : MonoBehaviour
     [SerializeField] GameObject MinigunHolder;
     [SerializeField] GameObject RifleHolder;
     [SerializeField] GameObject MinigunIcon, RifleIcon;
-    LayerMask everythingButIgnoreBullets;
+    [SerializeField] LayerMask everythingButIgnoreBullets;
     [SerializeField] public ParticleSystem muzzleFlash;
 
     #endregion
@@ -617,7 +617,7 @@ public class Shooter : MonoBehaviour
         }
 
         RaycastHit hit;
-        if (Physics.Raycast(cineCamera.transform.position, direction, out hit, weaponRange))
+        if (Physics.Raycast(cineCamera.transform.position, direction, out hit, weaponRange, everythingButIgnoreBullets))
         {
             Target target = hit.transform.GetComponent<Target>();
             if (target != null && target.gameObject != car)
