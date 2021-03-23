@@ -32,6 +32,7 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject loadingScreen;
     [SerializeField] private float loadingTime;
     public static float LoadingTime;
+    [SerializeField] public TMP_Text hintText;
 
     #endregion
 

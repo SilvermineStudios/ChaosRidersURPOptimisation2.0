@@ -62,7 +62,7 @@ public class Controller : MonoBehaviour
     PhotonView pv;
     Health healthScript;
     ShredUltimate shredUltimate;
-    [HideInInspector] public TurretTester ShooterAttached; //Does this need to still be here?
+    //public TurretTester ShooterAttached; 
     [HideInInspector] public GameObject Shooter;
     protected PlayerInputs playerInputs;
     #endregion
@@ -136,6 +136,9 @@ public class Controller : MonoBehaviour
         FMODUnity.RuntimeManager.AttachInstanceToGameObject(skidSound, transform, rb);
         skidSound.start();
         skidSound.setVolume(0);
+
+        if(smokeTrail != null)
+            smokeTrail.SetActive(false);
     }
 
     private void Start()
@@ -172,11 +175,7 @@ public class Controller : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z - 1f);
             transform.rotation = Quaternion.Euler(0, transform.localRotation.y, 0);
-
-            if (ShooterAttached != null)
-            {
-                ShooterAttached.ResetPos();
-            }
+            
         }
         */
         if ((Input.GetKeyDown(KeyCode.Mouse1) && canChangeCar))
@@ -392,6 +391,9 @@ public class Controller : MonoBehaviour
 
     #region Driver Abilities
 
+    [SerializeField] private GameObject smokeTrail;
+    [SerializeField] private float smokeTrailActiveTime = 3f;
+
     void DriverAbilities()
     {
         ChargeBars(); //charge the equipment and ability bars
@@ -414,7 +416,17 @@ public class Controller : MonoBehaviour
                 Instantiate(equipmentData.prefab, abilitySpawn.transform.position, abilitySpawn.transform.rotation);
             }
             //equipmentChargeAmount = 0; //reset the cooldownbar after the equipment is used
+
+            //<------------------------------------------------------------------------------------------------------------NEW--------------------------------------------------------------
+            if (currentCarClass == CarClass.Braker && smokeTrail != null)
+            {
+                StartCoroutine(SmokeTrailCourotine(smokeTrailActiveTime));
+            }
+            else
+                Debug.Log("Error, Something is wrong with the smoke trail click here");
         }
+
+        
 
         //if you use the Ability
         if (Input.GetKeyDown(abilityKeyCode) && canUseAbility)
@@ -432,6 +444,15 @@ public class Controller : MonoBehaviour
             abilityChargeAmount = 0; //reset the cooldownbar after the ability is used
         }
 
+    }
+
+    private IEnumerator SmokeTrailCourotine(float time)
+    {
+        smokeTrail.SetActive(true);
+
+        yield return new WaitForSeconds(time);
+
+        smokeTrail.SetActive(false);
     }
 
     #region Ultimates

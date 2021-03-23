@@ -30,6 +30,7 @@ public class PhotonMenuPlayer : MonoBehaviour
     public enum shooterType { standardGun, goldenGun , None};
     public shooterType shooterModel;
     public MinigunClass currentMinigunClass;
+
     
 
 
