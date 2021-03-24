@@ -128,10 +128,10 @@ public class GameSetup : MonoBehaviour
         //Debug.Log(p.Player.NickName + " is trying to spawn a car at spawn position: " + spawnPos + " and at spawn rotation: " + spawnRot);
         //Debug.Log("Trying to spawn Driver for " + p.Player.NickName);
 
-        GameObject GO = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Driver"), spawnPos, spawnRot, 0);
-        GO.GetComponent<Controller>().currentCarClass = tempHolder.currentCarClass;
+        //GameObject GO = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Driver"), spawnPos, spawnRot, 0);
+        //GO.GetComponent<Controller>().currentCarClass = tempHolder.currentCarClass;
 
-        //PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "DriverPlayer"), spawnPos, spawnRot, 0);
+        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "DriverPlayer"), spawnPos, spawnRot, 0);
     }
 
     [PunRPC]
