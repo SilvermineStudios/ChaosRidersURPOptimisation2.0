@@ -31,9 +31,23 @@ public class RelayPing : MonoBehaviour
     [PunRPC]
     void SendAcrossNetwork()
     {
-        FMODUnity.RuntimeManager.PlayOneShot("event:/Ping/Ping");
-        outlineObject.enabled = true;
-        StartCoroutine(Countdown());
+        
+        if(!outlineObject.enabled)
+        {
+            outlineObject.enabled = true;
+            StartCoroutine(Countdown());
+            FMODUnity.RuntimeManager.PlayOneShot("event:/Ping/Ping");
+        }
+        else
+        {
+            StopAllCoroutines();
+            outlineObject.enabled = false;
+
+
+            outlineObject.enabled = true;
+            StartCoroutine(Countdown());
+        }
+        
         
     }
 }
