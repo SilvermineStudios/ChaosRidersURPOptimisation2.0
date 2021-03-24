@@ -6,6 +6,6 @@ using UnityEngine;
 
 public class CanPing : ScriptableObject
 {
-    [TagSelector]
+   
     public List<string> tags = new List<string>();
 }

@@ -7,6 +7,12 @@ using Photon.Pun;
 public class RelayPing : MonoBehaviour
 {
     [SerializeField] OutlineObject outlineObject;
+    PhotonView pv;
+
+    private void Awake()
+    {
+        pv = GetComponent<PhotonView>();
+    }
 
     IEnumerator Countdown()
     {
@@ -17,7 +23,16 @@ public class RelayPing : MonoBehaviour
 
     public void RelayPingToOutline(PhotonView[] ourViews)
     {
-        if (ourViews[0].IsMine || ourViews[1].IsMine)
+        
+        pv.RPC("SendAcrossNetwork", RpcTarget.All); 
+    }
+
+
+    [PunRPC]
+    void SendAcrossNetwork(object[] ourViewsasObject)
+    {
+        
+        if (ourViewsasObject[0] as PhotonView)
         {
             FMODUnity.RuntimeManager.PlayOneShot("event:/Ping/Ping");
             outlineObject.enabled = true;

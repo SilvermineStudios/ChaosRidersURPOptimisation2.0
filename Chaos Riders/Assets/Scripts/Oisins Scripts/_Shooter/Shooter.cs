@@ -7,12 +7,13 @@ using TMPro;
 using System.IO;
 using UnityEngine.UI;
 
-public class Shooter : MonoBehaviour
+public class Shooter : MonoBehaviourPun
 {
-
+    public GameObject car { get; private set; }
     #region General GameObjects
     [Header("General GameObjects")]
-    public GameObject car;
+
+    
     private Transform barrelToRotate;
     [SerializeField] private Transform minigunBarrel;
     [SerializeField] private Transform rifleBarrel;
@@ -195,6 +196,10 @@ public class Shooter : MonoBehaviour
             }
         }
     }
+
+    
+
+
 
     void SetupGun(ShooterClass shooterClass)
     {

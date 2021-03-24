@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using TMPro;
+using UnityEngine.UI;
 
 public class Checkpoint : MonoBehaviour
 {
     [SerializeField] private AudioClip soundEffect;
-
+    [SerializeField] GameObject resetBar;
+    float resetChargeAmount;
     private int amountOfLaps;
     [SerializeField] private int currentLap = 1;
     [SerializeField] private TMP_Text lapsText;
@@ -22,7 +24,7 @@ public class Checkpoint : MonoBehaviour
     [SerializeField] private GameObject youWinText;
 
     [SerializeField] private bool canCollect = true;
-
+    bool isResetting;
     [SerializeField] GameObject Music;
 
     private PhotonView pv;
@@ -55,17 +57,25 @@ public class Checkpoint : MonoBehaviour
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
             OnlyDisplayNextCheckpoint();
-            if(Input.GetKey(resetKey) && previousCheckpoint != -1)
+            if(Input.GetKeyDown(resetKey))
             {
-                if(resetTimer == 0)
-                {
-                    resetTimer = Time.time;
-                }
-                ResetPos();
+                isResetting = true;
+            }
+            if(Input.GetKeyUp(resetKey))
+            {
+                isResetting = false;
+
+            }
+            if (isResetting && previousCheckpoint != -1)
+            {
+                StartCoroutine(UseEquipmentUI(3));
             }
             else
             {
                 resetTimer = 0;
+                resetChargeAmount = 0;
+                resetBar.GetComponent<Image>().fillAmount = 0;
+                resetBar.transform.parent.gameObject.SetActive(false);
             }
 
             //only let the player cross the finish line if they have gone throug the first check point
@@ -92,22 +102,39 @@ public class Checkpoint : MonoBehaviour
         }
     }
 
-    Vector3 sdad;
-    Quaternion asdadad;
     private void ResetPos()
-    {
-        Debug.Log((resetTimer + 3) - Time.time);
-        if (Time.time >= resetTimer + 3)
-        {
-            transform.position = checkpoints[(int)previousCheckpoint].transform.position;
-            Debug.Log(checkpoints[(int)previousCheckpoint].transform.position + "ee" + transform.position);
-            sdad = new Vector3(checkpoints[(int)previousCheckpoint].transform.rotation.x, checkpoints[(int)previousCheckpoint].transform.rotation.y + 90, checkpoints[(int)previousCheckpoint].transform.rotation.z);
-            asdadad.eulerAngles = sdad;
-            transform.rotation = asdadad;
-            rb.velocity = Vector3.zero;
-            resetTimer = 0;
-        }
+    { 
+        int chosen = Random.Range(0, 5);
+        rb.velocity = Vector3.zero;
+        transform.position = checkpoints[(int)previousCheckpoint].transform.GetChild(0).GetChild(chosen).GetChild(0).position;
+        transform.rotation = checkpoints[(int)previousCheckpoint].transform.GetChild(0).GetChild(chosen).GetChild(0).rotation;
+        //Debug.Log(checkpoints[(int)previousCheckpoint].transform.position + "ee" + transform.position);
+        rb.velocity = Vector3.zero;
+        resetTimer = 0;
     }
+
+
+    IEnumerator UseEquipmentUI(float timeTomove)
+    {
+        var t = 0f;
+        while (t < 1 && isResetting)
+        {
+            resetBar.transform.parent.gameObject.SetActive(true);
+            t += Time.deltaTime / timeTomove;
+            resetChargeAmount = Mathf.Lerp(0, 100, t);
+            resetBar.GetComponent<Image>().fillAmount = resetChargeAmount / 100;
+
+            if (resetChargeAmount == 100)
+            {
+                ResetPos();
+                isResetting = false;
+            }
+
+            yield return null;
+        }
+
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {

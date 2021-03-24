@@ -10,12 +10,13 @@ public class Ping : MonoBehaviour
     [SerializeField] CanPing canPing;
     [SerializeField] float pingRadius = 1;
     [SerializeField] KeyCode pingButton = KeyCode.Q;
+    [SerializeField] LayerMask IgnoreWalls;
     RaycastHit hit;
     CinemachineVirtualCamera cineCamera;
     GameObject car;
     PhotonView pv;
     PhotonView driverPv;
-    PhotonView[] ourViews = new PhotonView[2]; 
+    PhotonView[] ourViews = new PhotonView[2];
 
     void Start()
     {
@@ -39,7 +40,7 @@ public class Ping : MonoBehaviour
 
         if (Input.GetKeyDown(pingButton) && pv.IsMine)
         {
-            if (Physics.SphereCast(cineCamera.transform.position, pingRadius, cineCamera.transform.forward, out hit, 9999))
+            if (Physics.SphereCast(cineCamera.transform.position, pingRadius, cineCamera.transform.forward, out hit, 9999, IgnoreWalls))
             {
                 if (canPing.tags.Contains(hit.transform.gameObject.tag) && hit.transform.gameObject != car)
                 {
