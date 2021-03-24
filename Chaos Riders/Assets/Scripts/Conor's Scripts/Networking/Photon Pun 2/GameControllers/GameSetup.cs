@@ -23,7 +23,7 @@ public class GameSetup : MonoBehaviour
 
     private int amountOfShooters = 0, amountOfDrivers = 0;
     public GameObject[] aiCars;
-
+    PhotonMenuPlayer tempHolder;
 
     private void OnDrawGizmos()
     {
@@ -91,11 +91,13 @@ public class GameSetup : MonoBehaviour
 
         foreach (PhotonMenuPlayer p in playerDataManager.photonMenuPlayers)
         {
+            tempHolder = p;
             if (p.driver)
             {
                 //Debug.Log(p.Player.NickName + " is a Driver");
                 //pv.RPC("RPC_SpawnDriver", p.Player, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation, p);
-                pv.RPC("RPC_SpawnDriver", p.Player, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
+                //pv.RPC("RPC_SpawnDriver", p.Player, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "DriverPlayer"), spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation, 0);
             }
 
             if (p.shooter)
@@ -127,7 +129,7 @@ public class GameSetup : MonoBehaviour
         //Debug.Log("Trying to spawn Driver for " + p.Player.NickName);
 
         //GameObject GO = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Driver"), spawnPos, spawnRot, 0);
-        //GO.GetComponent<Controller>().currentCarClass = p.currentCarClass;
+        //GO.GetComponent<Controller>().currentCarClass = tempHolder.currentCarClass;
 
         PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "DriverPlayer"), spawnPos, spawnRot, 0);
     }

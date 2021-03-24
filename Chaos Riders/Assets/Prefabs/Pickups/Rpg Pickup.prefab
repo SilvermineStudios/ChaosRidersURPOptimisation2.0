@@ -95,6 +95,8 @@ GameObject:
   - component: {fileID: 1287546185186777206}
   - component: {fileID: 1287546185186777201}
   - component: {fileID: 1287546185186777203}
+  - component: {fileID: 8681882803559677363}
+  - component: {fileID: 7646329333739405188}
   m_Layer: 0
   m_Name: Rpg Pickup
   m_TagString: RPGPickup
@@ -145,6 +147,41 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 4.6377773, z: 4.325821}
   m_Center: {x: 0, y: -1.0692644, z: 0.029029846}
+--- !u!114 &8681882803559677363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1287546185186777202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebfd5895e6992ff44a2f916d49602c5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineObject: {fileID: 4429093161033772274}
+--- !u!114 &7646329333739405188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1287546185186777202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  observableSearch: 2
+  Synchronization: 3
+  OwnershipTransfer: 0
+  ObservedComponents: []
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1287546185324979371
 GameObject:
   m_ObjectHideFlags: 0
@@ -237,6 +274,7 @@ GameObject:
   - component: {fileID: 1287546185573072481}
   - component: {fileID: 1287546185573072487}
   - component: {fileID: 1287546185573072486}
+  - component: {fileID: 4429093161033772274}
   m_Layer: 0
   m_Name: 'Gun Barrel '
   m_TagString: Untagged
@@ -309,6 +347,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4429093161033772274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1287546185573072480}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a34dce33c4213c4393266fbcd799d5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: 59e59fde4ec3891459b83e0fd6bd6db8, type: 2}
+  color: {r: 0, g: 0.18836021, b: 1, a: 1}
+  mask: {fileID: 0}
+  fresnelScale: 2
+  fresnelPower: 2
+  alphaThreshold: 0.5
 --- !u!1 &1287546185911935107
 GameObject:
   m_ObjectHideFlags: 0
