@@ -11,12 +11,12 @@ public class Ping : MonoBehaviour
     [SerializeField] float pingRadius = 1;
     [SerializeField] KeyCode pingButton = KeyCode.Q;
     [SerializeField] LayerMask IgnoreWalls;
-    RaycastHit hit;
+    RaycastHit[] hits;
     CinemachineVirtualCamera cineCamera;
     GameObject car;
     PhotonView pv;
     PhotonView driverPv;
-    PhotonView[] ourViews = new PhotonView[2];
+    bool isPing;
 
     void Start()
     {
@@ -24,7 +24,12 @@ public class Ping : MonoBehaviour
         pv = GetComponent<PhotonView>();
      }
 
-    void Update()
+    private void Update()
+    {
+        isPing = Input.GetKey(pingButton);
+    }
+
+    void FixedUpdate()
     {
 
         if (pv.IsMine && car == null)
@@ -33,21 +38,37 @@ public class Ping : MonoBehaviour
             {
                 car = GetComponent<Shooter>().car;
                 driverPv = car.GetComponent<PhotonView>();
-                ourViews[0] = pv;
-                ourViews[1] = driverPv;
             }
         }
 
-        if (Input.GetKeyDown(pingButton) && pv.IsMine)
+        if (isPing && pv.IsMine)
         {
-            if (Physics.SphereCast(cineCamera.transform.position, pingRadius, cineCamera.transform.forward, out hit, 9999, IgnoreWalls))
+            Debug.Log("Attempted Ping");
+            hits = Physics.SphereCastAll(cineCamera.transform.position, pingRadius, cineCamera.transform.forward, 9999, IgnoreWalls);
+           
+            foreach (RaycastHit hit in hits)
             {
                 if (canPing.tags.Contains(hit.transform.gameObject.tag) && hit.transform.gameObject != car)
                 {
-                    Debug.Log(hit.transform.gameObject.tag);
-                    hit.transform.gameObject.SendMessage("RelayPingToOutline", ourViews);
+                    Debug.Log(hit.transform.gameObject.tag + " Success");
+                    hit.transform.gameObject.SendMessage("RelayPingToOutline", driverPv);
+                    break;
                 }
+                else
+                {
+                    if(hit.transform.gameObject == car)
+                    {
+                        Debug.Log("My car Fail");
+                    }
+                    else
+                       Debug.Log(hit.transform.gameObject.tag + " Fail");
+
+                }
+                    
             }
+
+            
+            
         }
         //Debug.DrawRay(cineCamera.transform.position, cineCamera.transform.forward * 100, Color.red);
     }
