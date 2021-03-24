@@ -134,7 +134,7 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
         {
             if (pmp.gameObject.GetComponent<PhotonView>().Owner == p)
             {
-                playerDataManager.drivers.Add(pmp.gameObject);
+                //playerDataManager.drivers.Add(pmp.gameObject);
 
                 pmp.driver = true;
                 pmp.shooter = false;
@@ -215,7 +215,7 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
         {
             if (pmp.gameObject.GetComponent<PhotonView>().Owner == p)
             {
-                playerDataManager.shooters.Add(pmp.gameObject);
+                //playerDataManager.shooters.Add(pmp.gameObject);
                 pmp.shooter = true;
                 pmp.driver = false;
             }
