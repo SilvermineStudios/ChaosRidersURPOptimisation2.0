@@ -21,22 +21,19 @@ public class RelayPing : MonoBehaviour
         outlineObject.enabled = false;
     }
 
-    public void RelayPingToOutline(PhotonView[] ourViews)
+    public void RelayPingToOutline(PhotonView driverPV)
     {
-        
-        pv.RPC("SendAcrossNetwork", RpcTarget.All); 
+        pv.RPC("SendAcrossNetwork", driverPV.Owner);
+        SendAcrossNetwork();
     }
 
 
     [PunRPC]
-    void SendAcrossNetwork(object[] ourViewsasObject)
+    void SendAcrossNetwork()
     {
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Ping/Ping");
+        outlineObject.enabled = true;
+        StartCoroutine(Countdown());
         
-        if (ourViewsasObject[0] as PhotonView)
-        {
-            FMODUnity.RuntimeManager.PlayOneShot("event:/Ping/Ping");
-            outlineObject.enabled = true;
-            StartCoroutine(Countdown());
-        }
     }
 }

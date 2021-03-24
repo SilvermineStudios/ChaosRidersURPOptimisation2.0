@@ -16,7 +16,6 @@ public class Ping : MonoBehaviour
     GameObject car;
     PhotonView pv;
     PhotonView driverPv;
-    PhotonView[] ourViews = new PhotonView[2];
 
     void Start()
     {
@@ -33,8 +32,6 @@ public class Ping : MonoBehaviour
             {
                 car = GetComponent<Shooter>().car;
                 driverPv = car.GetComponent<PhotonView>();
-                ourViews[0] = pv;
-                ourViews[1] = driverPv;
             }
         }
 
@@ -45,7 +42,7 @@ public class Ping : MonoBehaviour
                 if (canPing.tags.Contains(hit.transform.gameObject.tag) && hit.transform.gameObject != car)
                 {
                     Debug.Log(hit.transform.gameObject.tag);
-                    hit.transform.gameObject.SendMessage("RelayPingToOutline", ourViews);
+                    hit.transform.gameObject.SendMessage("RelayPingToOutline", driverPv);
                 }
             }
         }
