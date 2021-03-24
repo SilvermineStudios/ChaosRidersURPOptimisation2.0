@@ -691,7 +691,7 @@ public class Shooter : MonoBehaviour
     {
         if (other.gameObject.tag == "car")
         {
-            car = other.gameObject;
+            //car = other.gameObject;
         }
     }
 }
