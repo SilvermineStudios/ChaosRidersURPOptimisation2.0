@@ -2930,6 +2930,7 @@ GameObject:
   - component: {fileID: 8912738681920540298}
   - component: {fileID: 8912738682866580747}
   - component: {fileID: 8912738683764012292}
+  - component: {fileID: 808702510105702326}
   m_Layer: 0
   m_Name: Standard Gun
   m_TagString: shooter
@@ -2969,7 +2970,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adffd39c4f2d5bd46a3d010868d66c07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  car: {fileID: 0}
   minigunBarrel: {fileID: 8912738681946165269}
   rifleBarrel: {fileID: 8581471636464025707}
   rpgGo: {fileID: 8912738682533089526}
@@ -2982,8 +2982,10 @@ MonoBehaviour:
   RifleHolder: {fileID: 8582814112348102975}
   MinigunIcon: {fileID: 149100529497673404}
   RifleIcon: {fileID: 761918961114594319}
+  everythingButIgnoreBullets:
+    serializedVersion: 2
+    m_Bits: 57143
   muzzleFlash: {fileID: 1315662156967290663}
-  cineCamera: {fileID: 3743629652910534923}
   connectCar: 0
   RPG: 0
   pickedUpRPG: 0
@@ -3141,6 +3143,7 @@ MonoBehaviour:
   soundEffect: {fileID: 8300000, guid: ed476ad4a6f78b64382ce8cd8d9c2f2f, type: 3}
   currentLap: 1
   lapsText: {fileID: 1665179948968719208}
+  resetKey: 114
   canCrossFinish: 0
   checkpoints: []
   currentCheckpoint: 0
@@ -3255,6 +3258,24 @@ MonoBehaviour:
   driverModelIndex: -1
   AIBraker: {fileID: 1407414512137103672, guid: c7d771049c583ed4d8583216cccd3132, type: 3}
   AIColt: {fileID: 2011213230151948855, guid: 4fef911cd4b7a114bb4c2b67b8861e47, type: 3}
+--- !u!114 &808702510105702326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1315662156546385610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 821832aa2c7fa31419bf616a0899db7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canPing: {fileID: 11400000, guid: 66661ce22ea602e498c410f0a37b84f0, type: 2}
+  pingRadius: 4
+  pingButton: 113
+  IgnoreWalls:
+    serializedVersion: 2
+    m_Bits: 57143
 --- !u!1 &1315662156551701997
 GameObject:
   m_ObjectHideFlags: 0
