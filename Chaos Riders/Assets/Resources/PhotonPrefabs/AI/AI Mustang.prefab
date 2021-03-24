@@ -283,7 +283,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &594636190
 Transform:
   m_ObjectHideFlags: 0
@@ -8997,6 +8997,7 @@ GameObject:
   - component: {fileID: 976415736}
   - component: {fileID: 604401238}
   - component: {fileID: 604401239}
+  - component: {fileID: 5738966227521430251}
   m_Layer: 10
   m_Name: AI Mustang
   m_TagString: Player
@@ -9226,6 +9227,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasRPG: 0
+--- !u!114 &5738966227521430251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407414512137103672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebfd5895e6992ff44a2f916d49602c5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineObject: {fileID: 6752402208824672621}
 --- !u!1 &1407414512161380209
 GameObject:
   m_ObjectHideFlags: 0
@@ -12311,9 +12325,10 @@ GameObject:
   - component: {fileID: 4223010251209149217}
   - component: {fileID: 3349340343280198146}
   - component: {fileID: 1354169405767554589}
+  - component: {fileID: 6752402208824672621}
   m_Layer: 0
   m_Name: Roof
-  m_TagString: Untagged
+  m_TagString: Outline
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12389,6 +12404,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6752402208824672621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6687856460221808099}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a34dce33c4213c4393266fbcd799d5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: 59e59fde4ec3891459b83e0fd6bd6db8, type: 2}
+  color: {r: 0, g: 0.18836021, b: 1, a: 1}
+  mask: {fileID: 0}
+  fresnelScale: 2
+  fresnelPower: 2
+  alphaThreshold: 0.5
 --- !u!1 &6755284921014430476
 GameObject:
   m_ObjectHideFlags: 0

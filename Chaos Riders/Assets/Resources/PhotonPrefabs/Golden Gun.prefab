@@ -13907,6 +13907,7 @@ GameObject:
   - component: {fileID: 2780465873139233418}
   - component: {fileID: 2780465871979249931}
   - component: {fileID: 2780465871769585924}
+  - component: {fileID: -565711370190230324}
   m_Layer: 0
   m_Name: Golden Gun
   m_TagString: shooter
@@ -13959,8 +13960,10 @@ MonoBehaviour:
   RifleHolder: {fileID: 3042777005825809727}
   MinigunIcon: {fileID: 4460825033913593880}
   RifleIcon: {fileID: 6065071125403989495}
+  everythingButIgnoreBullets:
+    serializedVersion: 2
+    m_Bits: 57143
   muzzleFlash: {fileID: 5720822376782568231}
-  cineCamera: {fileID: 7985534370126974219}
   connectCar: 0
   RPG: 0
   pickedUpRPG: 0
@@ -14118,6 +14121,7 @@ MonoBehaviour:
   soundEffect: {fileID: 8300000, guid: ed476ad4a6f78b64382ce8cd8d9c2f2f, type: 3}
   currentLap: 1
   lapsText: {fileID: 371842087230749138}
+  resetKey: 114
   canCrossFinish: 0
   checkpoints: []
   currentCheckpoint: 0
@@ -14139,6 +14143,7 @@ MonoBehaviour:
   gunstand: {fileID: 5720822375933026152}
   car: {fileID: 0}
   FakeParent: {fileID: 0}
+  turretTester: {fileID: 0}
 --- !u!114 &5720822377400605400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14231,6 +14236,24 @@ MonoBehaviour:
   driverModelIndex: -1
   AIBraker: {fileID: 1407414512137103672, guid: c7d771049c583ed4d8583216cccd3132, type: 3}
   AIColt: {fileID: 2011213230151948855, guid: 4fef911cd4b7a114bb4c2b67b8861e47, type: 3}
+--- !u!114 &-565711370190230324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5720822377400605386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 821832aa2c7fa31419bf616a0899db7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canPing: {fileID: 11400000, guid: 66661ce22ea602e498c410f0a37b84f0, type: 2}
+  pingRadius: 4
+  pingButton: 113
+  IgnoreWalls:
+    serializedVersion: 2
+    m_Bits: 57143
 --- !u!1 &5720822377416161773
 GameObject:
   m_ObjectHideFlags: 0

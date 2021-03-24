@@ -161,7 +161,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/Master.bank
   Name: Master
-  lastModified: 637501446806175386
+  lastModified: 637521285034315467
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -248,11 +248,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/Master.strings.bank
   Name: Master.strings
-  lastModified: 637501446806633825
+  lastModified: 637521285034375221
   LoadResult: 0
   FileSizes:
   - Name: Desktop
-    Value: 1976
+    Value: 2026
   Exists: 1
 --- !u!114 &-2624649675606900976
 MonoBehaviour:
@@ -501,6 +501,7 @@ MonoBehaviour:
   EditorBanks:
   - {fileID: -2954939187940535496}
   - {fileID: -4466803539278922483}
+  - {fileID: 8246673202330450505}
   EditorEvents:
   - {fileID: -4789631137126399954}
   - {fileID: -2173327587602132150}
@@ -528,8 +529,31 @@ MonoBehaviour:
   - {fileID: -4466803539278922483}
   StringsBanks:
   - {fileID: -2954939187940535496}
-  stringsBankWriteTime: 637501446806633825
+  stringsBankWriteTime: 637521285034375221
   cacheVersion: 5
+--- !u!114 &317469205867548753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Ping/Ping
+  m_EditorClassIdentifier: 
+  Path: event:/Ping/Ping
+  guid: 55225b05b8e37d41ad5cea7306a314fd
+  Banks:
+  - {fileID: -4466803539278922483}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 993
 --- !u!114 &481966967742989797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1111,7 +1135,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/CarNoise.bank
   Name: CarNoise
-  lastModified: 637501367315248030
+  lastModified: 637521285028818420
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -1173,6 +1197,7 @@ MonoBehaviour:
   Banks:
   - {fileID: 8390316997883208087}
   - {fileID: 1822313279407467418}
+  - {fileID: 8246673202330450505}
   - {fileID: -4466803539278922483}
   IsStream: 0
   Is3D: 1

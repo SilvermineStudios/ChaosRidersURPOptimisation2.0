@@ -53,7 +53,7 @@ public class MoveTurretPosition : MonoBehaviour
         if (FakeParent == null)
             return;
 
-        if (IsThisMultiplayer.Instance.multiplayer)
+        if (IsThisMultiplayer.Instance.multiplayer && car != null)
         {
             pv.RPC("AttachToFakeParent", RpcTarget.All);
         }
@@ -84,6 +84,7 @@ public class MoveTurretPosition : MonoBehaviour
 
         gunstand.localRotation = targetRot;
         gunstand.transform.position = carGunStandPosition.transform.position;
+        Debug.Log("Attached to fake parent");
     }
 
 
@@ -121,6 +122,7 @@ public class MoveTurretPosition : MonoBehaviour
             if (other.gameObject.tag == "car")
             {
                 car = other.gameObject.transform.root.gameObject;
+                Debug.Log(car);
                 FakeParent = other.gameObject.transform.root;
             }
             else

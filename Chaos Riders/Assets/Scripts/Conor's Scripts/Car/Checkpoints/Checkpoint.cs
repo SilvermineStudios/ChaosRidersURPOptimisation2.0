@@ -3,31 +3,37 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using TMPro;
+using UnityEngine.UI;
 
 public class Checkpoint : MonoBehaviour
 {
     [SerializeField] private AudioClip soundEffect;
-
+    [SerializeField] GameObject resetBar;
+    float resetChargeAmount;
     private int amountOfLaps;
     [SerializeField] private int currentLap = 1;
     [SerializeField] private TMP_Text lapsText;
-
+    [SerializeField] private KeyCode resetKey = KeyCode.R;
+    float resetTimer;
     [SerializeField] private bool canCrossFinish = false; //remove from inspector <--------------------------------------------------
 
     //script for what happens when a player drives through a checkpoint
     [SerializeField] private GameObject[] checkpoints;
     [SerializeField] private float currentCheckpoint = 0f;
+    private float previousCheckpoint = -1f;
     [SerializeField] private GameObject youWinText;
 
     [SerializeField] private bool canCollect = true;
-
+    bool isResetting;
     [SerializeField] GameObject Music;
 
     private PhotonView pv;
+    Rigidbody rb;
 
     private void Awake()
     {
         pv = GetComponent<PhotonView>();
+        rb = GetComponent<Rigidbody>();
     }
 
     private void Start()
@@ -51,6 +57,26 @@ public class Checkpoint : MonoBehaviour
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
             OnlyDisplayNextCheckpoint();
+            if(Input.GetKeyDown(resetKey))
+            {
+                isResetting = true;
+            }
+            if(Input.GetKeyUp(resetKey))
+            {
+                isResetting = false;
+
+            }
+            if (isResetting && previousCheckpoint != -1)
+            {
+                StartCoroutine(UseEquipmentUI(3));
+            }
+            else
+            {
+                resetTimer = 0;
+                resetChargeAmount = 0;
+                resetBar.GetComponent<Image>().fillAmount = 0;
+                resetBar.transform.parent.gameObject.SetActive(false);
+            }
 
             //only let the player cross the finish line if they have gone throug the first check point
             if (currentCheckpoint == 1)
@@ -76,6 +102,39 @@ public class Checkpoint : MonoBehaviour
         }
     }
 
+    private void ResetPos()
+    { 
+        int chosen = Random.Range(0, 5);
+        rb.velocity = Vector3.zero;
+        transform.position = checkpoints[(int)previousCheckpoint].transform.GetChild(0).GetChild(chosen).GetChild(0).position;
+        transform.rotation = checkpoints[(int)previousCheckpoint].transform.GetChild(0).GetChild(chosen).GetChild(0).rotation;
+        //Debug.Log(checkpoints[(int)previousCheckpoint].transform.position + "ee" + transform.position);
+        rb.velocity = Vector3.zero;
+        resetTimer = 0;
+    }
+
+
+    IEnumerator UseEquipmentUI(float timeTomove)
+    {
+        var t = 0f;
+        while (t < 1 && isResetting)
+        {
+            resetBar.transform.parent.gameObject.SetActive(true);
+            t += Time.deltaTime / timeTomove;
+            resetChargeAmount = Mathf.Lerp(0, 100, t);
+            resetBar.GetComponent<Image>().fillAmount = resetChargeAmount / 100;
+
+            if (resetChargeAmount == 100)
+            {
+                ResetPos();
+                isResetting = false;
+            }
+
+            yield return null;
+        }
+
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -91,8 +150,14 @@ public class Checkpoint : MonoBehaviour
                 if (currentCheckpoint == checkpoints.Length) //if the car is at the last waypoint
                     currentCheckpoint = 0; //make the next waypoint the first waypoint
                 else
+                {
+                    previousCheckpoint += 1;
+                    if (previousCheckpoint > checkpoints.Length)
+                    {
+                        previousCheckpoint = 0;
+                    }
                     currentCheckpoint += 1;//if the current waypoint is not the last waypoint in the list then go to the next waypoint in the list
-
+                }
             }
 
 
