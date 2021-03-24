@@ -30,6 +30,7 @@ public class PhotonMenuPlayer : MonoBehaviour
     public enum shooterType { standardGun, goldenGun , None};
     public shooterType shooterModel;
     public MinigunClass currentMinigunClass;
+
     
 
 
@@ -65,6 +66,19 @@ public class PhotonMenuPlayer : MonoBehaviour
 
     void Update()
     {
+        //used if the player dissconnects from the lobby then reconnects to the game
+        if(carModel != carType.None)
+        {
+            driver = true;
+            shooter = false;
+        }
+        if(shooterModel != shooterType.None)
+        {
+            shooter = true;
+            driver = false;
+        }
+        ///////////////////////////////////////////////////////////////////////////
+
         if(roomController != null)
         {
             foreach (GameObject go in roomController.playerNameBoxes)

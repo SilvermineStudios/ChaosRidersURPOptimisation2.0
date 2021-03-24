@@ -3341,6 +3341,7 @@ MonoBehaviour:
   startButton: {fileID: 693231904}
   loadingScreen: {fileID: 3050640146201333011}
   loadingTime: 1
+  hintText: {fileID: 1539279593}
 --- !u!114 &328847882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13247,8 +13248,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 94.4, y: -20}
-  m_SizeDelta: {x: 178.8, y: 30}
+  m_AnchoredPosition: {x: 76.34, y: -20}
+  m_SizeDelta: {x: 142.68, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1331051490
 MonoBehaviour:
@@ -13270,7 +13271,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Chaos Gauntlet
+  m_text: Quarry Lane
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -13581,8 +13582,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 128.2, y: 70.6}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 128.2, y: -9.02}
+  m_SizeDelta: {x: 200, y: 209.24274}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1343886713
 MonoBehaviour:
@@ -13604,14 +13605,20 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '- small description here
+  m_text: 'Finding little else but loose sand and brittle stone, quarry site A was
+    the first to be abandoned
 
-    - about the gameplay and the map
+    by the Benethir corporation. Left to bake under
+    the hot Saharan sun, it was later appropriated
 
-    -
-    also some tips for players can try on game
+    by the owners of the Chaos
+    Races for its tight turns, unsupported roadways and plummeting
 
-    - and have a better experience'
+    depths. Refurbished
+    and given a dash of DIY magic, its flaws have been exacerbated to be
+
+    more
+    dangerous and exhilarating for the Chaos Riders that dare drive on this track.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -13638,11 +13645,11 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 10.1
+  m_fontSize: 12.15
   m_fontSizeBase: 10.1
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 11.3
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
@@ -15203,7 +15210,7 @@ GameObject:
   - component: {fileID: 1539279594}
   - component: {fileID: 1539279593}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Hint Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15225,8 +15232,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 18.8, y: -5.3}
-  m_SizeDelta: {x: 414.0869, y: 23.034828}
+  m_AnchoredPosition: {x: 18.8, y: -0.56}
+  m_SizeDelta: {x: 414.0869, y: 29.318562}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1539279593
 MonoBehaviour:
@@ -15275,15 +15282,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 10.3
+  m_fontSize: 18
   m_fontSizeBase: 10.3
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 10
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -16014,6 +16021,39 @@ MonoBehaviour:
   choosePlayerTypePanel: {fileID: 1264031424}
   backButton: {fileID: 176387437}
   photonMenuPlayers: []
+  shooterHints:
+  - "Don\u2019t forget to watch your cooldown meter."
+  - "Not all rockets have to be fired (at least straight away), so switch to your
+    infinite gun if no one\u2019s around. Trust me, they won\u2019t mind (at least
+    initially)."
+  - Not only can Pick-Ups be picked up, but they can be Shot-Up as well, which will
+    disable them temporarily.
+  - 'You know bullets can make for great mine detectors. '
+  - Continuously shooting is great but burst shooting can be even better for your
+    hip fire.
+  - Stay in the centre of the track at all times.
+  - Good luck!
+  - Try not to crash, blow up, burn, get shot, get cut, etc.
+  - "Don\u2019t forget to watch around, as bullets can come from any direction."
+  - "Always remember, there\u2019s no better work than teamwork."
+  driverHints:
+  - Hold onto your Shield for those RPG attacks
+  - 'Try not to get pushed off the tracks, or at least try to take someone down with
+    you. '
+  - 'Knock other Riders off the tracks if you can. Try not to go down with them though. '
+  - "Don\u2019t forget to use your abilities and equipment! "
+  - Use your smokescreen near walls, ledges and edges.
+  - Mines work great in the middle of a road or underneath a Pick-Up.
+  - 'Mines are great for diverting other Riders away from or towards certain areas. '
+  - Stop! Use your Emergency break just before a wall, ledge or edge.
+  - Cut them up! Use your Shred ability when up against other Sand Trackers.
+  - 'Boost is great when you need to get ahead of someone quickly. '
+  - Stay in the centre of the track at all times.
+  - Good luck!
+  - Try not to crash, blow up, burn, get shot, get cut, etc.
+  - "Don\u2019t forget to watch around, as bullets can come from any direction."
+  - "Always remember, there\u2019s no better work than teamwork."
+  roomController: {fileID: 328847881}
 --- !u!114 &1595746699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36727,8 +36767,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -14.6, y: -8}
-  m_SizeDelta: {x: 188.8, y: 35}
+  m_AnchoredPosition: {x: -37.2, y: -8}
+  m_SizeDelta: {x: 152.68, y: 35}
   m_Pivot: {x: 1, y: 1}
 --- !u!224 &3050640146181872171
 RectTransform:

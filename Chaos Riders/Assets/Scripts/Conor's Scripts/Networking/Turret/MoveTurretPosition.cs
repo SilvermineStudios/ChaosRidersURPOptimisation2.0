@@ -19,7 +19,7 @@ public class MoveTurretPosition : MonoBehaviour
     private PlayerSpawner ps;
     private bool canConnect = true;
 
-    private TurretTester turretTester;
+    [SerializeField] private TurretTester turretTester;
 
     private Shooter shooterScript;
 
@@ -116,14 +116,20 @@ public class MoveTurretPosition : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("Cars") && canConnect)
         {
             canConnect = false;
-            car = other.gameObject;
+            
+            
+            if (other.gameObject.tag == "car")
+            {
+                car = other.gameObject.transform.root.gameObject;
+                FakeParent = other.gameObject.transform.root;
+            }
+            else
+            {
+                car = other.gameObject;
+                FakeParent = other.gameObject.transform;
+            }
 
-            if(other.gameObject.tag == "car")
-                car.GetComponent<Controller>().ShooterAttached = turretTester;
-            //else
-                //car.GetComponent<AICarController>().ShooterAttached = turretTester;
-
-            FakeParent = other.gameObject.transform;
+                
 
             if (shooterScript != null)
                 shooterScript.connectCar = true;

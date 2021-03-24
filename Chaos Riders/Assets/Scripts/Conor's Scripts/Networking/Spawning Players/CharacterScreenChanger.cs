@@ -20,11 +20,19 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
 
     [SerializeField] private PhotonMenuPlayer[] photonMenuPlayers;
 
+    [Header("Loading Screen")]
+    [SerializeField] private string[] shooterHints;
+    [SerializeField] private string[] driverHints;
+    [SerializeField] private CustomMatchmakingRoomController roomController;
+
     private void Awake()
     {
         //playerDataManager = FindObjectOfType<PlayerDataManager>();
         pv = GetComponent<PhotonView>();
         gameVariables = FindObjectOfType<GameVariables>();
+
+        if (roomController == null)
+            roomController = FindObjectOfType<CustomMatchmakingRoomController>();
     }
 
     private void Start()
@@ -113,6 +121,9 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
                 backButton.SetActive(true);
 
                 pv.RPC("RPC_AddToDrivers", RpcTarget.AllBuffered, p);
+
+                roomController.hintText.text = driverHints[Random.Range(0, driverHints.Length)];
+                Debug.Log("Tip: " + driverHints[Random.Range(0, driverHints.Length)]);
             }
         }
     }
@@ -123,7 +134,7 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
         {
             if (pmp.gameObject.GetComponent<PhotonView>().Owner == p)
             {
-                playerDataManager.drivers.Add(pmp.gameObject);
+                //playerDataManager.drivers.Add(pmp.gameObject);
 
                 pmp.driver = true;
                 pmp.shooter = false;
@@ -191,6 +202,9 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
                 backButton.SetActive(true);
 
                 pv.RPC("RPC_AddToShooters", RpcTarget.AllBuffered, p);
+
+                roomController.hintText.text = shooterHints[Random.Range(0, shooterHints.Length)];
+                Debug.Log("Tip: " + shooterHints[Random.Range(0, shooterHints.Length)]);
             }
         }
     }
@@ -201,7 +215,7 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
         {
             if (pmp.gameObject.GetComponent<PhotonView>().Owner == p)
             {
-                playerDataManager.shooters.Add(pmp.gameObject);
+                //playerDataManager.shooters.Add(pmp.gameObject);
                 pmp.shooter = true;
                 pmp.driver = false;
             }

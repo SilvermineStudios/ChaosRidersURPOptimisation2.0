@@ -62,7 +62,7 @@ public class Controller : MonoBehaviour
     PhotonView pv;
     Health healthScript;
     ShredUltimate shredUltimate;
-    [HideInInspector] public TurretTester ShooterAttached; //Does this need to still be here?
+    //public TurretTester ShooterAttached; 
     [HideInInspector] public GameObject Shooter;
     protected PlayerInputs playerInputs;
     #endregion
@@ -136,7 +136,9 @@ public class Controller : MonoBehaviour
         FMODUnity.RuntimeManager.AttachInstanceToGameObject(skidSound, transform, rb);
         skidSound.start();
         skidSound.setVolume(0);
-        smokeTrail.SetActive(false);
+
+        if(smokeTrail != null)
+            smokeTrail.SetActive(false);
     }
 
     private void Start()
@@ -172,11 +174,7 @@ public class Controller : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z - 1f);
             transform.rotation = Quaternion.Euler(0, transform.localRotation.y, 0);
-
-            if (ShooterAttached != null)
-            {
-                ShooterAttached.ResetPos();
-            }
+            
         }
 
         if ((Input.GetKeyDown(KeyCode.Mouse1) && canChangeCar))
