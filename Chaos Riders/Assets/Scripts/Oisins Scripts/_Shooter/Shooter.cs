@@ -646,6 +646,8 @@ public class Shooter : MonoBehaviourPun
                 }
                 //impactGo.transform.parent = impactEffectHolder;
 
+                hitmarker.ChangeAlpha(1);
+                FMODUnity.RuntimeManager.PlayOneShot(hitmarkerSound);
 
                 float chance = Random.Range(0, 100);
                 if (chance <= trailPercentage)
