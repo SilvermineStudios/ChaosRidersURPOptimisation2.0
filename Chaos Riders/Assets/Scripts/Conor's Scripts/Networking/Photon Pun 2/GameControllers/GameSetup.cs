@@ -23,7 +23,6 @@ public class GameSetup : MonoBehaviour
 
     private int amountOfShooters = 0, amountOfDrivers = 0;
     public GameObject[] aiCars;
-    PhotonMenuPlayer tempHolder;
 
     private void OnDrawGizmos()
     {
@@ -91,7 +90,6 @@ public class GameSetup : MonoBehaviour
 
         foreach (PhotonMenuPlayer p in playerDataManager.photonMenuPlayers)
         {
-            tempHolder = p;
             if (p.driver)
             {
                 //Debug.Log(p.Player.NickName + " is a Driver");

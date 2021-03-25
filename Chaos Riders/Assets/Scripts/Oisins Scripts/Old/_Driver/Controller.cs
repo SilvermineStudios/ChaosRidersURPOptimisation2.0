@@ -169,6 +169,7 @@ public class Controller : MonoBehaviour
 
     private void Update()
     {
+        //Debug.Log("Muh name is: " + pv.Owner.NickName);
         GetInput();
         /*
         if (Input.GetKeyDown(KeyCode.R))
