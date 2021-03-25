@@ -627,7 +627,7 @@ public class Shooter : MonoBehaviourPun
 
         foreach (RaycastHit hit in hits)
         {
-            if (hit.transform.gameObject != car)
+            if (hit.transform.gameObject != car && (hit.transform.gameObject.tag == "Player" || hit.transform.gameObject.tag == "car"))
             {
                 Target target = hit.transform.GetComponent<Target>();
                 if (target != null && target.gameObject != car)
@@ -676,7 +676,7 @@ public class Shooter : MonoBehaviourPun
                     trailGO.GetComponent<Rigidbody>().AddForce(trailGO.transform.forward * 100, ForceMode.Impulse);
                     trailGO.GetComponent<DeleteMe>().enabled = true;
                 }
-                break;
+                
             }
         }
     }
