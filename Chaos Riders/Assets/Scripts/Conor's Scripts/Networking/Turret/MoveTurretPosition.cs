@@ -84,7 +84,7 @@ public class MoveTurretPosition : MonoBehaviour
 
         gunstand.localRotation = targetRot;
         gunstand.transform.position = carGunStandPosition.transform.position;
-        Debug.Log("Attached to fake parent");
+        //Debug.Log("Attached to fake parent");
     }
 
 

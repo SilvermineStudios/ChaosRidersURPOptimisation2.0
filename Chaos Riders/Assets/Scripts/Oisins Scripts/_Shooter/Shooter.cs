@@ -621,56 +621,64 @@ public class Shooter : MonoBehaviourPun
             bulletCasingGO.GetComponent<Rigidbody>().AddForce((bulletCasingGO.transform.right + (bulletCasingGO.transform.up * 2)) * 0.3f, ForceMode.Impulse);
         }
 
-        RaycastHit hit;
-        if (Physics.Raycast(cineCamera.transform.position, direction, out hit, weaponRange, everythingButIgnoreBullets))
+        RaycastHit[] hits;
+
+        hits = Physics.RaycastAll(cineCamera.transform.position, direction, weaponRange, everythingButIgnoreBullets);
+
+        foreach (RaycastHit hit in hits)
         {
-            Target target = hit.transform.GetComponent<Target>();
-            if (target != null && target.gameObject != car)
+            if (hit.transform.gameObject != car)
             {
-                target.TakeDamage(weaponDamage);
-            }
-
-            GameObject impactGo;
-            if (IsThisMultiplayer.Instance.multiplayer)
-            {
-                impactGo = PhotonNetwork.Instantiate("Impact Particle Effect", hit.point, Quaternion.LookRotation(hit.normal), 0);
-            }
-            else
-            {
-                impactGo = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
-            }
-            //impactGo.transform.parent = impactEffectHolder;
-        }
-
-        float chance = Random.Range(0, 100);
-        if (chance <= trailPercentage)
-        {
-            GameObject trailGO;
-            if (IsThisMultiplayer.Instance.multiplayer)
-            {
-                trailGO = PhotonNetwork.Instantiate("Trail", bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.rotation);
-            }
-            else
-            {
-                trailGO = Instantiate(trail, bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.rotation);
-            }
-
-            FMODUnity.RuntimeManager.PlayOneShotAttached(bulletWhistle, trailGO);
-            if (!noCarNeeded)
-            {
-                if (car.GetComponent<Controller>() && pv.IsMine)
+                Target target = hit.transform.GetComponent<Target>();
+                if (target != null && target.gameObject != car)
                 {
-                    trailGO.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
+                    target.TakeDamage(weaponDamage);
+                }
+
+                GameObject impactGo;
+                if (IsThisMultiplayer.Instance.multiplayer)
+                {
+                    impactGo = PhotonNetwork.Instantiate("Impact Particle Effect", hit.point, Quaternion.LookRotation(hit.normal), 0);
                 }
                 else
-                    trailGO.GetComponent<Rigidbody>().velocity = aiCarController.rb.velocity;
+                {
+                    impactGo = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+                }
+                //impactGo.transform.parent = impactEffectHolder;
+
+                hitmarker.ChangeAlpha(1);
+                FMODUnity.RuntimeManager.PlayOneShot(hitmarkerSound);
+
+                float chance = Random.Range(0, 100);
+                if (chance <= trailPercentage)
+                {
+                    GameObject trailGO;
+                    if (IsThisMultiplayer.Instance.multiplayer)
+                    {
+                        trailGO = PhotonNetwork.Instantiate("Trail", bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.rotation);
+                    }
+                    else
+                    {
+                        trailGO = Instantiate(trail, bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.rotation);
+                    }
+
+                    FMODUnity.RuntimeManager.PlayOneShotAttached(bulletWhistle, trailGO);
+                    if (!noCarNeeded)
+                    {
+                        if (car.GetComponent<Controller>() && pv.IsMine)
+                        {
+                            trailGO.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
+                        }
+                        else
+                            trailGO.GetComponent<Rigidbody>().velocity = aiCarController.rb.velocity;
+                    }
+
+                    trailGO.GetComponent<Rigidbody>().AddForce(trailGO.transform.forward * 100, ForceMode.Impulse);
+                    trailGO.GetComponent<DeleteMe>().enabled = true;
+                }
+                break;
             }
-
-            trailGO.GetComponent<Rigidbody>().AddForce(trailGO.transform.forward * 100, ForceMode.Impulse);
-            trailGO.GetComponent<DeleteMe>().enabled = true;
         }
-
-        
     }
     #endregion
 

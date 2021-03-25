@@ -23,7 +23,6 @@ public class GameSetup : MonoBehaviour
 
     private int amountOfShooters = 0, amountOfDrivers = 0;
     public GameObject[] aiCars;
-    PhotonMenuPlayer tempHolder;
 
     private void OnDrawGizmos()
     {
@@ -91,13 +90,12 @@ public class GameSetup : MonoBehaviour
 
         foreach (PhotonMenuPlayer p in playerDataManager.photonMenuPlayers)
         {
-            tempHolder = p;
             if (p.driver)
             {
                 //Debug.Log(p.Player.NickName + " is a Driver");
                 //pv.RPC("RPC_SpawnDriver", p.Player, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation, p);
-                //pv.RPC("RPC_SpawnDriver", p.Player, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
-                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "DriverPlayer"), spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation, 0);
+                pv.RPC("RPC_SpawnDriver", p.Player, spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation);
+                //PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "DriverPlayer"), spawnPoints[p.teamNumber].position, spawnPoints[p.teamNumber].rotation, 0);
             }
 
             if (p.shooter)

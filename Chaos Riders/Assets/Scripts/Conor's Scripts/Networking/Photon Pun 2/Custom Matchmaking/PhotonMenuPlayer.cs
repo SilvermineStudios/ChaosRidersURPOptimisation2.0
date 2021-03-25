@@ -17,7 +17,7 @@ public class PhotonMenuPlayer : MonoBehaviour
 
     public Player Player;
     public int playerNumber; //<-----------------------------------------------------------------------------------------------------------------------------------------
-
+    public Checkpoint myCheckpoint;
 
     public bool picked = false;
     public bool driver = false;
@@ -61,6 +61,7 @@ public class PhotonMenuPlayer : MonoBehaviour
     private void Start()
     {
         Player = pv.Owner;
+        
         //Debug.Log("My player is = " + Player.NickName);
     }
 
@@ -103,6 +104,11 @@ public class PhotonMenuPlayer : MonoBehaviour
                         go.GetComponent<PlayerNameBox>().GoldenGunSelected();
                 }
             }
+        }
+
+        if(roomController == null)
+        {
+            myCheckpoint = pv.gameObject.GetComponent<Checkpoint>();
         }
     }
 

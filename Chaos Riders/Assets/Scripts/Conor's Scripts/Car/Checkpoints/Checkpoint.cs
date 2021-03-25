@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class Checkpoint : MonoBehaviour
 {
+    public float distanceToNextCheckpoint { get; private set; }
+
     [SerializeField] private AudioClip soundEffect;
     [SerializeField] GameObject resetBar;
     float resetChargeAmount;
@@ -56,8 +58,10 @@ public class Checkpoint : MonoBehaviour
         //update currentlap
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
+            distanceToNextCheckpoint = Vector3.Distance(transform.position, checkpoints[(int)currentCheckpoint].transform.position);
+
             OnlyDisplayNextCheckpoint();
-            if(Input.GetKeyDown(resetKey))
+            if(Input.GetKeyDown(resetKey) && resetBar != null)
             {
                 isResetting = true;
             }
@@ -70,7 +74,7 @@ public class Checkpoint : MonoBehaviour
             {
                 StartCoroutine(UseEquipmentUI(3));
             }
-            else
+            else if (resetBar != null)
             {
                 resetTimer = 0;
                 resetChargeAmount = 0;
