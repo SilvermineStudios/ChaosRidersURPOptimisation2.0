@@ -57,7 +57,7 @@ public class Checkpoint : MonoBehaviour
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
             OnlyDisplayNextCheckpoint();
-            if(Input.GetKeyDown(resetKey))
+            if(Input.GetKeyDown(resetKey) && resetBar != null)
             {
                 isResetting = true;
             }
@@ -70,7 +70,7 @@ public class Checkpoint : MonoBehaviour
             {
                 StartCoroutine(UseEquipmentUI(3));
             }
-            else
+            else if (resetBar != null)
             {
                 resetTimer = 0;
                 resetChargeAmount = 0;
