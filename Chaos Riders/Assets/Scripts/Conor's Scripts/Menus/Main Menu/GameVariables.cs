@@ -100,7 +100,8 @@ public class GameVariables : MonoBehaviour
     {
         int lapVal = val + 1; //adding 1 to val, val is the array index value from the dropdown which starts at 0, the index 0 on the drop down is 1 lap
         laps = lapVal;
-        nonHostLapText.text = "Laps: " + laps; //display what the host chooses for the other players
+        //nonHostLapText.text = "Laps: " + laps; //display what the host chooses for the other players
+        nonHostLapText.text = laps.ToString(); //display what the host chooses for the other players
         Laps = laps;
     }
 
@@ -110,7 +111,8 @@ public class GameVariables : MonoBehaviour
         if (val == 0)
         {
             toggleAI = true;
-            nonHostToggleAIText.text = "AI Drivers: on"; //display what the host chooses for the other players
+            //nonHostToggleAIText.text = "AI Drivers: on"; //display what the host chooses for the other players
+            nonHostToggleAIText.text = "on"; //display what the host chooses for the other players
             ToggleAI = toggleAI;
 
             //amountOfAIDropdown.value = 2;
@@ -119,7 +121,8 @@ public class GameVariables : MonoBehaviour
         else
         {
             toggleAI = false;
-            nonHostToggleAIText.text = "AI Drivers: off"; //display what the host chooses for the other players
+            //nonHostToggleAIText.text = "AI Drivers: off"; //display what the host chooses for the other players
+            nonHostToggleAIText.text = "off"; //display what the host chooses for the other players
             ToggleAI = toggleAI;
 
             //amountOfAIDropdown.value = 0;
@@ -147,7 +150,8 @@ public class GameVariables : MonoBehaviour
             pv.RPC("UpdateToggleAI", RpcTarget.AllBuffered, 0);
         }
 
-        nonHostAmountOfAIText.text = "Amount of AI: " + amountAI; //display what the host chooses for the other players
+        //nonHostAmountOfAIText.text = "Amount of AI: " + amountAI; //display what the host chooses for the other players
+        nonHostAmountOfAIText.text = amountAI.ToString(); //display what the host chooses for the other players
         AmountOfAICars = amountOfAICars;
     }
 
@@ -157,13 +161,15 @@ public class GameVariables : MonoBehaviour
         if (val == 0)
         {
             pickups = true;
-            nonHostPickupsText.text = "Pickups: on"; //display what the host chooses for the other players
+            //nonHostPickupsText.text = "Pickups: on"; //display what the host chooses for the other players
+            nonHostPickupsText.text = "on"; //display what the host chooses for the other players
             Pickups = pickups;
         }
         else
         {
             pickups = false;
-            nonHostPickupsText.text = "Pickups: off"; //display what the host chooses for the other players
+            //nonHostPickupsText.text = "Pickups: off"; //display what the host chooses for the other players
+            nonHostPickupsText.text = "off"; //display what the host chooses for the other players
             Pickups = pickups;
         }
     }
