@@ -18,7 +18,7 @@ public class CustomMatchmakingLobbyController : MonoBehaviourPunCallbacks
     public TMP_InputField playerNameInput; //input field so player can change their NickName
 
     private string roomName; //string for saving room name
-    [SerializeField] private bool roomNameBlank = true;
+    private bool roomNameBlank = true;
     private int roomSize; //int for saving room size
 
     private List<RoomInfo> roomLisings; //list of current rooms
