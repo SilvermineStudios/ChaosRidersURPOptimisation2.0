@@ -618,6 +618,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7646329333739405188, guid: 8de1ba82ff2fe444e985a96412fb910e, type: 3}
+      propertyPath: viewIdField
+      value: 50
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8de1ba82ff2fe444e985a96412fb910e, type: 3}
 --- !u!1 &33804034
@@ -836,6 +840,10 @@ PrefabInstance:
     - target: {fileID: 1287546185186777206, guid: 8de1ba82ff2fe444e985a96412fb910e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7646329333739405188, guid: 8de1ba82ff2fe444e985a96412fb910e, type: 3}
+      propertyPath: viewIdField
+      value: 49
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8de1ba82ff2fe444e985a96412fb910e, type: 3}
@@ -3846,6 +3854,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: NitroPickup (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 8862301169882001001, guid: 72493173c23be6544a3f4fe2e303efbc, type: 3}
+      propertyPath: viewIdField
+      value: 48
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72493173c23be6544a3f4fe2e303efbc, type: 3}
 --- !u!4 &229808248 stripped
@@ -4061,6 +4073,10 @@ PrefabInstance:
     - target: {fileID: 8022433694053280627, guid: 72493173c23be6544a3f4fe2e303efbc, type: 3}
       propertyPath: m_Name
       value: NitroPickup (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8862301169882001001, guid: 72493173c23be6544a3f4fe2e303efbc, type: 3}
+      propertyPath: viewIdField
+      value: 47
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72493173c23be6544a3f4fe2e303efbc, type: 3}
@@ -5795,6 +5811,10 @@ PrefabInstance:
     - target: {fileID: 1287546185186777206, guid: 8de1ba82ff2fe444e985a96412fb910e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7646329333739405188, guid: 8de1ba82ff2fe444e985a96412fb910e, type: 3}
+      propertyPath: viewIdField
+      value: 46
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8de1ba82ff2fe444e985a96412fb910e, type: 3}
@@ -7827,6 +7847,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShieldPickup (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 3625367844487992625, guid: 3f58e13a517f7304aaf0327aae895be3, type: 3}
+      propertyPath: viewIdField
+      value: 45
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f58e13a517f7304aaf0327aae895be3, type: 3}
 --- !u!4 &376927497 stripped
@@ -8941,6 +8965,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7646329333739405188, guid: 8de1ba82ff2fe444e985a96412fb910e, type: 3}
+      propertyPath: viewIdField
+      value: 44
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8de1ba82ff2fe444e985a96412fb910e, type: 3}
 --- !u!1001 &400614658
@@ -8997,6 +9025,10 @@ PrefabInstance:
     - target: {fileID: 8022433694053280627, guid: 72493173c23be6544a3f4fe2e303efbc, type: 3}
       propertyPath: m_Name
       value: NitroPickup (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8862301169882001001, guid: 72493173c23be6544a3f4fe2e303efbc, type: 3}
+      propertyPath: viewIdField
+      value: 43
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72493173c23be6544a3f4fe2e303efbc, type: 3}
@@ -10779,6 +10811,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58a56bcaa3c75624fa38c1b892be6afb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerDataManager: {fileID: 0}
   pv: {fileID: 439900649}
   canSpawnPlayers: 1
   spawnDelay: 5
@@ -10801,6 +10834,7 @@ MonoBehaviour:
   aiCars:
   - {fileID: 2011213230151948855, guid: 4fef911cd4b7a114bb4c2b67b8861e47, type: 3}
   - {fileID: 1407414512137103672, guid: c7d771049c583ed4d8583216cccd3132, type: 3}
+  aiGuns: []
 --- !u!1 &441288499
 GameObject:
   m_ObjectHideFlags: 0
@@ -11254,6 +11288,10 @@ PrefabInstance:
     - target: {fileID: 1287546185186777206, guid: 8de1ba82ff2fe444e985a96412fb910e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7646329333739405188, guid: 8de1ba82ff2fe444e985a96412fb910e, type: 3}
+      propertyPath: viewIdField
+      value: 42
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8de1ba82ff2fe444e985a96412fb910e, type: 3}
@@ -14384,6 +14422,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7646329333739405188, guid: 8de1ba82ff2fe444e985a96412fb910e, type: 3}
+      propertyPath: viewIdField
+      value: 41
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8de1ba82ff2fe444e985a96412fb910e, type: 3}
 --- !u!1 &624047186
@@ -17420,6 +17462,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7646329333739405188, guid: 8de1ba82ff2fe444e985a96412fb910e, type: 3}
+      propertyPath: viewIdField
+      value: 40
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8de1ba82ff2fe444e985a96412fb910e, type: 3}
 --- !u!1 &758873834
@@ -20050,6 +20096,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShieldPickup (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3625367844487992625, guid: 3f58e13a517f7304aaf0327aae895be3, type: 3}
+      propertyPath: viewIdField
+      value: 39
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f58e13a517f7304aaf0327aae895be3, type: 3}
 --- !u!4 &831848222 stripped
@@ -22397,6 +22447,10 @@ PrefabInstance:
     - target: {fileID: 1287546185186777206, guid: 8de1ba82ff2fe444e985a96412fb910e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7646329333739405188, guid: 8de1ba82ff2fe444e985a96412fb910e, type: 3}
+      propertyPath: viewIdField
+      value: 38
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8de1ba82ff2fe444e985a96412fb910e, type: 3}
@@ -26822,6 +26876,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShieldPickup (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 3625367844487992625, guid: 3f58e13a517f7304aaf0327aae895be3, type: 3}
+      propertyPath: viewIdField
+      value: 37
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f58e13a517f7304aaf0327aae895be3, type: 3}
 --- !u!4 &1117309789 stripped
@@ -27202,7 +27260,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1155110777}
-  m_LocalRotation: {x: 0.01689417, y: 0.923554, z: -0.040962674, w: 0.38089994}
+  m_LocalRotation: {x: 0.016894164, y: 0.923554, z: -0.040962663, w: 0.3808999}
   m_LocalPosition: {x: -148.9198, y: 2.6599998, z: 71.737045}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -27950,6 +28008,10 @@ PrefabInstance:
     - target: {fileID: 634208519812466191, guid: 3f58e13a517f7304aaf0327aae895be3, type: 3}
       propertyPath: m_Name
       value: ShieldPickup (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3625367844487992625, guid: 3f58e13a517f7304aaf0327aae895be3, type: 3}
+      propertyPath: viewIdField
+      value: 36
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f58e13a517f7304aaf0327aae895be3, type: 3}
@@ -29089,6 +29151,10 @@ PrefabInstance:
     - target: {fileID: 634208519812466191, guid: 3f58e13a517f7304aaf0327aae895be3, type: 3}
       propertyPath: m_Name
       value: ShieldPickup (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3625367844487992625, guid: 3f58e13a517f7304aaf0327aae895be3, type: 3}
+      propertyPath: viewIdField
+      value: 35
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f58e13a517f7304aaf0327aae895be3, type: 3}
@@ -30257,6 +30323,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: NitroPickup
       objectReference: {fileID: 0}
+    - target: {fileID: 8862301169882001001, guid: 72493173c23be6544a3f4fe2e303efbc, type: 3}
+      propertyPath: viewIdField
+      value: 34
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72493173c23be6544a3f4fe2e303efbc, type: 3}
 --- !u!4 &1295083444 stripped
@@ -30832,6 +30902,10 @@ PrefabInstance:
     - target: {fileID: 634208519812466191, guid: 3f58e13a517f7304aaf0327aae895be3, type: 3}
       propertyPath: m_Name
       value: ShieldPickup (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3625367844487992625, guid: 3f58e13a517f7304aaf0327aae895be3, type: 3}
+      propertyPath: viewIdField
+      value: 33
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f58e13a517f7304aaf0327aae895be3, type: 3}
@@ -34114,6 +34188,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShieldPickup (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 3625367844487992625, guid: 3f58e13a517f7304aaf0327aae895be3, type: 3}
+      propertyPath: viewIdField
+      value: 32
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f58e13a517f7304aaf0327aae895be3, type: 3}
 --- !u!4 &1398279950 stripped
@@ -34443,6 +34521,10 @@ PrefabInstance:
     - target: {fileID: 1287546185186777206, guid: 8de1ba82ff2fe444e985a96412fb910e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7646329333739405188, guid: 8de1ba82ff2fe444e985a96412fb910e, type: 3}
+      propertyPath: viewIdField
+      value: 31
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8de1ba82ff2fe444e985a96412fb910e, type: 3}
@@ -35591,6 +35673,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7646329333739405188, guid: 8de1ba82ff2fe444e985a96412fb910e, type: 3}
+      propertyPath: viewIdField
+      value: 30
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8de1ba82ff2fe444e985a96412fb910e, type: 3}
 --- !u!1 &1492355823
@@ -36438,6 +36524,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7646329333739405188, guid: 8de1ba82ff2fe444e985a96412fb910e, type: 3}
+      propertyPath: viewIdField
+      value: 29
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8de1ba82ff2fe444e985a96412fb910e, type: 3}
 --- !u!43 &1562449348
@@ -37113,6 +37203,7 @@ MonoBehaviour:
   aiCars:
   - {fileID: 2011213230151948855, guid: 4fef911cd4b7a114bb4c2b67b8861e47, type: 3}
   - {fileID: 1407414512137103672, guid: c7d771049c583ed4d8583216cccd3132, type: 3}
+  aiGuns: []
   spawnAI: 1
   amountOfAI: 10
 --- !u!1001 &1579298940
@@ -38642,6 +38733,10 @@ PrefabInstance:
     - target: {fileID: 1287546185186777206, guid: 8de1ba82ff2fe444e985a96412fb910e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7646329333739405188, guid: 8de1ba82ff2fe444e985a96412fb910e, type: 3}
+      propertyPath: viewIdField
+      value: 28
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8de1ba82ff2fe444e985a96412fb910e, type: 3}
@@ -40307,6 +40402,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: NitroPickup (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8862301169882001001, guid: 72493173c23be6544a3f4fe2e303efbc, type: 3}
+      propertyPath: viewIdField
+      value: 27
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72493173c23be6544a3f4fe2e303efbc, type: 3}
 --- !u!4 &1720626676 stripped
@@ -40704,6 +40803,10 @@ PrefabInstance:
     - target: {fileID: 1287546185186777206, guid: 8de1ba82ff2fe444e985a96412fb910e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7646329333739405188, guid: 8de1ba82ff2fe444e985a96412fb910e, type: 3}
+      propertyPath: viewIdField
+      value: 26
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8de1ba82ff2fe444e985a96412fb910e, type: 3}
@@ -41127,6 +41230,10 @@ PrefabInstance:
     - target: {fileID: 634208519812466191, guid: 3f58e13a517f7304aaf0327aae895be3, type: 3}
       propertyPath: m_Name
       value: ShieldPickup (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3625367844487992625, guid: 3f58e13a517f7304aaf0327aae895be3, type: 3}
+      propertyPath: viewIdField
+      value: 25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f58e13a517f7304aaf0327aae895be3, type: 3}
@@ -42506,6 +42613,10 @@ PrefabInstance:
     - target: {fileID: 634208519812466191, guid: 3f58e13a517f7304aaf0327aae895be3, type: 3}
       propertyPath: m_Name
       value: ShieldPickup
+      objectReference: {fileID: 0}
+    - target: {fileID: 3625367844487992625, guid: 3f58e13a517f7304aaf0327aae895be3, type: 3}
+      propertyPath: viewIdField
+      value: 24
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f58e13a517f7304aaf0327aae895be3, type: 3}
@@ -45301,6 +45412,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShieldPickup (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 3625367844487992625, guid: 3f58e13a517f7304aaf0327aae895be3, type: 3}
+      propertyPath: viewIdField
+      value: 23
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f58e13a517f7304aaf0327aae895be3, type: 3}
 --- !u!4 &2092301027 stripped
@@ -47118,19 +47233,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 51585144032355879, guid: acd44795723fd2b44a6202670b3435c9, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.000000019557772
+      value: 0.000000017695129
       objectReference: {fileID: 0}
     - target: {fileID: 51585144032355879, guid: acd44795723fd2b44a6202670b3435c9, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.99901783
+      value: 0.9990179
       objectReference: {fileID: 0}
     - target: {fileID: 51585144032355879, guid: acd44795723fd2b44a6202670b3435c9, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.044309743
+      value: -0.044309735
       objectReference: {fileID: 0}
     - target: {fileID: 51585144032355879, guid: acd44795723fd2b44a6202670b3435c9, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.0000005066394
+      value: 0.00000047683716
+      objectReference: {fileID: 0}
+    - target: {fileID: 51585144032355879, guid: acd44795723fd2b44a6202670b3435c9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.0000032186508
+      objectReference: {fileID: 0}
+    - target: {fileID: 51585144032355879, guid: acd44795723fd2b44a6202670b3435c9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.000007
       objectReference: {fileID: 0}
     - target: {fileID: 51585144521219586, guid: acd44795723fd2b44a6202670b3435c9, type: 3}
       propertyPath: m_AnchorMax.x

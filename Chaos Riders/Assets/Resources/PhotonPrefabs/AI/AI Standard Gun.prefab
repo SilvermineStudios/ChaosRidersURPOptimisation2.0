@@ -245,7 +245,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3834514846364322372
 Transform:
   m_ObjectHideFlags: 0
@@ -258,7 +258,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6753911985080015449}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &1381958003
 VFXRenderer:
@@ -267,7 +267,7 @@ VFXRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3108730426236208173}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -1479,7 +1479,6 @@ Transform:
   - {fileID: 6753911985266905326}
   - {fileID: 7085368395040658323}
   - {fileID: 3767529868687993744}
-  - {fileID: 766907919723302838}
   - {fileID: 3834514846364322372}
   m_Father: {fileID: 6753911985256716255}
   m_RootOrder: 0
@@ -1571,7 +1570,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6753911985263565948
 Transform:
   m_ObjectHideFlags: 0
@@ -6469,6 +6468,9 @@ GameObject:
   - component: {fileID: 3580106078686974098}
   - component: {fileID: 6753911985949760906}
   - component: {fileID: 219153933}
+  - component: {fileID: 3318281696263660135}
+  - component: {fileID: 3563193512973357809}
+  - component: {fileID: 3563193512973357810}
   m_Layer: 0
   m_Name: AI Standard Gun
   m_TagString: shooter
@@ -6510,6 +6512,8 @@ MonoBehaviour:
   noCarNeeded: 1
   useTestingCamera: 0
   Camera: {fileID: 7350203655266108}
+  fireRate: 1
+  WeaponDamage: 20
   minigunBarrel: {fileID: 3767529869141748556}
   rifleBarrel: {fileID: 4102530861068565298}
   rpgGo: {fileID: 3767529868687993775}
@@ -6519,21 +6523,20 @@ MonoBehaviour:
   bulletSpawnPoint: {fileID: 6753911985266905327}
   MinigunHolder: {fileID: 6019231408425968515}
   RifleHolder: {fileID: 4099642483785407078}
-  muzzleFlash: {fileID: 6753911985263565950}
+  muzzleFlash: {fileID: 6753911985263565949}
   removedMyCarFromTargets: 0
   impactEffect: {fileID: 7938478309457529535, guid: 0c9781b5140952b42ae2c6af77491dfc, type: 3}
   impactEffectHolder: {fileID: 3767529867846557448}
   VFXBulletGo: {fileID: 3108730426236208173}
-  WeaponDamage: 20
-  fireRate: 1
   partToRotate: {fileID: 6753911985080015449}
   aiCarTag: Player
   carTag: car
-  range: 40.74
-  timeBeforeLookingForANewTarget: 3
-  delayBeforeStartWorking: 10
+  range: 100
+  timeBeforeLookingForANewTarget: 1
+  delayBeforeStartWorking: 2
   targets: []
   turnSpeed: 5
+  xOffest: 0.4
 --- !u!114 &6753911985949760906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6567,6 +6570,61 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &3318281696263660135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6753911985949760915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d2692526f2ce1548ab27445bb4e6b00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  togglePickupButton: 32
+  hasRPG: 0
+  rpgUI: {fileID: 0}
+  gunbarrelHolder: {fileID: 0}
+  gunPartsToMakeInvisible: []
+--- !u!114 &3563193512973357809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6753911985949760915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+--- !u!114 &3563193512973357810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6753911985949760915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  observableSearch: 2
+  Synchronization: 3
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 3563193512973357809}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &6753911986327165252
 GameObject:
   m_ObjectHideFlags: 0
@@ -6659,36 +6717,6 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!1 &7205170889615342592
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 766907919723302838}
-  m_Layer: 0
-  m_Name: Casings
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &766907919723302838
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7205170889615342592}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.184, y: 0, z: 0.029}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 6753911985080015449}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7362794902746446492
 GameObject:
   m_ObjectHideFlags: 0
@@ -6901,7 +6929,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4276665082278511295
 Transform:
   m_ObjectHideFlags: 0
