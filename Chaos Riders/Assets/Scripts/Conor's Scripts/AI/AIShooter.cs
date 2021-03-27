@@ -219,8 +219,9 @@ public class AIShooter : MonoBehaviour
 
     void Shoot()
     {
-        //muzzleFlash.GetComponent<ParticleSystem>().Play();
         muzzleFlash.SetActive(true);
+        muzzleFlash.GetComponent<ParticleSystem>().Play();
+        
         VFXBulletGo.SetActive(true); //have bullet casings flying out
         barrelRotationSpeed = barrelRotationMaxSpeed;
 

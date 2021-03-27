@@ -6468,6 +6468,9 @@ GameObject:
   - component: {fileID: 3580106078686974098}
   - component: {fileID: 6753911985949760906}
   - component: {fileID: 219153933}
+  - component: {fileID: 3318281696263660135}
+  - component: {fileID: 3563193512973357809}
+  - component: {fileID: 3563193512973357810}
   m_Layer: 0
   m_Name: AI Standard Gun
   m_TagString: shooter
@@ -6528,12 +6531,12 @@ MonoBehaviour:
   partToRotate: {fileID: 6753911985080015449}
   aiCarTag: Player
   carTag: car
-  range: 70
+  range: 100
   timeBeforeLookingForANewTarget: 1
   delayBeforeStartWorking: 2
   targets: []
   turnSpeed: 5
-  xOffest: 0.35
+  xOffest: 0.4
 --- !u!114 &6753911985949760906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6567,6 +6570,61 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &3318281696263660135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6753911985949760915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d2692526f2ce1548ab27445bb4e6b00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  togglePickupButton: 32
+  hasRPG: 0
+  rpgUI: {fileID: 0}
+  gunbarrelHolder: {fileID: 0}
+  gunPartsToMakeInvisible: []
+--- !u!114 &3563193512973357809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6753911985949760915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+--- !u!114 &3563193512973357810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6753911985949760915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  observableSearch: 2
+  Synchronization: 3
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 3563193512973357809}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &6753911986327165252
 GameObject:
   m_ObjectHideFlags: 0
