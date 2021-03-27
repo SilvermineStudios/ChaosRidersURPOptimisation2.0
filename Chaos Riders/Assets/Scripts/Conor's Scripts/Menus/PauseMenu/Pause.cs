@@ -8,7 +8,9 @@ using UnityEngine.UI;
 
 public class Pause : MonoBehaviour
 {
-    [SerializeField] private int menuSceneIndex = 0;
+    private PhotonView pv;
+
+    private int menuSceneIndex = 0;
 
     //Audio
     FMOD.Studio.Bus Music;
@@ -16,23 +18,39 @@ public class Pause : MonoBehaviour
     FMOD.Studio.Bus Master;
 
     //Pause Menu Gameobject 
-    [SerializeField] private GameObject PauseMenu, audioSettingsPanel, mainPauseMenuPanel, controlsPanel; 
-    [SerializeField] private KeyCode pauseMenuButton1, pauseMenuButton2;
-    [SerializeField] Slider MasterSlider;
-    [SerializeField] Slider MusicSlider;
-    [SerializeField] Slider SFXSlider;
-    [SerializeField] Toggle saveChanges;
+    private GameObject PauseMenu; 
+    private GameObject audioSettingsPanel, mainPauseMenuPanel, controlsPanel, sliders; 
+    //[SerializeField] private KeyCode pauseMenuButton1, pauseMenuButton2;
 
-    float timeSinceLastPush = 0;
-    public bool paused = false;
-    public bool saveChangesToAudio;
-    [SerializeField] private int LobbySceneIndex = 0;
-    private PhotonView pv;
+    //Audio stuff
+    private Slider MasterSlider, MusicSlider, SFXSlider;
+    private Toggle saveChanges;
+
+    float timeSinceLastPush = 0; //dont delete
+    [HideInInspector] public bool paused = false;
+    private bool saveChangesToAudio;
+
+    
+
+    private void Awake()
+    {
+        PauseMenu = this.gameObject;
+        pv = GetComponent<PhotonView>();
+
+        audioSettingsPanel = PauseMenu.transform.Find("Audio Settings").gameObject;
+        mainPauseMenuPanel = PauseMenu.transform.Find("MainPauseMenu").gameObject;
+        controlsPanel = PauseMenu.transform.Find("Controls Panel").gameObject;
+
+        sliders = audioSettingsPanel.transform.Find("Sliders").gameObject;
+        MasterSlider = sliders.transform.Find("Master Volume Slider").GetComponent<Slider>();
+        MusicSlider = sliders.transform.Find("Music Volume Slider").GetComponent<Slider>();
+        SFXSlider = sliders.transform.Find("SFX Volume Slider").GetComponent<Slider>();
+        saveChanges = sliders.transform.Find("SaveChanges").GetComponent<Toggle>();
+    }
 
     void Start()
     {
-        pv = GetComponent<PhotonView>();
-        PauseMenu.SetActive(false); //deactivate pause menu
+        //PauseMenu.SetActive(false); //deactivate pause menu
         Music = FMODUnity.RuntimeManager.GetBus("bus:/Master/Music");
         SFX = FMODUnity.RuntimeManager.GetBus("bus:/Master/SFX");
         Master = FMODUnity.RuntimeManager.GetBus("bus:/Master");
@@ -68,8 +86,10 @@ public class Pause : MonoBehaviour
 
     void Update()
     {
-        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
-        {
+        /*
+
+        //if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
+        //{
             //check if the pause buttons are pressed
             if(Input.GetKeyDown(pauseMenuButton1) || Input.GetKeyDown(pauseMenuButton2))
             {
@@ -86,18 +106,20 @@ public class Pause : MonoBehaviour
                     PauseMenu.SetActive(false);
                 }
             }
-        }
+        //}
+
+        */
     }
 
     #region Buttons
     public void LeaveRaceButton()
     {
-        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
-        {
+        //if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
+        //{
             //PhotonNetwork.Disconnect(); //disconnect the player from the photon network before removing them from the game
             //SceneManager.LoadScene(LobbySceneIndex); //return to the custom matchmaking lobby
             StartCoroutine(DisconnectAndLoad());
-        }
+        //}
     }
     IEnumerator DisconnectAndLoad()
     {
@@ -111,15 +133,12 @@ public class Pause : MonoBehaviour
 
     public void QuitGameButton()
     {
-        
-        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
-        {
+        //if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
+        //{
             //PhotonNetwork.Disconnect(); //disconnect the player from the photon network before removing them from the game
             //Application.Quit(); //close the game for the player   
             StartCoroutine(Disconnect());
-        }
-        
-        
+        //}
     }
     IEnumerator Disconnect()
     {
@@ -134,11 +153,11 @@ public class Pause : MonoBehaviour
 
     public void AudioSettingsButton()
     {
-        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
-        {
+        //if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
+        //{
             mainPauseMenuPanel.SetActive(false); // disable the main pause menu panel 
             audioSettingsPanel.SetActive(true); //enable the audio settings panel
-        }
+        //}
     }
 
     public void GameControlsButton()
@@ -149,27 +168,30 @@ public class Pause : MonoBehaviour
 
     public void BackButton()
     {
-        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
-        {
+        //if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
+        //{
             mainPauseMenuPanel.SetActive(true); //enable the main pause menu panel 
             audioSettingsPanel.SetActive(false); //disable the audio settings panel
             controlsPanel.SetActive(false); //disable the controls panel
-        }
+        //}
     }
 
     public void ResumeGameButton()
     {
-        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
-        {
+        //if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
+        //{
             PauseMenu.SetActive(false); //close the pause menu
             paused = false;
-        }   
+
+        this.transform.root.GetComponent<PauseMenu>().paused = false;
+        Cursor.visible = false;
+        //}   
     }
     
     public void SaveChangesToAudio()
     {
-        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer && Time.timeSinceLevelLoad > 5)
-        {
+        //if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer && Time.timeSinceLevelLoad > 5)
+        //{
             timeSinceLastPush = Time.time;
             saveChangesToAudio = saveChanges.isOn;
             if(saveChangesToAudio)
@@ -186,7 +208,7 @@ public class Pause : MonoBehaviour
             {
                 PlayerPrefs.SetInt("SaveChanges", 1);
             }
-        }
+        //}
     }
 
     #endregion
@@ -194,45 +216,40 @@ public class Pause : MonoBehaviour
     #region Sliders
     public void SetMasterLevel(float sliderValue)
     {
-        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
-        {
+        //if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
+        //{
             if(saveChangesToAudio)
             {
                 PlayerPrefs.SetFloat("MasterVolume", sliderValue);
             }
 
             Master.setVolume(sliderValue);
-            
-        }
-            
+        //}
     }
 
     public void SetMusicLevel(float sliderValue)
     {
-        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
-        {
+        //if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
+        //{
             if (saveChangesToAudio)
             {
                 PlayerPrefs.SetFloat("MusicVolume", sliderValue);
             }
 
-
              Music.setVolume(sliderValue);
-            
-        }
+        //}
     }
 
     public void SetSFXLevel(float sliderValue)
     {
-        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
-        {
+        //if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
+        //{
             if (saveChangesToAudio)
             {
                 PlayerPrefs.SetFloat("SFXVolume", sliderValue);
             }
              SFX.setVolume(sliderValue);
-              
-        }
+        //}
     }
     #endregion
 }

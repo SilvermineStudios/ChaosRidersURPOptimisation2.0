@@ -110,7 +110,8 @@ public class Shooter : MonoBehaviourPun
     #endregion
 
     #region Scripts
-    Pause pauseMenu;
+    //Pause pauseMenu;
+    PauseMenu pauseMenu;
     Controller carController;
     AICarController aiCarController;
     #endregion
@@ -171,7 +172,8 @@ public class Shooter : MonoBehaviourPun
     {
         RenderersG = gunHolder.GetComponentsInChildren<MeshRenderer>();
         RenderersS = standHolder.GetComponentsInChildren<MeshRenderer>();
-        pauseMenu = GetComponent<Pause>();
+        //pauseMenu = GetComponent<Pause>();
+        pauseMenu = GetComponent<PauseMenu>();
         cineCamera = transform.GetChild(0).GetChild(0).GetChild(0).gameObject.GetComponent<CinemachineVirtualCamera>();
         pv = GetComponent<PhotonView>();
         rb = GetComponent<Rigidbody>();
