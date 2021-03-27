@@ -873,7 +873,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 7210401022831963838}
-  viewIdField: 7
+  viewIdField: 3
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &7210401022831963838
@@ -1503,7 +1503,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 6753911985203150815}
-  viewIdField: 6
+  viewIdField: 4
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &6753911985203150815
@@ -6511,8 +6511,7 @@ MonoBehaviour:
   noCarNeeded: 1
   useTestingCamera: 0
   Camera: {fileID: 7350203655266108}
-  fireRate: 1
-  WeaponDamage: 20
+  weaponDamage: 0.1
   minigunBarrel: {fileID: 3767529869141748556}
   rifleBarrel: {fileID: 4102530861068565298}
   rpgGo: {fileID: 3767529868687993775}
@@ -6524,6 +6523,9 @@ MonoBehaviour:
   RifleHolder: {fileID: 4099642483785407078}
   muzzleFlash: {fileID: 6753911985263565949}
   removedMyCarFromTargets: 1
+  everythingButIgnoreBullets:
+    serializedVersion: 2
+    m_Bits: 57143
   impactEffect: {fileID: 7938478309457529535, guid: 0c9781b5140952b42ae2c6af77491dfc, type: 3}
   impactEffectHolder: {fileID: 3767529867846557448}
   VFXBulletGo: {fileID: 3108730426236208173}
@@ -6604,7 +6606,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 3563193512973357809}
-  viewIdField: 2
+  viewIdField: 7
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!1 &6753911986327165252
@@ -6771,7 +6773,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 16768167095714995}
   - {fileID: 5998327773591176146}
-  viewIdField: 4
+  viewIdField: 2
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &5998327773591176146
@@ -6810,7 +6812,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 16768167095714995}
   - {fileID: 5998327773591176146}
-  viewIdField: 3
+  viewIdField: 6
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!1 &8040265445530778415
