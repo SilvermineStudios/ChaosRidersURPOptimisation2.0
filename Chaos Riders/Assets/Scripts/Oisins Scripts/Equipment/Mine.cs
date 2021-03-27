@@ -47,14 +47,7 @@ public class Mine : MonoBehaviour
     {
         if (waitTime <= 0)
         {
-            if (IsThisMultiplayer.Instance.multiplayer)
-            {
-                pv.RPC("Explode", RpcTarget.All);
-            }
-            else
-            {
-                OfflineExplode();
-            }
+            pv.RPC("Explode", RpcTarget.All);
         }
     }
 
@@ -67,16 +60,18 @@ public class Mine : MonoBehaviour
 
         foreach (Collider nearby in colliders)
         {
-            Target health = nearby.GetComponent<Target>();
+            Target health = nearby.transform.root.GetComponent<Target>();
             if (health != null)
             {
                 health.TakeDamage(damage);
+                Debug.Log("Target");
             }
 
             AIHealth aiHealth = GetComponent<AIHealth>();
             if (aiHealth != null)
             {
                 aiHealth.TakeDamage(damage);
+                Debug.Log("AITarget");
             }
         }
 
