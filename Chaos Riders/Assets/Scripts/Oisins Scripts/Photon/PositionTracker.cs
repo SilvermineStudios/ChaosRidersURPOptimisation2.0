@@ -11,7 +11,10 @@ public class PositionTracker : MonoBehaviourPun
     PlayerDataManager playerDataManager;
 
     string[] playerNames = new string[20];
-    float[] teamNumbersToPositions = new float[20];
+
+
+    //                                                  Team Number     Position
+    float[][] teamNumbersToPositions = new float[][] { new float[20], new float[1] };
 
 
 
@@ -38,14 +41,22 @@ public class PositionTracker : MonoBehaviourPun
         if (!PhotonNetwork.IsMasterClient) { return; }
         foreach (PhotonMenuPlayer p in PlayerDataManager.PhotonMenuPlayers)
         {
-            Debug.Log(p.teamNumber);
-            if(playerNames[p.teamNumber] == null)
+            if(!teamNumbers.Contains(p.teamNumber))
             {
-                playerNames[p.teamNumber] = p.Player.NickName;
+                teamNumbers.Add(p.teamNumber);
             }
-            else
+            p.driverAndShooterNames = p.Player.NickName;
+            if (p.driver)
             {
-                playerNames[p.teamNumber] = playerNames[p.teamNumber] + " + " + p.Player.NickName;
+                foreach (PhotonMenuPlayer p2 in PlayerDataManager.PhotonMenuPlayers)
+                {
+                    if(p2.shooter && p.teamNumber == p2.teamNumber)
+                    {
+                        p.driverAndShooterNames = p.Player.NickName + " + " + p2.Player.NickName;
+                        p2.driverAndShooterNames = p.Player.NickName + " + " + p2.Player.NickName;
+
+                    }
+                }
             }
         }
     }
@@ -54,15 +65,15 @@ public class PositionTracker : MonoBehaviourPun
     private void FixedUpdate()
     {
         if (!PhotonNetwork.IsMasterClient) { return; }
+
         foreach (PhotonMenuPlayer p in PlayerDataManager.PhotonMenuPlayers)
         {
-            if (p.driver)
-            {
-                teamNumbersToPositions[p.teamNumber] = p.myCheckpoint.distanceToNextCheckpoint;
-            }
+            teamNumbersToPositions[p.teamNumber][0] = p.myCheckpoint.distanceToNextCheckpoint;
         }
 
-
-
+        foreach(int i in teamNumbers)
+        {
+            Debug.Log(teamNumbersToPositions[i][0]);
+        }
     }
 }

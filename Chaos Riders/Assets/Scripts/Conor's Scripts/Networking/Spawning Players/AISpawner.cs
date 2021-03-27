@@ -12,6 +12,7 @@ public class AISpawner : MonoBehaviour
 
     public Transform[] spawnPoints;
     public GameObject[] aiCars;
+    public GameObject[] aiGuns;
 
     //from the main menu settings
     [SerializeField] private bool spawnAI;
@@ -52,7 +53,11 @@ public class AISpawner : MonoBehaviour
     {
         Quaternion spawnRotation = Quaternion.Euler(spawnRot.x, spawnRot.y - 90, spawnRot.z);
 
-        //PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "AI", "AI Mustang"), spawnPos, spawnRotation, 0);
+        //ai car
         PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "AI", aiCars[Random.Range(0, aiCars.Length)].name), spawnPos, spawnRotation, 0);
+
+        //ai gun
+        //PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "AI", aiGuns[Random.Range(0, aiCars.Length)].name), spawnPos, spawnRotation, 0);
+        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "AI", aiGuns[0].name), spawnPos, spawnRotation, 0); //<-----------------------------------------------change back to the above line if there are more than 1 ai gun
     }
 }

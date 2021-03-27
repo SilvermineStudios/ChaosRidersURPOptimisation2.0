@@ -18,6 +18,7 @@ public class CustomMatchmakingLobbyController : MonoBehaviourPunCallbacks
     public TMP_InputField playerNameInput; //input field so player can change their NickName
 
     private string roomName; //string for saving room name
+    private bool roomNameBlank = true;
     private int roomSize; //int for saving room size
 
     private List<RoomInfo> roomLisings; //list of current rooms
@@ -30,6 +31,12 @@ public class CustomMatchmakingLobbyController : MonoBehaviourPunCallbacks
         mainPanel.SetActive(true);
         lobbyPanel.SetActive(false);
         controlsPanel.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (roomName == "")
+            roomNameBlank = true;
     }
 
     public override void OnConnectedToMaster()
@@ -118,6 +125,7 @@ public class CustomMatchmakingLobbyController : MonoBehaviourPunCallbacks
     public void OnRoomNameChanged(string nameIn) //input function for changing room name
     {
         roomName = nameIn;
+        roomNameBlank = false;
     }
     public void OnRoomSizeChanged(string sizeIn) //input function for changing room size
     {
@@ -128,7 +136,14 @@ public class CustomMatchmakingLobbyController : MonoBehaviourPunCallbacks
     {
         //Debug.Log("Creating Room Now");
         RoomOptions roomOps = new RoomOptions() { IsVisible = true, IsOpen = true, MaxPlayers = (byte)roomSize };
-        PhotonNetwork.CreateRoom(roomName, roomOps); //attempting to create a new room
+
+        if (!roomNameBlank)
+            PhotonNetwork.CreateRoom(roomName, roomOps); //attempting to create a new room
+        else
+        {
+            string defaultRoomName = PhotonNetwork.NickName + "'s Room";
+            PhotonNetwork.CreateRoom(defaultRoomName, roomOps); //attempting to create a new room
+        }
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
