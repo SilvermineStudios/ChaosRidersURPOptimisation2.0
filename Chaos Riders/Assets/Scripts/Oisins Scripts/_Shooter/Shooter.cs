@@ -260,7 +260,7 @@ public class Shooter : MonoBehaviourPun
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
             //Run General Functions
-            BulletCasing();
+            //BulletCasing();
             CrossHair();
             Hitmarker();
             RotateGunBarrel();
@@ -393,7 +393,7 @@ public class Shooter : MonoBehaviourPun
             //Wait for weapons Free
             if (!MasterClientRaceStart.Instance.weaponsFree) { return; }
 
-
+            
             // Weapon Specific functions
             if (shooterClass == ShooterClass.minigun)
             {
@@ -401,10 +401,12 @@ public class Shooter : MonoBehaviourPun
                 if (shootButtonHeld)
                 {
                     barrelRotationSpeed = barrelRotationMaxSpeed;
+                    VFXBulletGo.SetActive(true);
                 }
                 else
                 {
                     barrelRotationSpeed = barrelRotationStartSpeed;
+                    VFXBulletGo.SetActive(false);
                 }
             }
 
@@ -485,7 +487,7 @@ public class Shooter : MonoBehaviourPun
             RPG = !RPG;
         }
     }
-
+    
     void BulletCasing()
     {
         if (!MasterClientRaceStart.Instance.weaponsFree) { return; }
