@@ -122,6 +122,7 @@ public class Shooter : MonoBehaviourPun
 
 
     [SerializeField] GameObject CasingSpawn, Casing;
+    [SerializeField] GameObject VFXBulletGo;
 
     [SerializeField] Image hitmarker;
     #endregion
@@ -174,6 +175,7 @@ public class Shooter : MonoBehaviourPun
         cineCamera = transform.GetChild(0).GetChild(0).GetChild(0).gameObject.GetComponent<CinemachineVirtualCamera>();
         pv = GetComponent<PhotonView>();
         rb = GetComponent<Rigidbody>();
+        VFXBulletGo.SetActive(false);
     }
 
     void Start()
@@ -258,6 +260,7 @@ public class Shooter : MonoBehaviourPun
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
             //Run General Functions
+            BulletCasing();
             CrossHair();
             Hitmarker();
             RotateGunBarrel();
@@ -429,6 +432,7 @@ public class Shooter : MonoBehaviourPun
             }
             else
             {
+                
                 currentlyShooting = false;
                 if (currentBulletSpread > 0)
                 {
@@ -439,6 +443,8 @@ public class Shooter : MonoBehaviourPun
                     currentCrosshairSpread -= crosshairDeviationIncrease;
                 }
             }
+
+            
 
 
             if (RPG)
@@ -477,6 +483,21 @@ public class Shooter : MonoBehaviourPun
         if (Input.GetKeyDown(RPGButton) && pickedUpRPG)
         {
             RPG = !RPG;
+        }
+    }
+
+    void BulletCasing()
+    {
+        if (!MasterClientRaceStart.Instance.weaponsFree) { return; }
+
+        //bulletcasing
+        if (Input.GetKey(shootButton) && amountOfAmmoForCooldownBar > weaponAmmoUsage && !RPG)
+        {
+            VFXBulletGo.SetActive(true);
+        }
+        else
+        {
+            VFXBulletGo.SetActive(false);
         }
     }
 
@@ -595,6 +616,8 @@ public class Shooter : MonoBehaviourPun
         FMODUnity.RuntimeManager.PlayOneShotAttached(sound, gameObject);
 
         Vector3 direction = Spread(currentBulletSpread);
+
+        /*
         GameObject bulletCasingGO;
 
         if (IsThisMultiplayer.Instance.multiplayer)
@@ -620,6 +643,7 @@ public class Shooter : MonoBehaviourPun
 
             bulletCasingGO.GetComponent<Rigidbody>().AddForce((bulletCasingGO.transform.right + (bulletCasingGO.transform.up * 2)) * 0.3f, ForceMode.Impulse);
         }
+        */
 
         RaycastHit[] hits;
 

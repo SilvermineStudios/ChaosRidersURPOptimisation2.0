@@ -12,6 +12,8 @@ public class AIShooter : MonoBehaviour
     public bool noCarNeeded = false;
     [SerializeField] private bool useTestingCamera = false;
     [SerializeField] private GameObject Camera;
+    [SerializeField] private float fireRate = 1f;
+    [SerializeField] private float WeaponDamage = 3f;
     [SerializeField] private Transform minigunBarrel;
     [SerializeField] private Transform rifleBarrel;
     [SerializeField] GameObject rpgGo;
@@ -21,19 +23,22 @@ public class AIShooter : MonoBehaviour
     [SerializeField] private GameObject bulletSpawnPoint;
     [SerializeField] GameObject MinigunHolder;
     [SerializeField] GameObject RifleHolder;
-    [SerializeField] public ParticleSystem muzzleFlash;
+    [SerializeField] public GameObject muzzleFlash;
     public bool removedMyCarFromTargets = false;
     private MoveTurretPosition mtp;
     private bool readyToDestroy = false;
     LayerMask everythingButIgnoreBullets;
     
 
-    [Header("Bullets")]
+    [Header("Decoration")]
     public GameObject impactEffect;
     [SerializeField] private Transform impactEffectHolder;
     [SerializeField] GameObject VFXBulletGo;
-    [SerializeField] private float WeaponDamage;
-    [SerializeField] private float fireRate = 0.5f;
+    private float barrelRotationSpeed;
+    private float barrelRotationStartSpeed = 100f;
+    private float barrelRotationMaxSpeed = 800f;
+    
+    
 
 
     // https://www.youtube.com/watch?v=QKhn2kl9_8I
@@ -46,6 +51,7 @@ public class AIShooter : MonoBehaviour
     [SerializeField] private float delayBeforeStartWorking = 3f;
     public List<GameObject> targets = new List<GameObject>();
     public float turnSpeed = 5f;
+    [SerializeField] private float xOffest = 0.2f;
     private Transform target;
     #endregion
 
@@ -54,7 +60,10 @@ public class AIShooter : MonoBehaviour
         if(mtp == null)
             mtp = this.gameObject.GetComponent<MoveTurretPosition>();
 
+        //decoration
         VFXBulletGo.SetActive(false);
+        muzzleFlash.SetActive(false);
+        barrelRotationSpeed = barrelRotationStartSpeed;
 
         if (!useTestingCamera)
             Camera.SetActive(false);
@@ -70,7 +79,7 @@ public class AIShooter : MonoBehaviour
     void Update()
     {
         DestroyMeIfDriverDisconnects();
-
+    
         if (mtp.car != null && car == null)
             car = mtp.car;
 
@@ -78,16 +87,22 @@ public class AIShooter : MonoBehaviour
             carRigidBody = car.GetComponent<Rigidbody>();
 
 
+        if (!MasterClientRaceStart.Instance.weaponsFree) { return; }
+
         //dont do anything if there is no target
         if (target == null)
             return;
-
-        TargetLockOn();
+        else
+            TargetLockOn();
     }
 
     private void FixedUpdate()
     {
-        if(target != null)
+        RotateGunBarrel();
+
+        if (!MasterClientRaceStart.Instance.weaponsFree) { return; }
+
+        if (target != null)
         {
             InvokeRepeating("Shoot", 0, fireRate);
             //Shoot();
@@ -96,7 +111,14 @@ public class AIShooter : MonoBehaviour
         {
             CancelInvoke("Shoot");
             VFXBulletGo.SetActive(false);
+            muzzleFlash.SetActive(false);
+            barrelRotationSpeed = barrelRotationStartSpeed;
         }
+    }
+
+    private void RotateGunBarrel()
+    {
+        minigunBarrel.Rotate(0, 0, barrelRotationSpeed * Time.deltaTime);
     }
 
     private void DestroyMeIfDriverDisconnects()
@@ -107,6 +129,7 @@ public class AIShooter : MonoBehaviour
         if (readyToDestroy && car == null)
             Destroy(this.gameObject);
     }
+
 
     #region Targeting
     //gets turned on in the GetTargets Courotine and repeats by what the "TimeBeforeLookingForANewTarget" is set too
@@ -143,7 +166,7 @@ public class AIShooter : MonoBehaviour
         Vector3 dir = target.position - transform.position;
         Quaternion lookRotation = Quaternion.LookRotation(dir);
         Vector3 rotation = Quaternion.Lerp(partToRotate.rotation, lookRotation, Time.deltaTime * turnSpeed).eulerAngles;
-        partToRotate.rotation = Quaternion.Euler(rotation.x, rotation.y, 0f);
+        partToRotate.rotation = Quaternion.Euler(rotation.x - xOffest, rotation.y, 0f);
     }
 
     //draws a sphere to show the range of the gun
@@ -196,8 +219,10 @@ public class AIShooter : MonoBehaviour
 
     void Shoot()
     {
-        muzzleFlash.Play();
+        //muzzleFlash.GetComponent<ParticleSystem>().Play();
+        muzzleFlash.SetActive(true);
         VFXBulletGo.SetActive(true); //have bullet casings flying out
+        barrelRotationSpeed = barrelRotationMaxSpeed;
 
         //FMODUnity.RuntimeManager.PlayOneShotAttached(sound, gameObject);
 
