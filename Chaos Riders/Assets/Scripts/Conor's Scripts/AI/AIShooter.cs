@@ -12,8 +12,7 @@ public class AIShooter : MonoBehaviour
     public bool noCarNeeded = false;
     [SerializeField] private bool useTestingCamera = false;
     [SerializeField] private GameObject Camera;
-    [SerializeField] private float fireRate = 1f;
-    [SerializeField] private float WeaponDamage = 3f;
+    [SerializeField] private float weaponDamage = 3f;
     [SerializeField] private Transform minigunBarrel;
     [SerializeField] private Transform rifleBarrel;
     [SerializeField] GameObject rpgGo;
@@ -25,10 +24,12 @@ public class AIShooter : MonoBehaviour
     [SerializeField] GameObject RifleHolder;
     [SerializeField] public GameObject muzzleFlash;
     public bool removedMyCarFromTargets = false;
+    [SerializeField] LayerMask everythingButIgnoreBullets;
     private MoveTurretPosition mtp;
     private bool readyToDestroy = false;
-    LayerMask everythingButIgnoreBullets;
-    
+    private bool shooting = false;
+
+
 
     [Header("Decoration")]
     public GameObject impactEffect;
@@ -102,9 +103,10 @@ public class AIShooter : MonoBehaviour
 
         if (!MasterClientRaceStart.Instance.weaponsFree) { return; }
 
-        if (target != null)
+        if (target != null && !shooting)
         {
-            InvokeRepeating("Shoot", 0, fireRate);
+            InvokeRepeating("Shoot", 0, 1);
+            shooting = true;
             //Shoot();
         }
         else
@@ -113,6 +115,7 @@ public class AIShooter : MonoBehaviour
             VFXBulletGo.SetActive(false);
             muzzleFlash.SetActive(false);
             barrelRotationSpeed = barrelRotationStartSpeed;
+            shooting = false;
         }
     }
 
@@ -219,6 +222,8 @@ public class AIShooter : MonoBehaviour
 
     void Shoot()
     {
+        //Debug.Log("Shooting");
+
         muzzleFlash.SetActive(true);
         muzzleFlash.GetComponent<ParticleSystem>().Play();
         
@@ -227,14 +232,16 @@ public class AIShooter : MonoBehaviour
 
         //FMODUnity.RuntimeManager.PlayOneShotAttached(sound, gameObject);
 
-
+        /*
         Vector3 direction = Vector3.zero;
         RaycastHit hit;
         if (Physics.Raycast(bulletSpawnPoint.transform.position, direction, out hit, range))
         {
             Target target = hit.transform.GetComponent<Target>();
+
             if (target != null && target.gameObject != car)
             {
+                //Debug.Log("Hit: " + target);
                 target.TakeDamage(WeaponDamage);
             }
 
@@ -248,6 +255,39 @@ public class AIShooter : MonoBehaviour
                 impactGo = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
             }
             //impactGo.transform.parent = impactEffectHolder;
+        }
+        */
+
+        RaycastHit[] hits;
+        Vector3 direction = bulletSpawnPoint.transform.forward;
+        //Vector3 direction = Vector3.zero;
+
+        hits = Physics.RaycastAll(bulletSpawnPoint.transform.position, direction, range, everythingButIgnoreBullets);
+        Debug.DrawRay(bulletSpawnPoint.transform.position, direction * range, Color.red);
+
+        foreach (RaycastHit hit in hits)
+        {
+            //Debug.Log("You Hit: " + hit.transform.name);
+
+            if (hit.transform.gameObject != car && (hit.transform.gameObject.tag == "Player" || hit.transform.gameObject.tag == "car"))
+            {
+                Target target = hit.transform.GetComponent<Target>();
+                if (target != null && target.gameObject != car)
+                {
+                    target.TakeDamage(weaponDamage);
+                }
+
+                //GameObject impactGo;
+                if (IsThisMultiplayer.Instance.multiplayer)
+                {
+                    //impactGo = PhotonNetwork.Instantiate("Impact Particle Effect", hit.point, Quaternion.LookRotation(hit.normal), 0);
+                }
+                else
+                {
+                    //impactGo = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+                }
+                //impactGo.transform.parent = impactEffectHolder;
+            }
         }
     }
     #endregion
