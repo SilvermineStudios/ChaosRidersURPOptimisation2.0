@@ -5,7 +5,8 @@ using Photon.Pun;
 
 public class CursorLocker : MonoBehaviour
 {
-    private Pause pauseVars;
+    //private Pause pauseVars;
+    private PauseMenu pauseVars;
     private bool paused;
 
     private PhotonView pv;
@@ -13,7 +14,8 @@ public class CursorLocker : MonoBehaviour
     private void Awake()
     {
         pv = GetComponent<PhotonView>();
-        pauseVars = GetComponent<Pause>();
+        //pauseVars = GetComponent<Pause>();
+        pauseVars = GetComponent<PauseMenu>();
     }
 
     void Start()
