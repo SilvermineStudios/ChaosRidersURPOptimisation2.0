@@ -9,7 +9,8 @@ public class MoveTurretPosition : MonoBehaviour
     [SerializeField] private Transform gunstand;
 
     public GameObject car;
-    private Transform carGunPos, carGunStandPosition; 
+    private Transform carGunPos, carGunStandPosition;
+    [SerializeField] private bool isAiGun = false;
 
     public Transform FakeParent;
 
@@ -53,7 +54,7 @@ public class MoveTurretPosition : MonoBehaviour
         if (FakeParent == null)
             return;
 
-        if (IsThisMultiplayer.Instance.multiplayer && car != null)
+        if (IsThisMultiplayer.Instance.multiplayer && car != null && !isAiGun)
         {
             pv.RPC("AttachToFakeParent", RpcTarget.All);
         }

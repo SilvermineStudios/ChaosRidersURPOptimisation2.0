@@ -9006,7 +9006,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh39134
+  m_Name: pb_Mesh379828
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -15427,6 +15427,8 @@ MonoBehaviour:
   aiCars:
   - {fileID: 2011213230151948855, guid: 4fef911cd4b7a114bb4c2b67b8861e47, type: 3}
   - {fileID: 1407414512137103672, guid: c7d771049c583ed4d8583216cccd3132, type: 3}
+  aiGuns:
+  - {fileID: 6753911985949760915, guid: 5a4ea196226cd40439d05bcb4d89a401, type: 3}
 --- !u!1001 &439935514
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33505,7 +33507,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh41422
+  m_Name: pb_Mesh382116
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -43472,8 +43474,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1155110777}
-  m_LocalRotation: {x: -0.0021820734, y: 0.98473006, z: -0.01237516, w: -0.17363438}
-  m_LocalPosition: {x: 54.83354, y: -18.208809, z: 49.0286}
+  m_LocalRotation: {x: 0.012566066, y: 0, z: 0, w: 0.9999211}
+  m_LocalPosition: {x: 179.52899, y: 75.084, z: -166.31099}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -47285,7 +47287,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh39058
+  m_Name: pb_Mesh379752
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -47758,7 +47760,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh39702
+  m_Name: pb_Mesh380396
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -51833,6 +51835,8 @@ MonoBehaviour:
   aiCars:
   - {fileID: 2011213230151948855, guid: 4fef911cd4b7a114bb4c2b67b8861e47, type: 3}
   - {fileID: 1407414512137103672, guid: c7d771049c583ed4d8583216cccd3132, type: 3}
+  aiGuns:
+  - {fileID: 6753911985949760915, guid: 5a4ea196226cd40439d05bcb4d89a401, type: 3}
   spawnAI: 1
   amountOfAI: 10
 --- !u!114 &1576374397
@@ -67066,7 +67070,6 @@ GameObject:
   - component: {fileID: 2109867049}
   - component: {fileID: 2109867050}
   - component: {fileID: 2109867051}
-  - component: {fileID: 2109867052}
   m_Layer: 0
   m_Name: GameManagers
   m_TagString: Untagged
@@ -67123,24 +67126,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneIndex: 0
---- !u!114 &2109867052
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2109867048}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29d6b9a001bd1f54eb0b0d1dec52650a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerTeams: []
-  playerNameTexts: []
-  playerScores: 
-  scoreTotal: 0
-  playerScoreText: []
-  scoreHolder: []
 --- !u!4 &2111885359 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4077211057240834, guid: 5f3aaf835ed6c4946a48821bb448693a, type: 3}

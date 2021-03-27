@@ -10,6 +10,8 @@ public class AIShooter : MonoBehaviour
     public GameObject car;
     [SerializeField] private Rigidbody carRigidBody;
     public bool noCarNeeded = false;
+    [SerializeField] private bool useTestingCamera = false;
+    [SerializeField] private GameObject Camera;
     [SerializeField] private Transform minigunBarrel;
     [SerializeField] private Transform rifleBarrel;
     [SerializeField] GameObject rpgGo;
@@ -22,26 +24,18 @@ public class AIShooter : MonoBehaviour
     [SerializeField] public ParticleSystem muzzleFlash;
     public bool removedMyCarFromTargets = false;
     private MoveTurretPosition mtp;
+    private bool readyToDestroy = false;
     LayerMask everythingButIgnoreBullets;
     
 
-    [Header("Bullet Decoration")]
+    [Header("Bullets")]
     public GameObject impactEffect;
     [SerializeField] private Transform impactEffectHolder;
-    [SerializeField] GameObject CasingSpawn;
-    [SerializeField] GameObject Casing;
+    [SerializeField] GameObject VFXBulletGo;
     [SerializeField] private float WeaponDamage;
+    [SerializeField] private float fireRate = 0.5f;
 
-    /// <summary>
-    /// /////////////////////////////////////////////////////////////////MAKE SURE TO NOT HAVE YOUR OWN CAR BE IN THE TARGETS ARRAY///////////////////////////////////////////////////////
-    ///                                                                      foreach(Gameobkect go in targets)
-    ///                                                                      {
-    ///                                                                         if(go.isMyCar)
-    ///                                                                         {
-    ///                                                                             targets.Remove(go);
-    ///                                                                         }
-    ///                                                                      }
-    /// </summary>
+
     // https://www.youtube.com/watch?v=QKhn2kl9_8I
     [Header("Brackeys Stuff")]
     public Transform partToRotate;
@@ -59,33 +53,30 @@ public class AIShooter : MonoBehaviour
     {
         if(mtp == null)
             mtp = this.gameObject.GetComponent<MoveTurretPosition>();
+
+        VFXBulletGo.SetActive(false);
+
+        if (!useTestingCamera)
+            Camera.SetActive(false);
+        else
+            Camera.SetActive(true);
     }
 
     void Start()
     {
         StartCoroutine(GetTargets(delayBeforeStartWorking));
-        
     }
 
     void Update()
     {
+        DestroyMeIfDriverDisconnects();
+
         if (mtp.car != null && car == null)
             car = mtp.car;
 
         if (car != null && carRigidBody == null)
             carRigidBody = car.GetComponent<Rigidbody>();
 
-        if(car != null && !removedMyCarFromTargets && targets.Count > 0)
-        {
-            foreach(GameObject go in targets)
-            {
-                if(go.gameObject == car.gameObject)
-                {
-                    //targets.Remove(go);
-                    //removedMyCarFromTargets = true;
-                }
-            }
-        }
 
         //dont do anything if there is no target
         if (target == null)
@@ -98,8 +89,23 @@ public class AIShooter : MonoBehaviour
     {
         if(target != null)
         {
-            Shoot();
+            InvokeRepeating("Shoot", 0, fireRate);
+            //Shoot();
         }
+        else
+        {
+            CancelInvoke("Shoot");
+            VFXBulletGo.SetActive(false);
+        }
+    }
+
+    private void DestroyMeIfDriverDisconnects()
+    {
+        if (!readyToDestroy && car != null)
+            readyToDestroy = true;
+
+        if (readyToDestroy && car == null)
+            Destroy(this.gameObject);
     }
 
     #region Targeting
@@ -164,7 +170,7 @@ public class AIShooter : MonoBehaviour
         //add all of the player cars to the targets array
         foreach(GameObject go in cars)
         {
-            if (go.gameObject != car.gameObject)
+            if (go.transform.root.gameObject != car.gameObject)
                 targets.Add(go);
         }
 
@@ -182,32 +188,18 @@ public class AIShooter : MonoBehaviour
     }
     #endregion
 
+
+
+
+
     #region Shooting
 
     void Shoot()
     {
         muzzleFlash.Play();
+        VFXBulletGo.SetActive(true); //have bullet casings flying out
+
         //FMODUnity.RuntimeManager.PlayOneShotAttached(sound, gameObject);
-
-        #region BulletCasing
-        GameObject bulletCasingGO;
-
-        if (IsThisMultiplayer.Instance.multiplayer)
-        {
-            bulletCasingGO = PhotonNetwork.Instantiate("BulletCasing", CasingSpawn.transform.position, CasingSpawn.transform.rotation);
-        }
-        else
-        {
-            bulletCasingGO = Instantiate(Casing, CasingSpawn.transform.position, CasingSpawn.transform.rotation);
-        }
-        bulletCasingGO.GetComponent<Rigidbody>().AddForce((bulletCasingGO.transform.right + (bulletCasingGO.transform.up * 2)) * 0.3f, ForceMode.Impulse);
-
-        if (!noCarNeeded)
-        {
-            bulletCasingGO.GetComponent<Rigidbody>().velocity = carRigidBody.velocity;
-            bulletCasingGO.GetComponent<Rigidbody>().AddForce((bulletCasingGO.transform.right + (bulletCasingGO.transform.up * 2)) * 0.3f, ForceMode.Impulse);
-        }
-        #endregion
 
 
         Vector3 direction = Vector3.zero;
