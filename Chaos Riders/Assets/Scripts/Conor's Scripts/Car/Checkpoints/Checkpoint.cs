@@ -51,7 +51,7 @@ public class Checkpoint : MonoBehaviour
 
         OnlyDisplayNextCheckpoint();
     }
-
+    GameObject gar;
 
     private void Update()
     {
@@ -63,7 +63,7 @@ public class Checkpoint : MonoBehaviour
                 rb.isKinematic = false;
             }
             distanceToNextCheckpoint = Vector3.Distance(transform.position, checkpoints[(int)currentCheckpoint].transform.position);
-
+            
             OnlyDisplayNextCheckpoint();
             if(Input.GetKeyDown(resetKey) && resetBar != null)
             {
