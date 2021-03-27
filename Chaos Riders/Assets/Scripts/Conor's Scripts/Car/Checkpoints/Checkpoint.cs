@@ -58,6 +58,10 @@ public class Checkpoint : MonoBehaviour
         //update currentlap
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
+            if(rb.isKinematic)
+            {
+                rb.isKinematic = false;
+            }
             distanceToNextCheckpoint = Vector3.Distance(transform.position, checkpoints[(int)currentCheckpoint].transform.position);
 
             OnlyDisplayNextCheckpoint();
@@ -108,12 +112,12 @@ public class Checkpoint : MonoBehaviour
 
     private void ResetPos()
     { 
-        int chosen = Random.Range(0, 5);
+        int chosen = Random.Range(0, 3);
         rb.velocity = Vector3.zero;
         transform.position = checkpoints[(int)previousCheckpoint].transform.GetChild(0).GetChild(chosen).GetChild(0).position;
         transform.rotation = checkpoints[(int)previousCheckpoint].transform.GetChild(0).GetChild(chosen).GetChild(0).rotation;
         //Debug.Log(checkpoints[(int)previousCheckpoint].transform.position + "ee" + transform.position);
-        rb.velocity = Vector3.zero;
+        rb.isKinematic = true;
         resetTimer = 0;
     }
 
