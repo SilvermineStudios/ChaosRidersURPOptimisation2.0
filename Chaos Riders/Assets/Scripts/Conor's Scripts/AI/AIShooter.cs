@@ -38,6 +38,11 @@ public class AIShooter : MonoBehaviour
     private float barrelRotationSpeed;
     private float barrelRotationStartSpeed = 100f;
     private float barrelRotationMaxSpeed = 800f;
+
+    //FMOD
+    [SerializeField] private GameObject soundSourceLocation;
+    [SerializeField] private float gunSoundCoolDownTime = 2f;
+    private float startGunSoundCoolDownTime;
     
     
 
@@ -58,6 +63,8 @@ public class AIShooter : MonoBehaviour
 
     private void Awake()
     {
+        startGunSoundCoolDownTime = gunSoundCoolDownTime;
+
         if(mtp == null)
             mtp = this.gameObject.GetComponent<MoveTurretPosition>();
 
@@ -95,6 +102,18 @@ public class AIShooter : MonoBehaviour
             return;
         else
             TargetLockOn();
+
+        if (shooting)
+        {
+            gunSoundCoolDownTime -= 1 * Time.deltaTime;
+
+            if(gunSoundCoolDownTime <= 0)
+            {
+                InvokeRepeating("ShootSound", 0, 100);
+                gunSoundCoolDownTime = startGunSoundCoolDownTime;
+            }
+            
+        }
     }
 
     private void FixedUpdate()
@@ -111,8 +130,11 @@ public class AIShooter : MonoBehaviour
         else
         {
             CancelInvoke("Shoot");
+            CancelInvoke("ShootSound");
             shooting = false;
         }
+
+        
 
         if(target == null)
         {
@@ -223,9 +245,15 @@ public class AIShooter : MonoBehaviour
 
     #region Shooting
 
+    void ShootSound()
+    {
+        FMODUnity.RuntimeManager.PlayOneShotAttached("event:/GunFX/Minigun/MinigunShot 2", soundSourceLocation);
+    }
+
     void Shoot()
     {
         //Debug.Log("Shooting");
+        
 
         muzzleFlash.SetActive(true);
         //muzzleFlash.GetComponent<ParticleSystem>().Play();
