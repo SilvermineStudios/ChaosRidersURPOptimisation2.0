@@ -51,7 +51,7 @@ public class Checkpoint : MonoBehaviour
 
         OnlyDisplayNextCheckpoint();
     }
-
+    GameObject gar;
 
     private void Update()
     {
@@ -63,7 +63,7 @@ public class Checkpoint : MonoBehaviour
                 rb.isKinematic = false;
             }
             distanceToNextCheckpoint = Vector3.Distance(transform.position, checkpoints[(int)currentCheckpoint].transform.position);
-
+            
             OnlyDisplayNextCheckpoint();
             if(Input.GetKeyDown(resetKey) && resetBar != null)
             {
@@ -76,7 +76,7 @@ public class Checkpoint : MonoBehaviour
             }
             if (isResetting && previousCheckpoint != -1)
             {
-                StartCoroutine(UseEquipmentUI(3));
+                StartCoroutine(UseEquipmentUI(1));
             }
             else if (resetBar != null)
             {
@@ -159,13 +159,14 @@ public class Checkpoint : MonoBehaviour
                     currentCheckpoint = 0; //make the next waypoint the first waypoint
                 else
                 {
-                    previousCheckpoint += 1;
-                    if (previousCheckpoint > checkpoints.Length)
-                    {
-                        previousCheckpoint = 0;
-                    }
                     currentCheckpoint += 1;//if the current waypoint is not the last waypoint in the list then go to the next waypoint in the list
+                    previousCheckpoint += 1;
                 }
+                if (currentCheckpoint == 1)
+                {
+                    previousCheckpoint = 0;
+                }
+
             }
 
 
