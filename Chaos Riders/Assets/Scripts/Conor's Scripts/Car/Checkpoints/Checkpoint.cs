@@ -100,7 +100,7 @@ public class Checkpoint : MonoBehaviour
             //Start the music on the last lap
             if(currentLap == amountOfLaps && !Music.activeInHierarchy)
             {
-                Music.SetActive(true);
+                //Music.SetActive(true);
             }
 
             if (currentLap == amountOfLaps && canCrossFinish && currentCheckpoint == 0)
