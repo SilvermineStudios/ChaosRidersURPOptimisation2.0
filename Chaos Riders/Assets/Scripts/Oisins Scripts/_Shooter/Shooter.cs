@@ -29,7 +29,8 @@ public class Shooter : MonoBehaviourPun
     [SerializeField] GameObject RifleHolder;
     [SerializeField] GameObject MinigunIcon, RifleIcon;
     [SerializeField] LayerMask everythingButIgnoreBullets;
-    [SerializeField] public ParticleSystem muzzleFlash;
+    //[SerializeField] public ParticleSystem muzzleFlash;
+    [SerializeField] private GameObject muzzleFlash;
 
     #endregion
 
@@ -110,7 +111,8 @@ public class Shooter : MonoBehaviourPun
     #endregion
 
     #region Scripts
-    Pause pauseMenu;
+    //Pause pauseMenu;
+    PauseMenu pauseMenu;
     Controller carController;
     AICarController aiCarController;
     #endregion
@@ -171,11 +173,13 @@ public class Shooter : MonoBehaviourPun
     {
         RenderersG = gunHolder.GetComponentsInChildren<MeshRenderer>();
         RenderersS = standHolder.GetComponentsInChildren<MeshRenderer>();
-        pauseMenu = GetComponent<Pause>();
+        //pauseMenu = GetComponent<Pause>();
+        pauseMenu = GetComponent<PauseMenu>();
         cineCamera = transform.GetChild(0).GetChild(0).GetChild(0).gameObject.GetComponent<CinemachineVirtualCamera>();
         pv = GetComponent<PhotonView>();
         rb = GetComponent<Rigidbody>();
         VFXBulletGo.SetActive(false);
+        muzzleFlash.SetActive(false);
     }
 
     void Start()
@@ -402,11 +406,13 @@ public class Shooter : MonoBehaviourPun
                 {
                     barrelRotationSpeed = barrelRotationMaxSpeed;
                     VFXBulletGo.SetActive(true);
+                    muzzleFlash.SetActive(true);
                 }
                 else
                 {
                     barrelRotationSpeed = barrelRotationStartSpeed;
                     VFXBulletGo.SetActive(false);
+                    muzzleFlash.SetActive(false);
                 }
             }
 
@@ -614,7 +620,9 @@ public class Shooter : MonoBehaviourPun
 
     void Shoot()
     {
-        muzzleFlash.Play();
+        //muzzleFlash.Play();
+        //muzzleFlash.SetActive(true);
+
         FMODUnity.RuntimeManager.PlayOneShotAttached(sound, gameObject);
 
         Vector3 direction = Spread(currentBulletSpread);

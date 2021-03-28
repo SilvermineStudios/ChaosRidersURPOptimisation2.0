@@ -107,15 +107,18 @@ public class AIShooter : MonoBehaviour
         {
             InvokeRepeating("Shoot", 0, 1);
             shooting = true;
-            //Shoot();
         }
         else
         {
             CancelInvoke("Shoot");
+            shooting = false;
+        }
+
+        if(target == null)
+        {
             VFXBulletGo.SetActive(false);
             muzzleFlash.SetActive(false);
             barrelRotationSpeed = barrelRotationStartSpeed;
-            shooting = false;
         }
     }
 
@@ -225,7 +228,7 @@ public class AIShooter : MonoBehaviour
         //Debug.Log("Shooting");
 
         muzzleFlash.SetActive(true);
-        muzzleFlash.GetComponent<ParticleSystem>().Play();
+        //muzzleFlash.GetComponent<ParticleSystem>().Play();
         
         VFXBulletGo.SetActive(true); //have bullet casings flying out
         barrelRotationSpeed = barrelRotationMaxSpeed;
