@@ -13,7 +13,7 @@ public class ReplaceDisconnectedDriver : MonoBehaviour
     private Shooter ShooterScript;
     [SerializeField] private bool canReplaceDriver = false;
     [SerializeField] private int driverModelIndex = -1; //this is the same index from the Driver Title script; 0 = braker, 1 = shredder, 2 = colt
-    [SerializeField] private GameObject AIBraker, AIColt;
+    [SerializeField] private GameObject AIBraker, AIColt, AIShredder;
 
     private PhotonView pv;
 
@@ -61,10 +61,10 @@ public class ReplaceDisconnectedDriver : MonoBehaviour
                 //shredder
                 if (driverModelIndex == 1)
                 {
-                    //GameObject AIReplacementShredder = Instantiate(x, this.transform.position, this.transform.rotation); //spawn the ai shredder 
+                    GameObject AIReplacementShredder = Instantiate(AIShredder, this.transform.position, this.transform.rotation); //spawn the ai shredder 
 
-                    //mtp.FakeParent = AIReplacementShredder.transform;
-                    //mtp.car = AIReplacementShredder;
+                    mtp.FakeParent = AIReplacementShredder.transform;
+                    mtp.car = AIReplacementShredder;
                 }
                 //colt
                 if (driverModelIndex == 2)
