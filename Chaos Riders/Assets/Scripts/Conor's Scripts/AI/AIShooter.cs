@@ -107,7 +107,7 @@ public class AIShooter : MonoBehaviour
         {
             gunSoundCoolDownTime -= 1 * Time.deltaTime;
 
-            if(gunSoundCoolDownTime <= 0)
+            if(gunSoundCoolDownTime <= 0 && car != null && car.tag == "car")
             {
                 InvokeRepeating("ShootSound", 0, 100);
                 gunSoundCoolDownTime = startGunSoundCoolDownTime;
