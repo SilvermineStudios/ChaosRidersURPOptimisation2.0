@@ -248,7 +248,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/Master.bank
   Name: Master
-  lastModified: 637525379538013629
+  lastModified: 637525446180865394
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -335,11 +335,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/Master.strings.bank
   Name: Master.strings
-  lastModified: 637525379538083556
+  lastModified: 637525446180915442
   LoadResult: 0
   FileSizes:
   - Name: Desktop
-    Value: 2282
+    Value: 2326
   Exists: 1
 --- !u!114 &-2624649675606900976
 MonoBehaviour:
@@ -510,6 +510,24 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 4416
+--- !u!114 &-1360027346901968715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/CarNoise.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Chaos Riders/Build/Desktop/CarNoise.bank
+  Name: CarNoise
+  lastModified: 637525446179414615
+  LoadResult: 0
+  FileSizes: []
+  Exists: 1
 --- !u!114 &-1287445818185218633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -652,7 +670,7 @@ MonoBehaviour:
   EditorBanks:
   - {fileID: -2954939187940535496}
   - {fileID: -4466803539278922483}
-  - {fileID: -4684390613576618857}
+  - {fileID: -1360027346901968715}
   EditorEvents:
   - {fileID: -4789631137126399954}
   - {fileID: -2173327587602132150}
@@ -682,12 +700,13 @@ MonoBehaviour:
   - {fileID: 5032157713940315357}
   - {fileID: -2571072255624506997}
   - {fileID: -2191402287390572133}
+  - {fileID: 3140280014407465733}
   EditorParameters: []
   MasterBanks:
   - {fileID: -4466803539278922483}
   StringsBanks:
   - {fileID: -2954939187940535496}
-  stringsBankWriteTime: 637525379538083556
+  stringsBankWriteTime: 637525446180915442
   cacheVersion: 5
 --- !u!114 &317469205867548753
 MonoBehaviour:
@@ -947,6 +966,29 @@ MonoBehaviour:
   LoadResult: 0
   FileSizes: []
   Exists: 1
+--- !u!114 &3140280014407465733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/CarFX/Braker/Lion Roar Loop
+  m_EditorClassIdentifier: 
+  Path: event:/CarFX/Braker/Lion Roar Loop
+  guid: f12745774cf6c149824322fba6beb4d8
+  Banks:
+  - {fileID: -4466803539278922483}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 10000
+  Length: 3121
 --- !u!114 &3317266355144416784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1419,7 +1461,7 @@ MonoBehaviour:
   Banks:
   - {fileID: 8390316997883208087}
   - {fileID: 1822313279407467418}
-  - {fileID: -4684390613576618857}
+  - {fileID: -1360027346901968715}
   - {fileID: -4466803539278922483}
   IsStream: 0
   Is3D: 1

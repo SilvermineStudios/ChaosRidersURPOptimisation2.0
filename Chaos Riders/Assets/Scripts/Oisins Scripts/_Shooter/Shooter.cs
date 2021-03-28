@@ -402,7 +402,7 @@ public class Shooter : MonoBehaviourPun
             if (shooterClass == ShooterClass.minigun)
             {
                 //if you are shooting the minigun
-                if (shootButtonHeld)
+                if (shootButtonHeld && !RPG)
                 {
                     barrelRotationSpeed = barrelRotationMaxSpeed;
                     VFXBulletGo.SetActive(true);

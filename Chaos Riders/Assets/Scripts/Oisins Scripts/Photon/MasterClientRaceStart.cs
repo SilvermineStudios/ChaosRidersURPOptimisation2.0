@@ -107,16 +107,16 @@ public class MasterClientRaceStart : MonoBehaviour
 
     IEnumerator StartTime()
     {
-        yield return new WaitForSeconds(2.3f);
-        pv.RPC("CountDown", RpcTarget.All, 3);
-        yield return new WaitForSeconds(2.2f);
-        pv.RPC("CountDown", RpcTarget.All, 2);
-        yield return new WaitForSeconds(2.3f);
-        pv.RPC("CountDown", RpcTarget.All, 1);
-        yield return new WaitForSeconds(2.2f);
-        pv.RPC("CountDown", RpcTarget.All, 0);
+        yield return new WaitForSeconds(2.1f);
+        CountDown(3);
+        yield return new WaitForSeconds(2.05f);
+        CountDown(2);
+        yield return new WaitForSeconds(2.05f);
+        CountDown(1);
+        yield return new WaitForSeconds(2.05f);
+        CountDown(0);
         yield return new WaitForSeconds(5);
-        pv.RPC("CountDown", RpcTarget.All, -1);
+        CountDown(-1);
     }
 
     [PunRPC]
@@ -154,7 +154,7 @@ public class MasterClientRaceStart : MonoBehaviour
     }
 
 
-    [PunRPC]
+    
     public void CountDown(int time)
     {
         MasterClientRaceStart.Instance.countdownTimer = time;
