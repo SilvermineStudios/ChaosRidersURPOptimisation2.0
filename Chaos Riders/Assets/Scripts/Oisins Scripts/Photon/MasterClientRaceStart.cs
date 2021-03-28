@@ -88,22 +88,41 @@ public class MasterClientRaceStart : MonoBehaviour
         panelTemp = BackgroundPanel.color;
         if(PhotonNetwork.IsMasterClient)
         {
-            StartCoroutine(StartTime());
+            StartCoroutine(InitWait());
         }
+    }
+
+    IEnumerator InitWait()
+    {
+        yield return new WaitForSeconds(2);
+        pv.RPC("StartMusic", RpcTarget.All);
+    }
+
+    [PunRPC]
+    public void StartMusic()
+    {
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Music/Opening");
+        StartCoroutine(StartTime());
     }
 
     IEnumerator StartTime()
     {
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(2.3f);
         pv.RPC("CountDown", RpcTarget.All, 3);
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(2.2f);
         pv.RPC("CountDown", RpcTarget.All, 2);
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(2.3f);
         pv.RPC("CountDown", RpcTarget.All, 1);
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(2.2f);
         pv.RPC("CountDown", RpcTarget.All, 0);
         yield return new WaitForSeconds(5);
         pv.RPC("CountDown", RpcTarget.All, -1);
+    }
+
+    [PunRPC]
+    public void StartCountdown()
+    {
+        StartCoroutine(StartTime());
     }
 
     void FixedUpdate()
@@ -183,17 +202,13 @@ public class MasterClientRaceStart : MonoBehaviour
 
 
     [PunRPC]
-    public void CountDownStart()
-    {
-        MasterClientRaceStart.Instance.countdownTimerStart = true;
-        FMODUnity.RuntimeManager.PlayOneShot("event:/RaceStart/Start");
-    }
-
-    [PunRPC]
     public void WeaponsFree()
     {
         MasterClientRaceStart.Instance.weaponsFree = true;
         FMODUnity.RuntimeManager.PlayOneShot("event:/RaceStart/Start");
     }
+
+
+
 
 }

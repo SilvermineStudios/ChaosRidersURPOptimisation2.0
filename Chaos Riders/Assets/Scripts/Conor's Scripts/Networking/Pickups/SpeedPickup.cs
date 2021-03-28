@@ -19,7 +19,7 @@ public class SpeedPickup : MonoBehaviour
         if(!pickedUp)
         {
             pickedUp = true;
-            FMODUnity.RuntimeManager.PlayOneShotAttached("event:/Pickups/PickupItem", other.gameObject);
+            FMODUnity.RuntimeManager.PlayOneShotAttached("event:/Pickups/PickupBoost", other.gameObject);
 
             StartCoroutine(Timer(PickupManager.pickupRespawnTime));
         }
