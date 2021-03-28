@@ -29,7 +29,8 @@ public class Shooter : MonoBehaviourPun
     [SerializeField] GameObject RifleHolder;
     [SerializeField] GameObject MinigunIcon, RifleIcon;
     [SerializeField] LayerMask everythingButIgnoreBullets;
-    [SerializeField] public ParticleSystem muzzleFlash;
+    //[SerializeField] public ParticleSystem muzzleFlash;
+    [SerializeField] private GameObject muzzleFlash;
 
     #endregion
 
@@ -178,6 +179,7 @@ public class Shooter : MonoBehaviourPun
         pv = GetComponent<PhotonView>();
         rb = GetComponent<Rigidbody>();
         VFXBulletGo.SetActive(false);
+        muzzleFlash.SetActive(false);
     }
 
     void Start()
@@ -404,11 +406,13 @@ public class Shooter : MonoBehaviourPun
                 {
                     barrelRotationSpeed = barrelRotationMaxSpeed;
                     VFXBulletGo.SetActive(true);
+                    muzzleFlash.SetActive(true);
                 }
                 else
                 {
                     barrelRotationSpeed = barrelRotationStartSpeed;
                     VFXBulletGo.SetActive(false);
+                    muzzleFlash.SetActive(false);
                 }
             }
 
@@ -616,7 +620,9 @@ public class Shooter : MonoBehaviourPun
 
     void Shoot()
     {
-        muzzleFlash.Play();
+        //muzzleFlash.Play();
+        //muzzleFlash.SetActive(true);
+
         FMODUnity.RuntimeManager.PlayOneShotAttached(sound, gameObject);
 
         Vector3 direction = Spread(currentBulletSpread);
