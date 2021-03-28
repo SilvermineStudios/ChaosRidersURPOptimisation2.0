@@ -135,7 +135,7 @@ public class CarPickup : MonoBehaviour
     #region Puwerup Courotines
     private IEnumerator InvincibleTimer(float time)
     {
-        FMODUnity.RuntimeManager.PlayOneShotAttached("event:/Pickups/Use", gameObject);
+        FMODUnity.RuntimeManager.PlayOneShotAttached("event:/Pickups/PickupShield", gameObject);
         //armourUiImage.SetActive(true);
         healthScript.isProtected = true;
         invincibleTimerCountDown = true;
@@ -154,7 +154,7 @@ public class CarPickup : MonoBehaviour
     
     private IEnumerator SpeedBoostTimer(float time)
     {
-        FMODUnity.RuntimeManager.PlayOneShotAttached("event:/Pickups/Use", gameObject);
+        FMODUnity.RuntimeManager.PlayOneShotAttached("event:/Pickups/PickupBoost", gameObject);
         //nitroUiImage.SetActive(true);
         carController.boost = true;
         nitroTimerCountDown = true;
