@@ -42,12 +42,15 @@ public class Audio : MonoBehaviour
     private Controller m_CarController; // Reference to car we are controlling
 
     FMOD.Studio.EventInstance brakerSound;
+    FMOD.Studio.EventInstance brakerSound2;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         brakerSound = FMODUnity.RuntimeManager.CreateInstance("event:/CarFX/Braker/BrakerAudio");
+        brakerSound2 = FMODUnity.RuntimeManager.CreateInstance("event:/CarFX/Braker/Lion Roar Loop");
         FMODUnity.RuntimeManager.AttachInstanceToGameObject(brakerSound, transform, rb);
+        FMODUnity.RuntimeManager.AttachInstanceToGameObject(brakerSound2, transform, rb);
         brakerSound.start();
         m_CarController = GetComponent<Controller>();
     }
