@@ -248,7 +248,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/Master.bank
   Name: Master
-  lastModified: 637525446180865394
+  lastModified: 637525448331334906
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -335,7 +335,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/Master.strings.bank
   Name: Master.strings
-  lastModified: 637525446180915442
+  lastModified: 637525448331384951
   LoadResult: 0
   FileSizes:
   - Name: Desktop
@@ -524,7 +524,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/CarNoise.bank
   Name: CarNoise
-  lastModified: 637525446179414615
+  lastModified: 637525448329943623
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -700,13 +700,13 @@ MonoBehaviour:
   - {fileID: 5032157713940315357}
   - {fileID: -2571072255624506997}
   - {fileID: -2191402287390572133}
-  - {fileID: 3140280014407465733}
+  - {fileID: 7156786910982388957}
   EditorParameters: []
   MasterBanks:
   - {fileID: -4466803539278922483}
   StringsBanks:
   - {fileID: -2954939187940535496}
-  stringsBankWriteTime: 637525446180915442
+  stringsBankWriteTime: 637525448331384951
   cacheVersion: 5
 --- !u!114 &317469205867548753
 MonoBehaviour:
@@ -980,8 +980,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: event:/CarFX/Braker/Lion Roar Loop
   guid: f12745774cf6c149824322fba6beb4d8
-  Banks:
-  - {fileID: -4466803539278922483}
+  Banks: []
   IsStream: 0
   Is3D: 1
   IsOneShot: 0
@@ -1344,6 +1343,29 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 5018
+--- !u!114 &7156786910982388957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/CarFX/Braker/Lion Roar Loop
+  m_EditorClassIdentifier: 
+  Path: event:/CarFX/Braker/Lion Roar Loop
+  guid: f12745774cf6c149824322fba6beb4d8
+  Banks:
+  - {fileID: -4466803539278922483}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 10000
+  Length: 3121
 --- !u!114 &7425718266395928888
 MonoBehaviour:
   m_ObjectHideFlags: 0
