@@ -18,6 +18,29 @@ MonoBehaviour:
   LoadResult: 0
   FileSizes: []
   Exists: 0
+--- !u!114 &-8263530577688826151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/MainTrack 4
+  m_EditorClassIdentifier: 
+  Path: event:/Music/MainTrack 4
+  guid: 1b5a8d7a6b00e64c80eeb940317e138f
+  Banks:
+  - {fileID: -4466803539278922483}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 149500
 --- !u!114 &-8081485380875060407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,6 +193,29 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 350
   Length: 5398
+--- !u!114 &-4782299216096950230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Pickups/PickupShield
+  m_EditorClassIdentifier: 
+  Path: event:/Pickups/PickupShield
+  guid: a36e97e575d8764594eae411fe231420
+  Banks:
+  - {fileID: -4466803539278922483}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 959
 --- !u!114 &-4684390613576618857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,7 +230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/CarNoise.bank
   Name: CarNoise
-  lastModified: 637521285028818420
+  lastModified: 637525379537099476
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -202,7 +248,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/Master.bank
   Name: Master
-  lastModified: 637524872268993774
+  lastModified: 637525379538013629
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -289,11 +335,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/Master.strings.bank
   Name: Master.strings
-  lastModified: 637524872268993774
+  lastModified: 637525379538083556
   LoadResult: 0
   FileSizes:
   - Name: Desktop
-    Value: 2026
+    Value: 2282
   Exists: 1
 --- !u!114 &-2624649675606900976
 MonoBehaviour:
@@ -331,6 +377,29 @@ MonoBehaviour:
   LoadResult: 0
   FileSizes: []
   Exists: 0
+--- !u!114 &-2571072255624506997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/Opening
+  m_EditorClassIdentifier: 
+  Path: event:/Music/Opening
+  guid: b7f61c6654aa6e46a12deec32e30f09b
+  Banks:
+  - {fileID: -4466803539278922483}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 21786
 --- !u!114 &-2379609175019932448
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -349,6 +418,29 @@ MonoBehaviour:
   LoadResult: 0
   FileSizes: []
   Exists: 1
+--- !u!114 &-2191402287390572133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/MainTrack 3
+  m_EditorClassIdentifier: 
+  Path: event:/Music/MainTrack 3
+  guid: bafa3955d4729b4fb656eb53e2811bed
+  Banks:
+  - {fileID: -4466803539278922483}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 188598
 --- !u!114 &-2173327587602132150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -560,6 +652,7 @@ MonoBehaviour:
   EditorBanks:
   - {fileID: -2954939187940535496}
   - {fileID: -4466803539278922483}
+  - {fileID: -4684390613576618857}
   EditorEvents:
   - {fileID: -4789631137126399954}
   - {fileID: -2173327587602132150}
@@ -583,12 +676,18 @@ MonoBehaviour:
   - {fileID: -1697617239266563794}
   - {fileID: 6582687345382335072}
   - {fileID: -7121170668381344416}
+  - {fileID: -4782299216096950230}
+  - {fileID: 3786937066584681232}
+  - {fileID: -8263530577688826151}
+  - {fileID: 5032157713940315357}
+  - {fileID: -2571072255624506997}
+  - {fileID: -2191402287390572133}
   EditorParameters: []
   MasterBanks:
   - {fileID: -4466803539278922483}
   StringsBanks:
   - {fileID: -2954939187940535496}
-  stringsBankWriteTime: 637524872268993774
+  stringsBankWriteTime: 637525379538083556
   cacheVersion: 5
 --- !u!114 &317469205867548753
 MonoBehaviour:
@@ -952,6 +1051,29 @@ MonoBehaviour:
   LoadResult: 0
   FileSizes: []
   Exists: 1
+--- !u!114 &3786937066584681232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Pickups/PickupBoost
+  m_EditorClassIdentifier: 
+  Path: event:/Pickups/PickupBoost
+  guid: ff761a8db4a3b34ebe93b0b5d78dddd6
+  Banks:
+  - {fileID: -4466803539278922483}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 3253
 --- !u!114 &4123615403235642673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1034,6 +1156,29 @@ MonoBehaviour:
   LoadResult: 0
   FileSizes: []
   Exists: 1
+--- !u!114 &5032157713940315357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/MainTrack 2
+  m_EditorClassIdentifier: 
+  Path: event:/Music/MainTrack 2
+  guid: 9eedf6a40c7cf848b29f68ca263ba72a
+  Banks:
+  - {fileID: -4466803539278922483}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 62328
 --- !u!114 &5271905026308419752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1274,6 +1419,7 @@ MonoBehaviour:
   Banks:
   - {fileID: 8390316997883208087}
   - {fileID: 1822313279407467418}
+  - {fileID: -4684390613576618857}
   - {fileID: -4466803539278922483}
   IsStream: 0
   Is3D: 1

@@ -483,6 +483,7 @@ public class Controller : MonoBehaviour
     {
         usingUltimate = true;
         FMODUnity.RuntimeManager.PlayOneShotAttached(ultimateData.sound, gameObject);
+        //FMODUnity.RuntimeManager.PlayOneShotAttached(equipmentData.sound, gameObject);
         shredUltimate.enabled = true;
         StartCoroutine(UseUltimateUI(ultimateData.ultimateUsetime));
         yield return new WaitForSeconds(ultimateData.ultimateUsetime);
