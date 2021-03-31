@@ -84,7 +84,7 @@ public class Controller : MonoBehaviour
     private int gearNum;
     private float gearFactor;
 
-    public string revsoundLocation;
+    public string revsoundLocation; //<-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     #endregion
 
     #region Driver Abilities
@@ -205,7 +205,7 @@ public class Controller : MonoBehaviour
         }
 
 
-        //rev sound
+        //rev sound <-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         if (Input.GetKeyDown(KeyCode.W))
         {
             FMODUnity.RuntimeManager.PlayOneShotAttached(revsoundLocation, gameObject);
