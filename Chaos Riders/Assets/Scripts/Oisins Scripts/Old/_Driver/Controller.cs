@@ -83,6 +83,8 @@ public class Controller : MonoBehaviour
     public float Revs { get; private set; }
     private int gearNum;
     private float gearFactor;
+
+    public string revsoundLocation;
     #endregion
 
     #region Driver Abilities
@@ -131,13 +133,14 @@ public class Controller : MonoBehaviour
         driverAbilities = GetComponent<DriverAbilities>();
         playerInputs = GetComponent<PlayerInputs>();
         rb = GetComponent<Rigidbody>();
+
         skidmarksController = FindObjectOfType<Skidmarks>();
         skidSound = FMODUnity.RuntimeManager.CreateInstance("event:/CarFX/All/Skid");
         FMODUnity.RuntimeManager.AttachInstanceToGameObject(skidSound, transform, rb);
         skidSound.start();
         skidSound.setVolume(0);
 
-        if(smokeTrail != null)
+        if (smokeTrail != null)
             smokeTrail.SetActive(false);
     }
 
@@ -199,6 +202,13 @@ public class Controller : MonoBehaviour
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer && MasterClientRaceStart.Instance.weaponsFree || !IsThisMultiplayer.Instance.multiplayer)
         {
             DriverAbilities();
+        }
+
+
+        //rev sound
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            FMODUnity.RuntimeManager.PlayOneShotAttached(revsoundLocation, gameObject);
         }
     }
 

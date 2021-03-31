@@ -19611,7 +19611,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5416099599659642407
 Transform:
   m_ObjectHideFlags: 0
@@ -19963,7 +19963,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5416099600120239585
 RectTransform:
   m_ObjectHideFlags: 0
@@ -36665,6 +36665,7 @@ GameObject:
   - component: {fileID: 5553538201569404173}
   - component: {fileID: -8266661033905631652}
   - component: {fileID: 6559998972517212976}
+  - component: {fileID: 620683048}
   m_Layer: 10
   m_Name: Braker
   m_TagString: car
@@ -36764,6 +36765,7 @@ MonoBehaviour:
   - {fileID: 4997753427087588560}
   - {fileID: 4273592698902916963}
   Shooter: {fileID: 0}
+  revsoundLocation: event:/CarFX/All/Engine rev
   CurrentEquipment: 0
   CurrentUltimate: 0
   abilityKeyCode: 113
@@ -37062,6 +37064,21 @@ MonoBehaviour:
   PauseScreen: {fileID: 1755802932340615697}
   paused: 0
   online: 1
+--- !u!114 &620683048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9040616798976095027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab7ed41d402c7e94cb2a7eea575f1da7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectsToTurnOn:
+  - {fileID: 5416099599659642404}
+  - {fileID: 5416099600120239598}
 --- !u!1 &9040616799060037772
 GameObject:
   m_ObjectHideFlags: 0
@@ -37329,8 +37346,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9040616799218981579}
-  m_LocalRotation: {x: 0.000000022351742, y: 0.99901783, z: -0.044310007, w: 0.0000005066395}
-  m_LocalPosition: {x: -0.000004053116, y: 1.5499998, z: 4.0000014}
+  m_LocalRotation: {x: -0.000000027939677, y: -0.99901783, z: 0.044310085, w: -0.0000006556511}
+  m_LocalPosition: {x: -0.000005468726, y: 1.5499992, z: 3.9999979}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 9040616799121926659}
@@ -38118,9 +38135,17 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 6412423899935664849, guid: 0b9edbef478a3374caad48dc738f323e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6412423899935664850, guid: 0b9edbef478a3374caad48dc738f323e, type: 3}
       propertyPath: m_Name
       value: Trail_SmokeHDRP
+      objectReference: {fileID: 0}
+    - target: {fileID: 6412423899935664850, guid: 0b9edbef478a3374caad48dc738f323e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6412423899935664855, guid: 0b9edbef478a3374caad48dc738f323e, type: 3}
       propertyPath: m_LocalPosition.x
