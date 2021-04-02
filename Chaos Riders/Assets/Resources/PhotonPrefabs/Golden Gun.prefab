@@ -8935,6 +8935,7 @@ GameObject:
   - component: {fileID: 2780465871769585924}
   - component: {fileID: -565711370190230324}
   - component: {fileID: 4885029395763682787}
+  - component: {fileID: 8275976053554095670}
   m_Layer: 0
   m_Name: Golden Gun
   m_TagString: shooter
@@ -9273,6 +9274,20 @@ MonoBehaviour:
   PauseScreen: {fileID: 2983028811234981537}
   paused: 0
   online: 1
+--- !u!114 &8275976053554095670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5720822377400605386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab7ed41d402c7e94cb2a7eea575f1da7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectsToTurnOn:
+  - {fileID: 5720822377651440783}
 --- !u!1 &5720822377641248966
 GameObject:
   m_ObjectHideFlags: 0
@@ -9423,7 +9438,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5720822377651440776
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15923,13 +15938,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30b4cc2728d8cec499fad63ba93785a4, type: 3}
---- !u!1 &6790843512467139806 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100006, guid: 30b4cc2728d8cec499fad63ba93785a4, type: 3}
-  m_PrefabInstance: {fileID: 6790843512467171960}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6790843512466780414 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400006, guid: 30b4cc2728d8cec499fad63ba93785a4, type: 3}
+  m_PrefabInstance: {fileID: 6790843512467171960}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6790843512467139806 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100006, guid: 30b4cc2728d8cec499fad63ba93785a4, type: 3}
   m_PrefabInstance: {fileID: 6790843512467171960}
   m_PrefabAsset: {fileID: 0}
