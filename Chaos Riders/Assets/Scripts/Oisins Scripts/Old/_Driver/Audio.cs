@@ -44,6 +44,14 @@ public class Audio : MonoBehaviour
     FMOD.Studio.EventInstance brakerSound;
     FMOD.Studio.EventInstance brakerSound2;
 
+
+    public Vehicle vehicalData;
+    public float topSpeed, currentSpeed, currentGear;
+
+    //[FMODUnity.EventRef]
+    public string revsoundLocation;
+    public KeyCode driveButtonKeyboard;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -53,8 +61,22 @@ public class Audio : MonoBehaviour
         FMODUnity.RuntimeManager.AttachInstanceToGameObject(brakerSound2, transform, rb);
         brakerSound.start();
         m_CarController = GetComponent<Controller>();
+        topSpeed = vehicalData.topSpeed;
     }
 
+
+    private void Update()
+    {
+        currentSpeed = this.GetComponent<Controller>().currentSpeed;
+
+        //rev sound <-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        if (Input.GetKeyDown(driveButtonKeyboard))
+        {
+            FMODUnity.RuntimeManager.PlayOneShotAttached(revsoundLocation, gameObject);
+        }
+
+        ChangingGear();
+    }
 
     // Update is called once per frame
     private void FixedUpdate()
@@ -82,6 +104,48 @@ public class Audio : MonoBehaviour
             //m_HighAccel.dopplerLevel = useDoppler ? dopplerLevel : 0;
             //m_HighAccel.volume = 0.45f;
         } 
+    }
+
+
+    private void ChangingGear()
+    {
+        float fifth = topSpeed / 5;
+        float gear1Speed = fifth - (fifth / 5);
+
+        //gear 1
+        if (currentSpeed <= gear1Speed)
+        {
+            currentGear = 1f;
+            brakerSound.setParameterByName("Gear Change", 0.1f);
+        }
+
+        //gear 2
+        if (currentSpeed > gear1Speed && currentSpeed <= gear1Speed * 2)
+        {
+            currentGear = 2f;
+            brakerSound.setParameterByName("Gear Change", 0.2f);
+        }
+
+        //gear 3
+        if (currentSpeed > gear1Speed * 2 && currentSpeed <= gear1Speed * 3)
+        {
+            currentGear = 3f;
+            brakerSound.setParameterByName("Gear Change", 0.3f);
+        }
+
+        //gear 4
+        if (currentSpeed > gear1Speed * 3 && currentSpeed <= gear1Speed * 4)
+        {
+            currentGear = 4f;
+            brakerSound.setParameterByName("Gear Change", 0.4f);
+        }
+
+        //gear 5
+        if (currentSpeed > gear1Speed * 4 && currentSpeed < topSpeed)
+        {
+            currentGear = 5f;
+            brakerSound.setParameterByName("Gear Change", 0.5f);
+        }
     }
 
 
