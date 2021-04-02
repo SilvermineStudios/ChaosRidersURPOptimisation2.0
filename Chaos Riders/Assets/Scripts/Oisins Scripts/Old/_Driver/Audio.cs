@@ -46,7 +46,7 @@ public class Audio : MonoBehaviour
 
 
     public Vehicle vehicalData;
-    public float topSpeed, currentSpeed, currentGear;
+    private float topSpeed, currentSpeed, currentGear;
     private float fifth, gear1Speed;
 
     //[FMODUnity.EventRef]
