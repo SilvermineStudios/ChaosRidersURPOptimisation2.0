@@ -47,6 +47,7 @@ public class Audio : MonoBehaviour
 
     public Vehicle vehicalData;
     public float topSpeed, currentSpeed, currentGear;
+    private float fifth, gear1Speed;
 
     //[FMODUnity.EventRef]
     public string revsoundLocation;
@@ -61,13 +62,16 @@ public class Audio : MonoBehaviour
         FMODUnity.RuntimeManager.AttachInstanceToGameObject(brakerSound2, transform, rb);
         brakerSound.start();
         m_CarController = GetComponent<Controller>();
+
         topSpeed = vehicalData.topSpeed;
+        fifth = topSpeed / 5;
+        gear1Speed = fifth - (fifth / 4);
     }
 
 
     private void Update()
     {
-        currentSpeed = this.GetComponent<Controller>().currentSpeed;
+        currentSpeed = m_CarController.currentSpeed;
 
         //rev sound <-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         if (Input.GetKeyDown(driveButtonKeyboard))
@@ -109,8 +113,7 @@ public class Audio : MonoBehaviour
 
     private void ChangingGear()
     {
-        float fifth = topSpeed / 5;
-        float gear1Speed = fifth - (fifth / 5);
+        //Debug.Log("One Fifth = " + fifth + "    gear 1 speed = " + gear1Speed);
 
         //gear 1
         if (currentSpeed <= gear1Speed)
