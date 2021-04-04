@@ -36974,6 +36974,7 @@ GameObject:
   - component: {fileID: -8266661033905631652}
   - component: {fileID: 6559998972517212976}
   - component: {fileID: 620683048}
+  - component: {fileID: 2618939130122305234}
   m_Layer: 10
   m_Name: Braker
   m_TagString: car
@@ -37389,6 +37390,19 @@ MonoBehaviour:
   objectsToTurnOn:
   - {fileID: 5416099599659642404}
   - {fileID: 5416099600120239598}
+--- !u!114 &2618939130122305234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9040616798976095027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1487e03e584c4e40a518df29db3f34c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FPSText: {fileID: 1657483099}
 --- !u!1 &9040616799060037772
 GameObject:
   m_ObjectHideFlags: 0
@@ -38340,7 +38354,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5523332056477321561, guid: 629d895192f6d1f4b8a91d113482fb81, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -16.7
       objectReference: {fileID: 0}
     - target: {fileID: 5523332056477321561, guid: 629d895192f6d1f4b8a91d113482fb81, type: 3}
       propertyPath: m_SizeDelta.x
@@ -38667,13 +38681,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e076683e0305e35498b8e8834978c0fa, type: 3}
---- !u!1 &8299392946789440943 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100006, guid: e076683e0305e35498b8e8834978c0fa, type: 3}
-  m_PrefabInstance: {fileID: 8299392946789538569}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8299392946789400975 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400006, guid: e076683e0305e35498b8e8834978c0fa, type: 3}
+  m_PrefabInstance: {fileID: 8299392946789538569}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8299392946789440943 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100006, guid: e076683e0305e35498b8e8834978c0fa, type: 3}
   m_PrefabInstance: {fileID: 8299392946789538569}
   m_PrefabAsset: {fileID: 0}
