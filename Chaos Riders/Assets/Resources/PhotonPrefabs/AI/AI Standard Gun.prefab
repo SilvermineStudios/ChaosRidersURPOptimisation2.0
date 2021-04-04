@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4411027069716731079}
   - component: {fileID: 3767529868088426816}
   m_Layer: 0
-  m_Name: CinemachineVirtualCamera (1)
+  m_Name: 'CinemachineVirtualCamera '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6510,7 +6510,7 @@ Transform:
   m_GameObject: {fileID: 6753911985949760915}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 180.08, y: 60.78, z: -164.803}
-  m_LocalScale: {x: 1.0000001, y: 1, z: 1.0000001}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6753911985256716255}
   - {fileID: 3767529867846557448}
@@ -6531,39 +6531,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   car: {fileID: 0}
+  gunBarrel: {fileID: 6753911985080015449}
   minigunBarrel: {fileID: 3767529869141748556}
   rifleBarrel: {fileID: 4102530861068565298}
   rpgGo: {fileID: 3767529868687993775}
   rocketspawn: {fileID: 474918211956209927}
   rocket: {fileID: 14798063656109763, guid: 74ea11e91b020954b88db6eaa0e77b7e, type: 3}
-  gunBarrel: {fileID: 6753911985080015449}
   bulletSpawnPoint: {fileID: 6753911985266905327}
   MinigunHolder: {fileID: 6019231408425968515}
   RifleHolder: {fileID: 4099642483785407078}
-  muzzleFlash: {fileID: 3563193514523591112}
-  removedMyCarFromTargets: 1
   everythingButIgnoreBullets:
     serializedVersion: 2
     m_Bits: 57143
-  weaponDamage: 0.1
-  range: 100
+  weaponDamage: 0.2
+  range: 70
   turnSpeed: 5
   barrelRotationStartSpeed: 100
   barrelRotationMaxSpeed: 800
-  timeBeforeLookingForANewTarget: 1
-  delayBeforeStartWorking: 2
+  muzzleFlash: {fileID: 3563193514523591112}
   impactEffect: {fileID: 7938478309457529535, guid: 0c9781b5140952b42ae2c6af77491dfc, type: 3}
   impactEffectHolder: {fileID: 3767529867846557448}
   VFXBulletGo: {fileID: 3108730426236208173}
-  partToRotate: {fileID: 6753911985080015449}
   aiCarTag: Player
   carTag: car
   targets: []
-  xOffest: 0.4
-  useTestingCamera: 1
+  useTestingCamera: 0
   noCarNeeded: 1
   UseShootingSound: 1
-  UseImpactEffect: 1
+  UseImpactEffect: 0
   UseMuzzleFlash: 1
   UseBulletCasings: 1
 --- !u!114 &6753911985949760906

@@ -12,24 +12,22 @@ public class AIShooter : MonoBehaviour
     public GameObject car;
     private Rigidbody carRigidBody;
     private GameObject Camera;
+    [SerializeField] private Transform gunBarrel; //barrel that is going to rotate to face the correct direction
     [SerializeField] private Transform minigunBarrel;
     [SerializeField] private Transform rifleBarrel;
     [SerializeField] GameObject rpgGo;
     [SerializeField] GameObject rocketspawn;
     [SerializeField] GameObject rocket;
-    [SerializeField] private Transform gunBarrel; //barrel that is going to rotate to face the correct direction
     [SerializeField] private GameObject bulletSpawnPoint;
     [SerializeField] GameObject MinigunHolder;
     [SerializeField] GameObject RifleHolder;
-    [SerializeField] public GameObject muzzleFlash;
-    public bool removedMyCarFromTargets = false;
-    [SerializeField] LayerMask everythingButIgnoreBullets;
     private MoveTurretPosition mtp;
     private bool readyToDestroy = false;
     private bool shooting = false;
     private Rigidbody rb;
 
     [Header("Gun Variables")]
+    [SerializeField] LayerMask everythingButIgnoreBullets;
     [SerializeField] private float weaponDamage = 0.2f;
     public float range = 30f;
     public float turnSpeed = 5f;
@@ -40,6 +38,7 @@ public class AIShooter : MonoBehaviour
 
 
     [Header("Decoration")]
+    [SerializeField] private GameObject muzzleFlash;
     public GameObject impactEffect;
     [SerializeField] private Transform impactEffectHolder;
     [SerializeField] GameObject VFXBulletGo;
@@ -52,11 +51,10 @@ public class AIShooter : MonoBehaviour
 
     
     [Header("Targeting")]
-    
     public string aiCarTag = "Player";
     public string carTag = "car";
     public List<GameObject> targets = new List<GameObject>();
-    [SerializeField] private float xOffest = 0.2f;
+    private float xOffest = 0.2f;
     private Transform target;
 
 
@@ -170,6 +168,7 @@ public class AIShooter : MonoBehaviour
 
 
     #region Targeting
+
     //gets turned on in the GetTargets Courotine and repeats by what the "TimeBeforeLookingForANewTarget" is set too
     void UpdateTarget()
     {
@@ -207,8 +206,6 @@ public class AIShooter : MonoBehaviour
         gunBarrel.rotation = Quaternion.Euler(rotation.x - xOffest, rotation.y, 0f);
     }
 
-    
-
     private IEnumerator GetTargets(float time)
     {
         yield return new WaitForSeconds(time);
@@ -230,22 +227,10 @@ public class AIShooter : MonoBehaviour
                 targets.Add(go);
         }
 
-        foreach(GameObject go in targets)
-        {
-            if(car != null && go.gameObject == car.gameObject)
-            {
-                //targets.Remove(go);
-                //removedMyCarFromTargets = true;
-            }
-        }
-
         //Starts lookinf for a target and then repeats it over and over again
         InvokeRepeating("UpdateTarget", 0f, timeBeforeLookingForANewTarget); //MOVE TO WHEN WEAPONS ARE ENABLED
     }
     #endregion
-
-
-
 
 
     #region Shooting
