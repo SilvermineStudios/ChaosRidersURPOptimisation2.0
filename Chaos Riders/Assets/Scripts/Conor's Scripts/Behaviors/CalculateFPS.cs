@@ -6,7 +6,9 @@ using TMPro;
 public class CalculateFPS : MonoBehaviour
 {
     public TMP_Text FPSText;
-    private float timer, refresh, avgFramerate;
+    private float timer;
+    public float refresh = 0.7f;
+    private float avgFramerate;
 
     void Update()
     {
