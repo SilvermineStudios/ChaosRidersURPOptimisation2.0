@@ -25,7 +25,7 @@ public class Pause : MonoBehaviour
     private GameObject sliders;
     private GameObject audioSettingsPanel, videoSettingsPanel, controlsPanel;
     public List<GameObject> menuPanels;
-    [SerializeField] private GameObject playerCanvas;
+    private GameObject playerCanvas;
 
     //Audio stuff
     private Slider MasterSlider, MusicSlider, SFXSlider;
@@ -34,7 +34,7 @@ public class Pause : MonoBehaviour
     //video Stuff
     private GameObject videoSettingsHolder;
     private TMP_Dropdown imageQualityDropDown;
-    [SerializeField] private GameObject FPSText;
+    private GameObject FPSText;
 
     float timeSinceLastPush = 0; //dont delete
     [HideInInspector] public bool paused = false;
@@ -128,11 +128,11 @@ public class Pause : MonoBehaviour
     {
         if(toggle)
         {
-
+            FPSText.SetActive(true);
         }
         else
         {
-
+            FPSText.SetActive(false);
         }
     }
 
@@ -239,10 +239,16 @@ public class Pause : MonoBehaviour
     {
         mainPauseMenuPanel.SetActive(true); //enable the main pause menu panel 
 
-        foreach(GameObject go in menuPanels)
+        audioSettingsPanel.SetActive(false);
+        videoSettingsPanel.SetActive(false);
+        controlsPanel.SetActive(false);
+
+        /*
+        foreach (GameObject go in menuPanels)
         {
             go.SetActive(false);
         }
+        */
     }
 
     public void ResumeGameButton()
