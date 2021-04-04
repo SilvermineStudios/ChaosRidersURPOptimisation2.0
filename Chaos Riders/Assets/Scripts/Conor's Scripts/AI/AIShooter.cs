@@ -5,14 +5,13 @@ using UnityEngine;
 
 public class AIShooter : MonoBehaviour
 {
+    // https://www.youtube.com/watch?v=QKhn2kl9_8I // usefull youtube video 
+
     #region Variables
     [Header("General GameObjects")]
     public GameObject car;
-    [SerializeField] private Rigidbody carRigidBody;
-    public bool noCarNeeded = false;
-    [SerializeField] private bool useTestingCamera = false;
-    [SerializeField] private GameObject Camera;
-    [SerializeField] private float weaponDamage = 3f;
+    private Rigidbody carRigidBody;
+    private GameObject Camera;
     [SerializeField] private Transform minigunBarrel;
     [SerializeField] private Transform rifleBarrel;
     [SerializeField] GameObject rpgGo;
@@ -28,7 +27,16 @@ public class AIShooter : MonoBehaviour
     private MoveTurretPosition mtp;
     private bool readyToDestroy = false;
     private bool shooting = false;
+    private Rigidbody rb;
 
+    [Header("Gun Variables")]
+    [SerializeField] private float weaponDamage = 0.2f;
+    public float range = 30f;
+    public float turnSpeed = 5f;
+    [SerializeField] private float barrelRotationStartSpeed = 100f;
+    [SerializeField] private float barrelRotationMaxSpeed = 800f;
+    private float timeBeforeLookingForANewTarget = 1f;
+    private float delayBeforeStartWorking = 2f;
 
 
     [Header("Decoration")]
@@ -36,34 +44,43 @@ public class AIShooter : MonoBehaviour
     [SerializeField] private Transform impactEffectHolder;
     [SerializeField] GameObject VFXBulletGo;
     private float barrelRotationSpeed;
-    private float barrelRotationStartSpeed = 100f;
-    private float barrelRotationMaxSpeed = 800f;
-
-    //FMOD
-    [SerializeField] private GameObject soundSourceLocation;
-    [SerializeField] private float gunSoundCoolDownTime = 2f;
-    private float startGunSoundCoolDownTime;
-    
     
 
+    [Header("FMOD")]
+    FMOD.Studio.EventInstance minigunLoopSoundInstance;
+    private bool shootingSoundOn = false;
 
-    // https://www.youtube.com/watch?v=QKhn2kl9_8I
-    [Header("Brackeys Stuff")]
-    public Transform partToRotate;
+    
+    [Header("Targeting")]
+    
     public string aiCarTag = "Player";
     public string carTag = "car";
-    public float range = 30f;
-    [SerializeField] private float timeBeforeLookingForANewTarget = 2f;
-    [SerializeField] private float delayBeforeStartWorking = 3f;
     public List<GameObject> targets = new List<GameObject>();
-    public float turnSpeed = 5f;
     [SerializeField] private float xOffest = 0.2f;
     private Transform target;
+
+
+    [Header("Toggles")]
+    [SerializeField] private bool useTestingCamera = false;
+    public bool noCarNeeded = false;
+    [SerializeField] private bool UseShootingSound = true;
+    [SerializeField] private bool UseImpactEffect = true;
+    [SerializeField] private bool UseMuzzleFlash = true;
+    [SerializeField] private bool UseBulletCasings = true;
     #endregion
+
+
+    //draws a sphere to show the range of the gun
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, range);
+    }
 
     private void Awake()
     {
-        startGunSoundCoolDownTime = gunSoundCoolDownTime;
+        rb = GetComponent<Rigidbody>();
+        Camera = this.gameObject.GetComponentInChildren<AudioListener>().gameObject;
 
         if(mtp == null)
             mtp = this.gameObject.GetComponent<MoveTurretPosition>();
@@ -72,6 +89,7 @@ public class AIShooter : MonoBehaviour
         VFXBulletGo.SetActive(false);
         muzzleFlash.SetActive(false);
         barrelRotationSpeed = barrelRotationStartSpeed;
+        minigunLoopSoundInstance = FMODUnity.RuntimeManager.CreateInstance("event:/GunFX/Minigun/MinigunLoop");
 
         if (!useTestingCamera)
             Camera.SetActive(false);
@@ -87,14 +105,15 @@ public class AIShooter : MonoBehaviour
     void Update()
     {
         DestroyMeIfDriverDisconnects();
-    
+
+        //Getting car info
         if (mtp.car != null && car == null)
             car = mtp.car;
 
         if (car != null && carRigidBody == null)
             carRigidBody = car.GetComponent<Rigidbody>();
 
-
+        //////////////////////////////////////////////////////////// Put all shooting stuff below here
         if (!MasterClientRaceStart.Instance.weaponsFree) { return; }
 
         //dont do anything if there is no target
@@ -103,18 +122,9 @@ public class AIShooter : MonoBehaviour
         else
             TargetLockOn();
 
-        if (shooting)
-        {
-            gunSoundCoolDownTime -= 1 * Time.deltaTime;
-
-            if(gunSoundCoolDownTime <= 0 && car != null && car.tag == "car")
-            {
-                InvokeRepeating("ShootSound", 0, 100);
-                gunSoundCoolDownTime = startGunSoundCoolDownTime;
-            }
-            
-        }
+        ShootSound();
     }
+
 
     private void FixedUpdate()
     {
@@ -130,7 +140,7 @@ public class AIShooter : MonoBehaviour
         else
         {
             CancelInvoke("Shoot");
-            CancelInvoke("ShootSound");
+            //CancelInvoke("ShootSound");
             shooting = false;
         }
 
@@ -193,16 +203,11 @@ public class AIShooter : MonoBehaviour
     {
         Vector3 dir = target.position - transform.position;
         Quaternion lookRotation = Quaternion.LookRotation(dir);
-        Vector3 rotation = Quaternion.Lerp(partToRotate.rotation, lookRotation, Time.deltaTime * turnSpeed).eulerAngles;
-        partToRotate.rotation = Quaternion.Euler(rotation.x - xOffest, rotation.y, 0f);
+        Vector3 rotation = Quaternion.Lerp(gunBarrel.rotation, lookRotation, Time.deltaTime * turnSpeed).eulerAngles;
+        gunBarrel.rotation = Quaternion.Euler(rotation.x - xOffest, rotation.y, 0f);
     }
 
-    //draws a sphere to show the range of the gun
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, range);
-    }
+    
 
     private IEnumerator GetTargets(float time)
     {
@@ -247,47 +252,52 @@ public class AIShooter : MonoBehaviour
 
     void ShootSound()
     {
-        FMODUnity.RuntimeManager.PlayOneShotAttached("event:/GunFX/Minigun/MinigunShot 2", soundSourceLocation);
+        if (!UseShootingSound)
+            return;
+
+        //if there is a target
+        if (target != null)
+        {
+            float distanceToEnemy = Vector3.Distance(transform.position, target.transform.position); //check the distance of the target from the player
+
+            //shooting
+            if (distanceToEnemy <= range) //if the target is within shooting range
+            {
+                //play the FMOD shooting sound
+                if (!shootingSoundOn)
+                {
+                    FMODUnity.RuntimeManager.AttachInstanceToGameObject(minigunLoopSoundInstance, this.transform, rb);
+                    minigunLoopSoundInstance.setParameterByName("on", 0);
+                    minigunLoopSoundInstance.start();
+
+                    shootingSoundOn = true;
+                }
+            }
+            else //not shooting
+            {
+                //turn off the FMOD shooting sound
+                if (shootingSoundOn)
+                {
+                    minigunLoopSoundInstance.setParameterByName("on", 1);
+
+                    shootingSoundOn = false;
+                }
+
+            }
+        }
     }
 
     void Shoot()
     {
         //Debug.Log("Shooting");
         
-
-        muzzleFlash.SetActive(true);
-        //muzzleFlash.GetComponent<ParticleSystem>().Play();
-        
-        VFXBulletGo.SetActive(true); //have bullet casings flying out
+        //decoration
+        if(UseMuzzleFlash) 
+            muzzleFlash.SetActive(true);
+        if(UseBulletCasings)
+            VFXBulletGo.SetActive(true); //have bullet casings flying out
         barrelRotationSpeed = barrelRotationMaxSpeed;
 
-        //FMODUnity.RuntimeManager.PlayOneShotAttached(sound, gameObject);
-
-        /*
-        Vector3 direction = Vector3.zero;
-        RaycastHit hit;
-        if (Physics.Raycast(bulletSpawnPoint.transform.position, direction, out hit, range))
-        {
-            Target target = hit.transform.GetComponent<Target>();
-
-            if (target != null && target.gameObject != car)
-            {
-                //Debug.Log("Hit: " + target);
-                target.TakeDamage(WeaponDamage);
-            }
-
-            GameObject impactGo;
-            if (IsThisMultiplayer.Instance.multiplayer)
-            {
-                impactGo = PhotonNetwork.Instantiate("Impact Particle Effect", hit.point, Quaternion.LookRotation(hit.normal), 0);
-            }
-            else
-            {
-                impactGo = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
-            }
-            //impactGo.transform.parent = impactEffectHolder;
-        }
-        */
 
         RaycastHit[] hits;
         Vector3 direction = bulletSpawnPoint.transform.forward;
@@ -308,16 +318,19 @@ public class AIShooter : MonoBehaviour
                     target.TakeDamage(weaponDamage);
                 }
 
-                //GameObject impactGo;
-                if (IsThisMultiplayer.Instance.multiplayer)
+                if(UseImpactEffect)
                 {
-                    //impactGo = PhotonNetwork.Instantiate("Impact Particle Effect", hit.point, Quaternion.LookRotation(hit.normal), 0);
+                    GameObject impactGo;
+                    if (IsThisMultiplayer.Instance.multiplayer)
+                    {
+                        impactGo = PhotonNetwork.Instantiate("Impact Particle Effect", hit.point, Quaternion.LookRotation(hit.normal), 0);
+                    }
+                    else
+                    {
+                        impactGo = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+                    }
+                    impactGo.transform.parent = impactEffectHolder;
                 }
-                else
-                {
-                    //impactGo = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
-                }
-                //impactGo.transform.parent = impactEffectHolder;
             }
         }
     }

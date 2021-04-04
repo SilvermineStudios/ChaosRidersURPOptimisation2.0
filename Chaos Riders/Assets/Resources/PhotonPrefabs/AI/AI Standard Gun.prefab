@@ -6531,11 +6531,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   car: {fileID: 0}
-  carRigidBody: {fileID: 0}
-  noCarNeeded: 1
-  useTestingCamera: 0
-  Camera: {fileID: 7350203655266108}
-  weaponDamage: 0.1
   minigunBarrel: {fileID: 3767529869141748556}
   rifleBarrel: {fileID: 4102530861068565298}
   rpgGo: {fileID: 3767529868687993775}
@@ -6550,20 +6545,27 @@ MonoBehaviour:
   everythingButIgnoreBullets:
     serializedVersion: 2
     m_Bits: 57143
+  weaponDamage: 0.1
+  range: 100
+  turnSpeed: 5
+  barrelRotationStartSpeed: 100
+  barrelRotationMaxSpeed: 800
+  timeBeforeLookingForANewTarget: 1
+  delayBeforeStartWorking: 2
   impactEffect: {fileID: 7938478309457529535, guid: 0c9781b5140952b42ae2c6af77491dfc, type: 3}
   impactEffectHolder: {fileID: 3767529867846557448}
   VFXBulletGo: {fileID: 3108730426236208173}
-  soundSourceLocation: {fileID: 6753911985266905327}
-  gunSoundCoolDownTime: 0.09
   partToRotate: {fileID: 6753911985080015449}
   aiCarTag: Player
   carTag: car
-  range: 100
-  timeBeforeLookingForANewTarget: 1
-  delayBeforeStartWorking: 2
   targets: []
-  turnSpeed: 5
   xOffest: 0.4
+  useTestingCamera: 1
+  noCarNeeded: 1
+  UseShootingSound: 1
+  UseImpactEffect: 1
+  UseMuzzleFlash: 1
+  UseBulletCasings: 1
 --- !u!114 &6753911985949760906
 MonoBehaviour:
   m_ObjectHideFlags: 0
