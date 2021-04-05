@@ -50,6 +50,7 @@ public class Shooter : MonoBehaviourPun
     [SerializeField] bool noCarNeeded;
     bool usingAmmo;
     bool rotate;
+    bool shootingDecorationStuffOn = false;
     #endregion
 
     #region Floats
@@ -122,7 +123,6 @@ public class Shooter : MonoBehaviourPun
     public GameObject impactEffect;
     [SerializeField] private Transform impactEffectHolder;
 
-
     [SerializeField] GameObject CasingSpawn, Casing;
     [SerializeField] GameObject VFXBulletGo;
 
@@ -137,6 +137,7 @@ public class Shooter : MonoBehaviourPun
     #endregion
 
     #region Sound
+    FMOD.Studio.EventInstance minigunLoopSoundInstance;
     string sound;
     string bulletWhistle;
     string hitmarkerSound;
@@ -180,6 +181,8 @@ public class Shooter : MonoBehaviourPun
         rb = GetComponent<Rigidbody>();
         VFXBulletGo.SetActive(false);
         muzzleFlash.SetActive(false);
+        minigunLoopSoundInstance = FMODUnity.RuntimeManager.CreateInstance("event:/GunFX/Minigun/MinigunLoop");
+        //FMODUnity.RuntimeManager.AttachInstanceToGameObject(minigunLoopSoundInstance, transform, rb);
     }
 
     void Start()
@@ -287,7 +290,10 @@ public class Shooter : MonoBehaviourPun
                 connectCar = false;
                 car = GetComponentInParent<MoveTurretPosition>().car;
                 carCollision = GetComponentInParent<MoveTurretPosition>().car.transform.GetChild(0).gameObject;
+
+                //FMODUnity.RuntimeManager.AttachInstanceToGameObject(minigunLoopSoundInstance, this.transform, car.GetComponent<Rigidbody>());
             }
+
             FollowMouse();
             rpgcount.text = amountOfAmmoForRPG + " / " + startAmountOfAmmoForRPG;
 
@@ -398,23 +404,40 @@ public class Shooter : MonoBehaviourPun
             if (!MasterClientRaceStart.Instance.weaponsFree) { return; }
 
             
-            // Weapon Specific functions
+            // Weapon Specific functions <-------------------------------------------------------------- MINIGUN DECORATIONS / AUDIO
             if (shooterClass == ShooterClass.minigun)
             {
                 //if you are shooting the minigun
                 if (shootButtonHeld && !RPG)
                 {
-                    barrelRotationSpeed = barrelRotationMaxSpeed;
-                    VFXBulletGo.SetActive(true);
-                    muzzleFlash.SetActive(true);
+                    if(!shootingDecorationStuffOn)
+                    {
+                        barrelRotationSpeed = barrelRotationMaxSpeed;
+                        VFXBulletGo.SetActive(true);
+                        muzzleFlash.SetActive(true);
+
+                        FMODUnity.RuntimeManager.AttachInstanceToGameObject(minigunLoopSoundInstance, transform, rb);
+                        minigunLoopSoundInstance.setParameterByName("on", 0);
+                        minigunLoopSoundInstance.start();
+
+                        shootingDecorationStuffOn = true;
+                    }
                 }
                 else
                 {
-                    barrelRotationSpeed = barrelRotationStartSpeed;
-                    VFXBulletGo.SetActive(false);
-                    muzzleFlash.SetActive(false);
+                    if(shootingDecorationStuffOn)
+                    {
+                        barrelRotationSpeed = barrelRotationStartSpeed;
+                        VFXBulletGo.SetActive(false);
+                        muzzleFlash.SetActive(false);
+                        minigunLoopSoundInstance.setParameterByName("on", 1);
+
+                        shootingDecorationStuffOn = false;
+                    }
                 }
             }
+            //---------------------------------------------------------------------------------------------------------------------
+
 
             if (shooterClass == ShooterClass.rifle)
             {
@@ -502,10 +525,20 @@ public class Shooter : MonoBehaviourPun
         if (Input.GetKey(shootButton) && amountOfAmmoForCooldownBar > weaponAmmoUsage && !RPG)
         {
             VFXBulletGo.SetActive(true);
+
+            bool on = false;
+            if(!on)
+            {
+                minigunLoopSoundInstance.setParameterByName("on", 0);
+                minigunLoopSoundInstance.start();
+                on = true;
+            }
+            
         }
         else
         {
             VFXBulletGo.SetActive(false);
+            minigunLoopSoundInstance.setParameterByName("on", 1);
         }
     }
 
@@ -623,7 +656,7 @@ public class Shooter : MonoBehaviourPun
         //muzzleFlash.Play();
         //muzzleFlash.SetActive(true);
 
-        FMODUnity.RuntimeManager.PlayOneShotAttached(sound, gameObject);
+        //FMODUnity.RuntimeManager.PlayOneShotAttached(sound, gameObject);
 
         Vector3 direction = Spread(currentBulletSpread);
 
