@@ -270,6 +270,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 1
+--- !u!114 &-4812052476411781461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/MinigunLoop/on
+  m_EditorClassIdentifier: 
+  Name: on
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-4789631137126399954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -348,7 +368,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/Master.bank
   Name: Master
-  lastModified: 637534842911290319
+  lastModified: 637535945743641205
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -475,7 +495,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/Master.strings.bank
   Name: Master.strings
-  lastModified: 637534842911313634
+  lastModified: 637535945743651210
   LoadResult: 0
   FileSizes:
   - Name: Desktop
@@ -501,7 +521,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 0
   Parameters:
-  - {fileID: 5986823351180911673}
+  - {fileID: -4812052476411781461}
   MinDistance: 1
   MaxDistance: 20
   Length: 1771
@@ -934,7 +954,7 @@ MonoBehaviour:
   - {fileID: -4466803539278922483}
   StringsBanks:
   - {fileID: -2954939187940535496}
-  stringsBankWriteTime: 637534842911313634
+  stringsBankWriteTime: 637535945743651210
   cacheVersion: 5
 --- !u!114 &85392896368430204
 MonoBehaviour:
@@ -959,6 +979,26 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 10000
   Length: 3121
+--- !u!114 &172871173339392215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/BrakerAudio/Gear Change
+  m_EditorClassIdentifier: 
+  Name: Gear Change
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &256488080592663770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1980,7 +2020,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 0
   Parameters:
-  - {fileID: -6303716821046819717}
+  - {fileID: 172871173339392215}
   MinDistance: 1
   MaxDistance: 10000
   Length: 5400
