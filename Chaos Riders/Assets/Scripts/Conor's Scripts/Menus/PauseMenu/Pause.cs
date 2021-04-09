@@ -67,12 +67,15 @@ public class Pause : MonoBehaviour
         //video
         videoSettingsHolder = videoSettingsPanel.transform.Find("Settings Stuff").gameObject;
         imageQualityDropDown = videoSettingsHolder.transform.Find("Video Quality Dropdown").GetComponent<TMP_Dropdown>();
-        imageQualityDropDown.value = QualitySettings.GetQualityLevel();
+        //imageQualityDropDown.value = QualitySettings.GetQualityLevel();
+        imageQualityDropDown.value = QualitySettings.GetQualityLevel() - 1; //REVERT IF USING VERY LOW SETTINGS
         FPSText = playerCanvas.transform.Find("FPSText").gameObject;
     }
 
     void Start()
     {
+        //Debug.Log("Quality settings int value: " + QualitySettings.GetQualityLevel());
+
         //PauseMenu.SetActive(false); //deactivate pause menu
         Music = FMODUnity.RuntimeManager.GetBus("bus:/Master/Music");
         SFX = FMODUnity.RuntimeManager.GetBus("bus:/Master/SFX");
@@ -121,7 +124,13 @@ public class Pause : MonoBehaviour
 
     public void ChangeRenderPipelineAsset(int value)
     {
-        QualitySettings.SetQualityLevel(value);
+        //Debug.Log("Value: " + value);
+
+        int test = value + 1;
+        //Debug.Log("Test: " + test);
+
+        //QualitySettings.SetQualityLevel(value); 
+        QualitySettings.SetQualityLevel(test); //REVERT IF USING VERY LOW SETTINGS
     }
 
     public void ToggleDisplayFPS(bool toggle)
