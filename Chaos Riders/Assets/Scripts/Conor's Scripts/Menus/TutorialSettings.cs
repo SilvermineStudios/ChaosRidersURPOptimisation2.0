@@ -15,16 +15,15 @@ public class TutorialSettings : MonoBehaviour
     public TMP_Dropdown aiOnDropDown;
     public TMP_Dropdown amountOfAiDropDown;
 
-    [Header("Buttons")]
-    public GameObject shooterButton;
-    public GameObject driverButton;
-    public GameObject brakerButton;
-    public GameObject shredderButton;
-    public GameObject standardGunButton;
-    public GameObject goldenGunButton;
+    [Header("Character Selection")]
+    public GameObject playerTypeButtons;
+    public GameObject driverButtons;
+    public GameObject shooterButtons;
+    public Color selectedColour;
 
     void Start()
     {
+        //Values / Dropdowns
         lapsDropDown.value = amountOfLaps - 1;
         amountOfAiDropDown.value = amountOfAI;
 
@@ -32,8 +31,14 @@ public class TutorialSettings : MonoBehaviour
             aiOnDropDown.value = 0;
         else
             aiOnDropDown.value = 1;
+
+        //character Selection
+        playerTypeButtons.SetActive(true);
+        driverButtons.SetActive(false);
+        shooterButtons.SetActive(false);
     }
 
+    #region Settings
     public void HangleLapsInputData(int val)
     {
         amountOfLaps = val + 1;
@@ -74,4 +79,56 @@ public class TutorialSettings : MonoBehaviour
             aiOnDropDown.value = 0;
         }
     }
+    #endregion
+
+    #region Buttons
+    public void Button_Start()
+    {
+
+    }
+
+    public void Button_Driver()
+    {
+        playerTypeButtons.SetActive(false);
+        shooterButtons.SetActive(false);
+
+        driverButtons.SetActive(true);
+    }
+
+    public void Button_Shooter()
+    {
+        playerTypeButtons.SetActive(false);
+        driverButtons.SetActive(false);
+
+        shooterButtons.SetActive(true);
+    }
+
+    public void Button_Back()
+    {
+        driverButtons.SetActive(false);
+        shooterButtons.SetActive(false);
+
+        playerTypeButtons.SetActive(true);
+    }
+
+    public void Button_Braker()
+    {
+
+    }
+
+    public void Button_Shredder()
+    {
+
+    }
+
+    public void Button_StandardGun()
+    {
+
+    }
+
+    public void Button_GoldenGun()
+    {
+
+    }
+    #endregion
 }

@@ -1611,9 +1611,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1595746698}
-        m_TargetAssemblyTypeName: CharacterScreenChanger, Assembly-CSharp
-        m_MethodName: BackButton
+      - m_Target: {fileID: 1220562311}
+        m_TargetAssemblyTypeName: TutorialSettings, Assembly-CSharp
+        m_MethodName: Button_Back
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -19599,9 +19599,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1595746698}
-        m_TargetAssemblyTypeName: CharacterScreenChanger, Assembly-CSharp
-        m_MethodName: ShooterButton
+      - m_Target: {fileID: 1220562311}
+        m_TargetAssemblyTypeName: TutorialSettings, Assembly-CSharp
+        m_MethodName: Button_Shooter
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -23233,12 +23233,10 @@ MonoBehaviour:
   lapsDropDown: {fileID: 198165668}
   aiOnDropDown: {fileID: 91437206}
   amountOfAiDropDown: {fileID: 1419279767}
-  shooterButton: {fileID: 0}
-  driverButton: {fileID: 0}
-  brakerButton: {fileID: 0}
-  shredderButton: {fileID: 0}
-  standardGunButton: {fileID: 0}
-  goldenGunButton: {fileID: 0}
+  playerTypeButtons: {fileID: 672434835}
+  driverButtons: {fileID: 1705761167}
+  shooterButtons: {fileID: 1978858811}
+  selectedColour: {r: 0.7490196, g: 0.5137255, b: 0.1137255, a: 1}
 --- !u!1 &1224799637
 GameObject:
   m_ObjectHideFlags: 0
@@ -32869,9 +32867,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1595746698}
-        m_TargetAssemblyTypeName: CharacterScreenChanger, Assembly-CSharp
-        m_MethodName: DriverButton
+      - m_Target: {fileID: 1220562311}
+        m_TargetAssemblyTypeName: TutorialSettings, Assembly-CSharp
+        m_MethodName: Button_Driver
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
