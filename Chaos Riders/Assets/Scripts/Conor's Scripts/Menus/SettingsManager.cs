@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 using TMPro;
 using UnityEngine.UI;
 
@@ -17,6 +18,7 @@ public class SettingsManager : MonoBehaviour
     [Header("Video Settings")]
     [SerializeField] private TMP_Dropdown imageQualityDropDown;
     [SerializeField] private GameObject FPSText;
+    public RenderPipelineAsset[] qualityLevels;
 
     private void Awake()
     {
@@ -36,13 +38,17 @@ public class SettingsManager : MonoBehaviour
 
         //video
         imageQualityDropDown.value = QualitySettings.GetQualityLevel() - 1; //REVERT IF USING VERY LOW SETTINGS
+        //QualitySettings.renderPipeline = qualityLevels[QualitySettings.GetQualityLevel() - 1];
     }
 
     #region video
     public void ChangeRenderPipelineAsset(int value) //changes the video quality settings
     {
-        int test = value + 1;
+        //Debug.Log("Value is: " + value);
+        //Debug.Log("Quality setting = " + qualityLevels[value].name);
+        //QualitySettings.renderPipeline = qualityLevels[value];
 
+        int test = value + 1;
         //QualitySettings.SetQualityLevel(value); 
         QualitySettings.SetQualityLevel(test); //REVERT IF USING VERY LOW SETTINGS
     }
