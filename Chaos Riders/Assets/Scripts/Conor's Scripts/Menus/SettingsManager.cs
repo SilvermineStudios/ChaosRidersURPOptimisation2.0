@@ -13,6 +13,7 @@ public class SettingsManager : MonoBehaviour
 
     [Header("Video Settings")]
     [SerializeField] private TMP_Dropdown imageQualityDropDown;
+    [SerializeField] private GameObject FPSText;
 
     private void Awake()
     {
@@ -25,5 +26,17 @@ public class SettingsManager : MonoBehaviour
 
         //QualitySettings.SetQualityLevel(value); 
         QualitySettings.SetQualityLevel(test); //REVERT IF USING VERY LOW SETTINGS
+    }
+
+    public void ToggleDisplayFPS(bool toggle)
+    {
+        if (toggle)
+        {
+            FPSText.SetActive(true);
+        }
+        else
+        {
+            FPSText.SetActive(false);
+        }
     }
 }
