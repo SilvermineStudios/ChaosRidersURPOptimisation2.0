@@ -14,6 +14,7 @@ public class CustomMatchmakingLobbyController : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject mainPanel; //panel for displaying main menu
     [SerializeField] private GameObject controlsPanel; //panel for displaying game controls
     [SerializeField] private GameObject settingsPanel; //panel for changing the game settings
+    [SerializeField] private GameObject tutorialPanel; //panel for changing the game settings
     //[SerializeField] private GameObject choosePlayerTypePanel; //panel for choosing whether to be a driver or shooter 
 
     public TMP_InputField playerNameInput; //input field so player can change their NickName
@@ -33,6 +34,7 @@ public class CustomMatchmakingLobbyController : MonoBehaviourPunCallbacks
         lobbyPanel.SetActive(false);
         controlsPanel.SetActive(false);
         settingsPanel.SetActive(false);
+        tutorialPanel.SetActive(false);
     }
 
     private void Update()
@@ -168,6 +170,7 @@ public class CustomMatchmakingLobbyController : MonoBehaviourPunCallbacks
         lobbyPanel.SetActive(false);
         mainPanel.SetActive(false);
         settingsPanel.SetActive(false);
+        tutorialPanel.SetActive(false);
         controlsPanel.SetActive(true);
     }
     
@@ -183,12 +186,28 @@ public class CustomMatchmakingLobbyController : MonoBehaviourPunCallbacks
         lobbyPanel.SetActive(false);
         mainPanel.SetActive(false);
         controlsPanel.SetActive(false);
+        tutorialPanel.SetActive(false);
         settingsPanel.SetActive(true);
     }
 
     public void BackFromSettingsButton()
     {
         settingsPanel.SetActive(false);
+        mainPanel.SetActive(true);
+    }
+
+    public void ToTutorialButton()
+    {
+        lobbyPanel.SetActive(false);
+        mainPanel.SetActive(false);
+        controlsPanel.SetActive(false);
+        settingsPanel.SetActive(false);
+        tutorialPanel.SetActive(true);
+    }
+
+    public void BackFromTutorialButton()
+    {
+        tutorialPanel.SetActive(false);
         mainPanel.SetActive(true);
     }
 }
