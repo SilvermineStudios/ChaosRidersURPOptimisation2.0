@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class TutorialSettings : MonoBehaviour
 {
+    private TutorialPlayerSettings tutorialPlayerSettings;
+
     [Header("Values")]
     public int amountOfLaps = 3;
     public bool aiOn = true;
@@ -32,8 +35,15 @@ public class TutorialSettings : MonoBehaviour
     public GameObject goldenGunButton;
     public GameObject backButton;
 
+    private void Awake()
+    {
+        tutorialPlayerSettings = FindObjectOfType<TutorialPlayerSettings>();
+    }
+
     void Start()
     {
+        DontDestroyOnLoad(this.gameObject);
+
         //Values / Dropdowns
         lapsDropDown.value = amountOfLaps - 1;
         amountOfAiDropDown.value = amountOfAI;
@@ -96,7 +106,7 @@ public class TutorialSettings : MonoBehaviour
     #region Buttons
     public void Button_Start()
     {
-
+        SceneManager.LoadScene(2);
     }
 
     public void Button_Driver()
@@ -131,6 +141,8 @@ public class TutorialSettings : MonoBehaviour
             shredderButton.GetComponent<Image>().color = standardColour;
             standarGunButton.GetComponent<Image>().color = standardColour;
             goldenGunButton.GetComponent<Image>().color = standardColour;
+
+            //tutorialPlayerSettings.playerType = 
         }
 
         //shredder
