@@ -4,20 +4,12 @@ using UnityEngine;
 
 public class TutorialPlayerSettings : MonoBehaviour
 {
-    public enum PlayerType
-    {
-        none,
-        Braker,
-        Shredder,
-        standardShooter,
-        goldenGun
-    };
-
     public PlayerType playerType;
 
     void Start()
     {
         DontDestroyOnLoad(this);
+        playerType = PlayerType.None;
     }
 
     

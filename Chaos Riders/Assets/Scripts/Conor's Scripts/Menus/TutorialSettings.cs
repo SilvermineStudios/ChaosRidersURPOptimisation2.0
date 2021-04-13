@@ -142,7 +142,7 @@ public class TutorialSettings : MonoBehaviour
             standarGunButton.GetComponent<Image>().color = standardColour;
             goldenGunButton.GetComponent<Image>().color = standardColour;
 
-            //tutorialPlayerSettings.playerType = 
+            tutorialPlayerSettings.playerType = PlayerType.Braker;
         }
 
         //shredder
@@ -157,6 +157,8 @@ public class TutorialSettings : MonoBehaviour
             brakerButton.GetComponent<Image>().color = standardColour;
             standarGunButton.GetComponent<Image>().color = standardColour;
             goldenGunButton.GetComponent<Image>().color = standardColour;
+
+            tutorialPlayerSettings.playerType = PlayerType.Shredder;
         }
     }
 
@@ -174,6 +176,8 @@ public class TutorialSettings : MonoBehaviour
             goldenGunButton.GetComponent<Image>().color = standardColour;
             brakerButton.GetComponent<Image>().color = standardColour;
             shredderButton.GetComponent<Image>().color = standardColour;
+
+            tutorialPlayerSettings.playerType = PlayerType.StandardShooter;
         }
 
         //golden gun
@@ -188,6 +192,8 @@ public class TutorialSettings : MonoBehaviour
             standarGunButton.GetComponent<Image>().color = standardColour;
             brakerButton.GetComponent<Image>().color = standardColour;
             shredderButton.GetComponent<Image>().color = standardColour;
+
+            tutorialPlayerSettings.playerType = PlayerType.GoldenGun;
         }
     }
 

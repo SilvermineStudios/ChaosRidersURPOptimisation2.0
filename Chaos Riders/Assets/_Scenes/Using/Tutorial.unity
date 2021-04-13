@@ -14134,53 +14134,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 612e4787820081d45abc4d7d07e06e75, type: 3}
---- !u!114 &439900649
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5927835612942448657}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  observableSearch: 2
-  Synchronization: 3
-  OwnershipTransfer: 0
-  ObservedComponents: []
-  viewIdField: 22
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
---- !u!114 &439900650
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5927835612942448657}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58a56bcaa3c75624fa38c1b892be6afb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerDataManager: {fileID: 0}
-  pv: {fileID: 439900649}
-  canSpawnPlayers: 1
-  spawnDelay: 5
-  menuSceneIndex: 0
-  spawnPoints:
-  - {fileID: 3043033493252910443}
-  aiCars:
-  - {fileID: 2011213230151948855, guid: 4fef911cd4b7a114bb4c2b67b8861e47, type: 3}
-  - {fileID: 1407414512137103672, guid: c7d771049c583ed4d8583216cccd3132, type: 3}
-  - {fileID: 8318536519656587226, guid: 75a4e3dc9871b954ca033cf55406b813, type: 3}
-  aiGuns:
-  - {fileID: 6753911985949760915, guid: 5a4ea196226cd40439d05bcb4d89a401, type: 3}
 --- !u!1 &441288499
 GameObject:
   m_ObjectHideFlags: 0
@@ -26742,7 +26695,7 @@ Transform:
   - {fileID: 1535273491}
   - {fileID: 1436315467}
   m_Father: {fileID: 3545949801471931698}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &758873836
 MonoBehaviour:
@@ -33738,7 +33691,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.1
-  far clip plane: 700
+  far clip plane: 5000
   field of view: 60.00004
   orthographic: 0
   orthographic size: 5
@@ -33764,8 +33717,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1155110777}
-  m_LocalRotation: {x: 0.012566066, y: 0, z: 0, w: 0.9999211}
-  m_LocalPosition: {x: -57.4, y: 84.3, z: -166}
+  m_LocalRotation: {x: 0.016894352, y: 0.92355484, z: -0.040963393, w: 0.3808977}
+  m_LocalPosition: {x: -62.343815, y: 68.84729, z: -78.07663}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -44008,8 +43961,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1576374395}
-  - component: {fileID: 1576374396}
-  - component: {fileID: 1576374397}
   m_Layer: 0
   m_Name: AISpawnPoints
   m_TagString: Untagged
@@ -44034,56 +43985,8 @@ Transform:
   - {fileID: 1731387218}
   - {fileID: 2130327044}
   m_Father: {fileID: 3545949801471931698}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -34.7, z: 0}
---- !u!114 &1576374396
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1576374394}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d5b6348f1e132946b2b027af54debc4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnPoints:
-  - {fileID: 1620073209}
-  - {fileID: 13766850}
-  - {fileID: 1146788452}
-  - {fileID: 1731387218}
-  - {fileID: 2130327044}
-  aiCars:
-  - {fileID: 2011213230151948855, guid: 4fef911cd4b7a114bb4c2b67b8861e47, type: 3}
-  - {fileID: 1407414512137103672, guid: c7d771049c583ed4d8583216cccd3132, type: 3}
-  - {fileID: 8318536519656587226, guid: 75a4e3dc9871b954ca033cf55406b813, type: 3}
-  aiGuns:
-  - {fileID: 6753911985949760915, guid: 5a4ea196226cd40439d05bcb4d89a401, type: 3}
-  spawnAI: 1
-  amountOfAI: 10
---- !u!114 &1576374397
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1576374394}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  observableSearch: 2
-  Synchronization: 3
-  OwnershipTransfer: 0
-  ObservedComponents: []
-  viewIdField: 5
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1001 &1581498676
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -58056,7 +57959,6 @@ Transform:
   m_LocalPosition: {x: -223, y: 0, z: 87}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 7273815967536361824}
   - {fileID: 1576374395}
   - {fileID: 758873835}
   m_Father: {fileID: 2109867049}
@@ -58148,8 +58050,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7273815967536361824}
-  - component: {fileID: 439900649}
-  - component: {fileID: 439900650}
   m_Layer: 0
   m_Name: PlayerSpawnPoint
   m_TagString: Untagged
@@ -58221,13 +58121,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5927835612942448657}
-  m_LocalRotation: {x: 0, y: -0.30569524, z: 0, w: 0.9521295}
-  m_LocalPosition: {x: 295.7, y: -79.2, z: 134.7}
+  m_LocalRotation: {x: -0, y: -0.4984878, z: -0, w: -0.8668967}
+  m_LocalPosition: {x: -116.72562, y: -74.4, z: -220.06418}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3043033493252910443}
-  m_Father: {fileID: 3545949801471931698}
-  m_RootOrder: 0
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: -35.6, z: 0}
 --- !u!1001 &7307160494144359776
 PrefabInstance:
@@ -58439,6 +58339,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da55900ca5226174e88033cab18d1980, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tps: {fileID: 0}
+  spawnDelay: 3
+  Braker: {fileID: 281617035568991754, guid: 0170507635ed67f47965805bd381861c, type: 3}
+  Shredder: {fileID: 6453727443666974786, guid: 94a94df880e7f9c4ab43c71408f038de, type: 3}
+  StandardGun: {fileID: 692332137427262031, guid: 5cd6e7b0c64f35442b154981937c34e4, type: 3}
+  GoldenGun: {fileID: 2136961651136749677, guid: d18f4f77a6cba1644a6a4a0476cfc7a3, type: 3}
+  aiCars:
+  - {fileID: 2011213230151948855, guid: 4fef911cd4b7a114bb4c2b67b8861e47, type: 3}
+  - {fileID: 1407414512137103672, guid: c7d771049c583ed4d8583216cccd3132, type: 3}
+  - {fileID: 8318536519656587226, guid: 75a4e3dc9871b954ca033cf55406b813, type: 3}
+  aiGun: {fileID: 6753911985949760915, guid: 5a4ea196226cd40439d05bcb4d89a401, type: 3}
   playerSpawnPoint: {fileID: 7273815967536361824}
   aiSpawnPointHolder: {fileID: 1576374395}
   aiSpawnPoints: []
