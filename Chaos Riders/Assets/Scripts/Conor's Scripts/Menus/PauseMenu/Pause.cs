@@ -67,16 +67,21 @@ public class Pause : MonoBehaviour
         //video
         videoSettingsHolder = videoSettingsPanel.transform.Find("Settings Stuff").gameObject;
         imageQualityDropDown = videoSettingsHolder.transform.Find("Video Quality Dropdown").GetComponent<TMP_Dropdown>();
-        imageQualityDropDown.value = QualitySettings.GetQualityLevel();
+        //imageQualityDropDown.value = QualitySettings.GetQualityLevel();
+        imageQualityDropDown.value = QualitySettings.GetQualityLevel() - 1; //REVERT IF USING VERY LOW SETTINGS
         FPSText = playerCanvas.transform.Find("FPSText").gameObject;
     }
 
     void Start()
     {
+        //Debug.Log("Quality settings int value: " + QualitySettings.GetQualityLevel());
+
         //PauseMenu.SetActive(false); //deactivate pause menu
         Music = FMODUnity.RuntimeManager.GetBus("bus:/Master/Music");
         SFX = FMODUnity.RuntimeManager.GetBus("bus:/Master/SFX");
         Master = FMODUnity.RuntimeManager.GetBus("bus:/Master");
+
+        /*
         if (!PlayerPrefs.HasKey("MasterVolume") || !PlayerPrefs.HasKey("MusicVolume") || !PlayerPrefs.HasKey("SFXVolume"))
         {
             PlayerPrefs.SetFloat("MasterVolume", 1);
@@ -84,11 +89,13 @@ public class Pause : MonoBehaviour
             PlayerPrefs.SetFloat("MusicVolume", 0.5f);
             PlayerPrefs.SetInt("SaveChanges", 1);
         }
-        else
-        {
+        */
+        //else
+        //{
             MasterSlider.value = PlayerPrefs.GetFloat("MasterVolume");
             MusicSlider.value = PlayerPrefs.GetFloat("MusicVolume");
             SFXSlider.value = PlayerPrefs.GetFloat("SFXVolume");
+        /*
             if(PlayerPrefs.GetInt("SaveChanges") == 1)
             {
                 saveChanges.isOn = true;
@@ -100,6 +107,7 @@ public class Pause : MonoBehaviour
                 saveChangesToAudio = false;
             }
         }
+        */
 
         // AUDIO SETTINGS
         Music.setVolume(PlayerPrefs.GetFloat("MusicVolume"));
@@ -121,7 +129,13 @@ public class Pause : MonoBehaviour
 
     public void ChangeRenderPipelineAsset(int value)
     {
-        QualitySettings.SetQualityLevel(value);
+        //Debug.Log("Value: " + value);
+
+        int test = value + 1;
+        //Debug.Log("Test: " + test);
+
+        //QualitySettings.SetQualityLevel(value); 
+        QualitySettings.SetQualityLevel(test); //REVERT IF USING VERY LOW SETTINGS
     }
 
     public void ToggleDisplayFPS(bool toggle)
@@ -152,30 +166,50 @@ public class Pause : MonoBehaviour
 
     public void SetMasterLevel(float sliderValue)
     {
+        /*
         if (saveChangesToAudio)
         {
             PlayerPrefs.SetFloat("MasterVolume", sliderValue);
         }
+       
+        Master.setVolume(sliderValue);
+        */
 
+
+        //new
+        PlayerPrefs.SetFloat("MasterVolume", sliderValue);
         Master.setVolume(sliderValue);
     }
 
     public void SetMusicLevel(float sliderValue)
     {
+        /*
         if (saveChangesToAudio)
         {
             PlayerPrefs.SetFloat("MusicVolume", sliderValue);
         }
 
         Music.setVolume(sliderValue);
+        */
+
+        //new
+        PlayerPrefs.SetFloat("MusicVolume", sliderValue);
+        Music.setVolume(sliderValue);
     }
 
     public void SetSFXLevel(float sliderValue)
     {
+        /*
         if (saveChangesToAudio)
         {
             PlayerPrefs.SetFloat("SFXVolume", sliderValue);
         }
+
+        SFX.setVolume(sliderValue);
+        */
+
+        //new
+        PlayerPrefs.SetFloat("SFXVolume", sliderValue);
         SFX.setVolume(sliderValue);
     }
 
