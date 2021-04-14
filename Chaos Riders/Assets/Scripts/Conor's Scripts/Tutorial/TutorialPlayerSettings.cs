@@ -5,6 +5,8 @@ using UnityEngine;
 public class TutorialPlayerSettings : MonoBehaviour
 {
     public PlayerType playerType;
+    public int amountOfAI;
+    public int amountOfLaps;
 
     void Start()
     {

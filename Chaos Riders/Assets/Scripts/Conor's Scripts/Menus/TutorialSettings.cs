@@ -64,6 +64,7 @@ public class TutorialSettings : MonoBehaviour
     public void HangleLapsInputData(int val)
     {
         amountOfLaps = val + 1;
+        tutorialPlayerSettings.amountOfLaps = amountOfLaps;
     }
 
     public void HangleAiOnInputData(int val)
@@ -89,6 +90,8 @@ public class TutorialSettings : MonoBehaviour
     public void HandleAmountOfAiInputData(int val)
     {
         amountOfAI = val;
+
+        tutorialPlayerSettings.amountOfAI = amountOfAI;
 
         if(val == 0)
         {

@@ -24,59 +24,81 @@ public class TutorialSpawner : MonoBehaviour
 
     void Start()
     {
-        aiSpawnPoints = new Transform[aiSpawnPointHolder.childCount]; //make the array the same length as the amount of children waypoints
-        for (int i = 0; i < aiSpawnPointHolder.childCount; i++) //put every waypoint(Child) in the array
-        {
-            aiSpawnPoints[i] = aiSpawnPointHolder.GetChild(i);
-        }
-
         tps = FindObjectOfType<TutorialPlayerSettings>();
-        StartCoroutine(SpawnCorotine(spawnDelay));
-
+        StartCoroutine(SpawnPlayerCorotine(spawnDelay));
+        StartCoroutine(SpawnAICorotine(spawnDelay));
     }
 
 
     void Update()
     {
-        /////////////////////////////////////////////////////////////////////////////////////REMOVE
+        //testing
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            Instantiate(Braker, playerSpawnPoint.position, playerSpawnPoint.rotation);
+            int randomNum = Random.Range(0, aiCars.Length);
+            Debug.Log("Random number = " + randomNum);
         }
     }
 
-    private IEnumerator SpawnCorotine(float time)
+    //Used for spawning your own player and AI companion
+    private IEnumerator SpawnPlayerCorotine(float time)
     {
         yield return new WaitForSeconds(time);
 
         //Braker
         if(tps.playerType == PlayerType.Braker)
         {
+            //spawn player
             Instantiate(Braker, playerSpawnPoint.position, playerSpawnPoint.rotation);
+
+            //spawn ai
             Instantiate(aiGun, playerSpawnPoint.position, playerSpawnPoint.rotation);
-            //spawn AI gun
         }
 
         //Shredder
         if(tps.playerType == PlayerType.Shredder)
         {
-            Instantiate(Shredder, playerSpawnPoint);
-            Instantiate(aiGun, playerSpawnPoint);
-            //spawn AI gun
+            //spawn player
+            Instantiate(Shredder, playerSpawnPoint.position, playerSpawnPoint.rotation);
+
+            //spawn ai
+            Instantiate(aiGun, playerSpawnPoint.position, playerSpawnPoint.rotation);
         }
 
         //Standard Gun
         if (tps.playerType == PlayerType.StandardShooter)
         {
-            Instantiate(StandardGun, playerSpawnPoint);
-            //spawn AI car
+            //spawn player
+            Instantiate(StandardGun, playerSpawnPoint.position, playerSpawnPoint.rotation);
+
+            //spawn ai
+            int randomNum = Random.Range(0, aiCars.Length);
+            Instantiate(aiCars[randomNum], playerSpawnPoint.position, playerSpawnPoint.rotation);
         }
 
         //Golden Gun
         if (tps.playerType == PlayerType.GoldenGun)
         {
-            Instantiate(GoldenGun, playerSpawnPoint);
-            //spawn AI car
+            //spawn player
+            Instantiate(GoldenGun, playerSpawnPoint.position, playerSpawnPoint.rotation);
+
+            //spawn ai
+            int randomNum = Random.Range(0, aiCars.Length);
+            Instantiate(aiCars[randomNum], playerSpawnPoint.position, playerSpawnPoint.rotation);
+        }
+    }
+
+    //used for spawning the addition ai cars selected in the tutorial menu screen
+    private IEnumerator SpawnAICorotine(float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        for (int i = 0; i < tps.amountOfAI; i++)
+        {
+            int randomNum = Random.Range(0, aiCars.Length);
+            Instantiate(aiCars[randomNum], aiSpawnPoints[i].position, aiSpawnPoints[i].rotation); //spawn ai car
+
+            Instantiate(aiGun, aiSpawnPoints[i].position, aiSpawnPoints[i].rotation); //spawn ai gun
         }
     }
 }
