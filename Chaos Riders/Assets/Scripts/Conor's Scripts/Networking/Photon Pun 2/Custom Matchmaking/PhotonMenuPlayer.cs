@@ -115,7 +115,7 @@ public class PhotonMenuPlayer : MonoBehaviour
 
 
         //Debug.Log(Player.GetPhotonTeam());
-        Debug.Log(teamNumber);
+        //Debug.Log(teamNumber);
     }
 
 

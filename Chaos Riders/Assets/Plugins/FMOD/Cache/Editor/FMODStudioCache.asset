@@ -473,7 +473,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/Master.bank
   Name: Master
-  lastModified: 637536656691675191
+  lastModified: 637539425266447522
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -640,7 +640,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/Master.strings.bank
   Name: Master.strings
-  lastModified: 637536656691725260
+  lastModified: 637539425266467499
   LoadResult: 0
   FileSizes:
   - Name: Desktop
@@ -666,7 +666,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 0
   Parameters:
-  - {fileID: -3576692611013077819}
+  - {fileID: 2084120325217047347}
   MinDistance: 1
   MaxDistance: 20
   Length: 1771
@@ -1182,8 +1182,28 @@ MonoBehaviour:
   - {fileID: -4466803539278922483}
   StringsBanks:
   - {fileID: -2954939187940535496}
-  stringsBankWriteTime: 637536656691725260
+  stringsBankWriteTime: 637539425266467499
   cacheVersion: 5
+--- !u!114 &17320906176810967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/BrakerAudio/Gear Change
+  m_EditorClassIdentifier: 
+  Name: Gear Change
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &85392896368430204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1678,6 +1698,26 @@ MonoBehaviour:
   m_Name: parameter:/BrakerAudio/Gear Change
   m_EditorClassIdentifier: 
   Name: Gear Change
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
+--- !u!114 &2084120325217047347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/MinigunLoop/on
+  m_EditorClassIdentifier: 
+  Name: on
   Min: 0
   Max: 1
   Default: 0
@@ -2345,7 +2385,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/CarNoise.bank
   Name: CarNoise
-  lastModified: 637536656690934521
+  lastModified: 637525491704131644
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -2532,7 +2572,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 0
   Parameters:
-  - {fileID: 5050684491394283884}
+  - {fileID: 17320906176810967}
   MinDistance: 1
   MaxDistance: 10000
   Length: 5400
