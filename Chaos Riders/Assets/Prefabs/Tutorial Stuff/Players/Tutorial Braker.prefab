@@ -510,8 +510,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 281617035191887858}
-  m_LocalRotation: {x: 0.0000000012792978, y: 0.99901783, z: -0.04431009, w: 0.000000028843122}
-  m_LocalPosition: {x: 0, y: 1.55, z: 4}
+  m_LocalRotation: {x: 1.906037e-10, y: 0.99901783, z: -0.044310004, w: 0.0000000042973705}
+  m_LocalPosition: {x: 0, y: 1.5499992, z: 4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 281617035651749690}
@@ -735,9 +735,9 @@ GameObject:
   - component: {fileID: 281617035568991755}
   - component: {fileID: 281617035568991753}
   - component: {fileID: 7288886143687283973}
-  - component: {fileID: 281617035568991752}
+  - component: {fileID: 7637821247668905616}
   - component: {fileID: 4461614684644015345}
-  - component: {fileID: 281617035568991761}
+  - component: {fileID: 2969357822266784819}
   - component: {fileID: 281617035568991762}
   - component: {fileID: 281617035568991775}
   - component: {fileID: 281617035568991763}
@@ -821,7 +821,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   carModel: 0
   carIndex: 0
---- !u!114 &281617035568991752
+--- !u!114 &7637821247668905616
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -830,7 +830,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 281617035568991754}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efe8b6672059e8a4dac0fd7e59e0b4b6, type: 3}
+  m_Script: {fileID: 11500000, guid: 32b7a89c3b5914e4cb7bc796cbad39ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   currentCarClass: 0
@@ -879,6 +879,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2f9334a86ca7f34ab73e1df829bd02d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onlineCar: 0
   engineSoundStyle: 0
   highAccelClip: {fileID: 0}
   pitchMultiplier: 1
@@ -891,7 +892,7 @@ MonoBehaviour:
   vehicalData: {fileID: 11400000, guid: 5945cc5f357fead40bafea468094598b, type: 2}
   revsoundLocation: event:/CarFX/All/Engine rev
   driveButtonKeyboard: 119
---- !u!114 &281617035568991761
+--- !u!114 &2969357822266784819
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -900,7 +901,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 281617035568991754}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8abb6b87053e7140ab06b8c1c924e94, type: 3}
+  m_Script: {fileID: 11500000, guid: 35addd005f799fa46843cd259bf96d67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   deathExplosionHeight: 3
@@ -909,7 +910,7 @@ MonoBehaviour:
   health: 200
   lastHit: 0
   isProtected: 0
-  deathParticles: {fileID: 987244680077615254}
+  deathExplosion: {fileID: 9147135579071462040, guid: fd2d69656cbb3ab4dbd3965be91e94eb, type: 3}
   dead: 0
   respawning: 0
 --- !u!114 &281617035568991762
@@ -924,6 +925,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d27e69788e37473469ed80ed3ea6919f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onlineCar: 0
   trL: {fileID: 281617035938962274}
   trR: {fileID: 281617035585711539}
 --- !u!114 &281617035568991775
@@ -1038,6 +1040,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd27fdd01875ad84092561a7a6869cf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onlineCar: 0
   ai: 0
   invincible: 0
   health: 0

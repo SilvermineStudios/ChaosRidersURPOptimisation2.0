@@ -4,20 +4,34 @@ using UnityEngine;
 
 public class Target : MonoBehaviour
 {
-    
+    [SerializeField] private bool onlineCar = true;
+
     [SerializeField] private bool ai = false;
     public bool invincible = false;
     private AIHealth aiHealthScript;
     private Health healthScript;
+    private OfflineHealth offlineHealthScript;
 
     [SerializeField] private float health;
+
+    private void Awake()
+    {
+        if(ai)
+        {
+            onlineCar = false;
+        }
+    }
 
     void Start()
     {
         if (ai)
             aiHealthScript = GetComponent<AIHealth>();
-        else
+        
+        if(!ai && onlineCar)
             healthScript = GetComponent<Health>();
+
+        if (!ai && !onlineCar)
+            offlineHealthScript = GetComponent<OfflineHealth>();
     }
 
     void Update()
@@ -28,9 +42,15 @@ public class Target : MonoBehaviour
             if (health < 0)
                 health = 0;
         }
-        else
+        if (!ai && onlineCar)
         {
             health = healthScript.health;
+            if (health < 0)
+                health = 0;
+        }
+        if (!ai && !onlineCar)
+        {
+            health = offlineHealthScript.health;
             if (health < 0)
                 health = 0;
         }
@@ -49,9 +69,14 @@ public class Target : MonoBehaviour
                 aiHealthScript.health -= amount;
             }
 
-            if (!ai && !invincible)
+            if (!ai && !invincible && onlineCar)
             {
                 healthScript.health -= amount;
+            }
+
+            if (!ai && !invincible && !onlineCar)
+            {
+                offlineHealthScript.health -= amount;
             }
         }
     }
