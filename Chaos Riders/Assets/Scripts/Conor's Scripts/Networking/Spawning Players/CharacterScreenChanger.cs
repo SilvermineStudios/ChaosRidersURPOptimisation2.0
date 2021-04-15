@@ -16,6 +16,8 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
 
     public GameObject shooterCharacterScreen, driverCharacterScreen;
     public GameObject choosePlayerTypePanel; //panel for choosing whether to be a driver or shooter 
+    public GameObject brakerButton, shredderButton, standardGunButton, goldenGunButton;
+    public Color regularButtonColour, selectedButtonColour;
     public GameObject backButton;
 
     [SerializeField] private PhotonMenuPlayer[] photonMenuPlayers;
@@ -72,6 +74,7 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
             }
         }
     }
+
     #region Buttons
     public void BackButton()
     {
@@ -174,6 +177,9 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
                     Debug.Log("Braker");
                     pmp.carModel = PhotonMenuPlayer.carType.Braker;
                     pmp.currentCarClass = CarClass.Braker;
+
+                    brakerButton.GetComponent<Image>().color = selectedButtonColour;
+                    shredderButton.GetComponent<Image>().color = regularButtonColour;
                 }
                 //shredder
                 if (whichCharacter == 1)
@@ -181,6 +187,9 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
                     Debug.Log("Shredder");
                     pmp.carModel = PhotonMenuPlayer.carType.Shredder;
                     pmp.currentCarClass = CarClass.Shredder;
+
+                    shredderButton.GetComponent<Image>().color = selectedButtonColour;
+                    brakerButton.GetComponent<Image>().color = regularButtonColour;
                 }
             }
         }
@@ -254,6 +263,9 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
                     Debug.Log("standard gun");
                     pmp.shooterModel = PhotonMenuPlayer.shooterType.standardGun;
                     pmp.currentMinigunClass = MinigunClass.standard;
+
+                    standardGunButton.GetComponent<Image>().color = selectedButtonColour;
+                    goldenGunButton.GetComponent<Image>().color = regularButtonColour;
                 }
                 //golden gun
                 if (whichCharacter == 1)
@@ -261,6 +273,9 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
                     Debug.Log("golden gun");
                     pmp.shooterModel = PhotonMenuPlayer.shooterType.goldenGun;
                     pmp.currentMinigunClass = MinigunClass.gold;
+
+                    goldenGunButton.GetComponent<Image>().color = selectedButtonColour;
+                    standardGunButton.GetComponent<Image>().color = regularButtonColour;
                 }
             }
         }
