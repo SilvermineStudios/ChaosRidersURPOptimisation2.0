@@ -63,7 +63,7 @@ public class Controller : MonoBehaviour
     Health healthScript;
     ShredUltimate shredUltimate;
     //public TurretTester ShooterAttached; 
-    [HideInInspector] public GameObject Shooter;
+     public GameObject Shooter;
     protected PlayerInputs playerInputs;
     #endregion
 
