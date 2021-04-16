@@ -17,7 +17,7 @@ public class Checkpoint : MonoBehaviour
     [SerializeField] private TMP_Text lapsText;
     [SerializeField] private KeyCode resetKey = KeyCode.R;
     float resetTimer;
-    [SerializeField] private bool canCrossFinish = false; //remove from inspector <--------------------------------------------------
+    [SerializeField] private bool canCrossFinish = false;
 
     //script for what happens when a player drives through a checkpoint
     [SerializeField] private GameObject[] checkpoints;
