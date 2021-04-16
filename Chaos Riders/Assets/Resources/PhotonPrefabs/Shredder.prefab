@@ -36308,6 +36308,8 @@ GameObject:
   - component: {fileID: 2802930354823540200}
   - component: {fileID: 4296187708274175761}
   - component: {fileID: 49324112865459812}
+  - component: {fileID: 1057344838701431480}
+  - component: {fileID: 326008359671407390}
   m_Layer: 10
   m_Name: Shredder
   m_TagString: car
@@ -36431,6 +36433,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2f9334a86ca7f34ab73e1df829bd02d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onlineCar: 1
   engineSoundStyle: 0
   highAccelClip: {fileID: 0}
   pitchMultiplier: 1
@@ -36476,6 +36479,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d27e69788e37473469ed80ed3ea6919f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onlineCar: 1
   trL: {fileID: 8606708847093901100}
   trR: {fileID: 8606708846773244413}
 --- !u!114 &8606708846722855505
@@ -36590,6 +36594,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd27fdd01875ad84092561a7a6869cf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onlineCar: 1
   ai: 0
   invincible: 0
   health: 0
@@ -36735,6 +36740,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FPSText: {fileID: 2985118980704539084}
   refresh: 0.7
+--- !u!114 &1057344838701431480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8606708846722855492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcc01efe4af9e8f4aaaddd1e3771260c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inspecCam: {fileID: 8606708847436291005}
+--- !u!114 &326008359671407390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8606708846722855492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d975ada9d7288174cbfba4812341210a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DriverName: {fileID: 4478348628404480564}
+  ShooterName: {fileID: 6302319533467951441}
+  isAI: 0
+  canvas: {fileID: 8606708847309754455}
 --- !u!1 &8606708846773244411
 GameObject:
   m_ObjectHideFlags: 0
@@ -53378,14 +53412,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 629d895192f6d1f4b8a91d113482fb81, type: 3}
---- !u!1 &229671876239163111 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 822781355919819842, guid: 629d895192f6d1f4b8a91d113482fb81, type: 3}
-  m_PrefabInstance: {fileID: 595862813563140773}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &4963599213558526972 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5523332056477321561, guid: 629d895192f6d1f4b8a91d113482fb81, type: 3}
+  m_PrefabInstance: {fileID: 595862813563140773}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &229671876239163111 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 822781355919819842, guid: 629d895192f6d1f4b8a91d113482fb81, type: 3}
   m_PrefabInstance: {fileID: 595862813563140773}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4873620133131246405
@@ -53497,6 +53531,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e15e495bd3b77e479d2503c1218f714, type: 3}
+--- !u!224 &2985118981848828371 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7696605950506619542, guid: 4e15e495bd3b77e479d2503c1218f714, type: 3}
+  m_PrefabInstance: {fileID: 4873620133131246405}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2985118980704539084 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7696605949503556233, guid: 4e15e495bd3b77e479d2503c1218f714, type: 3}
@@ -53508,11 +53547,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &2985118981848828371 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 7696605950506619542, guid: 4e15e495bd3b77e479d2503c1218f714, type: 3}
-  m_PrefabInstance: {fileID: 4873620133131246405}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6434104019238936977
 PrefabInstance:
   m_ObjectHideFlags: 0

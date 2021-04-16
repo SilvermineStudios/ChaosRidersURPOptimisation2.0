@@ -8937,6 +8937,7 @@ GameObject:
   - component: {fileID: 4885029395763682787}
   - component: {fileID: 8275976053554095670}
   - component: {fileID: 8052967480376718619}
+  - component: {fileID: 878825051276998423}
   m_Layer: 0
   m_Name: Golden Gun
   m_TagString: shooter
@@ -9303,6 +9304,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FPSText: {fileID: 1871478259158297819}
   refresh: 0.7
+--- !u!114 &878825051276998423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5720822377400605386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcc01efe4af9e8f4aaaddd1e3771260c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inspecCam: {fileID: 7985534370126974219}
 --- !u!1 &5720822377641248966
 GameObject:
   m_ObjectHideFlags: 0
@@ -15871,14 +15885,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 629d895192f6d1f4b8a91d113482fb81, type: 3}
---- !u!1 &2983028811234981537 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 822781355919819842, guid: 629d895192f6d1f4b8a91d113482fb81, type: 3}
-  m_PrefabInstance: {fileID: 2454114001320211171}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &7973643564269386682 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5523332056477321561, guid: 629d895192f6d1f4b8a91d113482fb81, type: 3}
+  m_PrefabInstance: {fileID: 2454114001320211171}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2983028811234981537 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 822781355919819842, guid: 629d895192f6d1f4b8a91d113482fb81, type: 3}
   m_PrefabInstance: {fileID: 2454114001320211171}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6790843512467171960
@@ -16061,11 +16075,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e15e495bd3b77e479d2503c1218f714, type: 3}
---- !u!224 &1871478260294268100 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 7696605950506619542, guid: 4e15e495bd3b77e479d2503c1218f714, type: 3}
-  m_PrefabInstance: {fileID: 8302110874184607314}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1871478259158297819 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7696605949503556233, guid: 4e15e495bd3b77e479d2503c1218f714, type: 3}
@@ -16077,3 +16086,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &1871478260294268100 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7696605950506619542, guid: 4e15e495bd3b77e479d2503c1218f714, type: 3}
+  m_PrefabInstance: {fileID: 8302110874184607314}
+  m_PrefabAsset: {fileID: 0}
