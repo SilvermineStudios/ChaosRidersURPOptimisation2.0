@@ -64,7 +64,7 @@ public class Shooter : MonoBehaviourPun
     private float weaponDamage;
     private float weaponRange;
     private float weaponAmmoUsage;
-
+    float mouseScrollFactor;
     #endregion
 
     #region Spread
@@ -346,21 +346,21 @@ public class Shooter : MonoBehaviourPun
         if ((pv.IsMine && IsThisMultiplayer.Instance.multiplayer) || !IsThisMultiplayer.Instance.multiplayer)
         {
             //Change Weapons
-            if (Input.GetKeyDown(changeWeapon))
             {
-
-                if (shooterClass == ShooterClass.minigun)
+                mouseScrollFactor = Input.mouseScrollDelta.y;
+                if(mouseScrollFactor < 0 && shooterClass == ShooterClass.minigun)
                 {
                     SetupGun(ShooterClass.rifle);
                     shooterClass = ShooterClass.rifle;
+                    currentCrosshairSpread = 0;
                 }
-                else if (shooterClass == ShooterClass.rifle)
+                else if(mouseScrollFactor > 0 && shooterClass == ShooterClass.rifle)
                 {
                     SetupGun(ShooterClass.minigun);
                     shooterClass = ShooterClass.minigun;
+                    currentCrosshairSpread = 0;
                 }
-                previousShooterClass = shooterClass;
-                currentCrosshairSpread = 0;
+                mouseScrollFactor = 0;
             }
             if (!RPG)
             {

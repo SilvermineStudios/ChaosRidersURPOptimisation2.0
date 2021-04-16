@@ -1,0 +1,35 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Cinemachine;
+using Photon.Pun;
+
+public class FindPlayerCamera : MonoBehaviour
+{
+    public static CinemachineVirtualCamera cineCam { get; private set; }
+
+    PhotonView[] photonViews;
+
+    bool foundCam;
+
+    PhotonView myPV;
+
+    void FixedUpdate()
+    {
+        if (!foundCam)
+        {
+            Debug.Log("NoiseSettings player cam");
+            photonViews = FindObjectsOfType<PhotonView>();
+            foreach (PhotonView pv in photonViews)
+            {
+                if(pv.IsMine)
+                {
+                    myPV = pv;
+                    cineCam = pv.gameObject.transform.root.GetComponent<LinkToCM>().CMcamera;
+                    foundCam = true;
+                    break;
+                }
+            }
+        }
+    }
+}
