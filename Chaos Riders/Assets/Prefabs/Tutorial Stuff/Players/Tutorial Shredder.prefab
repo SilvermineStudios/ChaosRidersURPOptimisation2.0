@@ -12745,6 +12745,7 @@ GameObject:
   - component: {fileID: 578449479124887534}
   - component: {fileID: 1548689646832182551}
   - component: {fileID: 3336656011663635554}
+  - component: {fileID: 7924042215106819518}
   m_Layer: 10
   m_Name: Tutorial Shredder
   m_TagString: car
@@ -12868,6 +12869,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2f9334a86ca7f34ab73e1df829bd02d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onlineCar: 1
   engineSoundStyle: 0
   highAccelClip: {fileID: 0}
   pitchMultiplier: 1
@@ -12913,6 +12915,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d27e69788e37473469ed80ed3ea6919f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onlineCar: 1
   trL: {fileID: 6453727443834072362}
   trR: {fileID: 6453727443515907067}
 --- !u!114 &6453727443666974807
@@ -13027,6 +13030,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd27fdd01875ad84092561a7a6869cf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onlineCar: 1
   ai: 0
   invincible: 0
   health: 0
@@ -13172,6 +13176,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FPSText: {fileID: 543905413515353034}
   refresh: 0.7
+--- !u!114 &7924042215106819518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6453727443666974786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dafafcacf919428489d4bbbffff972fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6453727443740427353
 GameObject:
   m_ObjectHideFlags: 0
