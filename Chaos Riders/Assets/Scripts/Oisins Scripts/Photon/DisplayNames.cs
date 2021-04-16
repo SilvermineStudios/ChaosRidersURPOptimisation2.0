@@ -52,7 +52,7 @@ public class DisplayNames : MonoBehaviour
             {
                 if (GetComponent<AICarController>().Shooter != null)
                 {
-                    pvS = GetComponent<Controller>().Shooter.GetComponent<PhotonView>();
+                    pvS = GetComponent<AICarController>().Shooter.GetComponent<PhotonView>();
                     shooterName = pvS.Owner.NickName;
                     shooterNameAssigned = true;
                 }
