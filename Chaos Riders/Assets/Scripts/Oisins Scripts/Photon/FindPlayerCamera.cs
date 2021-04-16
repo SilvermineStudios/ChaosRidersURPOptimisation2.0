@@ -14,6 +14,9 @@ public class FindPlayerCamera : MonoBehaviour
 
     PhotonView myPV;
 
+
+    //TODO Remove reference if Player leaves
+
     void FixedUpdate()
     {
         if (!foundCam)
