@@ -73,8 +73,8 @@ public class DisplayNames : MonoBehaviour
             }
         }
 
-        DriverNameText.text = myName;
-        ShooterNameText.text = shooterName;
+        DriverNameText.text = myName + " (Driver)";
+        ShooterNameText.text = shooterName + " (Shooter)";
 
         if (FindPlayerCamera.cineCam)
         {
