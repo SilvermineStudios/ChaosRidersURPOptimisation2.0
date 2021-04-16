@@ -19001,6 +19001,7 @@ GameObject:
   - component: {fileID: 1791419875}
   - component: {fileID: 757208674}
   - component: {fileID: 413523565}
+  - component: {fileID: 861915665308237677}
   m_Layer: 0
   m_Name: Shooter
   m_TagString: shooter
@@ -19040,7 +19041,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adffd39c4f2d5bd46a3d010868d66c07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  car: {fileID: 0}
   minigunBarrel: {fileID: 1682963324}
   rifleBarrel: {fileID: 911955151638522626}
   rpgGo: {fileID: 1094957983}
@@ -19053,8 +19053,10 @@ MonoBehaviour:
   RifleHolder: {fileID: 913156958082615894}
   MinigunIcon: {fileID: 8764531232459400661}
   RifleIcon: {fileID: 8152229863375869798}
+  everythingButIgnoreBullets:
+    serializedVersion: 2
+    m_Bits: 0
   muzzleFlash: {fileID: 7634238392497245262}
-  cineCamera: {fileID: 5207396787800693346}
   connectCar: 0
   RPG: 0
   pickedUpRPG: 0
@@ -19077,6 +19079,7 @@ MonoBehaviour:
   impactEffectHolder: {fileID: 322621240}
   CasingSpawn: {fileID: 6319989313829350448}
   Casing: {fileID: 861391098359841573, guid: 26e80ede9ba2652449e5169bf69301aa, type: 3}
+  VFXBulletGo: {fileID: 0}
   hitmarker: {fileID: 8931214932920015701}
   shooterClass: 2
   minigunClass: 2
@@ -19170,20 +19173,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ab777177ba797547980c17194e9a1cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuSceneIndex: 0
-  PauseMenu: {fileID: 7634238392792563357}
-  audioSettingsPanel: {fileID: 7634238392505030774}
-  mainPauseMenuPanel: {fileID: 7634238391561259603}
-  controlsPanel: {fileID: 1708990526}
-  pauseMenuButton1: 27
-  pauseMenuButton2: 112
-  MasterSlider: {fileID: 7634238391933079973}
-  MusicSlider: {fileID: 7634238392304452663}
-  SFXSlider: {fileID: 7634238391825248246}
-  saveChanges: {fileID: 1499827547962601198}
+  menuPanels: []
   paused: 0
-  saveChangesToAudio: 1
-  LobbySceneIndex: 0
 --- !u!65 &7634238392847830454
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19210,8 +19201,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundEffect: {fileID: 8300000, guid: ed476ad4a6f78b64382ce8cd8d9c2f2f, type: 3}
+  resetBar: {fileID: 0}
   currentLap: 1
   lapsText: {fileID: 7830493987493713921}
+  resetKey: 114
   canCrossFinish: 0
   checkpoints: []
   currentCheckpoint: 0
@@ -19232,7 +19225,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunstand: {fileID: 7634238391647832065}
   car: {fileID: 0}
+  isAiGun: 0
   FakeParent: {fileID: 0}
+  turretTester: {fileID: 0}
 --- !u!114 &7634238392847830449
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19325,6 +19320,20 @@ MonoBehaviour:
   driverModelIndex: -1
   AIBraker: {fileID: 1407414512137103672, guid: c7d771049c583ed4d8583216cccd3132, type: 3}
   AIColt: {fileID: 2011213230151948855, guid: 4fef911cd4b7a114bb4c2b67b8861e47, type: 3}
+  AIShredder: {fileID: 0}
+--- !u!114 &861915665308237677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7634238392847830435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcc01efe4af9e8f4aaaddd1e3771260c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inspecCam: {fileID: 5207396787800693346}
 --- !u!1 &7634238392854081156
 GameObject:
   m_ObjectHideFlags: 0
