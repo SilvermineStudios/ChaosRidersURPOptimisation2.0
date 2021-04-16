@@ -8999,6 +8999,7 @@ GameObject:
   - component: {fileID: 604401239}
   - component: {fileID: 5738966227521430251}
   - component: {fileID: -3095911766609178012}
+  - component: {fileID: 3436948171214373596}
   m_Layer: 10
   m_Name: AI Mustang
   m_TagString: Player
@@ -9177,6 +9178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd27fdd01875ad84092561a7a6869cf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onlineCar: 1
   ai: 1
   invincible: 0
   health: 0
@@ -9258,6 +9260,18 @@ MonoBehaviour:
   ShooterName: {fileID: 4681602292372162281}
   isAI: 1
   canvas: {fileID: 1407414511772850379}
+--- !u!114 &3436948171214373596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407414512137103672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dafafcacf919428489d4bbbffff972fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1407414512161380209
 GameObject:
   m_ObjectHideFlags: 0
@@ -13437,13 +13451,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e076683e0305e35498b8e8834978c0fa, type: 3}
---- !u!1 &4568921535773460638 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100006, guid: e076683e0305e35498b8e8834978c0fa, type: 3}
-  m_PrefabInstance: {fileID: 4568921535773494840}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4568921535773889726 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400006, guid: e076683e0305e35498b8e8834978c0fa, type: 3}
+  m_PrefabInstance: {fileID: 4568921535773494840}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4568921535773460638 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100006, guid: e076683e0305e35498b8e8834978c0fa, type: 3}
   m_PrefabInstance: {fileID: 4568921535773494840}
   m_PrefabAsset: {fileID: 0}

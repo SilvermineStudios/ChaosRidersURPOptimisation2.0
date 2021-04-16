@@ -2090,6 +2090,7 @@ GameObject:
   - component: {fileID: 1948710401}
   - component: {fileID: 1948710402}
   - component: {fileID: 7598154927196492342}
+  - component: {fileID: 4569356614653409851}
   m_Layer: 10
   m_Name: AI Colt
   m_TagString: Player
@@ -2277,6 +2278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd27fdd01875ad84092561a7a6869cf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onlineCar: 1
   ai: 1
   invincible: 0
   health: 0
@@ -2345,6 +2347,18 @@ MonoBehaviour:
   ShooterName: {fileID: 5468597217709623855}
   isAI: 1
   canvas: {fileID: 5310934394074413790}
+--- !u!114 &4569356614653409851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011213230151948855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dafafcacf919428489d4bbbffff972fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2040200205363631557
 GameObject:
   m_ObjectHideFlags: 0
