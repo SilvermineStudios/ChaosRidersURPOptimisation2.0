@@ -22,6 +22,7 @@ public class Audio : MonoBehaviour
 
     // For proper crossfading, the clips pitches should all match, with an octave offset between low and high.
 
+    public bool onlineCar = true;
 
     public enum EngineAudioOptions // Options for the engine audio
     {
@@ -40,6 +41,7 @@ public class Audio : MonoBehaviour
     Rigidbody rb;
 
     private Controller m_CarController; // Reference to car we are controlling
+    private OfflineController m_OfflineCarController; // Reference to car we are controlling
 
     FMOD.Studio.EventInstance brakerSound;
     FMOD.Studio.EventInstance brakerSound2;
@@ -61,7 +63,11 @@ public class Audio : MonoBehaviour
         FMODUnity.RuntimeManager.AttachInstanceToGameObject(brakerSound, transform, rb);
         FMODUnity.RuntimeManager.AttachInstanceToGameObject(brakerSound2, transform, rb);
         brakerSound.start();
-        m_CarController = GetComponent<Controller>();
+
+        if (onlineCar)
+            m_CarController = GetComponent<Controller>();
+        else
+            m_OfflineCarController = GetComponent<OfflineController>();
 
         topSpeed = vehicalData.topSpeed;
         fifth = topSpeed / 5;
@@ -71,7 +77,10 @@ public class Audio : MonoBehaviour
 
     private void Update()
     {
-        currentSpeed = m_CarController.currentSpeed;
+        if (onlineCar)
+            currentSpeed = m_CarController.currentSpeed;
+        else
+            currentSpeed = m_OfflineCarController.currentSpeed;
 
         //rev sound <-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         if (Input.GetKeyDown(driveButtonKeyboard))
@@ -85,9 +94,14 @@ public class Audio : MonoBehaviour
     // Update is called once per frame
     private void FixedUpdate()
     {
-        
+
         // The pitch is interpolated between the min and max values, according to the car's revs.
-        float pitch = ULerp(lowPitchMin, lowPitchMax, m_CarController.Revs);
+        float pitch;
+
+        if(onlineCar)
+            pitch = ULerp(lowPitchMin, lowPitchMax, m_CarController.Revs);
+        else
+            pitch = ULerp(lowPitchMin, lowPitchMax, m_OfflineCarController.Revs);
 
         // clamp to minimum pitch (note, not clamped to max for high revs while burning out)
         pitch = Mathf.Min(lowPitchMax, pitch);
@@ -95,15 +109,29 @@ public class Audio : MonoBehaviour
         if (engineSoundStyle == EngineAudioOptions.Simple)
         {
             // for 1 channel engine sound, it's oh so simple:
-            if(m_CarController.boost)
+            if (onlineCar)
             {
-                brakerSound.setPitch(pitch * pitchMultiplier * highPitchMultiplier * 1.2f);
-            } 
+                if (m_CarController.boost)
+                {
+                    brakerSound.setPitch(pitch * pitchMultiplier * highPitchMultiplier * 1.2f);
+                }
+                else
+                {
+                    brakerSound.setPitch(pitch * pitchMultiplier * highPitchMultiplier);
+                }
+            }
             else
             {
-                brakerSound.setPitch(pitch * pitchMultiplier * highPitchMultiplier);
-                    
+                if (m_OfflineCarController.boost)
+                {
+                    brakerSound.setPitch(pitch * pitchMultiplier * highPitchMultiplier * 1.2f);
+                }
+                else
+                {
+                    brakerSound.setPitch(pitch * pitchMultiplier * highPitchMultiplier);
+                }
             }
+            
                 
             //m_HighAccel.dopplerLevel = useDoppler ? dopplerLevel : 0;
             //m_HighAccel.volume = 0.45f;

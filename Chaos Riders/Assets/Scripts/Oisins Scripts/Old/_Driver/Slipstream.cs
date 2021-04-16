@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class Slipstream : MonoBehaviour
 {
+    [SerializeField] private bool onlineCar = true;
 
     Controller playerController;
+    OfflineController offlinePlayerController;
     public TrailRenderer trL,trR;
 
 
     void Start()
     {
-        playerController = GetComponent<Controller>();
+        if (onlineCar)
+            playerController = GetComponent<Controller>();
+        else
+            offlinePlayerController = GetComponent<OfflineController>();
 
         trL.enabled = false;
         trR.enabled = false;
@@ -20,15 +25,31 @@ public class Slipstream : MonoBehaviour
     int counter = 0;
     void Update()
     {
-        if(playerController.currentSpeed > 70)
+        if(onlineCar)
         {
-            trL.enabled = true;
-            trR.enabled = true;
+            if (playerController.currentSpeed > 70)
+            {
+                trL.enabled = true;
+                trR.enabled = true;
+            }
+            else
+            {
+                trL.enabled = false;
+                trR.enabled = false;
+            }
         }
         else
         {
-            trL.enabled = false;
-            trR.enabled = false;
+            if (offlinePlayerController.currentSpeed > 70)
+            {
+                trL.enabled = true;
+                trR.enabled = true;
+            }
+            else
+            {
+                trL.enabled = false;
+                trR.enabled = false;
+            }
         }
     }
 }

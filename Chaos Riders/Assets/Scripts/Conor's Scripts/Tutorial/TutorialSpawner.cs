@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TutorialSpawner : MonoBehaviour
 {
+    [SerializeField] private bool spawnStuff = true;
+
     [SerializeField] private TutorialPlayerSettings tps;
     [SerializeField] private float spawnDelay = 3;
 
@@ -24,9 +26,12 @@ public class TutorialSpawner : MonoBehaviour
 
     void Start()
     {
-        tps = FindObjectOfType<TutorialPlayerSettings>();
-        StartCoroutine(SpawnPlayerCorotine(spawnDelay));
-        StartCoroutine(SpawnAICorotine(spawnDelay));
+        if(spawnStuff)
+        {
+            tps = FindObjectOfType<TutorialPlayerSettings>();
+            StartCoroutine(SpawnPlayerCorotine(spawnDelay));
+            StartCoroutine(SpawnAICorotine(spawnDelay));
+        }
     }
 
 
