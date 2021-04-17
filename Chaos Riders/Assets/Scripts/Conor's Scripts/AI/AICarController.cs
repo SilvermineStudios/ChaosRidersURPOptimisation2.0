@@ -12,13 +12,13 @@ public class AICarController : MonoBehaviour
     [SerializeField] private float maxSpeed = 2000f; //maximum speed the car can achieve
     [SerializeField] private float maxSteerAngle = 45f; //maximum angle the wheels can rotate +/-
 
-    [SerializeField] private int currentWaypoint = 0; //the current waypoint the car is moving towards
-    [SerializeField] private int nearestWaypoint = 0; //the nearest waypoint to the car
+    public int currentWaypoint = 0; //the current waypoint the car is moving towards
+    private int nearestWaypoint = 0; //the nearest waypoint to the car
     [SerializeField] private float changeWaypointDistance = 45f; // the distance the car needs to be from its current waypoint before it changes to the next waypoint
 
     [SerializeField] private WheelCollider FL, FR; // the front tire wheel colliders
 
-    [SerializeField] private Transform[] waypoints;
+    [SerializeField] public Transform[] waypoints;
 
     [SerializeField] private Vector3 centerOfMass;
 
@@ -154,6 +154,21 @@ public class AICarController : MonoBehaviour
             }
         }
         return nearestWP;
+    }
+
+    public void ResetPosition()
+    {
+        if(currentWaypoint == 0)
+        {
+            this.transform.position = waypoints[currentWaypoint].transform.position;
+            this.transform.rotation = waypoints[currentWaypoint].transform.rotation;
+            currentWaypoint++;
+        }
+        else
+        {
+            this.transform.position = waypoints[currentWaypoint - 1].transform.position;
+            this.transform.rotation = waypoints[currentWaypoint - 1].transform.rotation;
+        }
     }
 
     private void OnTriggerEnter(Collider other)

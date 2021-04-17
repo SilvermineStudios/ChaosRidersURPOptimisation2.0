@@ -12,7 +12,7 @@ public class Target : MonoBehaviour
     private Health healthScript;
     private OfflineHealth offlineHealthScript;
 
-    [SerializeField] private float health;
+    public float health;
 
     private void Awake()
     {

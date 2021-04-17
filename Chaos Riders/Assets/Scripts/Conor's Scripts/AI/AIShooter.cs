@@ -190,7 +190,10 @@ public class AIShooter : MonoBehaviour
         //if a nearest enemy is found and within range then it becomes the target
         if(nearestEnemy != null && shortestDistance <= range)
         {
-            target = nearestEnemy.transform;
+            if(nearestEnemy.transform.root.gameObject.GetComponent<Target>().health > 0)
+                target = nearestEnemy.transform;
+            else
+                target = null;
         }
         else
         {

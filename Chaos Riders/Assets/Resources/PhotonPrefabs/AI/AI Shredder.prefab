@@ -6037,6 +6037,7 @@ GameObject:
   - component: {fileID: 6853912521859298892}
   - component: {fileID: -2618353262506796124}
   - component: {fileID: 1767151946}
+  - component: {fileID: 1926357446189682607}
   m_Layer: 10
   m_Name: AI Shredder
   m_TagString: Player
@@ -6099,7 +6100,6 @@ MonoBehaviour:
   maxSpeed: 1500
   maxSteerAngle: 55
   currentWaypoint: 0
-  nearestWaypoint: 0
   changeWaypointDistance: 15
   FL: {fileID: 5091506379330755994}
   FR: {fileID: 2557806636411017421}
@@ -6207,7 +6207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd27fdd01875ad84092561a7a6869cf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onlineCar: 1
+  onlineCar: 0
   ai: 1
   invincible: 0
   health: 0
@@ -6280,6 +6280,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectsToTurnOn:
   - {fileID: 8477280990450470766}
+--- !u!114 &1926357446189682607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8318536519656587226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 100cb524d3ee6a74698dd2ac69dc6c52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooSlowAmount: 0.5
+  maxTimeToBeStuck: 8
 --- !u!1 &8477280990450470766
 GameObject:
   m_ObjectHideFlags: 0
