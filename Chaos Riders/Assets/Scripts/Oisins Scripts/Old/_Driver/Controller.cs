@@ -473,13 +473,25 @@ public class Controller : MonoBehaviour
         usingUltimate = true;
         abilityOverChargeAmount = 100;
         StartCoroutine(UseUltimateUIPrep(ultimateData.ultimatePrepTime));
-        anim.SetTrigger("BreakerTransTrigger");
+
+        Debug.Log("BRAKER ANIMATION STUFF HERE");
+        //anim.SetTrigger("BreakerTransTrigger");
+        anim.SetBool("StartBreaker", true);
+        anim.SetBool("LeaveBreaker", false);
+
         //brake
         ApplyBrake(30000000);
 
+
         yield return new WaitForSeconds(ultimateData.ultimatePrepTime);
+        
+
         ReleaseBrake();
-        anim.SetTrigger("LeaveBreakerTrigger");
+
+        //anim.SetTrigger("LeaveBreakerTrigger");
+        anim.SetBool("StartBreaker", false);
+        anim.SetBool("LeaveBreaker", true);
+
         //speed
         StartCoroutine(UseUltimateUI(ultimateData.ultimateUsetime));
         boost = true;
