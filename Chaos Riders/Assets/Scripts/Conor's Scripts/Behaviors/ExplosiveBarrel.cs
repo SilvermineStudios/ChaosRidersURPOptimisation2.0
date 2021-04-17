@@ -8,7 +8,7 @@ public class ExplosiveBarrel : MonoBehaviour
     private Collider[] colliders;
     [SerializeField] private float explodedForTime = 7f;
 
-    private float explosiveDamage = 60f;
+    [SerializeField] private float explosiveDamage = 60f;
     public static float ExplosiveDamage; //used in the Target script to take health off
     
 
