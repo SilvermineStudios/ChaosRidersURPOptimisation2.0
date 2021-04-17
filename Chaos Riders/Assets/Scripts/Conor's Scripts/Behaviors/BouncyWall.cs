@@ -8,6 +8,9 @@ public class BouncyWall : MonoBehaviour
 
     private Vector3 lastVelocity;
 
+    [Range (0, 100)]
+    public float bounceSpeedPercentage = 60f; //the percentage of your speed that you bounce with
+
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -23,10 +26,12 @@ public class BouncyWall : MonoBehaviour
     {
         if(collision.gameObject.tag == "Bouncy")
         {
-            var speed = lastVelocity.magnitude;
+            
             var direction = Vector3.Reflect(lastVelocity.normalized, collision.contacts[0].normal);
+            var speed = lastVelocity.magnitude;
+            float bounceSpeed = (speed / 100) * bounceSpeedPercentage;
 
-            rb.velocity = direction * Mathf.Max(speed, 0f);
+            rb.velocity = direction * Mathf.Max(bounceSpeed, 0f);
         }
     }
 }

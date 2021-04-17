@@ -11,6 +11,8 @@ public class AIResetPos : MonoBehaviour
 
     private float zVelocity;
     private bool checkingIfTooSlow = false;
+    private float spawnpointRange = 10f;
+    private float ySpawnHeight = 10f;
 
     private void Awake()
     {
@@ -50,6 +52,6 @@ public class AIResetPos : MonoBehaviour
     private void ResetPos()
     {
         rb.velocity = Vector3.zero;
-        controller.ResetPosition();
+        controller.ResetPosition(spawnpointRange, ySpawnHeight);
     }
 }

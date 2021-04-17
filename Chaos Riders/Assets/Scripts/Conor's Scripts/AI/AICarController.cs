@@ -155,21 +155,31 @@ public class AICarController : MonoBehaviour
         }
         return nearestWP;
     }
-
-    public void ResetPosition()
+    
+    /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void ResetPosition(float range, float yOffset)
     {
-        if(currentWaypoint == 0)
+        if (currentWaypoint == 0)
         {
-            this.transform.position = waypoints[currentWaypoint].transform.position;
+            //this.transform.position = waypoints[currentWaypoint].transform.position;
+
+            Vector3 waypointPos = waypoints[currentWaypoint].transform.position;
+            this.transform.position = new Vector3(waypointPos.x + Random.Range(0, range), waypointPos.y + yOffset, waypointPos.z + Random.Range(0, range));
+
             this.transform.rotation = waypoints[currentWaypoint].transform.rotation;
             currentWaypoint++;
         }
         else
         {
-            this.transform.position = waypoints[currentWaypoint - 1].transform.position;
+            //this.transform.position = waypoints[currentWaypoint - 1].transform.position;
+
+            Vector3 waypointPos = waypoints[currentWaypoint - 1].transform.position;
+            this.transform.position = new Vector3(waypointPos.x + Random.Range(0, range), waypointPos.y + yOffset, waypointPos.z + Random.Range(0, range));
+
             this.transform.rotation = waypoints[currentWaypoint - 1].transform.rotation;
         }
     }
+    /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void OnTriggerEnter(Collider other)
     {
