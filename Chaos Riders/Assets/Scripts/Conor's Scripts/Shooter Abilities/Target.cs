@@ -80,4 +80,14 @@ public class Target : MonoBehaviour
             }
         }
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        //Exlosive Barrel damage
+        if(collision.gameObject.tag == "Explosive Barrel")
+        {
+            //Debug.Log("Take explosive barrel damage");
+            TakeDamage(ExplosiveBarrel.ExplosiveDamage);
+        }
+    }
 }
