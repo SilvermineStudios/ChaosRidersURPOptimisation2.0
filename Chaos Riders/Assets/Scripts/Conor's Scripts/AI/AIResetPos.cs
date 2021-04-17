@@ -6,10 +6,10 @@ public class AIResetPos : MonoBehaviour
     private Rigidbody rb;
     private AICarController controller;
     
-    [SerializeField] private float tooSlowAmount = 0.5f; //if the car is at this velocity or lower then it gets reset
+    private float tooSlowAmount = 0.25f; //if the car is at this velocity or lower then it gets reset
     [SerializeField] private float maxTimeToBeStuck = 8f; //the amount of time the car has to be stuck before being reset
 
-    private float zVelocity;
+    public float xVelocity, yVelocity, zVelocity;
     private bool checkingIfTooSlow = false;
 
     private void Awake()
@@ -23,8 +23,10 @@ public class AIResetPos : MonoBehaviour
         if (!MasterClientRaceStart.Instance.countdownTimerStart) { return; }
 
         //Check if Stuck
+        xVelocity = rb.velocity.x;
+        yVelocity = -zVelocity;
         zVelocity = rb.velocity.z;
-        if (zVelocity <= tooSlowAmount && !checkingIfTooSlow)
+        if (zVelocity <= tooSlowAmount && zVelocity >= -tooSlowAmount && !checkingIfTooSlow)
         {
             //Debug.Log("Not Moving");
             StartCoroutine(CarNotMovingCheck(maxTimeToBeStuck));
@@ -42,7 +44,7 @@ public class AIResetPos : MonoBehaviour
         checkingIfTooSlow = false;
 
         //stuck
-        if (zVelocity <= tooSlowAmount)
+        if (zVelocity <= tooSlowAmount && zVelocity >= -tooSlowAmount)
         {
             ResetPos();
         }
