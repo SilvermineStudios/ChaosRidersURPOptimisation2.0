@@ -10,7 +10,11 @@ public class ExplosiveBarrel : MonoBehaviour
 
     private MeshRenderer[] meshRenderers;
     private Collider[] colliders;
-    [SerializeField] private float explodedForTime = 7f;
+
+    public float explodedForTime = 7f;
+    public int barrelHealth = 5; //amount of bullets it takes to destroy
+    private int startHealth;
+    private bool readyToExplode = true;
 
     [SerializeField] private float explosiveDamage = 60f;
     public static float ExplosiveDamage; //used in the Target script to take health off
@@ -24,10 +28,29 @@ public class ExplosiveBarrel : MonoBehaviour
         meshRenderers = this.GetComponentsInChildren<MeshRenderer>();
         colliders = this.GetComponentsInChildren<Collider>();
         ExplosiveDamage = explosiveDamage;
+        startHealth = barrelHealth;
     }
 
+    void Update()
+    {
+        //if the barrel is shot
+        if(readyToExplode && barrelHealth <= 0)
+        {
+            StartCoroutine(ExplodeCoroutine(explodedForTime));
+        }  
+    }
+
+    public void TakeDamage()
+    {
+        //Debug.Log("Barrel Took Damage");
+        barrelHealth -= 1;
+    }
+
+    #region Enable / Disable
     void ExplodeBarrel()
     {
+        readyToExplode = false;
+
         //make invisible
         foreach (MeshRenderer mr in meshRenderers)
             mr.enabled = false;
@@ -49,6 +72,9 @@ public class ExplosiveBarrel : MonoBehaviour
 
     void ResetBarrel()
     {
+        readyToExplode = true;
+        barrelHealth = startHealth;
+
         //make visable
         foreach (MeshRenderer mr in meshRenderers)
             mr.enabled = true;
@@ -57,7 +83,9 @@ public class ExplosiveBarrel : MonoBehaviour
         foreach (Collider col in colliders)
             col.enabled = true;
     }
+    #endregion
 
+    #region explosion effect
     [PunRPC]
     void Explode()
     {
@@ -68,20 +96,18 @@ public class ExplosiveBarrel : MonoBehaviour
     {
         Instantiate(explosionEffect, transform.position, transform.rotation);
     }
-
-
+    #endregion
 
 
     private void OnCollisionEnter(Collision collision)
     {
         StartCoroutine(ExplodeCoroutine(explodedForTime));
-
-        //collision.gameObject.GetComponent<Target>().health -= explosiveDamage;
     }
 
-    private IEnumerator ExplodeCoroutine(float time)
+    public IEnumerator ExplodeCoroutine(float time)
     {
         ExplodeBarrel();
+        
 
         yield return new WaitForSeconds(time);
 

@@ -26,14 +26,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5567367614460273092}
-  m_LocalRotation: {x: 0.49080193, y: 0.5090319, z: 0.509032, w: -0.49080184}
+  m_LocalRotation: {x: -0.4908025, y: -0.50903136, z: -0.50903136, w: 0.4908025}
   m_LocalPosition: {x: 181.69168, y: 60.7, z: -147.18613}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5389113461957672308}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: -92.089}
 --- !u!136 &5567367614460273114
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -61,6 +61,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explodedForTime: 7
+  barrelHealth: 5
   explosiveDamage: 60
   explosionEffect: {fileID: 1000011797152326, guid: acf39d9f4addf294d93fa56fa373961b, type: 3}
 --- !u!114 &5567367614460273112
