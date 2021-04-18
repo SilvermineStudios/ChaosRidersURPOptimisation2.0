@@ -6035,9 +6035,9 @@ GameObject:
   - component: {fileID: 6843932727799104327}
   - component: {fileID: 7536812608358028271}
   - component: {fileID: 6853912521859298892}
-  - component: {fileID: -2618353262506796124}
   - component: {fileID: 1767151946}
   - component: {fileID: 1926357446189682607}
+  - component: {fileID: 4271568418564478049}
   m_Layer: 10
   m_Name: AI Shredder
   m_TagString: Player
@@ -6254,19 +6254,6 @@ MonoBehaviour:
   ShooterName: {fileID: 476660075534075013}
   isAI: 1
   canvas: {fileID: 6107878000007891326}
---- !u!114 &-2618353262506796124
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8318536519656587226}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dafafcacf919428489d4bbbffff972fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wallBouncePercentage: 60
 --- !u!114 &1767151946
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6294,6 +6281,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxTimeToBeStuck: 8
+--- !u!114 &4271568418564478049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8318536519656587226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5731f2f96014584d836a29c64980fac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wallBouncePercentage: 60
+  barrelBouncePercentage: 100
 --- !u!1 &8477280990450470766
 GameObject:
   m_ObjectHideFlags: 0
