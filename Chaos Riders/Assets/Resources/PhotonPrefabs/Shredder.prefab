@@ -39400,6 +39400,7 @@ GameObject:
   - component: {fileID: 1057344838701431480}
   - component: {fileID: 326008359671407390}
   - component: {fileID: 3111459141773061394}
+  - component: {fileID: 889363303271005169}
   m_Layer: 10
   m_Name: Shredder
   m_TagString: car
@@ -39873,6 +39874,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wallBouncePercentage: 60
   barrelBouncePercentage: 100
+--- !u!114 &889363303271005169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8606708846722855492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38db31f6777e4714cb176de90186213a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shooter: {fileID: 0}
+  canReplaceShooter: 0
+  AIShooter: {fileID: 6753911985949760915, guid: 5a4ea196226cd40439d05bcb4d89a401, type: 3}
 --- !u!1 &8606708846773244411
 GameObject:
   m_ObjectHideFlags: 0
@@ -40574,7 +40590,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8606708847436291004}
-  m_LocalRotation: {x: 0.000000014901161, y: -0.9980831, z: 0.061888684, w: 0.00000020861626}
+  m_LocalRotation: {x: 0.000000016763806, y: -0.9980831, z: 0.061888706, w: 0.00000020861626}
   m_LocalPosition: {x: 0.000002413988, y: 3, z: 7.000003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
