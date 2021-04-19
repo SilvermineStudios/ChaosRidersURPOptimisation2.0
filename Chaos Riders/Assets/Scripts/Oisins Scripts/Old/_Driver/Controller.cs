@@ -508,7 +508,16 @@ public class Controller : MonoBehaviour
         //FMODUnity.RuntimeManager.PlayOneShotAttached(equipmentData.sound, gameObject);
         shredUltimate.enabled = true;
         StartCoroutine(UseUltimateUI(ultimateData.ultimateUsetime));
+
+
+        anim.SetBool("StartShred", true);
+        anim.SetBool("LeaveShred", false);
+
         yield return new WaitForSeconds(ultimateData.ultimateUsetime);
+
+        anim.SetBool("StartShred", false);
+        anim.SetBool("LeaveShred", true);
+
         shredUltimate.enabled = false;
         usingUltimate = false;
     }
