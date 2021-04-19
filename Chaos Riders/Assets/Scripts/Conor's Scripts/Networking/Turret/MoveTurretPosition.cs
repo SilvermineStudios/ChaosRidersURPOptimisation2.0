@@ -86,6 +86,9 @@ public class MoveTurretPosition : MonoBehaviour
         gunstand.localRotation = targetRot;
         gunstand.transform.position = carGunStandPosition.transform.position;
         //Debug.Log("Attached to fake parent");
+
+        if (car != null)
+            GiveGunRefrenceToCar();
     }
 
 
@@ -109,6 +112,11 @@ public class MoveTurretPosition : MonoBehaviour
         point = dir + pivot;
         //Return calculated vector
         return point;
+    }
+
+    void GiveGunRefrenceToCar()
+    {
+        car.GetComponent<ReplaceDisconnectedShooters>().shooter = this.gameObject;
     }
 
     private void OnTriggerEnter(Collider other)

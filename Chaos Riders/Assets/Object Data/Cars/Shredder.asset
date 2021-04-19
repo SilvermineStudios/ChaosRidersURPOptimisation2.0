@@ -20,7 +20,7 @@ MonoBehaviour:
   - 0
   numOfGears: 5
   revRangeBoundary: 1
-  fullTorqueOverAllWheels: 8500
+  fullTorqueOverAllWheels: 5500
   boostFullTorqueOverAllWheels: 70000
   brakeTorque: 3000
   reverseTorque: 500
@@ -33,7 +33,7 @@ MonoBehaviour:
   fovChangeSpeed: 0.002
   steerHelper: 0.662
   steerHelperDrift: 1
-  tractionControl: 1
+  tractionControl: 0.2
   slipLimit: 0.3
   forwardSkidLimit: 0.9
   sideSkidLimit: 0.3
@@ -45,7 +45,7 @@ MonoBehaviour:
   vehicleDrag: 0.05
   vehicleAngularDrag: 0.1
   wheelMass: 20
-  wheelRadius: 0.55
+  wheelRadius: 0.325
   wheelDampingRate: 0.05
   wheelSuspensionDistance: 0.2
   wheelForceAppPontDistance: 0.1
@@ -57,7 +57,7 @@ MonoBehaviour:
   forwardExtremumValue: 1
   forwardAsymptoteSlip: 0.8
   forwardAsymptoteValue: 0.5
-  forwardStiffness: 1.5
+  forwardStiffness: 1
   sideExtremumSlip: 0.3
   sideExtremumValue: 1
   sideAsymptoteSlip: 0.5

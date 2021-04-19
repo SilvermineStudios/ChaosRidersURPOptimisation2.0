@@ -12,7 +12,7 @@ public class Target : MonoBehaviour
     private Health healthScript;
     private OfflineHealth offlineHealthScript;
 
-    [SerializeField] private float health;
+    public float health;
 
     private void Awake()
     {
@@ -78,6 +78,16 @@ public class Target : MonoBehaviour
             {
                 offlineHealthScript.health -= amount;
             }
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        //Exlosive Barrel damage
+        if(collision.gameObject.tag == "Explosive Barrel")
+        {
+            //Debug.Log("Take explosive barrel damage");
+            TakeDamage(ExplosiveBarrel.ExplosiveDamage);
         }
     }
 }

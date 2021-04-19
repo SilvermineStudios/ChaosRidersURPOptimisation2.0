@@ -10,6 +10,8 @@ public class AIShooter : MonoBehaviour
     #region Variables
     [Header("General GameObjects")]
     public GameObject car;
+    public float carHealth;
+    public bool dead = false;
     private Rigidbody carRigidBody;
     private GameObject Camera;
     [SerializeField] private Transform gunBarrel; //barrel that is going to rotate to face the correct direction
@@ -106,10 +108,24 @@ public class AIShooter : MonoBehaviour
 
         //Getting car info
         if (mtp.car != null && car == null)
+        {
             car = mtp.car;
+        }
 
         if (car != null && carRigidBody == null)
             carRigidBody = car.GetComponent<Rigidbody>();
+
+        if(car != null)
+        {
+            carHealth = car.GetComponent<Target>().health;
+        }
+
+        if (carHealth <= 0 && !dead)
+        {
+            dead = true;
+        }
+        else
+            dead = false;
 
         //////////////////////////////////////////////////////////// Put all shooting stuff below here
         if (!MasterClientRaceStart.Instance.weaponsFree) { return; }
@@ -190,7 +206,10 @@ public class AIShooter : MonoBehaviour
         //if a nearest enemy is found and within range then it becomes the target
         if(nearestEnemy != null && shortestDistance <= range)
         {
-            target = nearestEnemy.transform;
+            if(nearestEnemy.transform.root.gameObject.GetComponent<Target>().health > 0)
+                target = nearestEnemy.transform;
+            else
+                target = null;
         }
         else
         {
@@ -275,11 +294,11 @@ public class AIShooter : MonoBehaviour
     void Shoot()
     {
         //Debug.Log("Shooting");
-        
+
         //decoration
-        if(UseMuzzleFlash) 
+        if (UseMuzzleFlash)
             muzzleFlash.SetActive(true);
-        if(UseBulletCasings)
+        if (UseBulletCasings)
             VFXBulletGo.SetActive(true); //have bullet casings flying out
         barrelRotationSpeed = barrelRotationMaxSpeed;
 
@@ -303,7 +322,7 @@ public class AIShooter : MonoBehaviour
                     target.TakeDamage(weaponDamage);
                 }
 
-                if(UseImpactEffect)
+                if (UseImpactEffect)
                 {
                     GameObject impactGo;
                     if (IsThisMultiplayer.Instance.multiplayer)
@@ -319,5 +338,6 @@ public class AIShooter : MonoBehaviour
             }
         }
     }
+        
     #endregion
 }
