@@ -698,6 +698,10 @@ public class Shooter : MonoBehaviourPun
             {
                 Debug.Log("You Shot an explosive barrel");
                 hit.transform.gameObject.GetComponent<ExplosiveBarrel>().TakeDamage();
+
+                //hitmarker
+                hitmarker.ChangeAlpha(1);
+                FMODUnity.RuntimeManager.PlayOneShot(hitmarkerSound);
             }
 
 
