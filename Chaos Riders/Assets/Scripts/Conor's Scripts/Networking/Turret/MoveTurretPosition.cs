@@ -87,7 +87,7 @@ public class MoveTurretPosition : MonoBehaviour
         gunstand.transform.position = carGunStandPosition.transform.position;
         //Debug.Log("Attached to fake parent");
 
-        if (car != null)
+        if (car != null && car.tag == "car")
             GiveGunRefrenceToCar();
     }
 
