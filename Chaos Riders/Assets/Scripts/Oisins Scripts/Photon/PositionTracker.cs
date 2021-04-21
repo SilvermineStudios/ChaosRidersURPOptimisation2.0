@@ -8,28 +8,16 @@ using Photon;
 using Photon.Realtime;
 using UnityEngine.UI;
 
+
+
 public class PositionTracker : MonoBehaviourPun
 {
     PhotonView pv;
     PlayerDataManager playerDataManager;
 
-    string[] playerNames = new string[20];
-
-
-    //                                                  Team Number     Position
-    float[][] teamNumbersToPositions = new float[][] { new float[20], new float[1] };
-
-
 
     List<int> teamNumbers = new List<int>();
-    public string[] playerTeams;
-    public Text[] playerNameTexts;
-    public int[] playerScores;
-    public int scoreTotal;
-    public Text[] playerScoreText;
-    public Transform[] scoreHolder;
-
-
+    List<Position> teamPositions = new List<Position>();
 
     private void Awake()
     {
@@ -37,11 +25,8 @@ public class PositionTracker : MonoBehaviourPun
         playerDataManager = FindObjectOfType<PlayerDataManager>();
     }
 
-    float f;
-
     void Start()
     {
-        //GetAvailableTeams()
         if (!PhotonNetwork.IsMasterClient) { return; }
         foreach (PhotonMenuPlayer p in PlayerDataManager.PhotonMenuPlayers)
         {
@@ -72,11 +57,9 @@ public class PositionTracker : MonoBehaviourPun
             if(!teamNumbers.Contains(p.teamNumber))
             {
                 teamNumbers.Add(p.teamNumber);
-                
+                teamPositions.Add(new Position(p.driverAndShooterNames, 2));
             }
-            //p.Player.JoinTeam((byte)p.teamNumber);
-            //Debug.Log(p.teamNumber);
-            f = p.teamNumber;
+
         }
     }
 
@@ -84,13 +67,6 @@ public class PositionTracker : MonoBehaviourPun
     private void FixedUpdate()
     {
         if (!PhotonNetwork.IsMasterClient) { return; }
-
-
-        
-
-
-
-        // Debug.Log(PhotonTeamsManager.Instance.TryGetTeamMembers((byte)1));
 
         foreach (PhotonMenuPlayer p in PlayerDataManager.PhotonMenuPlayers)
         {
