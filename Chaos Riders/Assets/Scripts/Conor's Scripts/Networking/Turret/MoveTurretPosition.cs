@@ -8,7 +8,8 @@ public class MoveTurretPosition : MonoBehaviour
 {
     [SerializeField] private Transform gunstand;
 
-    public GameObject car;
+    public GameObject smoothCar;
+    public GameObject driverCar;
     private Transform carGunPos, carGunStandPosition;
     [SerializeField] private bool isAiGun = false;
 
@@ -18,7 +19,8 @@ public class MoveTurretPosition : MonoBehaviour
     private Quaternion _rotationOffset;
 
     private PlayerSpawner ps;
-    private bool canConnect = true;
+    private bool canConnectShooter = true;
+    private bool canGetRefToDriverCar = true;
 
     [SerializeField] private TurretTester turretTester;
 
@@ -54,7 +56,7 @@ public class MoveTurretPosition : MonoBehaviour
         if (FakeParent == null)
             return;
 
-        if (IsThisMultiplayer.Instance.multiplayer && car != null && !isAiGun)
+        if (IsThisMultiplayer.Instance.multiplayer && smoothCar != null && !isAiGun)
         {
             pv.RPC("AttachToFakeParent", RpcTarget.All);
         }
@@ -68,14 +70,14 @@ public class MoveTurretPosition : MonoBehaviour
     [PunRPC]
     void AttachToFakeParent()
     {
-        carGunPos = car.GetComponent<MultiplayerCarPrefabs>().gunSpawnPoint;
-        carGunStandPosition = car.GetComponent<MultiplayerCarPrefabs>().gunstand;
+        carGunPos = smoothCar.GetComponent<MultiplayerCarPrefabs>().gunSpawnPoint;
+        carGunStandPosition = smoothCar.GetComponent<MultiplayerCarPrefabs>().gunstand;
 
         transform.position = carGunPos.transform.position;
 
 
         //var targetPos = carGunPos.position;
-        var targetRot = car.transform.rotation;
+        var targetRot = smoothCar.transform.rotation;
 
         //targetRot.x = 0;
         //targetRot.z = 0;
@@ -87,7 +89,7 @@ public class MoveTurretPosition : MonoBehaviour
         gunstand.transform.position = carGunStandPosition.transform.position;
         //Debug.Log("Attached to fake parent");
 
-        if (car != null && car.tag == "car")
+        if (smoothCar != null && smoothCar.tag == "car")
             GiveGunRefrenceToCar();
     }
 
@@ -116,22 +118,53 @@ public class MoveTurretPosition : MonoBehaviour
 
     void GiveGunRefrenceToCar()
     {
-        car.GetComponent<ReplaceDisconnectedShooters>().shooter = this.gameObject;
+        smoothCar.GetComponent<ReplaceDisconnectedShooters>().shooter = this.gameObject;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!canConnect) return;
+        if (!canConnectShooter) return;
 
+        if (other.gameObject.tag == "Smooth Car" && canConnectShooter)
+        {
+            Debug.Log("Connect to smooth car here");
+
+            canConnectShooter = false;
+
+            smoothCar = other.gameObject;
+            FakeParent = other.gameObject.transform;
+
+            if (shooterScript != null)
+                shooterScript.connectCar = true;
+        }
+
+
+        if(other.gameObject.layer == LayerMask.NameToLayer("Cars") && canGetRefToDriverCar)
+        {
+            canGetRefToDriverCar = false;
+
+            if (other.gameObject.tag == "car")
+            {
+                driverCar = other.gameObject.transform.root.gameObject;
+            }
+            else
+            {
+                driverCar = other.gameObject;
+            }
+        }
+
+        /*
         if (other.gameObject.layer == LayerMask.NameToLayer("Cars") && canConnect)
         {
+            //Debug.Log("Connect to not smooth car here");
+
             canConnect = false;
             
             
             if (other.gameObject.tag == "car")
             {
                 car = other.gameObject.transform.root.gameObject;
-                Debug.Log(car);
+                //Debug.Log(car);
                 FakeParent = other.gameObject.transform.root;
             }
             else
@@ -140,10 +173,10 @@ public class MoveTurretPosition : MonoBehaviour
                 FakeParent = other.gameObject.transform;
             }
 
-                
 
             if (shooterScript != null)
                 shooterScript.connectCar = true;
         }
+        */
     }
 }

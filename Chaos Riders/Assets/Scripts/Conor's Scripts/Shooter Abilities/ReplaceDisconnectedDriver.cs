@@ -56,7 +56,7 @@ public class ReplaceDisconnectedDriver : MonoBehaviour
                     GameObject AIReplacementBraker = Instantiate(AIBraker, this.transform.position, this.transform.rotation); //spawn the ai breaker
 
                     mtp.FakeParent = AIReplacementBraker.transform; //attach the ai braker to the shooter in the moveTurretPosition Script
-                    mtp.car = AIReplacementBraker;
+                    mtp.smoothCar = AIReplacementBraker;
                 }
                 //shredder
                 if (driverModelIndex == 1)
@@ -64,7 +64,7 @@ public class ReplaceDisconnectedDriver : MonoBehaviour
                     GameObject AIReplacementShredder = Instantiate(AIShredder, this.transform.position, this.transform.rotation); //spawn the ai shredder 
 
                     mtp.FakeParent = AIReplacementShredder.transform;
-                    mtp.car = AIReplacementShredder;
+                    mtp.smoothCar = AIReplacementShredder;
                 }
                 //colt
                 if (driverModelIndex == 2)
@@ -72,7 +72,7 @@ public class ReplaceDisconnectedDriver : MonoBehaviour
                     GameObject AIReplacementColt = Instantiate(AIColt, this.transform.position, this.transform.rotation); //spawn the ai colt
 
                     mtp.FakeParent = AIReplacementColt.transform;
-                    mtp.car = AIReplacementColt;
+                    mtp.smoothCar = AIReplacementColt;
                 }
 
                 canReplaceDriver = false;

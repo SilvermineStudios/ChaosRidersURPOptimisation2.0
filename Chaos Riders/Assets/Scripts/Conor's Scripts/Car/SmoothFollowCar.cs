@@ -16,9 +16,6 @@ public class SmoothFollowCar : MonoBehaviour
     private Transform FL;
     private Transform FR;
 
-    //public float heightDamping = 3;
-    //public float rotationDamping = 3;
-
     private void Awake()
     {
         TargetCar = Target.transform;
@@ -29,6 +26,8 @@ public class SmoothFollowCar : MonoBehaviour
 
     void LateUpdate()
     {
+        if (!Target) return;
+
         //Move + Rotate Car 
         transform.position = Vector3.Lerp(transform.position, TargetCar.position, Time.deltaTime * 100);
         transform.rotation = Quaternion.Lerp(transform.rotation, TargetCar.rotation, Time.deltaTime * 100);
@@ -36,5 +35,6 @@ public class SmoothFollowCar : MonoBehaviour
         //Rotate Wheels
         MyFL.rotation = Quaternion.Lerp(FL.rotation, FL.rotation, Time.deltaTime * 100);
         MyFR.rotation = Quaternion.Lerp(FR.rotation, FR.rotation, Time.deltaTime * 100);
+        
     }
 }

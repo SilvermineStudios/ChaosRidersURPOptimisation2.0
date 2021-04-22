@@ -288,8 +288,8 @@ public class Shooter : MonoBehaviourPun
             if (connectCar && GetComponentInParent<MoveTurretPosition>() != null)
             {
                 connectCar = false;
-                car = GetComponentInParent<MoveTurretPosition>().car;
-                carCollision = GetComponentInParent<MoveTurretPosition>().car.transform.GetChild(0).gameObject;
+                car = GetComponentInParent<MoveTurretPosition>().driverCar;
+                carCollision = GetComponentInParent<MoveTurretPosition>().driverCar.transform.GetChild(0).gameObject;
 
                 //FMODUnity.RuntimeManager.AttachInstanceToGameObject(minigunLoopSoundInstance, this.transform, car.GetComponent<Rigidbody>());
             }

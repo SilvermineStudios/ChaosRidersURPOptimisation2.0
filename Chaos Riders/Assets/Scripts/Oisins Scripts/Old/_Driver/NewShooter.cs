@@ -68,8 +68,8 @@ public class NewShooter : MonoBehaviour
         if (connectCar)
         {
             connectCar = false;
-            car = GetComponentInParent<MoveTurretPosition>().car;
-            carCollision = GetComponentInParent<MoveTurretPosition>().car.transform.GetChild(0).gameObject;
+            car = GetComponentInParent<MoveTurretPosition>().smoothCar;
+            carCollision = GetComponentInParent<MoveTurretPosition>().smoothCar.transform.GetChild(0).gameObject;
         }
 
         rpgcount.text = amountOfAmmoForRPG + "/ 10";
