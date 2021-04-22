@@ -8,8 +8,7 @@ public class MoveTurretPosition : MonoBehaviour
 {
     [SerializeField] private Transform gunstand;
 
-    public GameObject smoothCar;
-    public GameObject driverCar;
+    public GameObject car;
     private Transform carGunPos, carGunStandPosition;
     [SerializeField] private bool isAiGun = false;
 
@@ -19,8 +18,7 @@ public class MoveTurretPosition : MonoBehaviour
     private Quaternion _rotationOffset;
 
     private PlayerSpawner ps;
-    private bool canConnectShooter = true;
-    private bool canGetRefToDriverCar = true;
+    private bool canConnect = true;
 
     [SerializeField] private TurretTester turretTester;
 
@@ -56,7 +54,7 @@ public class MoveTurretPosition : MonoBehaviour
         if (FakeParent == null)
             return;
 
-        if (IsThisMultiplayer.Instance.multiplayer && smoothCar != null && !isAiGun)
+        if (IsThisMultiplayer.Instance.multiplayer && car != null && !isAiGun)
         {
             pv.RPC("AttachToFakeParent", RpcTarget.All);
         }
@@ -70,14 +68,14 @@ public class MoveTurretPosition : MonoBehaviour
     [PunRPC]
     void AttachToFakeParent()
     {
-        carGunPos = smoothCar.GetComponent<MultiplayerCarPrefabs>().gunSpawnPoint;
-        carGunStandPosition = smoothCar.GetComponent<MultiplayerCarPrefabs>().gunstand;
+        carGunPos = car.GetComponent<MultiplayerCarPrefabs>().gunSpawnPoint;
+        carGunStandPosition = car.GetComponent<MultiplayerCarPrefabs>().gunstand;
 
         transform.position = carGunPos.transform.position;
 
 
         //var targetPos = carGunPos.position;
-        var targetRot = smoothCar.transform.rotation;
+        var targetRot = car.transform.rotation;
 
         //targetRot.x = 0;
         //targetRot.z = 0;
@@ -89,7 +87,7 @@ public class MoveTurretPosition : MonoBehaviour
         gunstand.transform.position = carGunStandPosition.transform.position;
         //Debug.Log("Attached to fake parent");
 
-        if (smoothCar != null && smoothCar.tag == "car")
+        if (car != null && car.tag == "car")
             GiveGunRefrenceToCar();
     }
 
@@ -118,13 +116,14 @@ public class MoveTurretPosition : MonoBehaviour
 
     void GiveGunRefrenceToCar()
     {
-        smoothCar.GetComponent<ReplaceDisconnectedShooters>().shooter = this.gameObject;
+        car.GetComponent<ReplaceDisconnectedShooters>().shooter = this.gameObject;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!canConnectShooter) return;
+        if (!canConnect) return;
 
+        /*
         if (other.gameObject.tag == "Smooth Car" && canConnectShooter)
         {
             Debug.Log("Connect to smooth car here");
@@ -152,8 +151,8 @@ public class MoveTurretPosition : MonoBehaviour
                 driverCar = other.gameObject;
             }
         }
-
-        /*
+        */
+        
         if (other.gameObject.layer == LayerMask.NameToLayer("Cars") && canConnect)
         {
             //Debug.Log("Connect to not smooth car here");
@@ -177,6 +176,6 @@ public class MoveTurretPosition : MonoBehaviour
             if (shooterScript != null)
                 shooterScript.connectCar = true;
         }
-        */
+        
     }
 }

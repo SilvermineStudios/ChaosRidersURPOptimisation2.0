@@ -107,9 +107,9 @@ public class AIShooter : MonoBehaviour
         DestroyMeIfDriverDisconnects();
 
         //Getting car info
-        if (mtp.smoothCar != null && car == null)
+        if (mtp.car != null && car == null)
         {
-            car = mtp.smoothCar;
+            car = mtp.car;
         }
 
         if (car != null && carRigidBody == null)

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class SmoothFollowCar : MonoBehaviour
 {
+    [Range(0f, 1f)]
+    public float lerpPercentage = 0.5f;
+
     [Header("Car Stuff")]
     public GameObject Target;
     private Transform TargetCar;
@@ -23,18 +26,27 @@ public class SmoothFollowCar : MonoBehaviour
         FL = Target.GetComponent<CarRefrences>().FL;
         FR = Target.GetComponent<CarRefrences>().FR;
     }
-
+    /*
     void LateUpdate()
     {
         if (!Target) return;
 
         //Move + Rotate Car 
-        transform.position = Vector3.Lerp(transform.position, TargetCar.position, Time.deltaTime * 100);
-        transform.rotation = Quaternion.Lerp(transform.rotation, TargetCar.rotation, Time.deltaTime * 100);
+        transform.position = Vector3.Lerp(transform.position, TargetCar.position, Time.deltaTime * lerpPercentage);
+        transform.rotation = Quaternion.Lerp(transform.rotation, TargetCar.rotation, Time.deltaTime * lerpPercentage);
 
         //Rotate Wheels
-        MyFL.rotation = Quaternion.Lerp(FL.rotation, FL.rotation, Time.deltaTime * 100);
-        MyFR.rotation = Quaternion.Lerp(FR.rotation, FR.rotation, Time.deltaTime * 100);
-        
+        MyFL.rotation = Quaternion.Lerp(MyFL.rotation, FL.rotation, Time.deltaTime * lerpPercentage);
+        MyFR.rotation = Quaternion.Lerp(MyFR.rotation, FR.rotation, Time.deltaTime * lerpPercentage);
+    }
+    */
+    private void Update()
+    {
+        transform.position = Vector3.Lerp(transform.position, TargetCar.position, lerpPercentage);
+        transform.rotation = Quaternion.Lerp(transform.rotation, TargetCar.rotation, lerpPercentage);
+
+        //Rotate Wheels
+        MyFL.rotation = Quaternion.Lerp(MyFL.rotation, FL.rotation, lerpPercentage);
+        MyFR.rotation = Quaternion.Lerp(MyFR.rotation, FR.rotation, lerpPercentage);
     }
 }

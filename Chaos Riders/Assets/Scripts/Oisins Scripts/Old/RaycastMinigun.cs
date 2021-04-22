@@ -36,8 +36,8 @@ public class RaycastMinigun : MonoBehaviour
     {       
         if(car == null && !carConnected)
         {
-            car = GetComponentInParent<MoveTurretPosition>().smoothCar;
-            carCollision = GetComponentInParent<MoveTurretPosition>().smoothCar.transform.GetChild(0).gameObject; 
+            car = GetComponentInParent<MoveTurretPosition>().car;
+            carCollision = GetComponentInParent<MoveTurretPosition>().car.transform.GetChild(0).gameObject; 
             //carCollision = car.transform.GetChild(0).gameObject;
             //carCollision = car;
         }
