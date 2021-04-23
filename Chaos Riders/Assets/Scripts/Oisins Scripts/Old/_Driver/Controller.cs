@@ -120,7 +120,7 @@ public class Controller : MonoBehaviour
     public enum DriverEquipment { SmokeScreen, Mine }
     public enum DriverUltimate { Brake, Shred }
     private Animator anim;
-    GameObject abilitySpawn;
+    [SerializeField] private GameObject abilitySpawn;
     #endregion
 
     #region Default Functions
@@ -297,7 +297,7 @@ public class Controller : MonoBehaviour
         model.SetActive(true);
 
         //Get position to spawn equipment from
-        abilitySpawn = model.transform.GetChild(1).gameObject;
+        //abilitySpawn = model.transform.GetChild(1).gameObject;
 
         //add models wheel meshes to array
         for (int i = 0; i < 4; i++)
