@@ -18,6 +18,7 @@ public class AIWaypointManager : MonoBehaviour
         for (int i = 0; i < this.transform.childCount; i++) //put every waypoint(Child) in the array
         {
             waypoints[i] = transform.GetChild(i);
+            waypoints[i].name = i.ToString();
         }
 
         //draw a line between all the waypoints

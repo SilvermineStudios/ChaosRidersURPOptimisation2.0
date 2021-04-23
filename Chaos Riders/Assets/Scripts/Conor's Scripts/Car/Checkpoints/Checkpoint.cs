@@ -31,6 +31,8 @@ public class Checkpoint : MonoBehaviour
 
     private PhotonView pv;
     Rigidbody rb;
+    [SerializeField] bool isAI;
+
 
     private void Awake()
     {
@@ -40,7 +42,7 @@ public class Checkpoint : MonoBehaviour
 
     private void Start()
     {
-        youWinText.SetActive(false);
+        
         //CarUIManager.youWinText.SetActive(false);
 
         //audioS = GetComponent<AudioSource>();
@@ -48,8 +50,11 @@ public class Checkpoint : MonoBehaviour
         amountOfLaps = LapCounter.AmountOfLaps;
 
         checkpoints = CheckpointManager.checkPoints;
-
-        OnlyDisplayNextCheckpoint();
+        if (!isAI)
+        {
+            youWinText.SetActive(false);
+            OnlyDisplayNextCheckpoint();
+        }
     }
     GameObject gar;
 
@@ -63,39 +68,41 @@ public class Checkpoint : MonoBehaviour
                 rb.isKinematic = false;
             }
             distanceToNextCheckpoint = Vector3.Distance(transform.position, checkpoints[(int)currentCheckpoint].transform.position);
-            
-            OnlyDisplayNextCheckpoint();
-            if(Input.GetKeyDown(resetKey) && resetBar != null)
+            if (!isAI)
             {
-                isResetting = true;
-            }
-            if(Input.GetKeyUp(resetKey))
-            {
-                isResetting = false;
+                OnlyDisplayNextCheckpoint();
+                if (Input.GetKeyDown(resetKey) && resetBar != null)
+                {
+                    isResetting = true;
+                }
+                if (Input.GetKeyUp(resetKey))
+                {
+                    isResetting = false;
 
+                }
+                if (isResetting && previousCheckpoint != -1)
+                {
+                    StartCoroutine(UseEquipmentUI(1));
+                }
+                else if (resetBar != null)
+                {
+                    resetTimer = 0;
+                    resetChargeAmount = 0;
+                    resetBar.GetComponent<Image>().fillAmount = 0;
+                    resetBar.transform.parent.gameObject.SetActive(false);
+                }
             }
-            if (isResetting && previousCheckpoint != -1)
-            {
-                StartCoroutine(UseEquipmentUI(1));
-            }
-            else if (resetBar != null)
-            {
-                resetTimer = 0;
-                resetChargeAmount = 0;
-                resetBar.GetComponent<Image>().fillAmount = 0;
-                resetBar.transform.parent.gameObject.SetActive(false);
-            }
-
             //only let the player cross the finish line if they have gone throug the first check point
             if (currentCheckpoint == 1)
             {
                 canCrossFinish = true;
             }
 
-
-            //CarUIManager.lapsText.text = "Lap " + currentLap + " / " + amountOfLaps;
-            lapsText.text = "Lap " + currentLap + " / " + amountOfLaps;
-
+            if (!isAI)
+            {
+                //CarUIManager.lapsText.text = "Lap " + currentLap + " / " + amountOfLaps;
+                lapsText.text = "Lap " + currentLap + " / " + amountOfLaps;
+            }
 
             //Start the music on the last lap
             if(currentLap == amountOfLaps && !Music.activeInHierarchy)
@@ -110,7 +117,7 @@ public class Checkpoint : MonoBehaviour
         }
     }
 
-    private void ResetPos()
+    public void ResetPos()
     { 
         int chosen = Random.Range(0, 3);
         rb.velocity = Vector3.zero;
@@ -153,7 +160,10 @@ public class Checkpoint : MonoBehaviour
 
                 FMODUnity.RuntimeManager.PlayOneShotAttached("event:/Pickups/Checkpoint", gameObject);
 
-                other.gameObject.SetActive(false);
+                if (!isAI)
+                {
+                    other.gameObject.SetActive(false);
+                }
 
                 if (currentCheckpoint == checkpoints.Length) //if the car is at the last waypoint
                     currentCheckpoint = 0; //make the next waypoint the first waypoint
