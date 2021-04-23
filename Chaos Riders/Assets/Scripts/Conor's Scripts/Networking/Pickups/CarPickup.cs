@@ -86,6 +86,7 @@ public class CarPickup : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        /*
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
             //if the player picked up a speed pickup
@@ -106,6 +107,32 @@ public class CarPickup : MonoBehaviour
                 invincibleCooldownBar.localScale = new Vector3(1f, 1f, 1f);
             }
                 
+
+            if (other.CompareTag("RPGPickup") && !hasRPG)
+                hasRPG = true;
+        }
+        */
+
+        if(pv.IsMine)
+        {
+            //if the player picked up a speed pickup
+            if (other.CompareTag("SpeedPickUp") && !hasPickup)
+            {
+                hasSpeedBoost = true;
+                nitroCurrentTimer = nitroStartTimer;
+                nitroUiImage.SetActive(true);
+                nitroCooldownBar.localScale = new Vector3(1f, 1f, 1f);
+            }
+
+            //if the player picked up the invincible pickup
+            if (other.CompareTag("InvinciblePickUp") && !hasPickup)
+            {
+                hasInvincibilityPickup = true;
+                invincibleCurrentTimer = invincibleStartTimer;
+                armourUiImage.SetActive(true);
+                invincibleCooldownBar.localScale = new Vector3(1f, 1f, 1f);
+            }
+
 
             if (other.CompareTag("RPGPickup") && !hasRPG)
                 hasRPG = true;
