@@ -75,6 +75,14 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
         }
     }
 
+
+    [PunRPC]
+    void RPC_ButtonColour(GameObject button, Color buttonColour)
+    {
+        button.GetComponent<Image>().color = buttonColour;
+    }
+
+
     #region Buttons
     public void BackButton()
     {
@@ -178,8 +186,10 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
                     pmp.carModel = PhotonMenuPlayer.carType.Braker;
                     pmp.currentCarClass = CarClass.Braker;
 
-                    brakerButton.GetComponent<Image>().color = selectedButtonColour;
-                    shredderButton.GetComponent<Image>().color = regularButtonColour;
+                    //brakerButton.GetComponent<Image>().color = selectedButtonColour;
+                    //shredderButton.GetComponent<Image>().color = regularButtonColour;
+                    pv.RPC("RPC_ButtonColour", p, brakerButton, selectedButtonColour);
+                    pv.RPC("RPC_ButtonColour", p, shredderButton, regularButtonColour);
                 }
                 //shredder
                 if (whichCharacter == 1)
@@ -188,13 +198,16 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
                     pmp.carModel = PhotonMenuPlayer.carType.Shredder;
                     pmp.currentCarClass = CarClass.Shredder;
 
-                    shredderButton.GetComponent<Image>().color = selectedButtonColour;
-                    brakerButton.GetComponent<Image>().color = regularButtonColour;
+                    //shredderButton.GetComponent<Image>().color = selectedButtonColour;
+                    //brakerButton.GetComponent<Image>().color = regularButtonColour;
+                    pv.RPC("RPC_ButtonColour", p, shredderButton, selectedButtonColour);
+                    pv.RPC("RPC_ButtonColour", p, brakerButton, regularButtonColour);
                 }
             }
         }
-        
     }
+
+    
     #endregion
 
     #region Shooter Buttons
@@ -264,8 +277,10 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
                     pmp.shooterModel = PhotonMenuPlayer.shooterType.standardGun;
                     pmp.currentMinigunClass = MinigunClass.standard;
 
-                    standardGunButton.GetComponent<Image>().color = selectedButtonColour;
-                    goldenGunButton.GetComponent<Image>().color = regularButtonColour;
+                    //standardGunButton.GetComponent<Image>().color = selectedButtonColour;
+                    //goldenGunButton.GetComponent<Image>().color = regularButtonColour;
+                    pv.RPC("RPC_ButtonColour", p, standardGunButton, selectedButtonColour);
+                    pv.RPC("RPC_ButtonColour", p, goldenGunButton, regularButtonColour);
                 }
                 //golden gun
                 if (whichCharacter == 1)
@@ -274,8 +289,10 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
                     pmp.shooterModel = PhotonMenuPlayer.shooterType.goldenGun;
                     pmp.currentMinigunClass = MinigunClass.gold;
 
-                    goldenGunButton.GetComponent<Image>().color = selectedButtonColour;
-                    standardGunButton.GetComponent<Image>().color = regularButtonColour;
+                    //goldenGunButton.GetComponent<Image>().color = selectedButtonColour;
+                    //standardGunButton.GetComponent<Image>().color = regularButtonColour;
+                    pv.RPC("RPC_ButtonColour", p, goldenGunButton, selectedButtonColour);
+                    pv.RPC("RPC_ButtonColour", p, regularButtonColour, regularButtonColour);
                 }
             }
         }
