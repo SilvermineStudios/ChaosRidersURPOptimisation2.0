@@ -17,7 +17,7 @@ public class Position : IComparable<Position>
     {
         driverName = newDriverName;
         shooterName = newShooterName;
-        teamName = driverName + " and " + shooterName;
+        teamName = "(Shooter) " + shooterName + "(Driver) " + driverName;
         currentPosition = newCurrentPosition;
     }
 
@@ -25,7 +25,7 @@ public class Position : IComparable<Position>
     {
         driverName = newDriverName;
         shooterName = newShooterName;
-        teamName = driverName + " and " + shooterName;
+        teamName = "(Shooter) " + shooterName + "(Driver) " + driverName;
     }
 
     public void UpdatePosition(float newCurrentPosition, int newCheckpointNumber)
