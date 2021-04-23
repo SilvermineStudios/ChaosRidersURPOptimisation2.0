@@ -50,7 +50,7 @@ public class AIHealth : MonoBehaviour
 
     }
 
-    float timeSinceDeath, deathTimer = 3;
+    float timeSinceDeath, deathTimer = 5;
 
     void Die()
     {
@@ -62,7 +62,6 @@ public class AIHealth : MonoBehaviour
             health = startHealth;
             deathParticles.SetActive(false);
             timeSinceDeath = 0;
-            GetComponent<Checkpoint>().ResetPos();
         }
         else
         {

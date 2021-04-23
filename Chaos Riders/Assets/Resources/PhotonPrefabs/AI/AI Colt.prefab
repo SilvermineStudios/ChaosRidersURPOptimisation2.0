@@ -2093,7 +2093,6 @@ GameObject:
   - component: {fileID: 6527334236595416596}
   - component: {fileID: 3864550292552388268}
   - component: {fileID: 5792194139033649097}
-  - component: {fileID: -8929748855800965354}
   m_Layer: 10
   m_Name: AI Colt
   m_TagString: Player
@@ -2376,7 +2375,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wallBouncePercentage: 60
-  barrelBouncePercentage: 100
 --- !u!114 &5792194139033649097
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2390,30 +2388,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TNW: {fileID: 3184754301632534502}
---- !u!114 &-8929748855800965354
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2011213230151948855}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60098c4ae8c3c524ea0933609487c06c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  soundEffect: {fileID: 8300000, guid: ed476ad4a6f78b64382ce8cd8d9c2f2f, type: 3}
-  resetBar: {fileID: 6482304263097920210, guid: 45d2d241c84b3bf4385491ae467389ed, type: 3}
-  currentLap: 1
-  lapsText: {fileID: 5416099599320009175, guid: 45d2d241c84b3bf4385491ae467389ed, type: 3}
-  resetKey: 114
-  canCrossFinish: 0
-  checkpoints: []
-  currentCheckpoint: 0
-  youWinText: {fileID: 5416099599173656054, guid: 45d2d241c84b3bf4385491ae467389ed, type: 3}
-  canCollect: 1
-  Music: {fileID: 6746358911520101374, guid: 45d2d241c84b3bf4385491ae467389ed, type: 3}
-  isAI: 1
 --- !u!1 &2040200205363631557
 GameObject:
   m_ObjectHideFlags: 0
@@ -13286,13 +13260,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e076683e0305e35498b8e8834978c0fa, type: 3}
---- !u!4 &7817225987191630883 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400006, guid: e076683e0305e35498b8e8834978c0fa, type: 3}
-  m_PrefabInstance: {fileID: 7817225987191764645}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7817225987191861251 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100006, guid: e076683e0305e35498b8e8834978c0fa, type: 3}
+  m_PrefabInstance: {fileID: 7817225987191764645}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7817225987191630883 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400006, guid: e076683e0305e35498b8e8834978c0fa, type: 3}
   m_PrefabInstance: {fileID: 7817225987191764645}
   m_PrefabAsset: {fileID: 0}
