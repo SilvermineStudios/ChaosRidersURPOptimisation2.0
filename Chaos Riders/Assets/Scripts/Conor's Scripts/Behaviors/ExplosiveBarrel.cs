@@ -47,7 +47,8 @@ public class ExplosiveBarrel : MonoBehaviour
     }
 
     #region Enable / Disable
-    void ExplodeBarrel()
+    [PunRPC]
+    void RPC_ExplodeBarrel()
     {
         readyToExplode = false;
 
@@ -70,7 +71,8 @@ public class ExplosiveBarrel : MonoBehaviour
         }
     }
 
-    void ResetBarrel()
+    [PunRPC]
+    void RPC_ResetBarrel()
     {
         readyToExplode = true;
         barrelHealth = startHealth;
@@ -106,11 +108,16 @@ public class ExplosiveBarrel : MonoBehaviour
 
     public IEnumerator ExplodeCoroutine(float time)
     {
-        ExplodeBarrel();
+        if (IsThisMultiplayer.Instance.multiplayer)
+            pv.RPC("RPC_ExplodeBarrel", RpcTarget.All);
+        else
+            RPC_ExplodeBarrel();
         
-
         yield return new WaitForSeconds(time);
 
-        ResetBarrel();
+        if (IsThisMultiplayer.Instance.multiplayer)
+            pv.RPC("RPC_ResetBarrel", RpcTarget.All);
+        else
+            RPC_ResetBarrel();
     }
 }

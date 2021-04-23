@@ -97,7 +97,7 @@ public class PlayerDataManager : MonoBehaviour
     {
         if (drivers.Count > 0)
         {
-            foreach (GameObject go in shooters)
+            foreach (GameObject go in drivers)
             {
                 if (go == null || !go.GetComponent<PhotonMenuPlayer>().driver)
                     drivers.Remove(go);
