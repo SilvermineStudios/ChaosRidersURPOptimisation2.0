@@ -35,7 +35,10 @@ public class DisplayNames : MonoBehaviour
         "[AI]Sally",
         "[AI]Ann",
         "[AI]Ellen",
-        "[AI]Jane",
+        "[AI]Oisin",
+        "[AI]Conor",
+        "[AI]Will",
+        "[AI]Mayowa",
     };
 
     void Start()
