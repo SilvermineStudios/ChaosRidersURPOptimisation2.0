@@ -28,8 +28,11 @@ public class FindPlayerCamera : MonoBehaviour
                 if(pv.IsMine)
                 {
                     myPV = pv;
-                    cineCam = pv.gameObject.transform.root.GetComponent<LinkToCM>().CMcamera;
-                    foundCam = true;
+                    if(pv.gameObject.transform.root.TryGetComponent<LinkToCM>(out var LinkToCM))
+                    {
+                        cineCam = pv.gameObject.transform.root.GetComponent<LinkToCM>().CMcamera;
+                        foundCam = true;
+                    }
                     break;
                 }
             }

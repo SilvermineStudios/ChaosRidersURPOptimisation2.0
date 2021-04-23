@@ -5246,6 +5246,64 @@ RectTransform:
   m_AnchoredPosition: {x: -5, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &4687766996978590493
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3573257799080404541}
+  - component: {fileID: 9110794226182005323}
+  - component: {fileID: 7407079849896184843}
+  m_Layer: 16
+  m_Name: WayFinder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3573257799080404541
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4687766996978590493}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8149726512099383473}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &9110794226182005323
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4687766996978590493}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 30
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7407079849896184843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4687766996978590493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 079d48702d76da14fa07de339e47062e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nearbyWaypoints: []
 --- !u!1 &4853533786702584685
 GameObject:
   m_ObjectHideFlags: 0
@@ -6038,6 +6096,8 @@ GameObject:
   - component: {fileID: 1767151946}
   - component: {fileID: 1926357446189682607}
   - component: {fileID: 4271568418564478049}
+  - component: {fileID: 887158327277677814}
+  - component: {fileID: 721869214275053046}
   m_Layer: 10
   m_Name: AI Shredder
   m_TagString: Player
@@ -6062,6 +6122,7 @@ Transform:
   - {fileID: 1285633277879725853}
   - {fileID: 3350565931676965595}
   - {fileID: 1570222785283643237}
+  - {fileID: 3573257799080404541}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6295,6 +6356,43 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wallBouncePercentage: 60
   barrelBouncePercentage: 100
+--- !u!114 &887158327277677814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8318536519656587226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db08bea78c5a4db4880d3b341e5002bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TNW: {fileID: 7407079849896184843}
+--- !u!114 &721869214275053046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8318536519656587226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60098c4ae8c3c524ea0933609487c06c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundEffect: {fileID: 8300000, guid: ed476ad4a6f78b64382ce8cd8d9c2f2f, type: 3}
+  resetBar: {fileID: 6482304263097920210, guid: 45d2d241c84b3bf4385491ae467389ed, type: 3}
+  currentLap: 1
+  lapsText: {fileID: 5416099599320009175, guid: 45d2d241c84b3bf4385491ae467389ed, type: 3}
+  resetKey: 114
+  canCrossFinish: 0
+  checkpoints: []
+  currentCheckpoint: 0
+  youWinText: {fileID: 5416099599173656054, guid: 45d2d241c84b3bf4385491ae467389ed, type: 3}
+  canCollect: 1
+  Music: {fileID: 6746358911520101374, guid: 45d2d241c84b3bf4385491ae467389ed, type: 3}
+  isAI: 1
 --- !u!1 &8477280990450470766
 GameObject:
   m_ObjectHideFlags: 0

@@ -113,6 +113,7 @@ public class PhotonMenuPlayer : MonoBehaviour
             myCheckpoint = pv.gameObject.GetComponent<Checkpoint>();
         }
 
+        driverAndShooterNames = pv.Owner.NickName;
 
         //Debug.Log(Player.GetPhotonTeam());
         //Debug.Log(teamNumber);
