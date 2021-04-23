@@ -39,8 +39,8 @@ public class PositionTracker : MonoBehaviourPun
         if(!doneWaiting) { return; }
         teamPositions.Sort();
 
-        Debug.Log(text.Length);
-        Debug.Log(teamPositions.Count);
+        //Debug.Log(text.Length);
+        //Debug.Log(teamPositions.Count);
         text[0].text = "(Driver) " + teamPositions[0].driverName;// + ", " + teamPositions[i].checkpointNumber; 
         text[1].text = "(Shooter) " + teamPositions[0].shooterName;// + ", " + teamPositions[i].checkpointNumber; 
         text[2].text = "(Driver) " + teamPositions[1].driverName;// + ", " + teamPositions[i].checkpointNumber; 

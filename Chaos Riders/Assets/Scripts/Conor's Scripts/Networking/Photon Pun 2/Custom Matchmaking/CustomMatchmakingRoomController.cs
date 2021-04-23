@@ -11,12 +11,17 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
 {
     #region Variables
     private PhotonView pv;
+    public GameObject thisRoomListing;
+    [SerializeField] private float disconnectTime = 2f;
+    private bool isHost = false;
     [SerializeField] private TMP_Text roomNameDisplay; //display for the name of the room
     [SerializeField] private int multiplayerSceneIndex; //scene index for loading multiplayer scene
 
     [Header("Panels")]
+    [SerializeField] private GameObject mainMenuPanel; 
     [SerializeField] private GameObject lobbyPanel; //display for when in lobby
-    [SerializeField] private GameObject roomPanel; //display for when in room#
+    [SerializeField] private GameObject roomPanel; //display for when in room
+    [SerializeField] private GameObject disconnectPanel; //display for when in room
 
     [Header("Player Listings")]
     [SerializeField] private Transform playersContainer; //used to display all the players in the current room
@@ -40,6 +45,7 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
     {
         pv = GetComponent<PhotonView>();
         loadingScreen.SetActive(false);
+        disconnectPanel.SetActive(false);
         LoadingTime = loadingTime;
     }
 
@@ -75,6 +81,7 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
         {
             startButton.SetActive(true);
             PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", playerDataManager.name), this.transform.position, this.transform.rotation, 0);
+            isHost = true;
         }
         else
         {
@@ -109,8 +116,29 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsMasterClient) //if the host leaves give the new host access to the start button
         {
-            startButton.SetActive(true);
+            // startButton.SetActive(true);
+
+            if(!isHost)
+            {
+                PhotonNetwork.CurrentRoom.IsOpen = false; // makes room close 
+                PhotonNetwork.CurrentRoom.IsVisible = false; // makes room invisible to random match
+                StartCoroutine(DisconnectedCouroutine(disconnectTime));
+            }
         }
+    }
+
+    private void DisconnectEveryone()
+    {
+        if (thisRoomListing != null)
+            Destroy(thisRoomListing);
+
+        PhotonNetwork.LeaveRoom();
+        PhotonNetwork.LeaveLobby();
+        StartCoroutine(rejoinLobby());
+
+        disconnectPanel.SetActive(false);
+        lobbyPanel.SetActive(true);
+        roomPanel.SetActive(false);
     }
 
     #region Buttons
@@ -141,9 +169,23 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveRoom();
         PhotonNetwork.LeaveLobby();
         StartCoroutine(rejoinLobby());
+        isHost = false;
+
+        if (thisRoomListing != null)
+            Destroy(thisRoomListing);
     }
     #endregion
     #region Couroutines
+    private IEnumerator DisconnectedCouroutine(float time)
+    {
+        disconnectPanel.SetActive(true);
+
+        yield return new WaitForSeconds(time);
+
+        DisconnectEveryone();
+    }
+
+
     IEnumerator rejoinLobby()
     {
         yield return new WaitForSeconds(1);
@@ -162,4 +204,5 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
         }
     }
     #endregion
+
 }
