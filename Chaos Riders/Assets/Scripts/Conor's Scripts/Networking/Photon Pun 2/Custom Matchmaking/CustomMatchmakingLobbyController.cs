@@ -11,6 +11,7 @@ public class CustomMatchmakingLobbyController : MonoBehaviourPunCallbacks
     #region Variables
     [SerializeField] private GameObject lobbyConnectButton; //button used for joining lobby
     [SerializeField] private GameObject lobbyPanel; //panel for displaying lobby
+    [SerializeField] private GameObject roomListingPanel; //panel for displaying rooms
     [SerializeField] private GameObject mainPanel; //panel for displaying main menu
     [SerializeField] private GameObject controlsPanel; //panel for displaying game controls
     [SerializeField] private GameObject settingsPanel; //panel for changing the game settings
@@ -32,6 +33,7 @@ public class CustomMatchmakingLobbyController : MonoBehaviourPunCallbacks
     {
         mainPanel.SetActive(true);
         lobbyPanel.SetActive(false);
+        roomListingPanel.SetActive(false);
         controlsPanel.SetActive(false);
         settingsPanel.SetActive(false);
         tutorialPanel.SetActive(false);
@@ -169,6 +171,7 @@ public class CustomMatchmakingLobbyController : MonoBehaviourPunCallbacks
     {
         lobbyPanel.SetActive(false);
         mainPanel.SetActive(false);
+        roomListingPanel.SetActive(false);
         settingsPanel.SetActive(false);
         tutorialPanel.SetActive(false);
         controlsPanel.SetActive(true);
@@ -185,6 +188,7 @@ public class CustomMatchmakingLobbyController : MonoBehaviourPunCallbacks
     {
         lobbyPanel.SetActive(false);
         mainPanel.SetActive(false);
+        roomListingPanel.SetActive(false);
         controlsPanel.SetActive(false);
         tutorialPanel.SetActive(false);
         settingsPanel.SetActive(true);
@@ -200,6 +204,7 @@ public class CustomMatchmakingLobbyController : MonoBehaviourPunCallbacks
     {
         lobbyPanel.SetActive(false);
         mainPanel.SetActive(false);
+        roomListingPanel.SetActive(false);
         controlsPanel.SetActive(false);
         settingsPanel.SetActive(false);
         tutorialPanel.SetActive(true);
@@ -209,5 +214,21 @@ public class CustomMatchmakingLobbyController : MonoBehaviourPunCallbacks
     {
         tutorialPanel.SetActive(false);
         mainPanel.SetActive(true);
+    }
+
+    public void ToRoomListingsButton()
+    {
+        lobbyPanel.SetActive(false);
+        mainPanel.SetActive(false);
+        controlsPanel.SetActive(false);
+        settingsPanel.SetActive(false);
+        tutorialPanel.SetActive(false);
+        roomListingPanel.SetActive(true);
+    }
+
+    public void BackFromRoomListingsButton()
+    {
+        roomListingPanel.SetActive(false);
+        lobbyPanel.SetActive(true);
     }
 }

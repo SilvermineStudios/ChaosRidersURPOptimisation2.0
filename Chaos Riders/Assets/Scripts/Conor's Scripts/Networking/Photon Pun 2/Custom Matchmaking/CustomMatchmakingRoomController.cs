@@ -13,10 +13,14 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
     private PhotonView pv;
     [SerializeField] private TMP_Text roomNameDisplay; //display for the name of the room
     [SerializeField] private int multiplayerSceneIndex; //scene index for loading multiplayer scene
+    [SerializeField] private float disconnectFromLobbyTime = 3f;
+    public GameObject currentRoomListing;
+    private bool youAreHost = false;
 
     [Header("Panels")]
     [SerializeField] private GameObject lobbyPanel; //display for when in lobby
-    [SerializeField] private GameObject roomPanel; //display for when in room#
+    [SerializeField] private GameObject roomPanel; //display for when in room
+    [SerializeField] private GameObject disconnectedPanel; //display for when in room
 
     [Header("Player Listings")]
     [SerializeField] private Transform playersContainer; //used to display all the players in the current room
@@ -40,6 +44,7 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
     {
         pv = GetComponent<PhotonView>();
         loadingScreen.SetActive(false);
+        disconnectedPanel.SetActive(false);
         LoadingTime = loadingTime;
     }
 
@@ -75,6 +80,7 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
         {
             startButton.SetActive(true);
             PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", playerDataManager.name), this.transform.position, this.transform.rotation, 0);
+            youAreHost = true;
         }
         else
         {
@@ -106,11 +112,44 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
     {
         ClearPlayerListings(); //remove all old player listings
         ListPlayers(); //relist all current player listings
+        
 
         if (PhotonNetwork.IsMasterClient) //if the host leaves give the new host access to the start button
         {
-            startButton.SetActive(true);
+            //startButton.SetActive(true);
+            //Debug.Log("The master left and there is a new one");
+
+            if(!youAreHost)
+            {
+                //PhotonNetwork.CurrentRoom.IsOpen = false; // makes room close 
+                //PhotonNetwork.CurrentRoom.IsVisible = false; // makes room invisible to random match making
+
+                pv.RPC("RPC_CloseRoom", RpcTarget.All);
+            }
+                
         }
+    }
+
+    [PunRPC]
+    void RPC_CloseRoom()
+    {
+        StartCoroutine(CloseRoomCoroutine(disconnectFromLobbyTime));
+    }
+
+    private IEnumerator CloseRoomCoroutine(float time)
+    {
+        disconnectedPanel.SetActive(true);
+
+        yield return new WaitForSeconds(time);
+
+        //Destroy(currentRoomListing);
+        //PhotonNetwork.LeaveRoom();
+        
+        disconnectedPanel.SetActive(false);
+        roomPanel.SetActive(false);
+        lobbyPanel.SetActive(true);
+
+        youAreHost = false;
     }
 
     #region Buttons
