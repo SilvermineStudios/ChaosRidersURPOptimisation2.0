@@ -18,15 +18,34 @@ public class DisplayNames : MonoBehaviour
     PhotonView pv, pvS;
     CinemachineVirtualCamera cineCam;
     PlayerDataManager playerDataManager;
-    string myName = "";
-    string shooterName = "";
+    public string myName { get; private set; } = "";
+    public string shooterName { get; private set; } = "";
     bool shooterNameAssigned;
+    int myAIShooterName;
+    string[] AINames = new string[]
+    {
+        "[AI]Allen",
+        "[AI]Greg",
+        "[AI]Steve",
+        "[AI]Bob",
+        "[AI]Jim",
+        "[AI]Dave",
+        "[AI]Susan",
+        "[AI]Meg",
+        "[AI]Sally",
+        "[AI]Ann",
+        "[AI]Ellen",
+        "[AI]Oisin",
+        "[AI]Conor",
+        "[AI]Will",
+        "[AI]Mayowa",
+    };
 
     void Start()
     {
         DriverNameText = DriverName.GetComponent<TextMeshProUGUI>();
         ShooterNameText = ShooterName.GetComponent<TextMeshProUGUI>();
-
+        myAIShooterName = Random.Range(0, 12);
         pv = GetComponent<PhotonView>();
 
         if(!isAI)
@@ -35,7 +54,8 @@ public class DisplayNames : MonoBehaviour
         }
         else
         {
-            myName = "AI Dave";
+            myName = AINames[Random.Range(0, 12)];
+            shooterName = AINames[Random.Range(0, 12)];
         }
 
         if (!isAI)
@@ -56,10 +76,6 @@ public class DisplayNames : MonoBehaviour
                     shooterName = pvS.Owner.NickName;
                     shooterNameAssigned = true;
                 }
-                else
-                {
-                    shooterName = "AI Jim";
-                }
             }
             else if (GetComponent<Controller>().Shooter != null)
             {
@@ -69,7 +85,7 @@ public class DisplayNames : MonoBehaviour
             }
             else
             {
-                shooterName = "AI Jim";
+                shooterName = AINames[myAIShooterName];
             }
         }
 

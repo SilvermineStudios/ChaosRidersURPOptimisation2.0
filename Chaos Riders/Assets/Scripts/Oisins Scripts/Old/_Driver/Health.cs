@@ -84,7 +84,7 @@ public class Health : MonoBehaviour
             {
                 dead = false;
                 health = startHealth;
-                pv.RPC("Respawn", RpcTarget.All);
+                Respawn();
                 timeSinceDeath = 0;
             }
             else
@@ -94,7 +94,7 @@ public class Health : MonoBehaviour
         }
     }
 
-    float timeSinceDeath, deathTimer = 6;
+    float timeSinceDeath, deathTimer = 3;
 
     [PunRPC]
     void Die()
@@ -104,10 +104,11 @@ public class Health : MonoBehaviour
         deathinstance = PhotonNetwork.Instantiate("DeathExplosion", this.transform.position, this.transform.rotation, 0);
     }
 
-    [PunRPC]
+
     void Respawn()
     {
         //deathParticles.SetActive(false);
+        GetComponent<Checkpoint>().ResetPos();
     }
 
     [PunRPC]
