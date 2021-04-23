@@ -38,11 +38,24 @@ public class PositionTracker : MonoBehaviourPun
         if (!PhotonNetwork.IsMasterClient) { return; }
         if(!doneWaiting) { return; }
         teamPositions.Sort();
-        for(int i = 0; i < 3; i++)
+
+        Debug.Log(text.Length);
+        Debug.Log(teamPositions.Count);
+        text[0].text = "(Driver) " + teamPositions[0].driverName;// + ", " + teamPositions[i].checkpointNumber; 
+        text[1].text = "(Shooter) " + teamPositions[0].shooterName;// + ", " + teamPositions[i].checkpointNumber; 
+        text[2].text = "(Driver) " + teamPositions[1].driverName;// + ", " + teamPositions[i].checkpointNumber; 
+        text[3].text = "(Shooter) " + teamPositions[1].shooterName;// + ", " + teamPositions[i].checkpointNumber; 
+        text[4].text = "(Driver) " + teamPositions[2].driverName;// + ", " + teamPositions[i].checkpointNumber; 
+        text[5].text = "(Shooter) " + teamPositions[2].shooterName;// + ", " + teamPositions[i].checkpointNumber; 
+
+
+
+        for (int i = 0; i < 5; i+=2)
         {
             //Debug.Log("Name: " + i.teamName +", Waypoint: " + i.checkpointNumber + ", Distance: " + i.currentPosition);
-            //Debug.Log(i);
-            text[i].text = teamPositions[i].teamName + ", " + teamPositions[i].checkpointNumber; 
+            //Debug.Log(text.Length);
+            //text[i-1].text ="(Driver) " + teamPositions[i].driverName;// + ", " + teamPositions[i].checkpointNumber; 
+            //text[i].text = "(Shooter) " + teamPositions[i].shooterName;// + ", " + teamPositions[i].checkpointNumber; 
         }
     }
 
