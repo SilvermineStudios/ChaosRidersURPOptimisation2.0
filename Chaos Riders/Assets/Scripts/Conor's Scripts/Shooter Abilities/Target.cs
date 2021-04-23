@@ -14,6 +14,8 @@ public class Target : MonoBehaviour
 
     public float health;
 
+    private float bladeTrapDamage = 2f;
+
     private void Awake()
     {
         if(ai)
@@ -87,7 +89,19 @@ public class Target : MonoBehaviour
         if(collision.gameObject.tag == "Explosive Barrel")
         {
             //Debug.Log("Take explosive barrel damage");
-            TakeDamage(ExplosiveBarrel.ExplosiveDamage);
+            //TakeDamage(ExplosiveBarrel.ExplosiveDamage);
+            TakeDamage(TrapManager.ExplosiveBarrelDamage);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        //blade traps
+        if(other.gameObject.tag == "Blade")
+        {
+            Debug.Log("You got cut");
+            //TakeDamage(bladeTrapDamage);
+            TakeDamage(TrapManager.BladeTrapDamage);
         }
     }
 }

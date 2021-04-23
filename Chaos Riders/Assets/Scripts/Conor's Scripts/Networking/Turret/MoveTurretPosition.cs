@@ -123,15 +123,47 @@ public class MoveTurretPosition : MonoBehaviour
     {
         if (!canConnect) return;
 
+        /*
+        if (other.gameObject.tag == "Smooth Car" && canConnectShooter)
+        {
+            Debug.Log("Connect to smooth car here");
+
+            canConnectShooter = false;
+
+            smoothCar = other.gameObject;
+            FakeParent = other.gameObject.transform;
+
+            if (shooterScript != null)
+                shooterScript.connectCar = true;
+        }
+
+
+        if(other.gameObject.layer == LayerMask.NameToLayer("Cars") && canGetRefToDriverCar)
+        {
+            canGetRefToDriverCar = false;
+
+            if (other.gameObject.tag == "car")
+            {
+                driverCar = other.gameObject.transform.root.gameObject;
+            }
+            else
+            {
+                driverCar = other.gameObject;
+            }
+        }
+        */
+        
         if (other.gameObject.layer == LayerMask.NameToLayer("Cars") && canConnect)
         {
+            //Debug.Log("Connect to not smooth car here");
+
             canConnect = false;
             
             
             if (other.gameObject.tag == "car")
             {
                 car = other.gameObject.transform.root.gameObject;
-                Debug.Log(car);
+                //Debug.Log(car);
                 FakeParent = other.gameObject.transform.root;
             }
             else
@@ -140,10 +172,10 @@ public class MoveTurretPosition : MonoBehaviour
                 FakeParent = other.gameObject.transform;
             }
 
-                
 
             if (shooterScript != null)
                 shooterScript.connectCar = true;
         }
+        
     }
 }
