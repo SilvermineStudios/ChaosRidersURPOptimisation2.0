@@ -7,7 +7,7 @@ using Photon.Pun.UtilityScripts;
 using Photon;
 using Photon.Realtime;
 using UnityEngine.UI;
-
+using TMPro;
 
 
 public class PositionTracker : MonoBehaviourPun
@@ -15,9 +15,10 @@ public class PositionTracker : MonoBehaviourPun
     PhotonView pv;
     PlayerDataManager playerDataManager;
 
-
-    List<int> teamNumbers = new List<int>();
+    CarPositionHolder[] carPositionHolders;
     List<Position> teamPositions = new List<Position>();
+    bool doneWaiting;
+    [SerializeField] TextMeshProUGUI[] text;
 
     private void Awake()
     {
@@ -28,58 +29,31 @@ public class PositionTracker : MonoBehaviourPun
     void Start()
     {
         if (!PhotonNetwork.IsMasterClient) { return; }
-        foreach (PhotonMenuPlayer p in PlayerDataManager.PhotonMenuPlayers)
-        {
-            {
-                /*
-                if(!teamNumbers.Contains(p.teamNumber))
-                {
-                    teamNumbers.Add(p.teamNumber);
-                }
-                p.driverAndShooterNames = p.Player.NickName;
-                if (p.driver)
-                {
-                    foreach (PhotonMenuPlayer p2 in PlayerDataManager.PhotonMenuPlayers)
-                    {
-                        if(p2.shooter && p.teamNumber == p2.teamNumber)
-                        {
-
-
-                            //p.driverAndShooterNames = p.Player.NickName + " + " + p2.Player.NickName;
-                            //p2.driverAndShooterNames = p.Player.NickName + " + " + p2.Player.NickName;
-
-
-
-                        }
-                    }
-                }*/
-            }
-            if(!teamNumbers.Contains(p.teamNumber))
-            {
-                teamNumbers.Add(p.teamNumber);
-                teamPositions.Add(new Position(p.driverAndShooterNames, 2));
-            }
-
-        }
+        StartCoroutine(WaitForSpawns());
     }
 
 
     private void FixedUpdate()
     {
         if (!PhotonNetwork.IsMasterClient) { return; }
-
-        foreach (PhotonMenuPlayer p in PlayerDataManager.PhotonMenuPlayers)
+        if(!doneWaiting) { return; }
+        teamPositions.Sort();
+        for(int i = 0; i < 3; i++)
         {
-            //teamNumbersToPositions[p.teamNumber][0] = p.myCheckpoint.distanceToNextCheckpoint;
+            //Debug.Log("Name: " + i.teamName +", Waypoint: " + i.checkpointNumber + ", Distance: " + i.currentPosition);
+            //Debug.Log(i);
+            text[i].text = teamPositions[i].teamName + ", " + teamPositions[i].checkpointNumber; 
         }
+    }
 
-        foreach(int i in teamNumbers)
+    IEnumerator WaitForSpawns()
+    {
+        yield return new WaitForSeconds(2);
+        carPositionHolders = FindObjectsOfType<CarPositionHolder>();
+        foreach (CarPositionHolder c in carPositionHolders)
         {
-            //Debug.Log(teamNumbersToPositions[i][0]);
+            teamPositions.Add(c.myPosition);
         }
-        
-
-
-        //var sortedPlayerList = (from p in playerList orderby p.GetMyScore() descending select p).ToList();
+        doneWaiting = true;
     }
 }

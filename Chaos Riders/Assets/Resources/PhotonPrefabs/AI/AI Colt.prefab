@@ -2092,6 +2092,8 @@ GameObject:
   - component: {fileID: 7598154927196492342}
   - component: {fileID: 6527334236595416596}
   - component: {fileID: 3864550292552388268}
+  - component: {fileID: 5792194139033649097}
+  - component: {fileID: -8929748855800965354}
   m_Layer: 10
   m_Name: AI Colt
   m_TagString: Player
@@ -2120,6 +2122,7 @@ Transform:
   - {fileID: 8741310427935951600}
   - {fileID: 5109257725156196150}
   - {fileID: 7817225987191630883}
+  - {fileID: 2423284976326891737}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2374,6 +2377,43 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wallBouncePercentage: 60
   barrelBouncePercentage: 100
+--- !u!114 &5792194139033649097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011213230151948855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db08bea78c5a4db4880d3b341e5002bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TNW: {fileID: 3184754301632534502}
+--- !u!114 &-8929748855800965354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011213230151948855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60098c4ae8c3c524ea0933609487c06c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundEffect: {fileID: 8300000, guid: ed476ad4a6f78b64382ce8cd8d9c2f2f, type: 3}
+  resetBar: {fileID: 6482304263097920210, guid: 45d2d241c84b3bf4385491ae467389ed, type: 3}
+  currentLap: 1
+  lapsText: {fileID: 5416099599320009175, guid: 45d2d241c84b3bf4385491ae467389ed, type: 3}
+  resetKey: 114
+  canCrossFinish: 0
+  checkpoints: []
+  currentCheckpoint: 0
+  youWinText: {fileID: 5416099599173656054, guid: 45d2d241c84b3bf4385491ae467389ed, type: 3}
+  canCollect: 1
+  Music: {fileID: 6746358911520101374, guid: 45d2d241c84b3bf4385491ae467389ed, type: 3}
+  isAI: 1
 --- !u!1 &2040200205363631557
 GameObject:
   m_ObjectHideFlags: 0
@@ -2583,6 +2623,64 @@ Transform:
   m_Father: {fileID: 5125535525856620083}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2433497418653911445
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2423284976326891737}
+  - component: {fileID: 5071397593919864454}
+  - component: {fileID: 3184754301632534502}
+  m_Layer: 16
+  m_Name: WayFinder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2423284976326891737
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2433497418653911445}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1837897696640187740}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &5071397593919864454
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2433497418653911445}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 30
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3184754301632534502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2433497418653911445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 079d48702d76da14fa07de339e47062e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nearbyWaypoints: []
 --- !u!1 &2512447575149855347
 GameObject:
   m_ObjectHideFlags: 0
@@ -13188,13 +13286,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e076683e0305e35498b8e8834978c0fa, type: 3}
---- !u!1 &7817225987191861251 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100006, guid: e076683e0305e35498b8e8834978c0fa, type: 3}
-  m_PrefabInstance: {fileID: 7817225987191764645}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7817225987191630883 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400006, guid: e076683e0305e35498b8e8834978c0fa, type: 3}
+  m_PrefabInstance: {fileID: 7817225987191764645}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7817225987191861251 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100006, guid: e076683e0305e35498b8e8834978c0fa, type: 3}
   m_PrefabInstance: {fileID: 7817225987191764645}
   m_PrefabAsset: {fileID: 0}
