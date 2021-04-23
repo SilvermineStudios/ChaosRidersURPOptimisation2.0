@@ -11,8 +11,8 @@ public class BounceOff : MonoBehaviour
     [Range(0, 100)]
     public float wallBouncePercentage = 60f; //the percentage of your speed that you bounce with
 
-    [Range(0, 200)]
-    public float barrelBouncePercentage = 100f; //the percentage of your speed that you bounce with
+    //[Range(0, 200)]
+    //public float barrelBouncePercentage = 100f; //the percentage of your speed that you bounce with
 
     void Awake()
     {
@@ -43,7 +43,8 @@ public class BounceOff : MonoBehaviour
 
             var direction = Vector3.Reflect(lastVelocity.normalized, collision.contacts[0].normal);
             var speed = lastVelocity.magnitude;
-            float bounceSpeed = (speed / 100) * barrelBouncePercentage;
+            //float bounceSpeed = (speed / 100) * barrelBouncePercentage;
+            float bounceSpeed = (speed / 100) * TrapManager.BounceOffBarrelAmount;
 
             rb.velocity = direction * Mathf.Max(bounceSpeed, 0f);
         }
