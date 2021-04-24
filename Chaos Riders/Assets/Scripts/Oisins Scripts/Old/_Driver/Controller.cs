@@ -119,7 +119,7 @@ public class Controller : MonoBehaviour
     public Rigidbody rb { get; private set; }
     public enum DriverEquipment { SmokeScreen, Mine }
     public enum DriverUltimate { Brake, Shred }
-    private Animator anim;
+    [SerializeField] private Animator anim;
     [SerializeField] private GameObject abilitySpawn;
     #endregion
 
@@ -127,7 +127,8 @@ public class Controller : MonoBehaviour
     private void Awake()
     {
         shredUltimate = GetComponent<ShredUltimate>();
-        anim = GetComponentInChildren<Animator>();
+        if(anim == null)
+            anim = GetComponentInChildren<Animator>();
         pv = GetComponent<PhotonView>();
         healthScript = GetComponent<Health>();
         driverAbilities = GetComponent<DriverAbilities>();
@@ -510,13 +511,15 @@ public class Controller : MonoBehaviour
         StartCoroutine(UseUltimateUI(ultimateData.ultimateUsetime));
 
 
-        anim.SetBool("StartShred", true);
-        anim.SetBool("LeaveShred", false);
+        //anim.SetBool("StartShred", true);
+        //anim.SetBool("LeaveShred", false);
+        anim.SetBool("Shred", true);
 
         yield return new WaitForSeconds(ultimateData.ultimateUsetime);
 
-        anim.SetBool("StartShred", false);
-        anim.SetBool("LeaveShred", true);
+        //anim.SetBool("StartShred", false);
+        //anim.SetBool("LeaveShred", true);
+        anim.SetBool("Shred", false);
 
         shredUltimate.enabled = false;
         usingUltimate = false;
