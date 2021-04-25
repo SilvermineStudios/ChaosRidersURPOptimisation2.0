@@ -40,13 +40,6 @@ public class Target : MonoBehaviour
 
     void Start()
     {
-        /*
-        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
-        {
-            myHealthBar.SetActive(false);
-        }
-        */
-
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer && !ai || !IsThisMultiplayer.Instance.multiplayer)
             myHealthBar.SetActive(false);
     }
