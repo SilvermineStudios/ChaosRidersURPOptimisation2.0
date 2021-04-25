@@ -40,15 +40,22 @@ public class MatchDriversHealth : MonoBehaviour
 
                 if(car.tag == "car")
                 {
-                    healthBarAboveCar = car.GetComponent<Health>().myHealthBar;
-                    carHealthBarUI = car.GetComponent<Health>().healthBarUi;
+                    //healthBarAboveCar = car.GetComponent<Health>().myHealthBar;
+                    //carHealthBarUI = car.GetComponent<Health>().healthBarUi;
+                    healthBarAboveCar = car.GetComponent<Target>().myHealthBar;
+                    carHealthBarUI = car.GetComponent<Target>().healthBarUi;
                 }
                 if(car.tag != "car")
                 {
-                    healthBarAboveCar = car.GetComponent<AIHealth>().myHealthBar;
-                    health = car.GetComponent<AIHealth>().health;
-                    startHealth = car.GetComponent<AIHealth>().startHealth;
-                    healthNormalized = car.GetComponent<AIHealth>().healthNormalized;
+                    //healthBarAboveCar = car.GetComponent<AIHealth>().myHealthBar;
+                    //health = car.GetComponent<AIHealth>().health;
+                    //startHealth = car.GetComponent<AIHealth>().startHealth;
+                    //healthNormalized = car.GetComponent<AIHealth>().healthNormalized;
+
+                    healthBarAboveCar = car.GetComponent<Target>().myHealthBar;
+                    health = car.GetComponent<Target>().health;
+                    startHealth = car.GetComponent<Target>().startHealth;
+                    healthNormalized = car.GetComponent<Target>().healthNormalized;
 
                     SetHealthBarUiSize(healthNormalized);
                 }

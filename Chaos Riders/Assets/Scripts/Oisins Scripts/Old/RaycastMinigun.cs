@@ -16,7 +16,8 @@ public class RaycastMinigun : MonoBehaviour
     private AudioSource speaker;
     public AudioClip gunShot;
     [SerializeField] private float volume = 0.3f;
-    public Health healthScript;
+    //public Health healthScript;
+    public Target healthScript;
     public float minigunDamage;
     [SerializeField] float playerNumber = 1;
 

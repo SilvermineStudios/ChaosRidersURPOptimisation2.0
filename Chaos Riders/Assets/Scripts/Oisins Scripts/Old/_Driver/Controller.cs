@@ -60,7 +60,8 @@ public class Controller : MonoBehaviour
     Skidmarks skidmarksController;
     DriverAbilities driverAbilities;
     PhotonView pv;
-    Health healthScript;
+    //Health healthScript;
+    Target healthScript;
     ShredUltimate shredUltimate;
     //public TurretTester ShooterAttached; 
      public GameObject Shooter;
@@ -130,7 +131,8 @@ public class Controller : MonoBehaviour
         if(anim == null)
             anim = GetComponentInChildren<Animator>();
         pv = GetComponent<PhotonView>();
-        healthScript = GetComponent<Health>();
+        //healthScript = GetComponent<Health>();
+        healthScript = GetComponent<Target>();
         driverAbilities = GetComponent<DriverAbilities>();
         playerInputs = GetComponent<PlayerInputs>();
         rb = GetComponent<Rigidbody>();
@@ -215,6 +217,7 @@ public class Controller : MonoBehaviour
 
     private void FixedUpdate()
     {
+        /*
         if (healthScript.isDead)
         {
             GetComponent<Rigidbody>().drag = 5;
@@ -224,6 +227,15 @@ public class Controller : MonoBehaviour
         {
             GetComponent<Rigidbody>().drag = 0;
         }
+        */
+
+        if (healthScript.isDead)
+        {
+            GetComponent<Rigidbody>().drag = 5;
+            return;
+        }
+        else
+            GetComponent<Rigidbody>().drag = 0;
 
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer|| !IsThisMultiplayer.Instance.multiplayer)
         {

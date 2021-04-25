@@ -22,7 +22,8 @@ public class AICarController : MonoBehaviour
 
     [SerializeField] private Vector3 centerOfMass;
 
-    private AIHealth healthScript;
+    //private AIHealth healthScript;
+    private Target healthScript;
 
     //public TurretTester ShooterAttached;
 
@@ -40,7 +41,8 @@ public class AICarController : MonoBehaviour
     void Start()
     {
         GetComponent<Rigidbody>().centerOfMass = centerOfMass;
-        healthScript = GetComponent<AIHealth>();
+        //healthScript = GetComponent<AIHealth>();
+        healthScript = GetComponent<Target>();
 
         nearestWaypoint = NearestWP();
         currentWaypoint = nearestWaypoint;

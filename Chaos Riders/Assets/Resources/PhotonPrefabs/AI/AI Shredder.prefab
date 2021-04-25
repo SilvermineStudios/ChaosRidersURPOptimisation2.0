@@ -5863,10 +5863,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd27fdd01875ad84092561a7a6869cf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onlineCar: 0
   ai: 1
   invincible: 0
   health: 0
+  startHealth: 0
+  healthBarUi: {fileID: 0}
+  myHealthBar: {fileID: 0}
+  healthNormalized: 0
+  lastHit: 0
+  dead: 0
+  respawning: 0
+  deathExplosionHeight: 3
+  deathTimer: 3
+  timeSinceDeath: 0
 --- !u!114 &6843932727799104327
 MonoBehaviour:
   m_ObjectHideFlags: 0
