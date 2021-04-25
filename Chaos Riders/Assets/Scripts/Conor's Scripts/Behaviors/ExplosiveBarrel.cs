@@ -9,13 +9,13 @@ public class ExplosiveBarrel : MonoBehaviour
     private MeshRenderer[] meshRenderers; //used for making the object invisible
     private Collider[] colliders; //used for disabling the colliders
 
-    private int barrelHealth, startHealth;
+    [SerializeField] private int barrelHealth, startHealth;
     private bool readyToExplode = true;
 
     [SerializeField] private GameObject explosionEffect;
     
 
-    void Awake()
+    void Start()
     {
         meshRenderers = this.GetComponentsInChildren<MeshRenderer>();
         colliders = this.GetComponentsInChildren<Collider>();
