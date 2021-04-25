@@ -8,20 +8,32 @@ public class TrapManager : MonoBehaviour
     [SerializeField] private float explosiveBarrelDamage = 60f;
     [Range(0.1f, 200f)]
     [SerializeField] private float bounceOffBarrelAmount = 60f;
-    
+    [Range(1, 8)]
+    [SerializeField] private int barrelHealth = 3; //amount of bullets it takes to destroy
+    [Range(1, 8)]
+    [SerializeField] private int explodedForTime = 3; //amount of bullets it takes to destroy
+
+    //public statics
+    public static float ExplosiveBarrelDamage;
+    public static float BounceOffBarrelAmount;
+    public static int BarrelHealth;
+    public static int ExplodedForTime;
+
 
     [Header("Blade Traps")]
     [SerializeField] private float bladeTrapDamage = 6f;
 
     //public statics
-    public static float ExplosiveBarrelDamage;
     public static float BladeTrapDamage;
-    public static float BounceOffBarrelAmount;
+    
 
     void Awake()
     {
         ExplosiveBarrelDamage = explosiveBarrelDamage;
-        BladeTrapDamage = bladeTrapDamage;
         BounceOffBarrelAmount = bounceOffBarrelAmount;
+        BarrelHealth = barrelHealth;
+        ExplodedForTime = explodedForTime;
+
+        BladeTrapDamage = bladeTrapDamage;
     }
 }

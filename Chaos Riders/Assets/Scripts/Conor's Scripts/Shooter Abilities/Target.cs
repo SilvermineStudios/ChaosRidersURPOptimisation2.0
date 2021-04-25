@@ -88,8 +88,6 @@ public class Target : MonoBehaviour
         //Exlosive Barrel damage
         if(collision.gameObject.tag == "Explosive Barrel")
         {
-            //Debug.Log("Take explosive barrel damage");
-            //TakeDamage(ExplosiveBarrel.ExplosiveDamage);
             TakeDamage(TrapManager.ExplosiveBarrelDamage);
         }
     }
@@ -99,8 +97,6 @@ public class Target : MonoBehaviour
         //blade traps
         if(other.gameObject.tag == "Blade")
         {
-            Debug.Log("You got cut");
-            //TakeDamage(bladeTrapDamage);
             TakeDamage(TrapManager.BladeTrapDamage);
         }
     }
