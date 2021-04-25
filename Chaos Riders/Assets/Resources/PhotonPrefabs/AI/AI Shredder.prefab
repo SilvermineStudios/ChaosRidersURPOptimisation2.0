@@ -5684,7 +5684,6 @@ GameObject:
   - component: {fileID: 7536812608521422747}
   - component: {fileID: 7536812608521422746}
   - component: {fileID: 7536812608521422741}
-  - component: {fileID: 1082708964850774110}
   - component: {fileID: 7536812608806525425}
   - component: {fileID: 6843932727799104327}
   - component: {fileID: 7536812608358028271}
@@ -5831,26 +5830,6 @@ MonoBehaviour:
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
---- !u!114 &1082708964850774110
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8318536519656587226}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: febe6d505073b4a45ac2738d786df0b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myHealthBar: {fileID: 1945307139529862139}
-  health: 200
-  startHealth: 0
-  healthNormalized: 0
-  lastHit: 0
-  isProtected: 0
-  deathParticles: {fileID: 1570222785283345221}
-  dead: 0
 --- !u!114 &7536812608806525425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5865,12 +5844,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ai: 1
   invincible: 0
-  health: 0
-  startHealth: 0
+  health: 200
   healthBarUi: {fileID: 0}
-  myHealthBar: {fileID: 0}
+  myHealthBar: {fileID: 1945307139529862139}
+  startHealth: 0
   healthNormalized: 0
-  lastHit: 0
   dead: 0
   respawning: 0
   deathExplosionHeight: 3
@@ -6672,10 +6650,5 @@ PrefabInstance:
 --- !u!4 &1570222785283643237 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400006, guid: e076683e0305e35498b8e8834978c0fa, type: 3}
-  m_PrefabInstance: {fileID: 1570222785283247587}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1570222785283345221 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100006, guid: e076683e0305e35498b8e8834978c0fa, type: 3}
   m_PrefabInstance: {fileID: 1570222785283247587}
   m_PrefabAsset: {fileID: 0}

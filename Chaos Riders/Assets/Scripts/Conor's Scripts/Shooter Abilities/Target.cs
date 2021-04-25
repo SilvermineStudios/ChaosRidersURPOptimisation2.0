@@ -14,11 +14,10 @@ public class Target : MonoBehaviour
 
     [Header("Health Stuff")]
     public float health;
-    public float startHealth;
     public Transform healthBarUi;
     public GameObject myHealthBar;
-    public float healthNormalized;
-    [SerializeField] float lastHit;
+    [HideInInspector] public float startHealth;
+    [HideInInspector] public float healthNormalized;
     private Slider healthbarSlider;
     private GameObject deathinstance;
 
@@ -41,7 +40,14 @@ public class Target : MonoBehaviour
 
     void Start()
     {
+        /*
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
+        {
+            myHealthBar.SetActive(false);
+        }
+        */
+
+        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer && !ai || !IsThisMultiplayer.Instance.multiplayer)
             myHealthBar.SetActive(false);
     }
 
@@ -51,7 +57,8 @@ public class Target : MonoBehaviour
             health = 0;
 
         healthNormalized = (health / startHealth);
-        SetHealthBarUiSize(healthNormalized);
+        if(!ai)
+            SetHealthBarUiSize(healthNormalized);
         pv.RPC("SetHealth", RpcTarget.All);
 
         DeathStuff();
@@ -100,7 +107,8 @@ public class Target : MonoBehaviour
 
     void Respawn()
     {
-        GetComponent<Checkpoint>().ResetPos();
+        Debug.Log("TURNED OFF REPSPAWN WHEN DEAD");
+        //GetComponent<Checkpoint>().ResetPos();
     }
 
     public void TakeDamage(float amount)
