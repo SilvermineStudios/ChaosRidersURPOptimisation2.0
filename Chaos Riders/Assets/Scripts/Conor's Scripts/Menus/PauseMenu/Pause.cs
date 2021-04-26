@@ -35,6 +35,7 @@ public class Pause : MonoBehaviour
     private GameObject videoSettingsHolder;
     private TMP_Dropdown imageQualityDropDown;
     private GameObject FPSText;
+    public GameObject gameControlsPanel;
 
     float timeSinceLastPush = 0; //dont delete
     [HideInInspector] public bool paused = false;
@@ -150,11 +151,13 @@ public class Pause : MonoBehaviour
         }
     }
 
-    public void SaveChangesToVideo()
+    public void DisplayContolsButton()
     {
-
+        if (gameControlsPanel != null)
+            gameControlsPanel.SetActive(true);
+        else
+            Debug.Log("Assign a game controls panel");
     }
-
     #endregion
 
     #region Audio Settings

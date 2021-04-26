@@ -6,28 +6,21 @@ using System.IO;
 
 public class ExplosiveBarrel : MonoBehaviour
 {
-    private PhotonView pv;
+    private MeshRenderer[] meshRenderers; //used for making the object invisible
+    private Collider[] colliders; //used for disabling the colliders
 
-    private MeshRenderer[] meshRenderers;
-    private Collider[] colliders;
-
-    public float explodedForTime = 7f;
-    public int barrelHealth = 5; //amount of bullets it takes to destroy
-    private int startHealth;
+    [SerializeField] private int barrelHealth, startHealth;
     private bool readyToExplode = true;
-
-    [SerializeField] private float explosiveDamage = 60f;
-    public static float ExplosiveDamage; //used in the Target script to take health off
 
     [SerializeField] private GameObject explosionEffect;
     
 
-    void Awake()
+    void Start()
     {
-        pv = GetComponent<PhotonView>();
         meshRenderers = this.GetComponentsInChildren<MeshRenderer>();
         colliders = this.GetComponentsInChildren<Collider>();
-        ExplosiveDamage = explosiveDamage;
+
+        barrelHealth = TrapManager.BarrelHealth;
         startHealth = barrelHealth;
     }
 
@@ -36,7 +29,7 @@ public class ExplosiveBarrel : MonoBehaviour
         //if the barrel is shot
         if(readyToExplode && barrelHealth <= 0)
         {
-            StartCoroutine(ExplodeCoroutine(explodedForTime));
+            StartCoroutine(ExplodeCoroutine(TrapManager.ExplodedForTime));
         }  
     }
 
@@ -47,8 +40,7 @@ public class ExplosiveBarrel : MonoBehaviour
     }
 
     #region Enable / Disable
-    [PunRPC]
-    void RPC_ExplodeBarrel()
+    void ExplodeBarrel()
     {
         readyToExplode = false;
 
@@ -60,19 +52,10 @@ public class ExplosiveBarrel : MonoBehaviour
         foreach (Collider col in colliders)
             col.enabled = false;
 
-        //spawn explosion
-        if (IsThisMultiplayer.Instance.multiplayer)
-        {
-            pv.RPC("Explode", RpcTarget.All);
-        }
-        else
-        {
-            OfflineExplode();
-        }
+        Instantiate(explosionEffect, transform.position, transform.rotation);
     }
 
-    [PunRPC]
-    void RPC_ResetBarrel()
+    void ResetBarrel()
     {
         readyToExplode = true;
         barrelHealth = startHealth;
@@ -87,37 +70,17 @@ public class ExplosiveBarrel : MonoBehaviour
     }
     #endregion
 
-    #region explosion effect
-    [PunRPC]
-    void Explode()
-    {
-        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", explosionEffect.gameObject.name), transform.position, transform.rotation, 0);
-    }
-
-    void OfflineExplode()
-    {
-        Instantiate(explosionEffect, transform.position, transform.rotation);
-    }
-    #endregion
-
-
     private void OnCollisionEnter(Collision collision)
     {
-        StartCoroutine(ExplodeCoroutine(explodedForTime));
+        StartCoroutine(ExplodeCoroutine(TrapManager.ExplodedForTime));
     }
 
     public IEnumerator ExplodeCoroutine(float time)
     {
-        if (IsThisMultiplayer.Instance.multiplayer)
-            pv.RPC("RPC_ExplodeBarrel", RpcTarget.All);
-        else
-            RPC_ExplodeBarrel();
+        ExplodeBarrel();
         
         yield return new WaitForSeconds(time);
 
-        if (IsThisMultiplayer.Instance.multiplayer)
-            pv.RPC("RPC_ResetBarrel", RpcTarget.All);
-        else
-            RPC_ResetBarrel();
+        ResetBarrel();
     }
 }

@@ -27,15 +27,17 @@ public class PlayerDataManager : MonoBehaviour
 
         //shooters
         AddToShooters();
-        RemoveFromShooters();
 
         //drivers
         AddToDrivers();
-        RemoveFromDrivers();
         
-
         Drivers = drivers;
         Shooters = shooters;
+
+        drivers.RemoveAll(x => x == null); //remove any targets that are null (Disconnected drivers)
+        Shooters.RemoveAll(x => x == null); //remove any targets that are null (Disconnected drivers)
+
+        RemovePlayersFromList();
     }
 
     private void UpdatePlayerList()
@@ -44,7 +46,22 @@ public class PlayerDataManager : MonoBehaviour
         PhotonMenuPlayers = photonMenuPlayers;
     }
 
-    #region Shooter Stuff
+    //removes players from dirver / shooter list when they change team
+    private void RemovePlayersFromList()
+    {
+        foreach (PhotonMenuPlayer p in photonMenuPlayers)
+        {
+            if (!p.shooter && shooters.Contains(p.gameObject))
+            {
+                shooters.Remove(p.gameObject);
+            }
+            if (!p.driver && drivers.Contains(p.gameObject))
+            {
+                drivers.Remove(p.gameObject);
+            }
+        }
+    }
+
     private void AddToShooters()
     {
         if (photonMenuPlayers.Length > 0)
@@ -60,23 +77,6 @@ public class PlayerDataManager : MonoBehaviour
         else
             return;
     }
-
-    private void RemoveFromShooters()
-    {
-        if(shooters.Count > 0)
-        {
-            foreach (GameObject go in shooters)
-            {
-                if (go == null || !go.GetComponent<PhotonMenuPlayer>().shooter)
-                    shooters.Remove(go);
-            }
-        }
-        else
-            return;    
-    }
-    #endregion
-
-    #region Driver Stuff
     private void AddToDrivers()
     {
         if (photonMenuPlayers.Length > 0)
@@ -92,53 +92,4 @@ public class PlayerDataManager : MonoBehaviour
         else
             return;
     }
-
-    private void RemoveFromDrivers()
-    {
-        if (drivers.Count > 0)
-        {
-            foreach (GameObject go in drivers)
-            {
-                if (go == null || !go.GetComponent<PhotonMenuPlayer>().driver)
-                    drivers.Remove(go);
-            }
-        }
-        else
-            return;
-    }
-    #endregion
-
-    /*
-    private void UpdateDriverAndShooterLists()
-    {
-        //remove players from list when they leave the game and when they change f
-        if (drivers.Count > 0)
-        {
-            foreach (GameObject go in drivers)
-            {
-                if (!go.GetComponent<PhotonMenuPlayer>().driver || go == null)
-                {
-                    drivers.Remove(go);
-                }
-            }
-        }
-
-        //remove players from list when they leave the game
-        if (shooters.Count > 0)
-        {
-            foreach (GameObject go in shooters)
-            {
-                if (!go.GetComponent<PhotonMenuPlayer>().shooter)
-                {
-                    shooters.Remove(go);
-                }
-
-                //if(go == null)
-                //{
-                    //shooters.Remove(go);
-                //}
-            }
-        }
-    }
-    */
 }

@@ -106,6 +106,8 @@ public class AIShooter : MonoBehaviour
     {
         DestroyMeIfDriverDisconnects();
 
+        targets.RemoveAll(x => x == null); //remove any targets that are null (Disconnected drivers)
+
         //Getting car info
         if (mtp.car != null && car == null)
         {
@@ -116,14 +118,10 @@ public class AIShooter : MonoBehaviour
             carRigidBody = car.GetComponent<Rigidbody>();
 
         if(car != null)
-        {
             carHealth = car.GetComponent<Target>().health;
-        }
 
         if (carHealth <= 0 && !dead)
-        {
             dead = true;
-        }
         else
             dead = false;
 
@@ -192,11 +190,11 @@ public class AIShooter : MonoBehaviour
         GameObject nearestEnemy = null;
 
         //cycle through all of the targets in the target array list to find the nearest one
-        foreach(GameObject enemy in targets)
+        foreach (GameObject enemy in targets)
         {
             float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
 
-            if(distanceToEnemy < shortestDistance)
+            if (distanceToEnemy < shortestDistance)
             {
                 shortestDistance = distanceToEnemy;
                 nearestEnemy = enemy;
@@ -204,9 +202,9 @@ public class AIShooter : MonoBehaviour
         }
 
         //if a nearest enemy is found and within range then it becomes the target
-        if(nearestEnemy != null && shortestDistance <= range)
+        if (nearestEnemy != null && shortestDistance <= range)
         {
-            if(nearestEnemy.transform.root.gameObject.GetComponent<Target>().health > 0)
+            if (nearestEnemy.transform.root.gameObject.GetComponent<Target>().health > 0)
                 target = nearestEnemy.transform;
             else
                 target = null;
@@ -229,24 +227,17 @@ public class AIShooter : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
 
-        GameObject[] aicars = GameObject.FindGameObjectsWithTag(aiCarTag); //get an array of all of the ai cars 
-        GameObject[] cars = GameObject.FindGameObjectsWithTag(carTag); //get an array of all of the player cars
-        
-        //add all of the ai cars to the targets array
-        foreach(GameObject go in aicars)
+        foreach (GameObject go in GameObject.FindGameObjectsWithTag(aiCarTag))
         {
-            if(go.gameObject != car.gameObject)
+            if (go.transform.root.gameObject != car.gameObject)
                 targets.Add(go);
         }
-
-        //add all of the player cars to the targets array
-        foreach(GameObject go in cars)
+        foreach (GameObject go in GameObject.FindGameObjectsWithTag(carTag))
         {
             if (go.transform.root.gameObject != car.gameObject)
                 targets.Add(go);
         }
 
-        //Starts lookinf for a target and then repeats it over and over again
         InvokeRepeating("UpdateTarget", 0f, timeBeforeLookingForANewTarget); //MOVE TO WHEN WEAPONS ARE ENABLED
     }
     #endregion
