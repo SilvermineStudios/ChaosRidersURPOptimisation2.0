@@ -56,7 +56,7 @@ public class Health : MonoBehaviour
             health = 0;
 
         healthNormalized = (health / startHealth);
-        SetHealthBarUiSize(healthNormalized); /////////////////
+        SetHealthBarUiSize(healthNormalized); 
 
         pv.RPC("SetHealth", RpcTarget.All);
 
@@ -114,9 +114,7 @@ public class Health : MonoBehaviour
     [PunRPC]
     void SetHealth()
     {
-
        healthbar.value = healthNormalized;
-
     }
 
     public void TakeDamage(float[] DamagetoTake)
