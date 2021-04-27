@@ -54,14 +54,14 @@ public class CarPickup : MonoBehaviour
                 hasPickup = false;
 
             //player can speedboost by pressing the space bar when they have one
-            if (hasSpeedBoost && (Input.GetKeyDown(KeyCode.Space)))// || Input.GetButtonDown("A")))
+            if (hasSpeedBoost && (Input.GetButtonDown("Y")))// || Input.GetButtonDown("A")))
             {
                 hasSpeedBoost = false;
                 StartCoroutine(SpeedBoostTimer(PickupManager.speedBoostTime));
             }
 
             //player can activate invincibility by pressing the space bar when they have one
-            if (hasInvincibilityPickup && (Input.GetKeyDown(KeyCode.Space)))// || Input.GetButtonDown("A")))
+            if (hasInvincibilityPickup && (Input.GetButtonDown("Y")))// || Input.GetButtonDown("A")))
             {
                 
                 StartCoroutine(InvincibleTimer(PickupManager.InvincibleTime));

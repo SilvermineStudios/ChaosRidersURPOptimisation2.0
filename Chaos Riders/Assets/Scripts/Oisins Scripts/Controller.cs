@@ -248,14 +248,14 @@ public class Controller : MonoBehaviour
 
     private void GetInput()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
+        horizontalInput = Input.GetAxis("Horizontal") * 0.5f;
         verticalInput = Input.GetAxis("Vertical");
         if (!braking)
         {
-            brake = Input.GetKey(KeyCode.T);
+            brake = Input.GetButton("Brake");
             //Debug.Log(98989898989898989);
         }
-        if (Input.GetKeyUp(KeyCode.T))
+        if (Input.GetButtonUp("Brake"))
         {
             brake = false;
             ReleaseBrake();
@@ -412,7 +412,7 @@ public class Controller : MonoBehaviour
         CheckIfCanUseEquipmentAndAbility(); //check if the player can use their equipment
 
         //if you use the equipment
-        if (Input.GetKeyDown(equipmentKeyCode) && canUseEquipment)
+        if (Input.GetButtonDown("A") && canUseEquipment)
         {
             usingEquipment = true;
             StartCoroutine(UseEquipmentUI(equipmentData.equipmentUseTime));
@@ -441,7 +441,7 @@ public class Controller : MonoBehaviour
         
 
         //if you use the Ability
-        if (Input.GetKeyDown(abilityKeyCode) && canUseAbility)
+        if (Input.GetButtonDown("X") && canUseAbility)
         {
 
             if (CurrentUltimate == DriverUltimate.Brake)
