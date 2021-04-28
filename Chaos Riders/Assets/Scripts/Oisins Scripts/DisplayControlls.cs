@@ -7,13 +7,19 @@ public class DisplayControlls : MonoBehaviour
     [SerializeField] GameObject[] Keyboard;
     [SerializeField] GameObject[] Controller;
     string[] Controllers;
-   
-    
+    bool controller;
+
+    private void Start()
+    {
+        InvokeRepeating("CheckForControllers", 0, 1);
+    }
+
     void Update()
     {
         Controllers = Input.GetJoystickNames();
+        Debug.Log(Controllers.Length);
 
-        if(Controllers == null)
+        if(!controller)
         {
             foreach (GameObject g in Keyboard)
             {
@@ -36,4 +42,32 @@ public class DisplayControlls : MonoBehaviour
             }
         }
     }
+
+    void CheckForControllers()
+    {
+        if (Controllers.Length > 0)
+        {
+            //Iterate over every element
+            for (int i = 0; i < Controllers.Length; ++i)
+            {
+                //Check if the string is empty or not
+                if (!string.IsNullOrEmpty(Controllers[i]))
+                {
+                    //Not empty, controller temp[i] is connected
+                    Debug.Log("Controller " + i + " is connected using: " + Controllers[i]);
+                    controller = true;
+                    break;
+                }
+                else
+                {
+                    //If it is empty, controller i is disconnected
+                    //where i indicates the controller number
+                    Debug.Log("Controller: " + i + " is disconnected.");
+                    controller = false;
+                }
+            }
+        }
+    }
+
+
 }

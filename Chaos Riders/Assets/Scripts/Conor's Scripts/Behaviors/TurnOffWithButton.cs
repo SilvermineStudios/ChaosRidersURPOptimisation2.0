@@ -4,13 +4,29 @@ using UnityEngine;
 
 public class TurnOffWithButton : MonoBehaviour
 {
-    public KeyCode buttonToPress = KeyCode.X;
+    bool isOn = true;
+    GameObject[] children;
 
     void Update()
     {
-        if (Input.GetKeyDown(buttonToPress))
+        if (Input.GetButtonDown("LB"))
         {
-            this.gameObject.SetActive(false);
+            if(isOn)
+            {
+                foreach(Transform child in transform)
+                {
+                    child.gameObject.SetActive(false);
+                }
+                isOn = false;
+            }
+            else
+            {
+                foreach (Transform child in transform)
+                {
+                    child.gameObject.SetActive(true);
+                }
+                isOn = true;
+            }
         }
     }
 }
