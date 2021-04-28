@@ -7868,6 +7868,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1518350524688681050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348122400311700924}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a34dce33c4213c4393266fbcd799d5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: 59e59fde4ec3891459b83e0fd6bd6db8, type: 2}
+  color: {r: 0, g: 0.023053646, b: 1, a: 1}
+  mask: {fileID: 0}
+  fresnelScale: 2
+  fresnelPower: 2
+  alphaThreshold: 0.5
 --- !u!1 &1407414511102413664
 GameObject:
   m_ObjectHideFlags: 0
@@ -8590,7 +8608,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebfd5895e6992ff44a2f916d49602c5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineObject: {fileID: 0}
+  outlineObject: {fileID: 1518350524688681050}
 --- !u!114 &-3095911766609178012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9758,6 +9776,11 @@ PrefabInstance:
 --- !u!4 &543450652136225532 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 41c0f11819ce1ee4c81571b68e4b8644, type: 3}
+  m_PrefabInstance: {fileID: 1597365527}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1348122400311700924 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -7875249635484847957, guid: 41c0f11819ce1ee4c81571b68e4b8644, type: 3}
   m_PrefabInstance: {fileID: 1597365527}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1407414512802149375

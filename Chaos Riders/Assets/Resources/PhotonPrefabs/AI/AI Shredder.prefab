@@ -4462,6 +4462,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &9220295715127862291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348122399928821162}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a34dce33c4213c4393266fbcd799d5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: 59e59fde4ec3891459b83e0fd6bd6db8, type: 2}
+  color: {r: 0, g: 0.06336594, b: 1, a: 1}
+  mask: {fileID: 0}
+  fresnelScale: 2
+  fresnelPower: 2
+  alphaThreshold: 0.5
 --- !u!1 &1945307139529862139
 GameObject:
   m_ObjectHideFlags: 0
@@ -5692,6 +5710,7 @@ GameObject:
   - component: {fileID: 1926357446189682607}
   - component: {fileID: 4271568418564478049}
   - component: {fileID: 887158327277677814}
+  - component: {fileID: 5474032364485415155}
   m_Layer: 10
   m_Name: AI Shredder
   m_TagString: Player
@@ -5950,6 +5969,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TNW: {fileID: 7407079849896184843}
+--- !u!114 &5474032364485415155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8318536519656587226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebfd5895e6992ff44a2f916d49602c5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineObject: {fileID: 9220295715127862291}
 --- !u!1 &8477280990450470766
 GameObject:
   m_ObjectHideFlags: 0
@@ -6446,6 +6478,11 @@ PrefabInstance:
 --- !u!4 &543450651713794794 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c7b46390ad5305c43879de295d52b642, type: 3}
+  m_PrefabInstance: {fileID: 1994888449}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1348122399928821162 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -7875249635484847957, guid: c7b46390ad5305c43879de295d52b642, type: 3}
   m_PrefabInstance: {fileID: 1994888449}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &548747728089310052
