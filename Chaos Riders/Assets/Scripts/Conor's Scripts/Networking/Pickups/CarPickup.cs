@@ -6,31 +6,36 @@ using Photon.Realtime;
 
 public class CarPickup : MonoBehaviour
 {
-    private GameObject go;
-    //Health healthScript;
-    Target healthScript;
-    [SerializeField] private bool hasSpeedBoost = false, hasInvincibilityPickup = false; //<-------------use this bool in target script
-    private bool hasPickup = false;
-    public bool hasRPG = false;
-    [SerializeField] private GameObject shooter;
-    [SerializeField] private GameObject nitroUiImage, armourUiImage;
-
-    //CoolDown Bars
-    [SerializeField] private Transform nitroCooldownBar, invincibleCooldownBar;
-    [SerializeField] private float nitroTimerNormalized, invincibleTimerNormalized;
-    [SerializeField] private float nitroStartTimer, invincibleStartTimer;
-    [SerializeField] private float nitroCurrentTimer, invincibleCurrentTimer;
-    [SerializeField] private bool nitroTimerCountDown = false, invincibleTimerCountDown = false;
-
     private PhotonView pv;
     private Controller carController;
+    [HideInInspector] public bool hasRPG = false;
+    private bool hasPickup = false;
+    private Target healthScript;
+    
+    [Header("Nitro Boost")]
+    [SerializeField] private Transform nitroCooldownBar;
+    [SerializeField] private GameObject nitroUiImage;
+    [SerializeField] private GameObject nitroVFX;
+    private bool hasSpeedBoost = false;
+    private float nitroTimerNormalized;
+    private float nitroStartTimer;
+    private float nitroCurrentTimer;
+    private bool nitroTimerCountDown = false;
+
+    [Header("Invincible")]
+    [SerializeField] private Transform invincibleCooldownBar;
+    [SerializeField] private GameObject armourUiImage;
+    private bool hasInvincibilityPickup = false;
+    private float invincibleTimerNormalized;
+    private float invincibleStartTimer;
+    private float invincibleCurrentTimer;
+    private bool invincibleTimerCountDown = false;
+
 
     void Start()
     {
         carController = GetComponent<Controller>();
-        //healthScript = GetComponent<Health>();
         healthScript = GetComponent<Target>();
-        go = this.GetComponent<GameObject>();
 
         nitroUiImage.SetActive(false);
         armourUiImage.SetActive(false);
@@ -39,6 +44,9 @@ public class CarPickup : MonoBehaviour
 
         nitroStartTimer = PickupManager.speedBoostTime;
         invincibleStartTimer = PickupManager.InvincibleTime;
+
+        if (nitroVFX != null)
+            nitroVFX.SetActive(false);
     }
 
     private void Update()
@@ -46,7 +54,6 @@ public class CarPickup : MonoBehaviour
         //Debug.Log(PickupManager.speedBoostTime);
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
-            shooter = GetComponent<Controller>().Shooter;
             //if (!shooter.GetComponent<Shooter>().RPG)
             //hasRPG = false;
 
@@ -88,33 +95,6 @@ public class CarPickup : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        /*
-        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
-        {
-            //if the player picked up a speed pickup
-            if (other.CompareTag("SpeedPickUp") && !hasPickup)
-            {
-                hasSpeedBoost = true;
-                nitroCurrentTimer = nitroStartTimer;
-                nitroUiImage.SetActive(true);
-                nitroCooldownBar.localScale = new Vector3(1f, 1f, 1f);
-            }
-
-            //if the player picked up the invincible pickup
-            if (other.CompareTag("InvinciblePickUp") && !hasPickup)
-            {
-                hasInvincibilityPickup = true;
-                invincibleCurrentTimer = invincibleStartTimer;
-                armourUiImage.SetActive(true);
-                invincibleCooldownBar.localScale = new Vector3(1f, 1f, 1f);
-            }
-                
-
-            if (other.CompareTag("RPGPickup") && !hasRPG)
-                hasRPG = true;
-        }
-        */
-
         if(pv.IsMine)
         {
             //if the player picked up a speed pickup
@@ -189,12 +169,16 @@ public class CarPickup : MonoBehaviour
         //nitroUiImage.SetActive(true);
         carController.boost = true;
         nitroTimerCountDown = true;
+        if (nitroVFX != null)
+            nitroVFX.SetActive(true);
 
         yield return new WaitForSeconds(time);
 
         carController.boost = false;
         nitroUiImage.SetActive(false);
         nitroTimerCountDown = false;
+        if (nitroVFX != null)
+            nitroVFX.SetActive(false);
     }
     #endregion
 }

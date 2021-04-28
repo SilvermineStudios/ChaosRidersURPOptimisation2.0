@@ -29,6 +29,10 @@ public class Target : MonoBehaviour
     [SerializeField] private float deathTimer = 3;
     [SerializeField] private float timeSinceDeath;
 
+    //used for stopping the target from being hit multiple times by 1 mine
+    [HideInInspector] public bool hitByMine = false;
+    private bool resettingHitByMine = false;
+
     public bool isDead { get { return dead; } private set { isDead = dead; } }
 
     private void Awake()
@@ -55,11 +59,25 @@ public class Target : MonoBehaviour
         pv.RPC("SetHealth", RpcTarget.All);
 
         DeathStuff();
+
+        if(hitByMine && !resettingHitByMine)
+        {
+            StartCoroutine(ResetMineBool());
+            resettingHitByMine = true;
+        }
+            
+    }
+
+    private IEnumerator ResetMineBool()
+    {
+        yield return new WaitForSeconds(1);
+        resettingHitByMine = false;
+        hitByMine = false;
     }
 
     private void SetHealthBarUiSize(float sizeNormalized)
     {
-        Debug.Log("Moving Player Health to: " + sizeNormalized);
+        //Debug.Log("Moving Player Health to: " + sizeNormalized);
         healthBarUi.localScale = new Vector3(1f, sizeNormalized);
     }
 
@@ -108,7 +126,7 @@ public class Target : MonoBehaviour
     {
         if (!invincible)
         {
-            Debug.Log("Taking Damage");
+            Debug.Log("Taking " + amount + " Damage");
             //if the amount of damage being dealt is more than the health set the amount of damage = to the health
             if (amount > health)
                 amount = health;
@@ -132,9 +150,6 @@ public class Target : MonoBehaviour
         deathinstance = PhotonNetwork.Instantiate("DeathExplosion", this.transform.position, this.transform.rotation, 0);
     }
 
-    
-
-    
 
     private void OnCollisionEnter(Collision collision)
     {
