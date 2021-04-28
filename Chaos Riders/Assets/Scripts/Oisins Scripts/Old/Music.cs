@@ -10,31 +10,27 @@ public class Music : MonoBehaviour
     FMOD.Studio.EventInstance track1;
     FMOD.Studio.EventInstance track2;
     FMOD.Studio.EventInstance track3;
-    FMOD.Studio.EventInstance track4;
 
     public string track1Ref = "event:/Music/MainTrack";
     public string track2Ref = "event:/Music/MainTrack 2";
     public string track3Ref = "event:/Music/MainTrack 3";
-    public string track4Ref = "event:/Music/MainTrack 4";
 
     public bool track1paused = false;
     public bool track2paused = false;
     public bool track3paused = false;
-    public bool track4paused = false;
 
     private void Start()
     {
         track1 = FMODUnity.RuntimeManager.CreateInstance(track1Ref);
         track2 = FMODUnity.RuntimeManager.CreateInstance(track2Ref);
         track3 = FMODUnity.RuntimeManager.CreateInstance(track3Ref);
-        track4 = FMODUnity.RuntimeManager.CreateInstance(track4Ref);
 
         PickRandomTrack();
     }
 
     public void PickRandomTrack()
     {
-        int randomNumber = Random.Range(1, 5);
+        int randomNumber = Random.Range(1, 4);
 
         if (randomNumber == 1)
         {
@@ -54,11 +50,6 @@ public class Music : MonoBehaviour
             trackSelector.value = 2;
         }
 
-        if (randomNumber == 4)
-        {
-            PlayTrack4();
-            trackSelector.value = 3;
-        }
     }
 
     public void PlayMusic(int val)
@@ -75,9 +66,6 @@ public class Music : MonoBehaviour
         if (val == 2)
             PlayTrack3();
 
-        //track 4
-        if (val == 3)
-            PlayTrack4();
     }
 
     void PlayTrack1()
@@ -85,12 +73,10 @@ public class Music : MonoBehaviour
         track1.setPaused(false);
         track2.setPaused(true);
         track3.setPaused(true);
-        track4.setPaused(true);
 
         track1paused = false;
         track2paused = true;
         track3paused = true;
-        track4paused = true;
 
         track1.start();
     }
@@ -100,12 +86,10 @@ public class Music : MonoBehaviour
         track1.setPaused(true);
         track2.setPaused(false);
         track3.setPaused(true);
-        track4.setPaused(true);
 
         track1paused = true;
         track2paused = false;
-        track3paused = true;
-        track4paused = true;
+        track3paused = true;;
 
         track2.start();
     }
@@ -115,28 +99,13 @@ public class Music : MonoBehaviour
         track1.setPaused(true);
         track2.setPaused(true);
         track3.setPaused(false);
-        track4.setPaused(true);
 
         track1paused = true;
         track2paused = true;
         track3paused = false;
-        track4paused = true;
 
         track3.start();
     }
 
-    void PlayTrack4()
-    {
-        track1.setPaused(true);
-        track2.setPaused(true);
-        track3.setPaused(true);
-        track4.setPaused(false);
 
-        track1paused = true;
-        track2paused = true;
-        track3paused = true;
-        track4paused = false;
-
-        track4.start();
-    }
 }

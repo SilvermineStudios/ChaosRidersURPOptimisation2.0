@@ -139,6 +139,7 @@ public class Shooter : MonoBehaviourPun
 
     #region Sound
     FMOD.Studio.EventInstance minigunLoopSoundInstance;
+    FMOD.Studio.EventInstance rifleSoundInstance;
     string sound;
     string bulletWhistle;
     string hitmarkerSound;
@@ -183,6 +184,7 @@ public class Shooter : MonoBehaviourPun
         VFXBulletGo.SetActive(false);
         muzzleFlash.SetActive(false);
         minigunLoopSoundInstance = FMODUnity.RuntimeManager.CreateInstance("event:/GunFX/Minigun/MinigunLoop");
+        rifleSoundInstance = FMODUnity.RuntimeManager.CreateInstance("event:/GunFX/Rifle/RifleShot2");
         //FMODUnity.RuntimeManager.AttachInstanceToGameObject(minigunLoopSoundInstance, transform, rb);
     }
 
@@ -424,7 +426,7 @@ public class Shooter : MonoBehaviourPun
             //Wait for weapons Free
             if (!MasterClientRaceStart.Instance.weaponsFree) { return; }
 
-            
+            //Error
             // Weapon Specific functions <-------------------------------------------------------------- MINIGUN DECORATIONS / AUDIO
             if (shooterClass == ShooterClass.minigun)
             {
@@ -457,12 +459,17 @@ public class Shooter : MonoBehaviourPun
                     }
                 }
             }
-            //---------------------------------------------------------------------------------------------------------------------
 
-
-            if (shooterClass == ShooterClass.rifle)
+            //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+            //Shot Rifle
+            if (shooterClass == ShooterClass.rifle && amountOfAmmoForCooldownBar > weaponAmmoUsage && !RPG && Time.time >= fireCooldown + fireRate)
             {
-               
+                if (Input.GetKeyDown(shootButton))
+                {
+                    //Debug.Log("You Shot");
+                    FMODUnity.RuntimeManager.AttachInstanceToGameObject(rifleSoundInstance, transform, rb);
+                    rifleSoundInstance.start();
+                }
             }
 
             //if you are shooting and have ammo 
@@ -729,6 +736,7 @@ public class Shooter : MonoBehaviourPun
 
         foreach (RaycastHit hit in hits)
         {
+            //Explosive Barrel
             if(hit.transform.gameObject.tag == "Explosive Barrel")
             {
                 Debug.Log("You Shot an explosive barrel");
@@ -739,8 +747,7 @@ public class Shooter : MonoBehaviourPun
                 FMODUnity.RuntimeManager.PlayOneShot(hitmarkerSound);
             }
 
-
-
+            //Ai car and player car
             if (hit.transform.gameObject != car && (hit.transform.gameObject.tag == "Player" || hit.transform.gameObject.tag == "car"))
             {
                 Target target = hit.transform.GetComponent<Target>();
