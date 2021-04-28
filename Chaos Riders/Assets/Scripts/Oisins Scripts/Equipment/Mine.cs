@@ -23,46 +23,53 @@ public class Mine : MonoBehaviour
     void OfflineExplode()
     {
         Instantiate(explosionEffect, transform.position, transform.rotation);
-
         Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
 
         foreach (Collider nearby in colliders)
         {
-            Target health = nearby.GetComponent<Target>();
-            if (health != null)
+            GameObject objectHit = nearby.transform.root.gameObject;
+            Target target = objectHit.GetComponent<Target>();
+
+            if (target != null && !target.hitByMine)
             {
-                health.TakeDamage(damage);
+                target.hitByMine = true;
+                target.TakeDamage(damage);
+                Debug.Log("You hit " + objectHit.name + " which has a target script attached");
             }
         }
         Destroy(gameObject);
-    }
-
-    private void OnTriggerEnter(Collider collision)
-    {
-        if (waitTime <= 0)
-        {
-            pv.RPC("Explode", RpcTarget.All);
-        }
     }
 
     [PunRPC]
     void Explode()
     {
         PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "explosionEffect"), transform.position, transform.rotation, 0);
-
         Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
 
         foreach (Collider nearby in colliders)
         {
-            Target health = nearby.transform.root.GetComponent<Target>();
-            if (health != null)
+            GameObject objectHit = nearby.transform.root.gameObject;
+            Target target = objectHit.GetComponent<Target>();
+
+            if (target != null && !target.hitByMine)
             {
-                health.TakeDamage(damage);
-                Debug.Log("Target");
+                target.hitByMine = true;
+                target.TakeDamage(damage);
+                Debug.Log("You hit " + objectHit.name + " which has a target script attached");
             }
         }
-
         Destroy(gameObject);
     }
 
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (waitTime <= 0)
+        {
+            if (!IsThisMultiplayer.Instance.multiplayer)
+                OfflineExplode();
+            else
+                pv.RPC("Explode", RpcTarget.All);
+        }
+    }
 }
