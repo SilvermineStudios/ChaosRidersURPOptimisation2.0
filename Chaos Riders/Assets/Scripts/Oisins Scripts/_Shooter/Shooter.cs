@@ -102,6 +102,13 @@ public class Shooter : MonoBehaviourPun
     private float ammoNormalized; //normalized the ammo value to be between 0 and 1 for the cooldown bar scale
     #endregion
 
+    #region RifleSpecific
+    [SerializeField] GameObject scopeOverlay;
+    [SerializeField] GameObject UI;
+    bool isScoped;
+
+    #endregion
+
     #region BulletTrails
     [Header("Bullet Trails")]
     [SerializeField] GameObject trail;
@@ -350,7 +357,7 @@ public class Shooter : MonoBehaviourPun
         {
             //Change Weapons
             {
-                if (Input.GetButtonDown("Y"))
+                if (Input.GetButtonDown("Y") && !isScoped)
                 {
                     if (shooterClass == ShooterClass.minigun)
                     {
@@ -368,13 +375,13 @@ public class Shooter : MonoBehaviourPun
                 else
                 {
                     mouseScrollFactor = Input.mouseScrollDelta.y;
-                    if (mouseScrollFactor < 0 && shooterClass == ShooterClass.minigun)
+                    if (mouseScrollFactor < 0 && shooterClass == ShooterClass.minigun && !isScoped)
                     {
                         SetupGun(ShooterClass.rifle);
                         shooterClass = ShooterClass.rifle;
                         currentCrosshairSpread = 0;
                     }
-                    else if (mouseScrollFactor > 0 && shooterClass == ShooterClass.rifle)
+                    else if (mouseScrollFactor > 0 && shooterClass == ShooterClass.rifle && !isScoped)
                     {
                         SetupGun(ShooterClass.minigun);
                         shooterClass = ShooterClass.minigun;
@@ -462,7 +469,22 @@ public class Shooter : MonoBehaviourPun
 
             if (shooterClass == ShooterClass.rifle)
             {
-               
+                if(Input.GetAxis("LT") > 0 || Input.GetKey(KeyCode.Mouse1))
+                {
+                    scopeOverlay.SetActive(true);
+                    RifleHolder.SetActive(false);
+                    UI.SetActive(false);
+                    isScoped = true;
+                    cineCamera.m_Lens.FieldOfView = 20;
+                }
+                else
+                {
+                    scopeOverlay.SetActive(false);
+                    RifleHolder.SetActive(true);
+                    UI.SetActive(true);
+                    isScoped = false;
+                    cineCamera.m_Lens.FieldOfView = 60;
+                }
             }
 
             //if you are shooting and have ammo 
@@ -509,7 +531,7 @@ public class Shooter : MonoBehaviourPun
                 {
                     rpgGo.SetActive(true);
                 }
-                if (shootButtonHeld && amountOfAmmoForRPG > 0)
+                if (shootButtonHeld && amountOfAmmoForRPG > 0 && Time.time >= fireCooldown + 1)
                 {
                     amountOfAmmoForRPG--;
                     if (IsThisMultiplayer.Instance.multiplayer)
@@ -520,6 +542,7 @@ public class Shooter : MonoBehaviourPun
                     {
                         OfflineShootRPG();
                     }
+                    fireCooldown = Time.time;
                 }
                 if (amountOfAmmoForRPG <= 0)
                 {

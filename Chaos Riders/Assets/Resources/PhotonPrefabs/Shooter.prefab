@@ -11528,6 +11528,7 @@ GameObject:
   - component: {fileID: 7634238391841590507}
   - component: {fileID: 7634238391841590504}
   - component: {fileID: 7634238391841590505}
+  - component: {fileID: 963269436302509076}
   m_Layer: 10
   m_Name: 'Minimap Cam '
   m_TagString: Untagged
@@ -11585,8 +11586,8 @@ Camera:
   m_TargetTexture: {fileID: 8400000, guid: 367350adc6cb56f4f9fd953d2b571118, type: 2}
   m_TargetDisplay: 0
   m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
+  m_HDR: 0
+  m_AllowMSAA: 0
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
@@ -11605,6 +11606,111 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 7634238392847830459}
+--- !u!114 &963269436302509076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7634238391841590510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23c1ce4fb46143f46bc5cb5224c934f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 7
+  m_ObsoleteRenderingPath: 0
+  m_ObsoleteFrameSettings:
+    overrides: 0
+    enableShadow: 0
+    enableContactShadows: 0
+    enableShadowMask: 0
+    enableSSR: 0
+    enableSSAO: 0
+    enableSubsurfaceScattering: 0
+    enableTransmission: 0
+    enableAtmosphericScattering: 0
+    enableVolumetrics: 0
+    enableReprojectionForVolumetrics: 0
+    enableLightLayers: 0
+    enableExposureControl: 1
+    diffuseGlobalDimmer: 0
+    specularGlobalDimmer: 0
+    shaderLitMode: 0
+    enableDepthPrepassWithDeferredRendering: 0
+    enableTransparentPrepass: 0
+    enableMotionVectors: 0
+    enableObjectMotionVectors: 0
+    enableDecals: 0
+    enableRoughRefraction: 0
+    enableTransparentPostpass: 0
+    enableDistortion: 0
+    enablePostprocess: 0
+    enableOpaqueObjects: 0
+    enableTransparentObjects: 0
+    enableRealtimePlanarReflection: 0
+    enableMSAA: 0
+    enableAsyncCompute: 0
+    runLightListAsync: 0
+    runSSRAsync: 0
+    runSSAOAsync: 0
+    runContactShadowsAsync: 0
+    runVolumeVoxelizationAsync: 0
+    lightLoopSettings:
+      overrides: 0
+      enableDeferredTileAndCluster: 0
+      enableComputeLightEvaluation: 0
+      enableComputeLightVariants: 0
+      enableComputeMaterialVariants: 0
+      enableFptlForForwardOpaque: 0
+      enableBigTilePrepass: 0
+      isFptlEnabled: 0
+  clearColorMode: 0
+  backgroundColorHDR: {r: 0.025, g: 0.07, b: 0.19, a: 0}
+  clearDepth: 1
+  volumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  volumeAnchorOverride: {fileID: 0}
+  antialiasing: 0
+  SMAAQuality: 2
+  dithering: 0
+  stopNaNs: 0
+  taaSharpenStrength: 0.6
+  physicalParameters:
+    m_Iso: 200
+    m_ShutterSpeed: 0.005
+    m_Aperture: 16
+    m_BladeCount: 5
+    m_Curvature: {x: 2, y: 11}
+    m_BarrelClipping: 0.25
+    m_Anamorphism: 0
+  flipYMode: 0
+  xrRendering: 1
+  fullscreenPassthrough: 0
+  allowDynamicResolution: 0
+  customRenderingSettings: 0
+  invertFaceCulling: 0
+  probeLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  hasPersistentHistory: 0
+  m_RenderingPathCustomFrameSettings:
+    bitDatas:
+      data1: 70300024700749
+      data2: 4539628425463136256
+    lodBias: 1
+    lodBiasMode: 0
+    lodBiasQualityLevel: 0
+    maximumLODLevel: 0
+    maximumLODLevelMode: 0
+    maximumLODLevelQualityLevel: 0
+    materialQuality: 0
+  renderingPathCustomFrameSettingsOverrideMask:
+    mask:
+      data1: 0
+      data2: 0
+  defaultFrameSettings: 0
 --- !u!1 &7634238391890789603
 GameObject:
   m_ObjectHideFlags: 0
@@ -19055,7 +19161,7 @@ MonoBehaviour:
   RifleIcon: {fileID: 8152229863375869798}
   everythingButIgnoreBullets:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 122679
   muzzleFlash: {fileID: 7634238392497245262}
   connectCar: 0
   RPG: 0
@@ -19074,6 +19180,7 @@ MonoBehaviour:
   amountOfAmmoForRPG: 3
   minigunData: {fileID: 11400000, guid: e85f6dc064f0ed4429cbc0d3bcac5507, type: 2}
   rifleData: {fileID: 11400000, guid: 7191b86a9eae21e479b244f69ddb8c87, type: 2}
+  scopeOverlay: {fileID: 8779312922377608560}
   trail: {fileID: 811231400246012879, guid: d9cb9feb506fa704e8572bb98f0ebff4, type: 3}
   impactEffect: {fileID: 7938478309457529535, guid: 0c9781b5140952b42ae2c6af77491dfc, type: 3}
   impactEffectHolder: {fileID: 322621240}
@@ -19174,6 +19281,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuPanels: []
+  gameControlsPanel: {fileID: 0}
   paused: 0
 --- !u!65 &7634238392847830454
 BoxCollider:
@@ -19211,6 +19319,7 @@ MonoBehaviour:
   youWinText: {fileID: 7634238392000496514}
   canCollect: 1
   Music: {fileID: 2580209905017675129}
+  isAI: 0
 --- !u!114 &7634238392847830458
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19280,12 +19389,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d3ad4603bb1cd24781d8eec18a58bc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBarAboveCar: {fileID: 0}
+  CarHealth: {fileID: 0}
   myHealthBarUi: {fileID: 8713241798449801682}
-  health: 0
-  startHealth: 0
-  healthNormalized: 0
-  setStartHealth: 0
 --- !u!114 &757208674
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20842,6 +20947,7 @@ RectTransform:
   - {fileID: 1801839464}
   - {fileID: 1611547243654007998}
   - {fileID: 1617670277}
+  - {fileID: 2408927169888526291}
   m_Father: {fileID: 7634238392847830459}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -20888,7 +20994,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -22142,6 +22248,81 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 39ffebc3db2074e4aa4c945a253aa0a2, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!1 &8779312922377608560
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2408927169888526291}
+  - component: {fileID: 3491979421085163627}
+  - component: {fileID: 7794631782227677855}
+  m_Layer: 5
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &2408927169888526291
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8779312922377608560}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7634238393232956385}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 2100, y: 968}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &3491979421085163627
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8779312922377608560}
+  m_CullTransparentMesh: 0
+--- !u!114 &7794631782227677855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8779312922377608560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: c0f8d258e44805841b381b5380cfbdc6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
