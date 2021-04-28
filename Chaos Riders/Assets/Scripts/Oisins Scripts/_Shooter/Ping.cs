@@ -17,6 +17,7 @@ public class Ping : MonoBehaviour
     PhotonView pv;
     PhotonView driverPv;
     bool isPing;
+    private string[] Controllers;
 
     void Start()
     {
@@ -26,7 +27,15 @@ public class Ping : MonoBehaviour
 
     private void Update()
     {
-        isPing = Input.GetKey(pingButton);
+
+        if (Input.GetButtonDown("A") || Input.GetKey(pingButton))
+        {
+            isPing = true;
+        }
+        else
+        {
+            isPing = false;   
+        }
     }
 
     void FixedUpdate()
