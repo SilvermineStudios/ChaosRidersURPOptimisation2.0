@@ -33,13 +33,6 @@ public class Mine : MonoBehaviour
             {
                 health.TakeDamage(damage);
             }
-
-            //AIHealth aiHealth = GetComponent<AIHealth>();
-            Target aiHealth = GetComponent<Target>();
-            if (aiHealth != null)
-            {
-                aiHealth.TakeDamage(damage);
-            }
         }
         Destroy(gameObject);
     }
@@ -67,16 +60,6 @@ public class Mine : MonoBehaviour
                 health.TakeDamage(damage);
                 Debug.Log("Target");
             }
-
-            /*
-            //AIHealth aiHealth = GetComponent<AIHealth>();
-            Target aiHealth = GetComponent<Target>();
-            if (aiHealth != null)
-            {
-                aiHealth.TakeDamage(damage);
-                Debug.Log("AITarget");
-            }
-            */
         }
 
         Destroy(gameObject);
