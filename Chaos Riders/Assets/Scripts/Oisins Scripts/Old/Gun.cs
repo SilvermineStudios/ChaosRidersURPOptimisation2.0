@@ -12,7 +12,8 @@ public class Gun : MonoBehaviour
     public PhotonView pv;
     private AudioSource speaker;
     public AudioClip gunShot;
-    public Health healthScript;
+    //public Health healthScript;
+    public Target healthScript;
 
     private void Start()
     {

@@ -350,7 +350,7 @@ public class Shooter : MonoBehaviourPun
         {
             //Change Weapons
             {
-                if (Controllers != null && Input.GetButtonDown("Y"))
+                if (Input.GetButtonDown("Y"))
                 {
                     if (shooterClass == ShooterClass.minigun)
                     {

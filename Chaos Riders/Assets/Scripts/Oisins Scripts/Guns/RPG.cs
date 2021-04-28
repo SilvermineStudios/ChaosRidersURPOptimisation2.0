@@ -26,11 +26,14 @@ public class RPG : MonoBehaviour
                 health.TakeDamage(damage);
             }
 
-            AIHealth aiHealth = GetComponent<AIHealth>();
+            /*
+            //AIHealth aiHealth = GetComponent<AIHealth>();
+            Target aiHealth = GetComponent<Target>();
             if (aiHealth != null)
             {
                 aiHealth.TakeDamage(damage);
             }
+            */
         }
         Destroy(gameObject);
     }
@@ -63,11 +66,13 @@ public class RPG : MonoBehaviour
                 health.TakeDamage(damage);
             }
 
+            /*
             AIHealth aiHealth = GetComponent<AIHealth>();
             if (aiHealth != null)
             {
                 aiHealth.TakeDamage(damage);
             }
+            */
         }
 
         Destroy(gameObject);

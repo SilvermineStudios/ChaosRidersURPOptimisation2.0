@@ -28,11 +28,13 @@ public class ShredUltimate : MonoBehaviour
                 health.TakeDamage(damage);
             }
 
+            /*
             AIHealth aiHealth = GetComponent<AIHealth>();
             if (aiHealth != null)
             {
                 aiHealth.TakeDamage(damage);
             }
+            */
         }
         
     }
