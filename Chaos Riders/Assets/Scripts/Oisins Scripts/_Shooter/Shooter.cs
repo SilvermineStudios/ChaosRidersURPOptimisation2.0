@@ -102,6 +102,13 @@ public class Shooter : MonoBehaviourPun
     private float ammoNormalized; //normalized the ammo value to be between 0 and 1 for the cooldown bar scale
     #endregion
 
+    #region RifleSpecific
+    [SerializeField] GameObject scopeOverlay;
+    [SerializeField] GameObject UI;
+    bool isScoped;
+
+    #endregion
+
     #region BulletTrails
     [Header("Bullet Trails")]
     [SerializeField] GameObject trail;
@@ -139,7 +146,6 @@ public class Shooter : MonoBehaviourPun
 
     #region Sound
     FMOD.Studio.EventInstance minigunLoopSoundInstance;
-    FMOD.Studio.EventInstance rifleSoundInstance;
     string sound;
     string bulletWhistle;
     string hitmarkerSound;
@@ -184,7 +190,6 @@ public class Shooter : MonoBehaviourPun
         VFXBulletGo.SetActive(false);
         muzzleFlash.SetActive(false);
         minigunLoopSoundInstance = FMODUnity.RuntimeManager.CreateInstance("event:/GunFX/Minigun/MinigunLoop");
-        rifleSoundInstance = FMODUnity.RuntimeManager.CreateInstance("event:/GunFX/Rifle/RifleShot2");
         //FMODUnity.RuntimeManager.AttachInstanceToGameObject(minigunLoopSoundInstance, transform, rb);
     }
 
@@ -352,7 +357,7 @@ public class Shooter : MonoBehaviourPun
         {
             //Change Weapons
             {
-                if (Input.GetButtonDown("Y"))
+                if (Input.GetButtonDown("Y") && !isScoped)
                 {
                     if (shooterClass == ShooterClass.minigun)
                     {
@@ -370,13 +375,13 @@ public class Shooter : MonoBehaviourPun
                 else
                 {
                     mouseScrollFactor = Input.mouseScrollDelta.y;
-                    if (mouseScrollFactor < 0 && shooterClass == ShooterClass.minigun)
+                    if (mouseScrollFactor < 0 && shooterClass == ShooterClass.minigun && !isScoped)
                     {
                         SetupGun(ShooterClass.rifle);
                         shooterClass = ShooterClass.rifle;
                         currentCrosshairSpread = 0;
                     }
-                    else if (mouseScrollFactor > 0 && shooterClass == ShooterClass.rifle)
+                    else if (mouseScrollFactor > 0 && shooterClass == ShooterClass.rifle && !isScoped)
                     {
                         SetupGun(ShooterClass.minigun);
                         shooterClass = ShooterClass.minigun;
@@ -426,7 +431,7 @@ public class Shooter : MonoBehaviourPun
             //Wait for weapons Free
             if (!MasterClientRaceStart.Instance.weaponsFree) { return; }
 
-            //Error
+            
             // Weapon Specific functions <-------------------------------------------------------------- MINIGUN DECORATIONS / AUDIO
             if (shooterClass == ShooterClass.minigun)
             {
@@ -459,16 +464,26 @@ public class Shooter : MonoBehaviourPun
                     }
                 }
             }
+            //---------------------------------------------------------------------------------------------------------------------
 
-            //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-            //Shot Rifle
-            if (shooterClass == ShooterClass.rifle && amountOfAmmoForCooldownBar > weaponAmmoUsage && !RPG && Time.time >= fireCooldown + fireRate)
+
+            if (shooterClass == ShooterClass.rifle)
             {
-                if (Input.GetKeyDown(shootButton))
+                if(Input.GetAxis("LT") > 0 || Input.GetKey(KeyCode.Mouse1))
                 {
-                    //Debug.Log("You Shot");
-                    FMODUnity.RuntimeManager.AttachInstanceToGameObject(rifleSoundInstance, transform, rb);
-                    rifleSoundInstance.start();
+                    scopeOverlay.SetActive(true);
+                    RifleHolder.SetActive(false);
+                    UI.SetActive(false);
+                    isScoped = true;
+                    cineCamera.m_Lens.FieldOfView = 20;
+                }
+                else
+                {
+                    scopeOverlay.SetActive(false);
+                    RifleHolder.SetActive(true);
+                    UI.SetActive(true);
+                    isScoped = false;
+                    cineCamera.m_Lens.FieldOfView = 60;
                 }
             }
 
@@ -516,7 +531,7 @@ public class Shooter : MonoBehaviourPun
                 {
                     rpgGo.SetActive(true);
                 }
-                if (shootButtonHeld && amountOfAmmoForRPG > 0)
+                if (shootButtonHeld && amountOfAmmoForRPG > 0 && Time.time >= fireCooldown + 1)
                 {
                     amountOfAmmoForRPG--;
                     if (IsThisMultiplayer.Instance.multiplayer)
@@ -527,6 +542,7 @@ public class Shooter : MonoBehaviourPun
                     {
                         OfflineShootRPG();
                     }
+                    fireCooldown = Time.time;
                 }
                 if (amountOfAmmoForRPG <= 0)
                 {
@@ -736,7 +752,6 @@ public class Shooter : MonoBehaviourPun
 
         foreach (RaycastHit hit in hits)
         {
-            //Explosive Barrel
             if(hit.transform.gameObject.tag == "Explosive Barrel")
             {
                 Debug.Log("You Shot an explosive barrel");
@@ -747,7 +762,8 @@ public class Shooter : MonoBehaviourPun
                 FMODUnity.RuntimeManager.PlayOneShot(hitmarkerSound);
             }
 
-            //Ai car and player car
+
+
             if (hit.transform.gameObject != car && (hit.transform.gameObject.tag == "Player" || hit.transform.gameObject.tag == "car"))
             {
                 Target target = hit.transform.GetComponent<Target>();
