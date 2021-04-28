@@ -1,87 +1,140 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using Photon.Pun;
 
 public class Target : MonoBehaviour
 {
-    [SerializeField] private bool onlineCar = true;
-
+    [Header("General")]
     [SerializeField] private bool ai = false;
     public bool invincible = false;
-    private AIHealth aiHealthScript;
-    private Health healthScript;
-    private OfflineHealth offlineHealthScript;
+    private PhotonView pv;
 
+
+    [Header("Health Stuff")]
     public float health;
+    public Transform healthBarUi;
+    public GameObject myHealthBar;
+    [HideInInspector] public float startHealth;
+    [HideInInspector] public float healthNormalized;
+    private Slider healthbarSlider;
+    private GameObject deathinstance;
 
-    private float bladeTrapDamage = 2f;
+    
+    [Header("Death Stuff")]
+    public bool dead;
+    public bool respawning;
+    [SerializeField] private float deathExplosionHeight = 3f;
+    [SerializeField] private float deathTimer = 3;
+    [SerializeField] private float timeSinceDeath;
+
+    public bool isDead { get { return dead; } private set { isDead = dead; } }
 
     private void Awake()
     {
-        if(ai)
-        {
-            onlineCar = false;
-        }
+        pv = GetComponent<PhotonView>();
+        startHealth = health;
+        healthbarSlider = myHealthBar.GetComponentInChildren<Slider>();
     }
 
     void Start()
     {
-        if (ai)
-            aiHealthScript = GetComponent<AIHealth>();
-        
-        if(!ai && onlineCar)
-            healthScript = GetComponent<Health>();
-
-        if (!ai && !onlineCar)
-            offlineHealthScript = GetComponent<OfflineHealth>();
+        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer && !ai || !IsThisMultiplayer.Instance.multiplayer)
+            myHealthBar.SetActive(false);
     }
 
     void Update()
     {
-        if (ai)
+        if (health < 0)
+            health = 0;
+
+        healthNormalized = (health / startHealth);
+        if(!ai)
+            SetHealthBarUiSize(healthNormalized);
+        pv.RPC("SetHealth", RpcTarget.All);
+
+        DeathStuff();
+    }
+
+    private void SetHealthBarUiSize(float sizeNormalized)
+    {
+        Debug.Log("Moving Player Health to: " + sizeNormalized);
+        healthBarUi.localScale = new Vector3(1f, sizeNormalized);
+    }
+
+    private void DeathStuff()
+    {
+        if (health <= 0 && !dead)
+            dead = true;
+
+        if (dead && !respawning)
         {
-            health = aiHealthScript.health;
-            if (health < 0)
-                health = 0;
+            pv.RPC("Die", RpcTarget.All);
+            respawning = true;
         }
-        if (!ai && onlineCar)
+
+        if (deathinstance != null)
         {
-            health = healthScript.health;
-            if (health < 0)
-                health = 0;
+            float y = this.transform.position.y + deathExplosionHeight;
+            Vector3 pos = new Vector3(this.transform.position.x, y, this.transform.position.z);
+            deathinstance.transform.position = pos;
+            deathinstance.transform.rotation = this.transform.rotation;
         }
-        if (!ai && !onlineCar)
+
+        if (respawning)
         {
-            health = offlineHealthScript.health;
-            if (health < 0)
-                health = 0;
+            if (timeSinceDeath > deathTimer)
+            {
+                dead = false;
+                health = startHealth;
+                Respawn();
+                timeSinceDeath = 0;
+            }
+            else
+            {
+                timeSinceDeath += Time.deltaTime;
+            }
         }
+    }
+
+    void Respawn()
+    {
+        Debug.Log("TURNED OFF REPSPAWN WHEN DEAD");
+        //GetComponent<Checkpoint>().ResetPos();
     }
 
     public void TakeDamage(float amount)
     {
-        //if the amount of damage being dealt is more than the health set the amount of damage = to the health
-        if (amount > health)
-            amount = health;
-
-        if (health > 0)
+        if (!invincible)
         {
-            if (ai && !invincible)
-            {
-                aiHealthScript.health -= amount;
-            }
+            Debug.Log("Taking Damage");
+            //if the amount of damage being dealt is more than the health set the amount of damage = to the health
+            if (amount > health)
+                amount = health;
 
-            if (!ai && !invincible && onlineCar)
-            {
-                healthScript.health -= amount;
-            }
-
-            if (!ai && !invincible && !onlineCar)
-            {
-                offlineHealthScript.health -= amount;
-            }
+            health -= amount;
         }
     }
+
+
+    [PunRPC]
+    void SetHealth()
+    {
+        healthbarSlider.value = healthNormalized;
+    }
+
+    [PunRPC]
+    void Die()
+    {
+        //deathParticles.SetActive(true);
+        StartCoroutine(DeathCourotine(deathTimer));
+        deathinstance = PhotonNetwork.Instantiate("DeathExplosion", this.transform.position, this.transform.rotation, 0);
+    }
+
+    
+
+    
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -99,5 +152,12 @@ public class Target : MonoBehaviour
         {
             TakeDamage(TrapManager.BladeTrapDamage);
         }
+    }
+
+    private IEnumerator DeathCourotine(float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        respawning = false;
     }
 }

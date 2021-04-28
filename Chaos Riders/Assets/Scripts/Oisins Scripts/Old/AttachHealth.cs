@@ -9,11 +9,13 @@ public class AttachHealth : MonoBehaviour
     private GameObject shooter;
     private bool canConnect = true;
     [SerializeField] private bool hasShooter = false;
-    Health healthScript;
+    //Health healthScript;
+    Target healthScript;
 
     private void Start()
     {
-        healthScript = GetComponent<Health>();
+        //healthScript = GetComponent<Health>();
+        healthScript = GetComponent<Target>();
     }
 
 
