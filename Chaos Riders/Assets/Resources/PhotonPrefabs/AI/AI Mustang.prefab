@@ -8356,7 +8356,6 @@ GameObject:
   - component: {fileID: 4477362338368450644}
   - component: {fileID: 3718443551745826043}
   - component: {fileID: 2587023993015831525}
-  - component: {fileID: 8296368093936665066}
   - component: {fileID: 1166782067}
   - component: {fileID: 976415736}
   - component: {fileID: 604401238}
@@ -8506,26 +8505,6 @@ MonoBehaviour:
   m_SynchronizeAngularVelocity: 1
   m_TeleportEnabled: 0
   m_TeleportIfDistanceGreaterThan: 3
---- !u!114 &8296368093936665066
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1407414512137103672}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: febe6d505073b4a45ac2738d786df0b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myHealthBar: {fileID: 1407414511772850379}
-  health: 200
-  startHealth: 0
-  healthNormalized: 0
-  lastHit: 0
-  isProtected: 0
-  deathParticles: {fileID: 4568921535773460638}
-  dead: 0
 --- !u!114 &1166782067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8538,10 +8517,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd27fdd01875ad84092561a7a6869cf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onlineCar: 0
   ai: 1
   invincible: 0
-  health: 0
+  health: 200
+  healthBarUi: {fileID: 0}
+  myHealthBar: {fileID: 1407414511772850379}
+  startHealth: 0
+  healthNormalized: 0
+  dead: 0
+  respawning: 0
+  deathExplosionHeight: 3
+  deathTimer: 3
+  timeSinceDeath: 0
 --- !u!114 &976415736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9940,11 +9927,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e076683e0305e35498b8e8834978c0fa, type: 3}
---- !u!1 &4568921535773460638 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100006, guid: e076683e0305e35498b8e8834978c0fa, type: 3}
-  m_PrefabInstance: {fileID: 4568921535773494840}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4568921535773889726 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400006, guid: e076683e0305e35498b8e8834978c0fa, type: 3}

@@ -82,6 +82,7 @@ public class Shooter : MonoBehaviourPun
     [SerializeField] private KeyCode shootButton = KeyCode.Mouse0;
     [SerializeField] private KeyCode RPGButton = KeyCode.Tab;
     [SerializeField] private KeyCode changeWeapon = KeyCode.Mouse1;
+    private string[] Controllers;
     #endregion
 
     #region Weapons
@@ -279,12 +280,14 @@ public class Shooter : MonoBehaviourPun
 
     void Update()
     {
+        Controllers = Input.GetJoystickNames();
         //Pause Menu
         if (pauseMenu.paused) { return; }
 
         //Check to see if we're offline, or if we're online check we are only recieveing instructions from the local player
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
+            
             if (connectCar && GetComponentInParent<MoveTurretPosition>() != null)
             {
                 connectCar = false;
@@ -347,20 +350,38 @@ public class Shooter : MonoBehaviourPun
         {
             //Change Weapons
             {
-                mouseScrollFactor = Input.mouseScrollDelta.y;
-                if(mouseScrollFactor < 0 && shooterClass == ShooterClass.minigun)
+                if (Controllers != null && Input.GetButtonDown("Y"))
                 {
-                    SetupGun(ShooterClass.rifle);
-                    shooterClass = ShooterClass.rifle;
-                    currentCrosshairSpread = 0;
+                    if (shooterClass == ShooterClass.minigun)
+                    {
+                        SetupGun(ShooterClass.rifle);
+                        shooterClass = ShooterClass.rifle;
+                        currentCrosshairSpread = 0;
+                    }
+                    else if (shooterClass == ShooterClass.rifle)
+                    {
+                        SetupGun(ShooterClass.minigun);
+                        shooterClass = ShooterClass.minigun;
+                        currentCrosshairSpread = 0;
+                    }
                 }
-                else if(mouseScrollFactor > 0 && shooterClass == ShooterClass.rifle)
+                else
                 {
-                    SetupGun(ShooterClass.minigun);
-                    shooterClass = ShooterClass.minigun;
-                    currentCrosshairSpread = 0;
+                    mouseScrollFactor = Input.mouseScrollDelta.y;
+                    if (mouseScrollFactor < 0 && shooterClass == ShooterClass.minigun)
+                    {
+                        SetupGun(ShooterClass.rifle);
+                        shooterClass = ShooterClass.rifle;
+                        currentCrosshairSpread = 0;
+                    }
+                    else if (mouseScrollFactor > 0 && shooterClass == ShooterClass.rifle)
+                    {
+                        SetupGun(ShooterClass.minigun);
+                        shooterClass = ShooterClass.minigun;
+                        currentCrosshairSpread = 0;
+                    }
+                    mouseScrollFactor = 0;
                 }
-                mouseScrollFactor = 0;
             }
             if (!RPG)
             {
@@ -378,7 +399,7 @@ public class Shooter : MonoBehaviourPun
             if (!MasterClientRaceStart.Instance.weaponsFree) { return; }
             
             //Check to see if shootButton is held down for crosshair
-            if (Input.GetKey(shootButton) && usingAmmo && (pv.IsMine || !IsThisMultiplayer.Instance.multiplayer))
+            if ((Input.GetAxis("RT") > 0 || Input.GetKey(shootButton)) && usingAmmo && (pv.IsMine || !IsThisMultiplayer.Instance.multiplayer))
             {
                 shootButtonHeld = true;
             }
@@ -445,7 +466,7 @@ public class Shooter : MonoBehaviourPun
             }
 
             //if you are shooting and have ammo 
-            if (Input.GetKey(shootButton) && amountOfAmmoForCooldownBar > weaponAmmoUsage && !RPG && Time.time >= fireCooldown + fireRate)
+            if (shootButtonHeld && amountOfAmmoForCooldownBar > weaponAmmoUsage && !RPG && Time.time >= fireCooldown + fireRate)
             {
                 currentlyShooting = true;
                 if (currentBulletSpread < maxBulletDeviation)
@@ -488,7 +509,7 @@ public class Shooter : MonoBehaviourPun
                 {
                     rpgGo.SetActive(true);
                 }
-                if (Input.GetKeyDown(shootButton) && amountOfAmmoForRPG > 0)
+                if (shootButtonHeld && amountOfAmmoForRPG > 0)
                 {
                     amountOfAmmoForRPG--;
                     if (IsThisMultiplayer.Instance.multiplayer)
@@ -522,7 +543,7 @@ public class Shooter : MonoBehaviourPun
         if (!MasterClientRaceStart.Instance.weaponsFree) { return; }
 
         //bulletcasing
-        if (Input.GetKey(shootButton) && amountOfAmmoForCooldownBar > weaponAmmoUsage && !RPG)
+        if (shootButtonHeld && amountOfAmmoForCooldownBar > weaponAmmoUsage && !RPG)
         {
             VFXBulletGo.SetActive(true);
 
@@ -544,10 +565,24 @@ public class Shooter : MonoBehaviourPun
 
     private void FollowMouse()
     {
+
+
+        xAngle += Input.GetAxis("Horizontal") * 2 * horizontalRotationSpeed * Time.deltaTime;
+        //xAngle = Mathf.Clamp(xAngle, 0, 180); //use this if you want to clamp the rotation. second var = min angle, third var = max angle
+
+        xAngle += Input.GetAxis("HorizontalB") * 2 * horizontalRotationSpeed * Time.deltaTime;
+        //xAngle = Mathf.Clamp(xAngle, 0, 180); //use this if you want to clamp the rotation. second var = min angle, third var = max angle
+
         xAngle += Input.GetAxis("Mouse X") * horizontalRotationSpeed * Time.deltaTime;
         //xAngle = Mathf.Clamp(xAngle, 0, 180); //use this if you want to clamp the rotation. second var = min angle, third var = max angle
 
+        yAngle += Input.GetAxis("Vertical") * 2 * verticalRotationSpeed * -Time.deltaTime;
+
+        yAngle += Input.GetAxis("VerticalB") * 2 * verticalRotationSpeed * -Time.deltaTime;
+
         yAngle += Input.GetAxis("Mouse Y") * verticalRotationSpeed * -Time.deltaTime;
+        
+
         yAngle = Mathf.Clamp(yAngle, minRotationHeight, maxRotationHeight); //use this if you want to clamp the rotation. second var = min angle, third var = max angle
 
         gunBarrel.localRotation = Quaternion.Euler(yAngle, xAngle, 0);

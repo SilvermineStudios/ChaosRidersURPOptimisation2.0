@@ -7,7 +7,8 @@ using Photon.Realtime;
 public class CarPickup : MonoBehaviour
 {
     private GameObject go;
-    Health healthScript;
+    //Health healthScript;
+    Target healthScript;
     [SerializeField] private bool hasSpeedBoost = false, hasInvincibilityPickup = false; //<-------------use this bool in target script
     private bool hasPickup = false;
     public bool hasRPG = false;
@@ -27,7 +28,8 @@ public class CarPickup : MonoBehaviour
     void Start()
     {
         carController = GetComponent<Controller>();
-        healthScript = GetComponent<Health>();
+        //healthScript = GetComponent<Health>();
+        healthScript = GetComponent<Target>();
         go = this.GetComponent<GameObject>();
 
         nitroUiImage.SetActive(false);
@@ -54,14 +56,14 @@ public class CarPickup : MonoBehaviour
                 hasPickup = false;
 
             //player can speedboost by pressing the space bar when they have one
-            if (hasSpeedBoost && (Input.GetKeyDown(KeyCode.Space)))// || Input.GetButtonDown("A")))
+            if (hasSpeedBoost && (Input.GetButtonDown("Y")))// || Input.GetButtonDown("A")))
             {
                 hasSpeedBoost = false;
                 StartCoroutine(SpeedBoostTimer(PickupManager.speedBoostTime));
             }
 
             //player can activate invincibility by pressing the space bar when they have one
-            if (hasInvincibilityPickup && (Input.GetKeyDown(KeyCode.Space)))// || Input.GetButtonDown("A")))
+            if (hasInvincibilityPickup && (Input.GetButtonDown("Y")))// || Input.GetButtonDown("A")))
             {
                 
                 StartCoroutine(InvincibleTimer(PickupManager.InvincibleTime));
@@ -164,7 +166,8 @@ public class CarPickup : MonoBehaviour
     {
         FMODUnity.RuntimeManager.PlayOneShotAttached("event:/Pickups/PickupShield", gameObject);
         //armourUiImage.SetActive(true);
-        healthScript.isProtected = true;
+        //healthScript.isProtected = true;
+        healthScript.invincible = true;
         invincibleTimerCountDown = true;
         this.GetComponent<Target>().invincible = true;
         
@@ -172,7 +175,8 @@ public class CarPickup : MonoBehaviour
         yield return new WaitForSeconds(time);
 
         hasInvincibilityPickup = false;
-        healthScript.isProtected = false;
+        //healthScript.isProtected = false;
+        healthScript.invincible = false;
         armourUiImage.SetActive(false);
         invincibleTimerCountDown = false;
         this.GetComponent<Target>().invincible = false;
