@@ -264,10 +264,10 @@ public class Controller : MonoBehaviour
         verticalInput = Input.GetAxis("Vertical");
         if (!braking)
         {
-            brake = Input.GetButton("Brake");
+            brake = Input.GetButton("B");
             //Debug.Log(98989898989898989);
         }
-        if (Input.GetButtonUp("Brake"))
+        if (Input.GetButtonUp("B"))
         {
             brake = false;
             ReleaseBrake();

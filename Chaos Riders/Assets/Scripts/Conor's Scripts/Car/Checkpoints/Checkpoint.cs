@@ -71,11 +71,11 @@ public class Checkpoint : MonoBehaviour
             if (!isAI)
             {
                 OnlyDisplayNextCheckpoint();
-                if (Input.GetKeyDown(resetKey) && resetBar != null)
+                if (Input.GetButtonDown("Select") && resetBar != null)
                 {
                     isResetting = true;
                 }
-                if (Input.GetKeyUp(resetKey))
+                if (Input.GetButtonUp("Select"))
                 {
                     isResetting = false;
 
