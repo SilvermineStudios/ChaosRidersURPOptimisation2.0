@@ -6533,6 +6533,8 @@ MonoBehaviour:
   car: {fileID: 0}
   carHealth: 0
   dead: 0
+  shooting: 0
+  gunShooting: 0
   gunBarrel: {fileID: 6753911985080015449}
   minigunBarrel: {fileID: 3767529869141748556}
   rifleBarrel: {fileID: 4102530861068565298}
@@ -6542,10 +6544,11 @@ MonoBehaviour:
   bulletSpawnPoint: {fileID: 6753911985266905327}
   MinigunHolder: {fileID: 6019231408425968515}
   RifleHolder: {fileID: 4099642483785407078}
+  shotsPerSecond: 25
   everythingButIgnoreBullets:
     serializedVersion: 2
     m_Bits: 57143
-  weaponDamage: 0.2
+  weaponDamage: 10
   range: 70
   turnSpeed: 5
   barrelRotationStartSpeed: 100

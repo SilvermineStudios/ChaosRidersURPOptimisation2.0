@@ -14,6 +14,8 @@ public class AIShooter : MonoBehaviour
     public bool dead = false;
     private Rigidbody carRigidBody;
     private GameObject Camera;
+    [SerializeField] private bool shooting = false;
+    [SerializeField] private bool gunShooting = false;
     [SerializeField] private Transform gunBarrel; //barrel that is going to rotate to face the correct direction
     [SerializeField] private Transform minigunBarrel;
     [SerializeField] private Transform rifleBarrel;
@@ -25,10 +27,11 @@ public class AIShooter : MonoBehaviour
     [SerializeField] GameObject RifleHolder;
     private MoveTurretPosition mtp;
     private bool readyToDestroy = false;
-    private bool shooting = false;
     private Rigidbody rb;
 
     [Header("Gun Variables")]
+    [SerializeField] private float shotsPerSecond = 10f; //the amount of bullets the ai gun can shoot per second
+    private float shootingRepeatSpeed;
     [SerializeField] LayerMask everythingButIgnoreBullets;
     [SerializeField] private float weaponDamage = 0.2f;
     public float range = 30f;
@@ -79,6 +82,9 @@ public class AIShooter : MonoBehaviour
 
     private void Awake()
     {
+        shootingRepeatSpeed = (60 / shotsPerSecond) / 60;
+        Debug.Log("Shooting speed = " + shootingRepeatSpeed);
+
         rb = GetComponent<Rigidbody>();
         Camera = this.gameObject.GetComponentInChildren<AudioListener>().gameObject;
 
@@ -134,7 +140,7 @@ public class AIShooter : MonoBehaviour
         else
             TargetLockOn();
 
-        ShootSound();
+        //ShootSound();
     }
 
 
@@ -144,26 +150,63 @@ public class AIShooter : MonoBehaviour
 
         if (!MasterClientRaceStart.Instance.weaponsFree) { return; }
 
+        //Check If you are shooting or not
+        if (target != null)
+        {
+            float distanceToEnemy = Vector3.Distance(transform.position, target.transform.position); //check the distance of the target from the player
+            if (distanceToEnemy <= range)
+                shooting = true;
+            else
+                shooting = false;
+        }
+        else
+            shooting = false;
+
+
+        //Shooting
+        if (shooting)
+        {
+            ShootingEffectsOn();
+
+            if(!gunShooting)
+            {
+                //InvokeRepeating("Shoot", 0, 1);
+                InvokeRepeating("ShootBullets", 0, shootingRepeatSpeed);
+                gunShooting = true;
+            }
+        }
+        else
+        {
+            ShootingEffectsOff();
+
+            if(gunShooting)
+            {
+                //CancelInvoke("Shoot");
+                CancelInvoke("ShootBullets");
+                gunShooting = false;
+            }
+        }
+
+        /*
         if (target != null && !shooting)
         {
             InvokeRepeating("Shoot", 0, 1);
-            shooting = true;
+            //shooting = true;
         }
         else
         {
             CancelInvoke("Shoot");
             //CancelInvoke("ShootSound");
-            shooting = false;
+            //shooting = false;
         }
 
-        
-
-        if(target == null)
+        if (target == null)
         {
             VFXBulletGo.SetActive(false);
             muzzleFlash.SetActive(false);
             barrelRotationSpeed = barrelRotationStartSpeed;
         }
+        */
     }
 
     private void RotateGunBarrel()
@@ -244,6 +287,97 @@ public class AIShooter : MonoBehaviour
 
 
     #region Shooting
+    void ShootingEffectsOn()
+    {
+        //turn on muzzleflash
+        if (UseMuzzleFlash)
+            muzzleFlash.SetActive(true);
+
+        //turn on bullet casings
+        if (UseBulletCasings)
+            VFXBulletGo.SetActive(true); //have bullet casings flying out
+
+        //turn on shooting sound
+        if(UseShootingSound && !shootingSoundOn)
+        {
+            FMODUnity.RuntimeManager.AttachInstanceToGameObject(minigunLoopSoundInstance, this.transform, rb);
+            minigunLoopSoundInstance.setParameterByName("on", 0);
+            minigunLoopSoundInstance.start();
+            shootingSoundOn = true;
+        }
+
+        //make barrel move faster
+        barrelRotationSpeed = barrelRotationMaxSpeed;
+    }
+
+    void ShootingEffectsOff()
+    {
+        //turn off bullet casings
+        if (UseBulletCasings)
+            VFXBulletGo.SetActive(false);
+
+        //turn off muzzleflash
+        if (UseMuzzleFlash)
+            muzzleFlash.SetActive(false);
+
+        //turn off shooting sound
+        if(UseShootingSound && shootingSoundOn)
+        {
+            minigunLoopSoundInstance.setParameterByName("on", 1);
+            shootingSoundOn = false;
+        }
+            
+        //make gun barrel rotation slow again
+        barrelRotationSpeed = barrelRotationStartSpeed;
+    }
+
+    void ShootBullets()
+    {
+        RaycastHit[] hits;
+        Vector3 direction = bulletSpawnPoint.transform.forward;
+        //Vector3 direction = Vector3.zero;
+
+        hits = Physics.RaycastAll(bulletSpawnPoint.transform.position, direction, range, everythingButIgnoreBullets);
+        Debug.DrawRay(bulletSpawnPoint.transform.position, direction * range, Color.red);
+
+        foreach (RaycastHit hit in hits)
+        {
+            if(hit.transform.gameObject.GetComponent<Target>())
+            {
+                Debug.Log("The AI Gun Hit: " + hit.transform.root.name);
+            }
+            else
+            {
+                //Debug.Log("The AI Gun Missed");
+            }
+
+
+            //dont so anything if what you hit doesnt have a target script on it or if it is your own car
+            if (!hit.transform.gameObject.GetComponent<Target>())
+                return;
+
+
+
+            Target target = hit.transform.GetComponent<Target>();
+
+            if(target.gameObject != car)
+                target.TakeDamage(weaponDamage);
+
+            if (UseImpactEffect)
+            {
+                GameObject impactGo;
+                if (IsThisMultiplayer.Instance.multiplayer)
+                {
+                    impactGo = PhotonNetwork.Instantiate("Impact Particle Effect", hit.point, Quaternion.LookRotation(hit.normal), 0);
+                }
+                else
+                {
+                    impactGo = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+                }
+                impactGo.transform.parent = impactEffectHolder;
+            }
+        }
+    }
 
     void ShootSound()
     {
@@ -284,16 +418,6 @@ public class AIShooter : MonoBehaviour
 
     void Shoot()
     {
-        //Debug.Log("Shooting");
-
-        //decoration
-        if (UseMuzzleFlash)
-            muzzleFlash.SetActive(true);
-        if (UseBulletCasings)
-            VFXBulletGo.SetActive(true); //have bullet casings flying out
-        barrelRotationSpeed = barrelRotationMaxSpeed;
-
-
         RaycastHit[] hits;
         Vector3 direction = bulletSpawnPoint.transform.forward;
         //Vector3 direction = Vector3.zero;
@@ -303,7 +427,13 @@ public class AIShooter : MonoBehaviour
 
         foreach (RaycastHit hit in hits)
         {
-            //Debug.Log("You Hit: " + hit.transform.name);
+            if (!hit.transform.gameObject.GetComponent<Target>())
+                Debug.Log("The AI Gun Missed");
+            else
+                Debug.Log("The AI Gun Hit: " + hit.transform.root.name);
+
+            if (!hit.transform.gameObject.GetComponent<Target>())
+                return;
 
             if (hit.transform.gameObject != car && (hit.transform.gameObject.tag == "Player" || hit.transform.gameObject.tag == "car"))
             {
