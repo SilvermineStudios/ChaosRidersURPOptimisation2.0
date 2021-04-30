@@ -783,7 +783,8 @@ public class Shooter : MonoBehaviourPun
                 Target target = hit.transform.GetComponent<Target>();
                 if (target != null && target.gameObject != car)
                 {
-                    target.TakeDamage(weaponDamage);
+                    //target.TakeDamage(weaponDamage);
+                    pv.RPC("RPC_DealDamage", RpcTarget.All, target, weaponDamage);
                 }
 
                 GameObject impactGo;
@@ -830,6 +831,12 @@ public class Shooter : MonoBehaviourPun
                 
             }
         }
+    }
+
+    [PunRPC]
+    void RPC_DealDamage(Target target, float amount)
+    {
+        target.TakeDamage(amount);
     }
     #endregion
 

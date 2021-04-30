@@ -50,23 +50,21 @@ public class Target : MonoBehaviour
 
     void Update()
     {
-        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer && !ai || !IsThisMultiplayer.Instance.multiplayer)
+        pv.RPC("SetHealth", RpcTarget.All);
+        if (health < 0)
+            health = 0;
+
+        healthNormalized = (health / startHealth);
+
+        DeathStuff();
+
+        if (!ai)
+            SetHealthBarUiSize(healthNormalized);
+
+        if (hitByMine && !resettingHitByMine)
         {
-            if (health < 0)
-                health = 0;
-
-            healthNormalized = (health / startHealth);
-            if (!ai)
-                SetHealthBarUiSize(healthNormalized);
-            pv.RPC("SetHealth", RpcTarget.All);
-
-            DeathStuff();
-
-            if (hitByMine && !resettingHitByMine)
-            {
-                StartCoroutine(ResetMineBool());
-                resettingHitByMine = true;
-            }
+            StartCoroutine(ResetMineBool());
+            resettingHitByMine = true;
         }
     }
 
