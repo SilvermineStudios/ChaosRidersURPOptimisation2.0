@@ -146,6 +146,8 @@ public class Shooter : MonoBehaviourPun
 
     #region Sound
     FMOD.Studio.EventInstance minigunLoopSoundInstance;
+    FMOD.Studio.EventInstance rifleSoundInstance;
+    string rifleSoundString = "event:/GunFX/Rifle/RifleShot2";
     string sound;
     string bulletWhistle;
     string hitmarkerSound;
@@ -190,6 +192,7 @@ public class Shooter : MonoBehaviourPun
         VFXBulletGo.SetActive(false);
         muzzleFlash.SetActive(false);
         minigunLoopSoundInstance = FMODUnity.RuntimeManager.CreateInstance("event:/GunFX/Minigun/MinigunLoop");
+        rifleSoundInstance = FMODUnity.RuntimeManager.CreateInstance(rifleSoundString);
         //FMODUnity.RuntimeManager.AttachInstanceToGameObject(minigunLoopSoundInstance, transform, rb);
     }
 
@@ -469,6 +472,17 @@ public class Shooter : MonoBehaviourPun
 
             if (shooterClass == ShooterClass.rifle)
             {
+                //shooting Rifle
+                if(Input.GetKey(shootButton) && amountOfAmmoForCooldownBar > weaponAmmoUsage && !RPG && Time.time >= fireCooldown + fireRate)
+                {
+                    Debug.Log("Playing rifle sound");
+
+                    //play rifle shot sound
+                    FMODUnity.RuntimeManager.PlayOneShot(rifleSoundString, transform.position);
+                    //FMODUnity.RuntimeManager.AttachInstanceToGameObject(rifleSoundInstance, transform, rb);
+                    //minigunLoopSoundInstance.start();
+                }
+
                 if(Input.GetAxis("LT") > 0 || Input.GetKey(KeyCode.Mouse1))
                 {
                     scopeOverlay.SetActive(true);
