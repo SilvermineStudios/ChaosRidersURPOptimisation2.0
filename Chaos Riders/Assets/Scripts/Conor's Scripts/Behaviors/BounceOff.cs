@@ -11,6 +11,9 @@ public class BounceOff : MonoBehaviour
     [Range(0, 100)]
     public float wallBouncePercentage = 60f; //the percentage of your speed that you bounce with
 
+    [Range(0, 100)]
+    public float carWreckBouncePercentage = 20f; //the percentage of your speed that you bounce with
+
     //[Range(0, 200)]
     //public float barrelBouncePercentage = 100f; //the percentage of your speed that you bounce with
 
@@ -36,6 +39,15 @@ public class BounceOff : MonoBehaviour
             rb.velocity = direction * Mathf.Max(bounceSpeed, 0f);
         }
 
+        if(collision.gameObject.tag == "Car Wreck")
+        {
+            //Debug.Log("Hit a wrecked car");
+            var direction = Vector3.Reflect(lastVelocity.normalized, collision.contacts[0].normal);
+            var speed = lastVelocity.magnitude;
+            float bounceSpeed = (speed / 100) * carWreckBouncePercentage;
+
+            rb.velocity = direction * Mathf.Max(bounceSpeed, 0f);
+        }
 
         if (collision.gameObject.tag == "Explosive Barrel")
         {

@@ -18,7 +18,7 @@ public class CarUIManager : MonoBehaviour
     public static TMP_Text lapsText;
 
 
-    [SerializeField] private GameObject minimapCam;
+    private GameObject minimapCam;
     public static GameObject minimapCamera;
 
     void Awake()
@@ -34,18 +34,16 @@ public class CarUIManager : MonoBehaviour
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
             driverCanvas.SetActive(true);
-            minimapCam.SetActive(true); //activate the minimap camera if it belongs to you
         } 
         else if (!pv.IsMine && IsThisMultiplayer.Instance.multiplayer)
         {
             driverCanvas.SetActive(false);
-            minimapCam.SetActive(false); //disable all the minimap cameras that dont belong to you
         }
-            
     }
 
     void Update()
     {
-        
+        if(minimapCam == null)
+            minimapCam = FindObjectOfType<MiniMap>().gameObject;
     }
 }
