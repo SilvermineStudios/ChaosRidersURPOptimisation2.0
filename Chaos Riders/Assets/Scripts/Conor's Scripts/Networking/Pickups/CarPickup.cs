@@ -95,8 +95,8 @@ public class CarPickup : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(pv.IsMine)
-        {
+        //if(pv.IsMine)
+        //{
             //if the player picked up a speed pickup
             if (other.CompareTag("SpeedPickUp") && !hasPickup)
             {
@@ -118,9 +118,10 @@ public class CarPickup : MonoBehaviour
 
             if (other.CompareTag("RPGPickup") && !hasRPG)
                 hasRPG = true;
-        }
+        //}
 
         ////////////////////////////////////////////////////////////////////////////////////////////<---------------------check if RPC necessary
+        /*
         if(pv.IsMine && IsThisMultiplayer.Instance.multiplayer)
         {
             if (other.CompareTag("RPGPickup") && !hasRPG)
@@ -128,6 +129,7 @@ public class CarPickup : MonoBehaviour
                 pv.RPC("RPG", RpcTarget.All);
             }
         }
+        */
     }
 
     [PunRPC]
