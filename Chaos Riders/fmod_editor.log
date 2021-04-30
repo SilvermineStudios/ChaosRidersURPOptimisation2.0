@@ -17,86 +17,57 @@
 [LOG] Manager::init                            : done.
 [LOG] Manager::readBank                        : fileversion = 135, compatVersion = 132 (oldest = 44, newest = 135)
 [LOG] Manager::readBank                        : fileversion = 135, compatVersion = 132 (oldest = 44, newest = 135)
+[LOG] SystemI::createSound                     : filename = FMOD\Chaos Riders\Build\Desktop/Master.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSound                     : setdata soundi = 00000259D9DBE838 : node = 00000257D75561E0
+[LOG] SystemI::createSound                     : add node to async list : head = 00000259CD74A358.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 00000259D9DBE838
+[LOG] SystemI::createSoundInternal             :     Create name='FMOD\Chaos Riders\Build\Desktop/Master.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 6843232
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 55456
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 00000257D75562F0
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='Deathrace battle music (Good)', format=5, channels=2, frequency=48000, lengthbytes=867520, lengthpcm=2991751, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.999969.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 00000259D9DBE838
+[LOG] SoundI::release                          : Deathrace battle music (Good) (00000259D9E20868)
+[LOG] SoundI::release                          :     Deathrace battle music (Good) (00000259E9A0F718)
+[LOG] SoundI::release                          :     Deathrace battle music (Good) (00000259D9E1F278)
+[LOG] SystemI::createSound                     : filename = FMOD\Chaos Riders\Build\Desktop/Master.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSound                     : setdata soundi = 00000259D9DBEB98 : node = 00000257D7556BE0
+[LOG] SystemI::createSound                     : add node to async list : head = 00000259CD74A358.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 00000259D9DBEB98
+[LOG] SystemI::createSoundInternal             :     Create name='FMOD\Chaos Riders\Build\Desktop/Master.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 6843232
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 55456
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 00000257D7556CF0
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='Deathrace battle music (Good)', format=5, channels=2, frequency=48000, lengthbytes=867520, lengthpcm=2991751, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.999969.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 00000259D9DBEB98
+[LOG] SoundI::release                          : Deathrace battle music (Good) (00000259D9DBE838)
+[LOG] SoundI::release                          :     Deathrace battle music (Good) (00000259E9A0F578)
+[LOG] SoundI::release                          :     Deathrace battle music (Good) (00000259D9DBE178)
 [LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
 [LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
 [LOG] SystemI::createSoundInternal             : exinfo->length             = 6843232
 [LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 55456
 [LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000DC022FF598
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000DC022FF418
 [LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
 [LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FF8BEF87E30
 [LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FF8BEF87E00
 [LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FF8BEF87F00
 [LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FF8BEF87FC0
-[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000259DA3B0658
-[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
-[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
-[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Car Start', format=5, channels=1, frequency=48000, lengthbytes=21248, lengthpcm=118042, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.392029.
-[LOG] SoundI::release                          : 2017-08-05_-_Orc_Chase_-_David_Fesliyan (00000259C9FDDAE8)
-[LOG] SoundI::release                          :     2017-08-05_-_Orc_Chase_-_David_Fesliyan (00000259DA547998)
-[LOG] SoundI::release                          :     2017-08-05_-_Orc_Chase_-_David_Fesliyan (00000259C9FDE358)
-[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
-[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
-[LOG] SystemI::createSoundInternal             : exinfo->length             = 6843232
-[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 55456
-[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000DC022FF598
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
-[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
-[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FF8BEF87E30
-[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FF8BEF87E00
-[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FF8BEF87F00
-[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FF8BEF87FC0
-[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000259DA4FB7D8
-[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
-[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
-[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Minigun Overheat', format=5, channels=1, frequency=48000, lengthbytes=12736, lengthpcm=72563, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.119415.
-[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
-[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
-[LOG] SystemI::createSoundInternal             : exinfo->length             = 6843232
-[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 55456
-[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000DC022FF598
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
-[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
-[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FF8BEF87E30
-[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FF8BEF87E00
-[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FF8BEF87F00
-[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FF8BEF87FC0
-[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000259DA4FB7D8
-[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
-[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
-[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Gun Loop', format=5, channels=2, frequency=48000, lengthbytes=2272, lengthpcm=5808, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.997070.
-[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
-[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
-[LOG] SystemI::createSoundInternal             : exinfo->length             = 6843232
-[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 55456
-[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000DC022FF598
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
-[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
-[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FF8BEF87E30
-[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FF8BEF87E00
-[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FF8BEF87F00
-[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FF8BEF87FC0
-[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000259DA4FB7D8
-[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
-[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
-[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Gun Loop stopped', format=5, channels=2, frequency=48000, lengthbytes=20000, lengthpcm=69782, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.215790.
-[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
-[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
-[LOG] SystemI::createSoundInternal             : exinfo->length             = 6843232
-[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 55456
-[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000DC022FF598
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
-[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
-[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FF8BEF87E30
-[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FF8BEF87E00
-[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FF8BEF87F00
-[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FF8BEF87FC0
-[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000259DA4FA758
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000259DB244518
 [LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
 [LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
 [LOG] SystemI::createSoundInternal             : Sample 0/1: name='Skid', format=5, channels=1, frequency=48000, lengthbytes=31648, lengthpcm=182819, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.412323.
@@ -105,14 +76,30 @@
 [LOG] SystemI::createSoundInternal             : exinfo->length             = 6843232
 [LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 55456
 [LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000DC022FF598
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000DC022FF418
 [LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
 [LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FF8BEF87E30
 [LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FF8BEF87E00
 [LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FF8BEF87F00
 [LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FF8BEF87FC0
-[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000259DA4FA758
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000259DB244518
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Minigun Overheat', format=5, channels=1, frequency=48000, lengthbytes=12736, lengthpcm=72563, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.119415.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 6843232
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 55456
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000DC022FF418
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FF8BEF87E30
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FF8BEF87E00
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FF8BEF87F00
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FF8BEF87FC0
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000259DB244518
 [LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
 [LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
 [LOG] SystemI::createSoundInternal             : Sample 0/1: name='Hiss2', format=5, channels=1, frequency=48000, lengthbytes=9760, lengthpcm=54064, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.875000.
@@ -121,14 +108,14 @@
 [LOG] SystemI::createSoundInternal             : exinfo->length             = 6843232
 [LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 55456
 [LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000DC022FF598
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000DC022FF418
 [LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
 [LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FF8BEF87E30
 [LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FF8BEF87E00
 [LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FF8BEF87F00
 [LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FF8BEF87FC0
-[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000259DA4FA758
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000259DB244518
 [LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
 [LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
 [LOG] SystemI::createSoundInternal             : Sample 0/1: name='eeeeeeeeeee', format=5, channels=1, frequency=48000, lengthbytes=28768, lengthpcm=155995, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.593750.
@@ -137,14 +124,14 @@
 [LOG] SystemI::createSoundInternal             : exinfo->length             = 6843232
 [LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 55456
 [LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000DC022FF598
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000DC022FF418
 [LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
 [LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FF8BEF87E30
 [LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FF8BEF87E00
 [LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FF8BEF87F00
 [LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FF8BEF87FC0
-[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000259DA4FA758
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000259DB244518
 [LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
 [LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
 [LOG] SystemI::createSoundInternal             : Sample 0/1: name='Lion Loop', format=5, channels=2, frequency=48000, lengthbytes=29920, lengthpcm=149851, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.078705.
@@ -153,14 +140,30 @@
 [LOG] SystemI::createSoundInternal             : exinfo->length             = 6843232
 [LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 55456
 [LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000DC022FF598
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000DC022FF418
 [LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
 [LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FF8BEF87E30
 [LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FF8BEF87E00
 [LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FF8BEF87F00
 [LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FF8BEF87FC0
-[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000259DA4FA758
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000259DB244518
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Gun Loop', format=5, channels=2, frequency=48000, lengthbytes=2272, lengthpcm=5808, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.997070.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 6843232
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 55456
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000DC022FF418
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FF8BEF87E30
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FF8BEF87E00
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FF8BEF87F00
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FF8BEF87FC0
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000259DB244518
 [LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
 [LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
 [LOG] SystemI::createSoundInternal             : Sample 0/1: name='engine rev 2', format=5, channels=2, frequency=48000, lengthbytes=13536, lengthpcm=52830, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.729736.
@@ -169,14 +172,14 @@
 [LOG] SystemI::createSoundInternal             : exinfo->length             = 6843232
 [LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 55456
 [LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000DC022FF598
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000DC022FF418
 [LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
 [LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FF8BEF87E30
 [LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FF8BEF87E00
 [LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FF8BEF87F00
 [LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FF8BEF87FC0
-[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000259DA4FA758
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000259DB244518
 [LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
 [LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
 [LOG] SystemI::createSoundInternal             : Sample 0/1: name='Engine Rumble Loop', format=5, channels=2, frequency=48000, lengthbytes=85344, lengthpcm=314378, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.404297.
@@ -185,46 +188,62 @@
 [LOG] SystemI::createSoundInternal             : exinfo->length             = 6843232
 [LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 55456
 [LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000DC022FF598
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000DC022FF418
 [LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
 [LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FF8BEF87E30
 [LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FF8BEF87E00
 [LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FF8BEF87F00
 [LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FF8BEF87FC0
-[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000259DA4FA758
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000259DB244518
 [LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
 [LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
 [LOG] SystemI::createSoundInternal             : Sample 0/1: name='Deeper car loop', format=5, channels=1, frequency=48000, lengthbytes=25632, lengthpcm=156912, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.290771.
-[LOG] SystemI::createSound                     : filename = FMOD\Chaos Riders\Build\Desktop/Master.bank : mode 02010082
-[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
-[LOG] SystemI::createSound                     : setdata soundi = 000002598F84B028 : node = 00000257AC012360
-[LOG] SystemI::createSound                     : add node to async list : head = 00000259E9B13938.  list count = 0
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000002598F84B028
-[LOG] SystemI::createSoundInternal             :     Create name='FMOD\Chaos Riders\Build\Desktop/Master.bank', mode=0x02010082
-[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
-[LOG] SystemI::createSoundInternal             :     exinfo->length             = 6843232
-[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 55456
-[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 00000257AC012470
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
-[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
-[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='Opening2', format=5, channels=2, frequency=48000, lengthbytes=300384, lengthpcm=1045733, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.999969.
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000002598F84B028
 [LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
 [LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
 [LOG] SystemI::createSoundInternal             : exinfo->length             = 6843232
 [LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 55456
 [LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000DC022FF598
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000DC022FF418
 [LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
 [LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FF8BEF87E30
 [LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FF8BEF87E00
 [LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FF8BEF87F00
 [LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FF8BEF87FC0
-[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000259DA4FB7D8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000259DB244518
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='Gun Loop stopped', format=5, channels=2, frequency=48000, lengthbytes=20000, lengthpcm=69782, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.215790.
+[LOG] SystemI::createSound                     : filename = FMOD\Chaos Riders\Build\Desktop/Master.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSound                     : setdata soundi = 00000259D9DBE4D8 : node = 0000025AB1519DB0
+[LOG] SystemI::createSound                     : add node to async list : head = 00000259CD74A358.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 00000259D9DBE4D8
+[LOG] SystemI::createSoundInternal             :     Create name='FMOD\Chaos Riders\Build\Desktop/Master.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 6843232
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 55456
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0000025AB1519EC0
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='Opening2', format=5, channels=2, frequency=48000, lengthbytes=300384, lengthpcm=1045733, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.999969.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 00000259D9DBE4D8
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 6843232
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 55456
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000DC022FF418
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FF8BEF87E30
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FF8BEF87E00
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FF8BEF87F00
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FF8BEF87FC0
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000259DB242208
 [LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
 [LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
 [LOG] SystemI::createSoundInternal             : Sample 0/1: name='Bass-Drum-Hit-Level-2a-www.fesliyanstudios.com', format=5, channels=2, frequency=48000, lengthbytes=8512, lengthpcm=65664, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.428223.
@@ -233,146 +252,391 @@
 [LOG] SystemI::createSoundInternal             : exinfo->length             = 6843232
 [LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 55456
 [LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000DC022FF598
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000DC022FF418
 [LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
 [LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FF8BEF87E30
 [LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FF8BEF87E00
 [LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FF8BEF87F00
 [LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FF8BEF87FC0
-[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000259DA4F96D8
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000259DB242208
 [LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
 [LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
 [LOG] SystemI::createSoundInternal             : Sample 0/1: name='Bass-Drum-Hit-Level-6c-www.fesliyanstudios.com', format=5, channels=2, frequency=48000, lengthbytes=8448, lengthpcm=62208, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.931000.
 [LOG] SystemI::createSound                     : filename = FMOD\Chaos Riders\Build\Desktop/Master.bank : mode 02010082
 [LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
-[LOG] SystemI::createSound                     : setdata soundi = 00000259C6E4F218 : node = 00000257AC0125E0
-[LOG] SystemI::createSound                     : add node to async list : head = 00000259E9B13938.  list count = 0
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 00000259C6E4F218
+[LOG] SystemI::createSound                     : setdata soundi = 00000259D9E20BC8 : node = 0000025AB1519B30
+[LOG] SystemI::createSound                     : add node to async list : head = 00000259CD74A358.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 00000259D9E20BC8
 [LOG] SystemI::createSoundInternal             :     Create name='FMOD\Chaos Riders\Build\Desktop/Master.bank', mode=0x02010082
 [LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
 [LOG] SystemI::createSoundInternal             :     exinfo->length             = 6843232
 [LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 55456
 [LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 00000257AC0126F0
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0000025AB1519C40
 [LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
 [LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
 [LOG] SystemI::createSoundInternal             :     Stream 0/1: name='Deathrace battle music (Good)', format=5, channels=2, frequency=48000, lengthbytes=867520, lengthpcm=2991751, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.999969.
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 00000259C6E4F218
-[LOG] SoundI::release                          : Opening2 (000002598F84B028)
-[LOG] SoundI::release                          :     Opening2 (00000259DA547B38)
-[LOG] SoundI::release                          :     Opening2 (000002598F849D98)
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 00000259D9E20BC8
+[LOG] SoundI::release                          : Opening2 (00000259D9DBE4D8)
+[LOG] SoundI::release                          :     Opening2 (00000259D9DA21B8)
+[LOG] SoundI::release                          :     Opening2 (00000259D9DBE838)
 [LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
 [LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
 [LOG] SystemI::createSoundInternal             : exinfo->length             = 6843232
 [LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 55456
 [LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000DC022FF598
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000DC022FF418
 [LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
 [LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FF8BEF87E30
 [LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FF8BEF87E00
 [LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FF8BEF87F00
 [LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FF8BEF87FC0
-[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000259DA4F8238
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000259DB2440F8
 [LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
 [LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
 [LOG] SystemI::createSoundInternal             : Sample 0/1: name='mixkit-metal-hit-drum-sound-550', format=5, channels=2, frequency=48000, lengthbytes=59872, lengthpcm=240901, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.914795.
+[LOG] SystemI::createSound                     : filename = FMOD\Chaos Riders\Build\Desktop/Master.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSound                     : setdata soundi = 00000259D9E20868 : node = 0000025AB1519DB0
+[LOG] SystemI::createSound                     : add node to async list : head = 00000259CD74A358.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 00000259D9E20868
+[LOG] SystemI::createSoundInternal             :     Create name='FMOD\Chaos Riders\Build\Desktop/Master.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 6843232
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 55456
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0000025AB1519EC0
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='Deathrace battle music (Good)', format=5, channels=2, frequency=48000, lengthbytes=867520, lengthpcm=2991751, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.999969.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 00000259D9E20868
+[LOG] SoundI::release                          : Deathrace battle music (Good) (00000259D9DBEB98)
+[LOG] SoundI::release                          :     Deathrace battle music (Good) (00000259E9A0F718)
+[LOG] SoundI::release                          :     Deathrace battle music (Good) (00000259D9E1FFF8)
 [LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
 [LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
 [LOG] SystemI::createSoundInternal             : exinfo->length             = 6843232
 [LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 55456
 [LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000DC022FF598
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000DC022FF418
 [LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
 [LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FF8BEF87E30
 [LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FF8BEF87E00
 [LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FF8BEF87F00
 [LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FF8BEF87FC0
-[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000259DA3B0E98
-[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
-[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
-[LOG] SystemI::createSoundInternal             : Sample 0/1: name='DeepExplosion02', format=5, channels=2, frequency=48000, lengthbytes=61280, lengthpcm=259136, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.996806.
-[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
-[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
-[LOG] SystemI::createSoundInternal             : exinfo->length             = 6843232
-[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 55456
-[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000DC022FF598
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
-[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
-[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FF8BEF87E30
-[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FF8BEF87E00
-[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FF8BEF87F00
-[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FF8BEF87FC0
-[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000259DA3B0238
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000259DB246828
 [LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
 [LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
 [LOG] SystemI::createSoundInternal             : Sample 0/1: name='mixkit-hand-tribal-drum-562', format=5, channels=2, frequency=48000, lengthbytes=9888, lengthpcm=53755, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.902557.
 [LOG] SystemI::createSound                     : filename = FMOD\Chaos Riders\Build\Desktop/Master.bank : mode 02010082
 [LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
-[LOG] SystemI::createSound                     : setdata soundi = 000002598F849F48 : node = 00000257AC5DBFD0
-[LOG] SystemI::createSound                     : add node to async list : head = 00000259E9B13938.  list count = 0
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000002598F849F48
+[LOG] SystemI::createSound                     : setdata soundi = 00000259D9E20358 : node = 0000025AB1519770
+[LOG] SystemI::createSound                     : add node to async list : head = 00000259CD74A358.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 00000259D9E20358
 [LOG] SystemI::createSoundInternal             :     Create name='FMOD\Chaos Riders\Build\Desktop/Master.bank', mode=0x02010082
 [LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
 [LOG] SystemI::createSoundInternal             :     exinfo->length             = 6843232
 [LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 55456
 [LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 00000257AC5DC0E0
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0000025AB1519880
 [LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
 [LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
 [LOG] SystemI::createSoundInternal             :     Stream 0/1: name='Deathrace battle music (Good)', format=5, channels=2, frequency=48000, lengthbytes=867520, lengthpcm=2991751, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.999969.
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000002598F849F48
-[LOG] SoundI::release                          : Deathrace battle music (Good) (00000259C6E4F218)
-[LOG] SoundI::release                          :     Deathrace battle music (Good) (00000259DA547998)
-[LOG] SoundI::release                          :     Deathrace battle music (Good) (00000259C6E50148)
-[LOG] SoundI::release                          :  (00000259CA66F588)
-[LOG] SoundI::release                          :     Car Start (00000259E8DE9DF8)
-[LOG] SoundI::release                          :  (00000259E9589968)
-[LOG] SoundI::release                          :     Bass-Drum-Hit-Level-2a-www.fesliyanstudios.com (00000259DA2FA1D8)
-[LOG] SoundI::release                          :  (00000259E9589688)
-[LOG] SoundI::release                          :     Bass-Drum-Hit-Level-6c-www.fesliyanstudios.com (00000259DA2FA6B8)
-[LOG] SoundI::release                          :  (00000259E9589AD8)
-[LOG] SoundI::release                          :     mixkit-metal-hit-drum-sound-550 (00000259DA2FA858)
-[LOG] SoundI::release                          :  (00000259CA66F138)
-[LOG] SoundI::release                          :     mixkit-hand-tribal-drum-562 (00000259E8DEA478)
-[LOG] SoundI::release                          :  (00000257AC0DA118)
-[LOG] SoundI::release                          :     click 1 (00000259EC8894C8)
-[LOG] SoundI::release                          :  (00000257AC0DA3F8)
-[LOG] SoundI::release                          :     click 2 (00000259E9980FE8)
-[LOG] SoundI::release                          :  (00000257AC0D9E38)
-[LOG] SoundI::release                          :     click 3 (00000259E9980B08)
-[LOG] SoundI::release                          :  (00000257AC0DA288)
-[LOG] SoundI::release                          :     click 4 (00000259EC8899A8)
-[LOG] SoundI::release                          :  (00000259CA66E898)
-[LOG] SoundI::release                          :     DeepExplosion02 (00000259E8DE9F98)
-[LOG] SoundI::release                          : Deathrace battle music (Good) (000002598F849F48)
-[LOG] SoundI::release                          :     Deathrace battle music (Good) (00000259DA547B38)
-[LOG] SoundI::release                          :     Deathrace battle music (Good) (000002598F84A458)
-[LOG] SoundI::release                          :  (00000259DB3AEE38)
-[LOG] SoundI::release                          :     Skid (00000259CA66D728)
-[LOG] SoundI::release                          :  (00000259DB3AE428)
-[LOG] SoundI::release                          :     Hiss2 (00000259CA66DDA8)
-[LOG] SoundI::release                          :  (00000259DB3AE9E8)
-[LOG] SoundI::release                          :     engine rev 2 (00000259CA66D588)
-[LOG] SoundI::release                          :  (00000259DB3AE598)
-[LOG] SoundI::release                          :     eeeeeeeeeee (00000259CA66D248)
-[LOG] SoundI::release                          :  (00000259DB3AECC8)
-[LOG] SoundI::release                          :     Deeper car loop (00000259DA2FAD38)
-[LOG] SoundI::release                          :  (00000259DB3AEB58)
-[LOG] SoundI::release                          :     Engine Rumble Loop (00000259DA2FA518)
-[LOG] SoundI::release                          :  (00000259DB3AE878)
-[LOG] SoundI::release                          :     Lion Loop (00000259CA66D3E8)
-[LOG] SoundI::release                          :  (00000259DB3AE708)
-[LOG] SoundI::release                          :     Gun Loop stopped (00000259CA66DA68)
-[LOG] SoundI::release                          :  (00000259DB3AE148)
-[LOG] SoundI::release                          :     Minigun Overheat (00000259D9DA17F8)
-[LOG] SoundI::release                          :  (00000259DB3AE2B8)
-[LOG] SoundI::release                          :     Gun Loop (00000259CA66D0A8)
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 00000259D9E20358
+[LOG] SoundI::release                          : Deathrace battle music (Good) (00000259D9E20BC8)
+[LOG] SoundI::release                          :     Deathrace battle music (Good) (00000259D9DA1E78)
+[LOG] SoundI::release                          :     Deathrace battle music (Good) (00000259C6E4F728)
+[LOG] SystemI::createSound                     : filename = FMOD\Chaos Riders\Build\Desktop/Master.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSound                     : setdata soundi = 00000259D9DBE178 : node = 0000025AB1519EF0
+[LOG] SystemI::createSound                     : add node to async list : head = 00000259CD74A358.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 00000259D9DBE178
+[LOG] SystemI::createSoundInternal             :     Create name='FMOD\Chaos Riders\Build\Desktop/Master.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 6843232
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 55456
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0000025AB151A000
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='Deathrace battle music (Good)', format=5, channels=2, frequency=48000, lengthbytes=867520, lengthpcm=2991751, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.999969.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 00000259D9DBE178
+[LOG] SoundI::release                          : Deathrace battle music (Good) (00000259D9E20868)
+[LOG] SoundI::release                          :     Deathrace battle music (Good) (00000259D9DA24F8)
+[LOG] SoundI::release                          :     Deathrace battle music (Good) (00000259C6E4F068)
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 6843232
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 55456
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000DC022FF418
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FF8BEF87E30
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FF8BEF87E00
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FF8BEF87F00
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FF8BEF87FC0
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000259DB243498
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='mixkit-drum-deep-impact-563', format=5, channels=2, frequency=48000, lengthbytes=53248, lengthpcm=264000, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.991913.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 6843232
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 55456
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000DC022FF418
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FF8BEF87E30
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FF8BEF87E00
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FF8BEF87F00
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FF8BEF87FC0
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000259DB243CD8
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='DeepExplosion02', format=5, channels=2, frequency=48000, lengthbytes=61280, lengthpcm=259136, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.996806.
+[LOG] SystemI::createSound                     : filename = FMOD\Chaos Riders\Build\Desktop/Master.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSound                     : setdata soundi = 0000025AB1558BD8 : node = 00000259E94BCA40
+[LOG] SystemI::createSound                     : add node to async list : head = 00000259CD74A358.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0000025AB1558BD8
+[LOG] SystemI::createSoundInternal             :     Create name='FMOD\Chaos Riders\Build\Desktop/Master.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 6843232
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 55456
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 00000259E94BCB50
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='Deathrace battle music (Good)', format=5, channels=2, frequency=48000, lengthbytes=867520, lengthpcm=2991751, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.999969.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0000025AB1558BD8
+[LOG] SoundI::release                          : Deathrace battle music (Good) (00000259D9E20358)
+[LOG] SoundI::release                          :     Deathrace battle music (Good) (00000259D9DA1B38)
+[LOG] SoundI::release                          :     Deathrace battle music (Good) (00000259C6E4F218)
+[LOG] SystemI::createSound                     : filename = FMOD\Chaos Riders\Build\Desktop/Master.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSound                     : setdata soundi = 000002598F84B028 : node = 00000259E94BB280
+[LOG] SystemI::createSound                     : add node to async list : head = 00000259CD74A358.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000002598F84B028
+[LOG] SystemI::createSoundInternal             :     Create name='FMOD\Chaos Riders\Build\Desktop/Master.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 6843232
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 55456
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 00000259E94BB390
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='Deathrace battle music (Good)', format=5, channels=2, frequency=48000, lengthbytes=867520, lengthpcm=2991751, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.999969.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000002598F84B028
+[LOG] SoundI::release                          : Deathrace battle music (Good) (00000259D9DBE178)
+[LOG] SoundI::release                          :     Deathrace battle music (Good) (00000259D9DA21B8)
+[LOG] SoundI::release                          :     Deathrace battle music (Good) (00000259D9DBE838)
+[LOG] SystemI::createSound                     : filename = FMOD\Chaos Riders\Build\Desktop/Master.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSound                     : setdata soundi = 0000025AB1558878 : node = 00000259E94BB3C0
+[LOG] SystemI::createSound                     : add node to async list : head = 00000259CD74A358.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0000025AB1558878
+[LOG] SystemI::createSoundInternal             :     Create name='FMOD\Chaos Riders\Build\Desktop/Master.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 6843232
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 55456
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 00000259E94BB4D0
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='Deathrace battle music (Good)', format=5, channels=2, frequency=48000, lengthbytes=867520, lengthpcm=2991751, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.999969.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0000025AB1558878
+[LOG] SoundI::release                          : Deathrace battle music (Good) (0000025AB1558BD8)
+[LOG] SoundI::release                          :     Deathrace battle music (Good) (00000259D9DA2358)
+[LOG] SoundI::release                          :     Deathrace battle music (Good) (0000025AB15581B8)
+[LOG] SystemI::createSound                     : filename = FMOD\Chaos Riders\Build\Desktop/Master.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSound                     : setdata soundi = 00000259D9DBE328 : node = 00000259E94BCA40
+[LOG] SystemI::createSound                     : add node to async list : head = 00000259CD74A358.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 00000259D9DBE328
+[LOG] SystemI::createSoundInternal             :     Create name='FMOD\Chaos Riders\Build\Desktop/Master.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 6843232
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 55456
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 00000259E94BCB50
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='Deathrace battle music (Good)', format=5, channels=2, frequency=48000, lengthbytes=867520, lengthpcm=2991751, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.999969.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 00000259D9DBE328
+[LOG] SoundI::release                          : Deathrace battle music (Good) (000002598F84B028)
+[LOG] SoundI::release                          :     Deathrace battle music (Good) (00000259D9DA24F8)
+[LOG] SoundI::release                          :     Deathrace battle music (Good) (000002598F849BE8)
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 6843232
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 55456
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000DC022FF418
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FF8BEF87E30
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FF8BEF87E00
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FF8BEF87F00
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FF8BEF87FC0
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000259DB247068
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='RPG7_Firing_Sound_Effect', format=5, channels=2, frequency=48000, lengthbytes=14880, lengthpcm=67244, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.656616.
+[LOG] SystemI::createSound                     : filename = FMOD\Chaos Riders\Build\Desktop/Master.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSound                     : setdata soundi = 0000025AB1558A28 : node = 00000259C75C6A00
+[LOG] SystemI::createSound                     : add node to async list : head = 00000259CD74A358.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0000025AB1558A28
+[LOG] SystemI::createSoundInternal             :     Create name='FMOD\Chaos Riders\Build\Desktop/Master.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 6843232
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 55456
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 00000259C75C6B10
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='Deathrace battle music (Good)', format=5, channels=2, frequency=48000, lengthbytes=867520, lengthpcm=2991751, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.999969.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0000025AB1558A28
+[LOG] SoundI::release                          : Deathrace battle music (Good) (0000025AB1558878)
+[LOG] SoundI::release                          :     Deathrace battle music (Good) (00000259D9DA1E78)
+[LOG] SoundI::release                          :     Deathrace battle music (Good) (00000259D9DBE178)
+[LOG] SystemI::createSound                     : filename = FMOD\Chaos Riders\Build\Desktop/Master.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSound                     : setdata soundi = 00000259C6E4F728 : node = 00000259C75C6280
+[LOG] SystemI::createSound                     : add node to async list : head = 00000259CD74A358.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 00000259C6E4F728
+[LOG] SystemI::createSoundInternal             :     Create name='FMOD\Chaos Riders\Build\Desktop/Master.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 6843232
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 55456
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 00000259C75C6390
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='Deathrace battle music (Good)', format=5, channels=2, frequency=48000, lengthbytes=867520, lengthpcm=2991751, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.999969.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 00000259C6E4F728
+[LOG] SoundI::release                          : Deathrace battle music (Good) (00000259D9DBE328)
+[LOG] SoundI::release                          :     Deathrace battle music (Good) (00000259D9DA1998)
+[LOG] SoundI::release                          :     Deathrace battle music (Good) (00000259D9DBEB98)
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 6843232
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 55456
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000DC022FF418
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FF8BEF87E30
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FF8BEF87E00
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FF8BEF87F00
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FF8BEF87FC0
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 00000259DB243288
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='322640__aruscio28__hitmarker-sound-effect', format=5, channels=2, frequency=48000, lengthbytes=1216, lengthpcm=21315, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.757507.
+[LOG] SystemI::createSound                     : filename = FMOD\Chaos Riders\Build\Desktop/Master.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSound                     : setdata soundi = 00000259D9DBEB98 : node = 00000257D75561E0
+[LOG] SystemI::createSound                     : add node to async list : head = 00000259CD74A358.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 00000259D9DBEB98
+[LOG] SystemI::createSoundInternal             :     Create name='FMOD\Chaos Riders\Build\Desktop/Master.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 6843232
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 55456
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 00000257D75562F0
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='Deathrace battle music (Good)', format=5, channels=2, frequency=48000, lengthbytes=867520, lengthpcm=2991751, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.999969.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 00000259D9DBEB98
+[LOG] SoundI::release                          : Deathrace battle music (Good) (0000025AB1558A28)
+[LOG] SoundI::release                          :     Deathrace battle music (Good) (00000259D9DA21B8)
+[LOG] SoundI::release                          :     Deathrace battle music (Good) (0000025AB1558D88)
+[LOG] SystemI::createSound                     : filename = FMOD\Chaos Riders\Build\Desktop/Master.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSound                     : setdata soundi = 00000259D9E20358 : node = 00000257D7556820
+[LOG] SystemI::createSound                     : add node to async list : head = 00000259CD74A358.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 00000259D9E20358
+[LOG] SystemI::createSoundInternal             :     Create name='FMOD\Chaos Riders\Build\Desktop/Master.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 6843232
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 55456
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 00000257D7556930
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='Deathrace battle music (Good)', format=5, channels=2, frequency=48000, lengthbytes=867520, lengthpcm=2991751, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.999969.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 00000259D9E20358
+[LOG] SoundI::release                          : Deathrace battle music (Good) (00000259C6E4F728)
+[LOG] SoundI::release                          :     Deathrace battle music (Good) (00000259D9DA2358)
+[LOG] SoundI::release                          :     Deathrace battle music (Good) (00000259C6E4F068)
+[LOG] SoundI::release                          :  (00000259DB55BB38)
+[LOG] SoundI::release                          :     click 1 (00000259D8E3A568)
+[LOG] SoundI::release                          :  (00000259DB55B858)
+[LOG] SoundI::release                          :     click 2 (00000259C9FC2278)
+[LOG] SoundI::release                          :  (00000259DB55B6E8)
+[LOG] SoundI::release                          :     click 3 (00000259D8E39A08)
+[LOG] SoundI::release                          :  (00000259DB55B578)
+[LOG] SoundI::release                          :     click 4 (00000259D8E39EE8)
+[LOG] SoundI::release                          :  (0000025AB1545298)
+[LOG] SoundI::release                          :     Bass-Drum-Hit-Level-2a-www.fesliyanstudios.com (00000259E90F5A18)
+[LOG] SoundI::release                          :  (00000259EC889B38)
+[LOG] SoundI::release                          :     Bass-Drum-Hit-Level-6c-www.fesliyanstudios.com (00000259E90F6578)
+[LOG] SoundI::release                          :  (00000259EC889408)
+[LOG] SoundI::release                          :     mixkit-metal-hit-drum-sound-550 (00000259E90F6BF8)
+[LOG] SoundI::release                          :  (00000259EC889578)
+[LOG] SoundI::release                          :     322640__aruscio28__hitmarker-sound-effect (00000259E90F6718)
+[LOG] SoundI::release                          :  (00000259EC888E48)
+[LOG] SoundI::release                          :     mixkit-drum-deep-impact-563 (00000259E90F6D98)
+[LOG] SoundI::release                          :  (00000259EC889858)
+[LOG] SoundI::release                          :     mixkit-hand-tribal-drum-562 (00000259E90F7418)
+[LOG] SoundI::release                          :  (00000259EC889128)
+[LOG] SoundI::release                          :     RPG7_Firing_Sound_Effect (00000259E90F5BB8)
+[LOG] SoundI::release                          :  (00000259EC8899C8)
+[LOG] SoundI::release                          :     DeepExplosion02 (00000259E90F6F38)
+[LOG] SoundI::release                          : Deathrace battle music (Good) (00000259D9DBEB98)
+[LOG] SoundI::release                          :     Deathrace battle music (Good) (00000259D9DA24F8)
+[LOG] SoundI::release                          :     Deathrace battle music (Good) (00000259D9DBE328)
+[LOG] SoundI::release                          : Deathrace battle music (Good) (00000259D9E20358)
+[LOG] SoundI::release                          :     Deathrace battle music (Good) (00000259D9DA1E78)
+[LOG] SoundI::release                          :     Deathrace battle music (Good) (00000259D9E20BC8)
+[LOG] SoundI::release                          :  (000002598F000978)
+[LOG] SoundI::release                          :     Skid (00000259E90DFDB8)
+[LOG] SoundI::release                          :  (0000025AB15456E8)
+[LOG] SoundI::release                          :     Hiss2 (00000259E90DE3B8)
+[LOG] SoundI::release                          :  (0000025AB1545E18)
+[LOG] SoundI::release                          :     engine rev 2 (00000259E90DEBD8)
+[LOG] SoundI::release                          :  (0000025AB1545408)
+[LOG] SoundI::release                          :     eeeeeeeeeee (00000259E90DFC18)
+[LOG] SoundI::release                          :  (0000025AB15459C8)
+[LOG] SoundI::release                          :     Deeper car loop (00000259E90DF0B8)
+[LOG] SoundI::release                          :  (0000025AB1545B38)
+[LOG] SoundI::release                          :     Engine Rumble Loop (00000259E90DF8D8)
+[LOG] SoundI::release                          :  (0000025AB1545578)
+[LOG] SoundI::release                          :     Lion Loop (00000259E90DE558)
+[LOG] SoundI::release                          :  (0000025AB1545CA8)
+[LOG] SoundI::release                          :     Minigun Overheat (00000259E90DFF58)
+[LOG] SoundI::release                          :  (0000025AB1545128)
+[LOG] SoundI::release                          :     Gun Loop stopped (00000259E90DF3F8)
+[LOG] SoundI::release                          :  (0000025AB1545858)
+[LOG] SoundI::release                          :     Gun Loop (00000259E90DEA38)
 [LOG] Thread::callback                         : FMOD Studio update thread finished.
 [LOG] Thread::callback                         : FMOD Studio bank load thread finished.
 [LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
