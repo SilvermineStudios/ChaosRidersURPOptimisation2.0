@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
 using Cinemachine;
 using TMPro;
 using System.IO;
@@ -784,7 +785,15 @@ public class Shooter : MonoBehaviourPun
                 if (target != null && target.gameObject != car)
                 {
                     //target.TakeDamage(weaponDamage);
-                    pv.RPC("RPC_DealDamage", RpcTarget.All, target, weaponDamage);
+                    //pv.RPC("RPC_DealDamage", RpcTarget.All, target, weaponDamage);
+
+                    foreach(Player p in PhotonNetwork.PlayerList)
+                    {
+                        if(target.pv.Owner == p)
+                        {
+                            pv.RPC("RPC_DealDamage", RpcTarget.All, weaponDamage, target.gameObject.GetPhotonView().ViewID);
+                        }
+                    }
                 }
 
                 GameObject impactGo;
@@ -834,9 +843,10 @@ public class Shooter : MonoBehaviourPun
     }
 
     [PunRPC]
-    void RPC_DealDamage(Target target, float amount)
+    void RPC_DealDamage(float amountOfDamage, int targetViewID)
     {
-        target.TakeDamage(amount);
+        PhotonView.Find(targetViewID).gameObject.GetComponent<Target>().TakeDamage(amountOfDamage);
+        //TakeDamage(amountOfDamage);
     }
     #endregion
 

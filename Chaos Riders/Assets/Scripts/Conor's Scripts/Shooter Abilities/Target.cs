@@ -9,7 +9,7 @@ public class Target : MonoBehaviour
     [Header("General")]
     [SerializeField] private bool ai = false;
     public bool invincible = false;
-    private PhotonView pv;
+    public PhotonView pv;
 
 
     [Header("Health Stuff")]
@@ -51,6 +51,7 @@ public class Target : MonoBehaviour
     void Update()
     {
         pv.RPC("SetHealth", RpcTarget.All);
+
         if (health < 0)
             health = 0;
 
@@ -159,6 +160,7 @@ public class Target : MonoBehaviour
         if(collision.gameObject.tag == "Explosive Barrel")
         {
             TakeDamage(TrapManager.ExplosiveBarrelDamage);
+            //pv.RPC("RPC_TakeDamage", RpcTarget.All, this.gameObject, TrapManager.ExplosiveBarrelDamage);
         }
     }
 
@@ -168,6 +170,7 @@ public class Target : MonoBehaviour
         if(other.gameObject.tag == "Blade")
         {
             TakeDamage(TrapManager.BladeTrapDamage);
+            //pv.RPC("RPC_TakeDamage", RpcTarget.All, this.gameObject, TrapManager.BladeTrapDamage);
         }
     }
 
@@ -176,5 +179,11 @@ public class Target : MonoBehaviour
         yield return new WaitForSeconds(time);
 
         respawning = false;
+    }
+
+    [PunRPC]
+    void RPC_TakeDamage(float amountOfDamage)
+    {
+        TakeDamage(amountOfDamage);
     }
 }
