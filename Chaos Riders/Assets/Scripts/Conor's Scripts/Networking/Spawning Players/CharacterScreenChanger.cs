@@ -134,7 +134,7 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
                 pv.RPC("RPC_AddToDrivers", RpcTarget.AllBuffered, p);
 
                 roomController.hintText.text = driverHints[Random.Range(0, driverHints.Length)];
-                Debug.Log("Tip: " + driverHints[Random.Range(0, driverHints.Length)]);
+                //Debug.Log("Tip: " + driverHints[Random.Range(0, driverHints.Length)]);
             }
         }
     }
@@ -182,7 +182,7 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
                 //braker
                 if (whichCharacter == 0)
                 {
-                    Debug.Log("Braker");
+                    //Debug.Log("Braker");
                     pmp.carModel = PhotonMenuPlayer.carType.Braker;
                     pmp.currentCarClass = CarClass.Braker;
 
@@ -194,7 +194,7 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
                 //shredder
                 if (whichCharacter == 1)
                 {
-                    Debug.Log("Shredder");
+                    //Debug.Log("Shredder");
                     pmp.carModel = PhotonMenuPlayer.carType.Shredder;
                     pmp.currentCarClass = CarClass.Shredder;
 
@@ -226,7 +226,7 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
                 pv.RPC("RPC_AddToShooters", RpcTarget.AllBuffered, p);
 
                 roomController.hintText.text = shooterHints[Random.Range(0, shooterHints.Length)];
-                Debug.Log("Tip: " + shooterHints[Random.Range(0, shooterHints.Length)]);
+                //Debug.Log("Tip: " + shooterHints[Random.Range(0, shooterHints.Length)]);
             }
         }
     }

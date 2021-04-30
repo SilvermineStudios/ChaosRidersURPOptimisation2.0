@@ -1460,7 +1460,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6753911984464353334}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.015998779, y: 0.079, z: -0.006}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -6533,6 +6533,8 @@ MonoBehaviour:
   car: {fileID: 0}
   carHealth: 0
   dead: 0
+  shooting: 0
+  gunShooting: 0
   gunBarrel: {fileID: 6753911985080015449}
   minigunBarrel: {fileID: 3767529869141748556}
   rifleBarrel: {fileID: 4102530861068565298}
@@ -6542,10 +6544,11 @@ MonoBehaviour:
   bulletSpawnPoint: {fileID: 6753911985266905327}
   MinigunHolder: {fileID: 6019231408425968515}
   RifleHolder: {fileID: 4099642483785407078}
+  shotsPerSecond: 25
   everythingButIgnoreBullets:
     serializedVersion: 2
     m_Bits: 57143
-  weaponDamage: 0.2
+  weaponDamage: 10
   range: 70
   turnSpeed: 5
   barrelRotationStartSpeed: 100

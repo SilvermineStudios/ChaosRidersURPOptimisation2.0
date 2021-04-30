@@ -17,7 +17,7 @@ public class ShooterUIManager : MonoBehaviour
     public static TMP_Text lapsText;
 
 
-    [SerializeField] private GameObject minimapCam;
+    private GameObject minimapCam;
     public static GameObject minimapCamera;
 
 
@@ -41,6 +41,11 @@ public class ShooterUIManager : MonoBehaviour
             gunnerCanvas.SetActive(false); //deactivate all the UI canvas' that dont belong to you
             minimapCam.SetActive(false);
         }
-            
+    }
+
+    private void Update()
+    {
+        if (minimapCam == null)
+            minimapCam = FindObjectOfType<MiniMap>().gameObject;
     }
 }

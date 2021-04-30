@@ -62,7 +62,6 @@ public class MoveTurretPosition : MonoBehaviour
         {
             AttachToFakeParent();
         }
-        
     }
 
     [PunRPC]
@@ -72,18 +71,14 @@ public class MoveTurretPosition : MonoBehaviour
         carGunStandPosition = car.GetComponent<MultiplayerCarPrefabs>().gunstand;
 
         transform.position = carGunPos.transform.position;
-
+        transform.rotation = Quaternion.Euler(0, -90, 0);
 
         //var targetPos = carGunPos.position;
         var targetRot = car.transform.rotation;
 
-        //targetRot.x = 0;
-        //targetRot.z = 0;
-
-        //this.transform.position = RotatePointAroundPivot(targetPos, targetPos, targetRot);
-        //this.transform.localRotation = targetRot;
-
-        gunstand.localRotation = targetRot;
+        //transform.rotation = targetRot;
+        //gunstand.localRotation = targetRot;
+        gunstand.localRotation = Quaternion.Euler(0, targetRot.eulerAngles.y - targetRot.eulerAngles.y, 0);
         gunstand.transform.position = carGunStandPosition.transform.position;
         //Debug.Log("Attached to fake parent");
 
