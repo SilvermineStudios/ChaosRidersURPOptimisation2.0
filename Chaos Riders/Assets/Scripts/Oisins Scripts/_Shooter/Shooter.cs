@@ -733,34 +733,35 @@ public class Shooter : MonoBehaviourPun
 
         Vector3 direction = Spread(currentBulletSpread);
 
-        /*
-        GameObject bulletCasingGO;
+        {
+            /*
+            GameObject bulletCasingGO;
 
-        if (IsThisMultiplayer.Instance.multiplayer)
-        {
-            bulletCasingGO = PhotonNetwork.Instantiate("BulletCasing", CasingSpawn.transform.position, CasingSpawn.transform.rotation);
-        }
-        else
-        {
-            bulletCasingGO = Instantiate(Casing, CasingSpawn.transform.position, CasingSpawn.transform.rotation);
-        }
-        bulletCasingGO.GetComponent<Rigidbody>().AddForce((bulletCasingGO.transform.right + (bulletCasingGO.transform.up * 2)) * 0.3f, ForceMode.Impulse);
-
-        if (!noCarNeeded)
-        {
-            if (car.GetComponent<Controller>())
+            if (IsThisMultiplayer.Instance.multiplayer)
             {
-                bulletCasingGO.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
+                bulletCasingGO = PhotonNetwork.Instantiate("BulletCasing", CasingSpawn.transform.position, CasingSpawn.transform.rotation);
             }
             else
             {
-                bulletCasingGO.GetComponent<Rigidbody>().velocity = aiCarController.rb.velocity;
+                bulletCasingGO = Instantiate(Casing, CasingSpawn.transform.position, CasingSpawn.transform.rotation);
             }
-
             bulletCasingGO.GetComponent<Rigidbody>().AddForce((bulletCasingGO.transform.right + (bulletCasingGO.transform.up * 2)) * 0.3f, ForceMode.Impulse);
-        }
-        */
 
+            if (!noCarNeeded)
+            {
+                if (car.GetComponent<Controller>())
+                {
+                    bulletCasingGO.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
+                }
+                else
+                {
+                    bulletCasingGO.GetComponent<Rigidbody>().velocity = aiCarController.rb.velocity;
+                }
+
+                bulletCasingGO.GetComponent<Rigidbody>().AddForce((bulletCasingGO.transform.right + (bulletCasingGO.transform.up * 2)) * 0.3f, ForceMode.Impulse);
+            }
+            */
+        }
         RaycastHit[] hits;
 
         hits = Physics.RaycastAll(cineCamera.transform.position, direction, weaponRange, everythingButIgnoreBullets);

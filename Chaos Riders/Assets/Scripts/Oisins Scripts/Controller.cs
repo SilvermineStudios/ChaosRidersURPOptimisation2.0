@@ -261,7 +261,22 @@ public class Controller : MonoBehaviour
     private void GetInput()
     {
         horizontalInput = Input.GetAxis("Horizontal") * 0.5f;
-        verticalInput = Input.GetAxis("Vertical");
+
+        if (Input.GetAxis("RT") > 0 || Input.GetAxis("LT") > 0)
+        {
+            if (Input.GetAxis("RT") > 0)
+            {
+                verticalInput = Input.GetAxis("RT");
+            }
+            else
+            {
+                verticalInput = -Input.GetAxis("LT");
+            }
+        }
+        else
+        {
+            verticalInput = Input.GetAxis("Vertical");
+        }
         if (!braking)
         {
             brake = Input.GetButton("B");
