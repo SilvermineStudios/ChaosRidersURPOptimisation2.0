@@ -126,7 +126,7 @@ public class Target : MonoBehaviour
     {
         if (!invincible)
         {
-            Debug.Log("Taking " + amount + " Damage");
+            //Debug.Log("Taking " + amount + " Damage");
             //if the amount of damage being dealt is more than the health set the amount of damage = to the health
             if (amount > health)
                 amount = health;

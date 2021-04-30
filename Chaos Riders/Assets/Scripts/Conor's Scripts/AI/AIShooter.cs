@@ -83,7 +83,7 @@ public class AIShooter : MonoBehaviour
     private void Awake()
     {
         shootingRepeatSpeed = (60 / shotsPerSecond) / 60;
-        Debug.Log("Shooting speed = " + shootingRepeatSpeed);
+        //Debug.Log("Shooting speed = " + shootingRepeatSpeed);
 
         rb = GetComponent<Rigidbody>();
         Camera = this.gameObject.GetComponentInChildren<AudioListener>().gameObject;
@@ -139,8 +139,6 @@ public class AIShooter : MonoBehaviour
             return;
         else
             TargetLockOn();
-
-        //ShootSound();
     }
 
 
@@ -186,27 +184,6 @@ public class AIShooter : MonoBehaviour
                 gunShooting = false;
             }
         }
-
-        /*
-        if (target != null && !shooting)
-        {
-            InvokeRepeating("Shoot", 0, 1);
-            //shooting = true;
-        }
-        else
-        {
-            CancelInvoke("Shoot");
-            //CancelInvoke("ShootSound");
-            //shooting = false;
-        }
-
-        if (target == null)
-        {
-            VFXBulletGo.SetActive(false);
-            muzzleFlash.SetActive(false);
-            barrelRotationSpeed = barrelRotationStartSpeed;
-        }
-        */
     }
 
     private void RotateGunBarrel()
@@ -253,9 +230,7 @@ public class AIShooter : MonoBehaviour
                 target = null;
         }
         else
-        {
             target = null; //if the enemy goes out of range remove them from being the target
-        }
     }
 
     void TargetLockOn()
@@ -335,33 +310,28 @@ public class AIShooter : MonoBehaviour
     {
         RaycastHit[] hits;
         Vector3 direction = bulletSpawnPoint.transform.forward;
-        //Vector3 direction = Vector3.zero;
 
         hits = Physics.RaycastAll(bulletSpawnPoint.transform.position, direction, range, everythingButIgnoreBullets);
         Debug.DrawRay(bulletSpawnPoint.transform.position, direction * range, Color.red);
 
         foreach (RaycastHit hit in hits)
         {
+            /*
             if(hit.transform.gameObject.GetComponent<Target>())
-            {
                 Debug.Log("The AI Gun Hit: " + hit.transform.root.name);
-            }
             else
-            {
-                //Debug.Log("The AI Gun Missed");
-            }
-
+                Debug.Log("The AI Gun Missed");
+            */
 
             //dont so anything if what you hit doesnt have a target script on it or if it is your own car
             if (!hit.transform.gameObject.GetComponent<Target>())
                 return;
 
-
-
             Target target = hit.transform.GetComponent<Target>();
 
-            if(target.gameObject != car)
+            if (target.gameObject != car)
                 target.TakeDamage(weaponDamage);
+
 
             if (UseImpactEffect)
             {
@@ -378,87 +348,5 @@ public class AIShooter : MonoBehaviour
             }
         }
     }
-
-    void ShootSound()
-    {
-        if (!UseShootingSound)
-            return;
-
-        //if there is a target
-        if (target != null)
-        {
-            float distanceToEnemy = Vector3.Distance(transform.position, target.transform.position); //check the distance of the target from the player
-
-            //shooting
-            if (distanceToEnemy <= range) //if the target is within shooting range
-            {
-                //play the FMOD shooting sound
-                if (!shootingSoundOn)
-                {
-                    FMODUnity.RuntimeManager.AttachInstanceToGameObject(minigunLoopSoundInstance, this.transform, rb);
-                    minigunLoopSoundInstance.setParameterByName("on", 0);
-                    minigunLoopSoundInstance.start();
-
-                    shootingSoundOn = true;
-                }
-            }
-            else //not shooting
-            {
-                //turn off the FMOD shooting sound
-                if (shootingSoundOn)
-                {
-                    minigunLoopSoundInstance.setParameterByName("on", 1);
-
-                    shootingSoundOn = false;
-                }
-
-            }
-        }
-    }
-
-    void Shoot()
-    {
-        RaycastHit[] hits;
-        Vector3 direction = bulletSpawnPoint.transform.forward;
-        //Vector3 direction = Vector3.zero;
-
-        hits = Physics.RaycastAll(bulletSpawnPoint.transform.position, direction, range, everythingButIgnoreBullets);
-        Debug.DrawRay(bulletSpawnPoint.transform.position, direction * range, Color.red);
-
-        foreach (RaycastHit hit in hits)
-        {
-            if (!hit.transform.gameObject.GetComponent<Target>())
-                Debug.Log("The AI Gun Missed");
-            else
-                Debug.Log("The AI Gun Hit: " + hit.transform.root.name);
-
-            if (!hit.transform.gameObject.GetComponent<Target>())
-                return;
-
-            if (hit.transform.gameObject != car && (hit.transform.gameObject.tag == "Player" || hit.transform.gameObject.tag == "car"))
-            {
-                Target target = hit.transform.GetComponent<Target>();
-                if (target != null && target.gameObject != car)
-                {
-                    target.TakeDamage(weaponDamage);
-                }
-
-                if (UseImpactEffect)
-                {
-                    GameObject impactGo;
-                    if (IsThisMultiplayer.Instance.multiplayer)
-                    {
-                        impactGo = PhotonNetwork.Instantiate("Impact Particle Effect", hit.point, Quaternion.LookRotation(hit.normal), 0);
-                    }
-                    else
-                    {
-                        impactGo = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
-                    }
-                    impactGo.transform.parent = impactEffectHolder;
-                }
-            }
-        }
-    }
-        
     #endregion
 }

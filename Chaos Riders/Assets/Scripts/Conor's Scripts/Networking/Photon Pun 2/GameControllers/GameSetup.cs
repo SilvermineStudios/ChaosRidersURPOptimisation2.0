@@ -44,11 +44,11 @@ public class GameSetup : MonoBehaviour
     {
         CalculateDriverAndShooterCount();
 
-        Debug.Log("The Amount of players in the PlayerDataManager is: " + playerDataManager.photonMenuPlayers.Length);
+        //Debug.Log("The Amount of players in the PlayerDataManager is: " + playerDataManager.photonMenuPlayers.Length);
 
         
 
-        Debug.Log("The Amount of players in the PlayerDataManager is: " + playerDataManager.photonMenuPlayers.Length);
+        //Debug.Log("The Amount of players in the PlayerDataManager is: " + playerDataManager.photonMenuPlayers.Length);
 
         if (pv.IsMine && PlayerDataManager.PhotonMenuPlayers.Length > 0)
         {
