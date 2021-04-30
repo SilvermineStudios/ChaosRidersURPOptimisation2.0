@@ -56,8 +56,8 @@ public class Target : MonoBehaviour
         healthNormalized = (health / startHealth);
         if(!ai)
             SetHealthBarUiSize(healthNormalized);
-        //pv.RPC("SetHealth", RpcTarget.All);
-        SetHealth();
+        pv.RPC("SetHealth", RpcTarget.All);
+
         DeathStuff();
 
         if(hitByMine && !resettingHitByMine)
@@ -137,7 +137,7 @@ public class Target : MonoBehaviour
     }
 
 
-    
+    [PunRPC]
     void SetHealth()
     {
         healthbarSlider.value = healthNormalized;
