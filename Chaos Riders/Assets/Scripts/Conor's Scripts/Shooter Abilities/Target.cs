@@ -50,22 +50,24 @@ public class Target : MonoBehaviour
 
     void Update()
     {
-        if (health < 0)
-            health = 0;
-
-        healthNormalized = (health / startHealth);
-        if(!ai)
-            SetHealthBarUiSize(healthNormalized);
-        pv.RPC("SetHealth", RpcTarget.All);
-
-        DeathStuff();
-
-        if(hitByMine && !resettingHitByMine)
+        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer && !ai || !IsThisMultiplayer.Instance.multiplayer)
         {
-            StartCoroutine(ResetMineBool());
-            resettingHitByMine = true;
+            if (health < 0)
+                health = 0;
+
+            healthNormalized = (health / startHealth);
+            if (!ai)
+                SetHealthBarUiSize(healthNormalized);
+            pv.RPC("SetHealth", RpcTarget.All);
+
+            DeathStuff();
+
+            if (hitByMine && !resettingHitByMine)
+            {
+                StartCoroutine(ResetMineBool());
+                resettingHitByMine = true;
+            }
         }
-            
     }
 
     private IEnumerator ResetMineBool()
@@ -147,6 +149,7 @@ public class Target : MonoBehaviour
     void Die()
     {
         //deathParticles.SetActive(true);
+        Debug.Log("YOU FUCKING DIED!!!!!");
         StartCoroutine(DeathCourotine(deathTimer));
         deathinstance = PhotonNetwork.Instantiate("DeathExplosion", this.transform.position, this.transform.rotation, 0);
     }
