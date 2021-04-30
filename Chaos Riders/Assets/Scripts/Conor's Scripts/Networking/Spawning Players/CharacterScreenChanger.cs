@@ -167,9 +167,55 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
                 }
 
                 pv.RPC("RPC_AssignDriverCharacter", RpcTarget.AllBuffered, whichCharacter, p);
+
+                /*
+                //braker
+                if(whichCharacter == 0)
+                {
+                    //pv.RPC("RPC_BrakerSelected", p, brakerButton, selectedButtonColour);
+                    pv.RPC("RPC_ButtonColour", p, brakerButton, selectedButtonColour);
+                    pv.RPC("RPC_ButtonColour", p, shredderButton, regularButtonColour);
+                }
+
+
+                //shredder
+                if (whichCharacter == 0)
+                {
+                    //pv.RPC("RPC_ShredderSelected", p, brakerButton, selectedButtonColour);
+                    pv.RPC("RPC_ButtonColour", p, shredderButton, selectedButtonColour);
+                    pv.RPC("RPC_ButtonColour", p, brakerButton, regularButtonColour);
+                }
+                */
             }
+
+            /*
+            foreach (PhotonMenuPlayer pmp in photonMenuPlayers)
+            {
+                if(pmp.gameObject.GetComponent<PhotonView>().Owner == p)
+                {
+                    pmp.picked = true;
+
+                    //Braker
+                    if(whichCharacter == 0)
+                    {
+                        pmp.carModel = PhotonMenuPlayer.carType.Braker;
+                        pmp.currentCarClass = CarClass.Braker;
+                    }
+
+                    //Shredder
+                    if(whichCharacter == 1)
+                    {
+                        pmp.carModel = PhotonMenuPlayer.carType.Shredder;
+                        pmp.currentCarClass = CarClass.Shredder;
+                    }
+                }
+            }
+            */
         }
     }
+
+    
+
     [PunRPC]
     void RPC_AssignDriverCharacter(int whichCharacter, Player p)
     {
@@ -177,8 +223,6 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
         {
             if (pmp.gameObject.GetComponent<PhotonView>().Owner == p)
             {
-                pmp.picked = true;
-
                 //braker
                 if (whichCharacter == 0)
                 {
@@ -186,8 +230,6 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
                     pmp.carModel = PhotonMenuPlayer.carType.Braker;
                     pmp.currentCarClass = CarClass.Braker;
 
-                    //brakerButton.GetComponent<Image>().color = selectedButtonColour;
-                    //shredderButton.GetComponent<Image>().color = regularButtonColour;
                     pv.RPC("RPC_ButtonColour", p, brakerButton, selectedButtonColour);
                     pv.RPC("RPC_ButtonColour", p, shredderButton, regularButtonColour);
                 }
@@ -198,8 +240,6 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
                     pmp.carModel = PhotonMenuPlayer.carType.Shredder;
                     pmp.currentCarClass = CarClass.Shredder;
 
-                    //shredderButton.GetComponent<Image>().color = selectedButtonColour;
-                    //brakerButton.GetComponent<Image>().color = regularButtonColour;
                     pv.RPC("RPC_ButtonColour", p, shredderButton, selectedButtonColour);
                     pv.RPC("RPC_ButtonColour", p, brakerButton, regularButtonColour);
                 }
@@ -207,7 +247,7 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
         }
     }
 
-    
+
     #endregion
 
     #region Shooter Buttons
@@ -292,7 +332,7 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
                     //goldenGunButton.GetComponent<Image>().color = selectedButtonColour;
                     //standardGunButton.GetComponent<Image>().color = regularButtonColour;
                     pv.RPC("RPC_ButtonColour", p, goldenGunButton, selectedButtonColour);
-                    pv.RPC("RPC_ButtonColour", p, regularButtonColour, regularButtonColour);
+                    pv.RPC("RPC_ButtonColour", p, standardGunButton, regularButtonColour);
                 }
             }
         }

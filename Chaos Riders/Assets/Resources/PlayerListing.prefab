@@ -697,6 +697,7 @@ GameObject:
   - component: {fileID: 389571465174584245}
   - component: {fileID: 8971646220445071978}
   - component: {fileID: 5020625075837323385}
+  - component: {fileID: 469266603}
   m_Layer: 5
   m_Name: PlayerListing
   m_TagString: Untagged
@@ -781,6 +782,28 @@ MonoBehaviour:
   shredder: {fileID: 8161432042405254976}
   standardGun: {fileID: 9009135066663578769}
   goldenGun: {fileID: 345278709672784196}
+--- !u!114 &469266603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7156296590799538169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  observableSearch: 2
+  Synchronization: 3
+  OwnershipTransfer: 0
+  ObservedComponents: []
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &8161432042405254976
 GameObject:
   m_ObjectHideFlags: 0

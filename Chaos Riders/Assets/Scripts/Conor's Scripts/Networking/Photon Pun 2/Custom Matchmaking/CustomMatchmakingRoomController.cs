@@ -62,11 +62,15 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
     {
         foreach(Player player in PhotonNetwork.PlayerList) //loop through each player 
         {
-            GameObject tempListing = Instantiate(playerListingPrefab, playersContainer);
+            //GameObject tempListing = Instantiate(playerListingPrefab, playersContainer);
+            GameObject tempListing = PhotonNetwork.Instantiate(playerListingPrefab.name, this.transform.position, this.transform.rotation, 0);
+            
             TMP_Text tempText = tempListing.transform.GetChild(1).GetComponent<TMP_Text>();
+            tempListing.transform.parent = playersContainer;
+            tempListing.transform.localScale = new Vector3(5.289001f, 1, 1);
             //Debug.Log("Players nickname is: " + player.NickName);
             tempText.text = player.NickName;
-
+            
             playerNameBoxes.Add(tempListing);
         }
     }
