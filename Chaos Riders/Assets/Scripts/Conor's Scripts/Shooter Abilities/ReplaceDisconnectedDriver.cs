@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using System.IO;
 
 public class ReplaceDisconnectedDriver : MonoBehaviour
 {
@@ -51,32 +52,39 @@ public class ReplaceDisconnectedDriver : MonoBehaviour
                 //braker
                 if (driverModelIndex == 0)
                 {
-                    GameObject AIReplacementBraker = Instantiate(AIBraker, this.transform.position, this.transform.rotation); //spawn the ai breaker
+                    //GameObject AIReplacementBraker = Instantiate(AIBraker, this.transform.position, this.transform.rotation); //spawn the ai breaker
+                    GameObject AIReplacementBraker = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "AI", AIBraker.name), this.transform.position, this.transform.rotation, 0);
 
                     mtp.FakeParent = AIReplacementBraker.transform; //attach the ai braker to the shooter in the moveTurretPosition Script
                     mtp.car = AIReplacementBraker;
 
                     AIReplacementBraker.GetComponent<AICarController>().healthBar.SetActive(false);
+                    this.GetComponent<MatchDriversHealth>().CarHealth = AIReplacementBraker.GetComponent<Target>();
                 }
                 //shredder
                 if (driverModelIndex == 1)
                 {
-                    GameObject AIReplacementShredder = Instantiate(AIShredder, this.transform.position, this.transform.rotation); //spawn the ai shredder 
+                    //GameObject AIReplacementShredder = Instantiate(AIShredder, this.transform.position, this.transform.rotation); //spawn the ai shredder 
+                    GameObject AIReplacementShredder = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "AI", AIShredder.name), this.transform.position, this.transform.rotation, 0);
 
                     mtp.FakeParent = AIReplacementShredder.transform;
                     mtp.car = AIReplacementShredder;
 
                     AIReplacementShredder.GetComponent<AICarController>().healthBar.SetActive(false);
+                    this.GetComponent<MatchDriversHealth>().CarHealth = AIReplacementShredder.GetComponent<Target>();
+                    this.GetComponent<Shooter>().car = AIReplacementShredder;
                 }
                 //colt
                 if (driverModelIndex == 2)
                 {
-                    GameObject AIReplacementColt = Instantiate(AIColt, this.transform.position, this.transform.rotation); //spawn the ai colt
+                    //GameObject AIReplacementColt = Instantiate(AIColt, this.transform.position, this.transform.rotation); //spawn the ai colt
+                    GameObject AIReplacementColt = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "AI", AIColt.name), this.transform.position, this.transform.rotation, 0);
 
                     mtp.FakeParent = AIReplacementColt.transform;
                     mtp.car = AIReplacementColt;
 
-                    AIReplacementColt.GetComponent<AICarController>().healthBar.SetActive(false); 
+                    AIReplacementColt.GetComponent<AICarController>().healthBar.SetActive(false);
+                    this.GetComponent<MatchDriversHealth>().CarHealth = AIReplacementColt.GetComponent<Target>();
                 }
 
                 canReplaceDriver = false;
