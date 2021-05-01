@@ -790,7 +790,7 @@ public class Shooter : MonoBehaviourPun
 
                     foreach(Player p in PhotonNetwork.PlayerList)
                     {
-                        if(target.pv.Owner == p)
+                        if(target.pv.Owner == p && target.gameObject != this.GetComponent<MoveTurretPosition>().car) // <---------- New car check
                         {
                             pv.RPC("RPC_DealDamage", RpcTarget.All, weaponDamage, target.gameObject.GetPhotonView().ViewID);
                         }
@@ -808,8 +808,23 @@ public class Shooter : MonoBehaviourPun
                 }
                 //impactGo.transform.parent = impactEffectHolder;
 
-                hitmarker.ChangeAlpha(1);
-                FMODUnity.RuntimeManager.PlayOneShot(hitmarkerSound);
+
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// HIT MARKERS
+                //only show a hitmarker if the car doesnt belong to you
+                if (this.GetComponent<MoveTurretPosition>().car != null)
+                {
+                    if(hit.transform.gameObject != this.GetComponent<MoveTurretPosition>().car)
+                    {
+                        hitmarker.ChangeAlpha(1);
+                        FMODUnity.RuntimeManager.PlayOneShot(hitmarkerSound);
+                    }
+                }
+                else //if you are not connected to a car you can get hitmarkers on every car
+                {
+                    hitmarker.ChangeAlpha(1);
+                    FMODUnity.RuntimeManager.PlayOneShot(hitmarkerSound);
+                }
+
 
                 float chance = Random.Range(0, 100);
                 if (chance <= trailPercentage)

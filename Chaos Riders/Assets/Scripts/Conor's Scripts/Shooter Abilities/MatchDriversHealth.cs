@@ -55,7 +55,7 @@ public class MatchDriversHealth : MonoBehaviour
 
     private void SetHealthBarUiSize(float sizeNormalized)
     {
-        Debug.Log("Health Normalized is: " + CarHealth.healthNormalized);
+        //Debug.Log("Health Normalized is: " + CarHealth.healthNormalized);
         myHealthBarUi.localScale = new Vector3(1f, sizeNormalized);
     }
 }

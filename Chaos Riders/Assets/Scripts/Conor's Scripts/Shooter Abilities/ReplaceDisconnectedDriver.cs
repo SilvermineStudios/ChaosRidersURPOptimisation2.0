@@ -8,8 +8,8 @@ public class ReplaceDisconnectedDriver : MonoBehaviour
 {
     private GameObject car; //ref to the connected car
     private MoveTurretPosition mtp;
-
     private Shooter ShooterScript;
+
     [SerializeField] private bool canReplaceDriver = false;
     [SerializeField] private int driverModelIndex = -1; //this is the same index from the Driver Title script; 0 = braker, 1 = shredder, 2 = colt
     [SerializeField] private GameObject AIBraker, AIColt, AIShredder;
@@ -61,6 +61,7 @@ public class ReplaceDisconnectedDriver : MonoBehaviour
                     AIReplacementBraker.GetComponent<AICarController>().healthBar.SetActive(false);
                     this.GetComponent<MatchDriversHealth>().CarHealth = AIReplacementBraker.GetComponent<Target>();
                 }
+
                 //shredder
                 if (driverModelIndex == 1)
                 {
@@ -72,8 +73,8 @@ public class ReplaceDisconnectedDriver : MonoBehaviour
 
                     AIReplacementShredder.GetComponent<AICarController>().healthBar.SetActive(false);
                     this.GetComponent<MatchDriversHealth>().CarHealth = AIReplacementShredder.GetComponent<Target>();
-                    this.GetComponent<Shooter>().car = AIReplacementShredder;
                 }
+
                 //colt
                 if (driverModelIndex == 2)
                 {
