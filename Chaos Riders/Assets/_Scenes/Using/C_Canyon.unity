@@ -50855,33 +50855,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 973503119309775103, guid: 75a4e3dc9871b954ca033cf55406b813, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 973503119309775103, guid: 75a4e3dc9871b954ca033cf55406b813, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 973503119309775103, guid: 75a4e3dc9871b954ca033cf55406b813, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2305776188843830642, guid: 75a4e3dc9871b954ca033cf55406b813, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2305776188843830642, guid: 75a4e3dc9871b954ca033cf55406b813, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3290571139897953901, guid: 75a4e3dc9871b954ca033cf55406b813, type: 3}
-      propertyPath: viewIdField
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 7536812608521422747, guid: 75a4e3dc9871b954ca033cf55406b813, type: 3}
-      propertyPath: viewIdField
-      value: 15
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8149726512099383473, guid: 75a4e3dc9871b954ca033cf55406b813, type: 3}
       propertyPath: m_LocalPosition.x
@@ -50930,10 +50910,6 @@ PrefabInstance:
     - target: {fileID: 8318536519656587226, guid: 75a4e3dc9871b954ca033cf55406b813, type: 3}
       propertyPath: m_Name
       value: AI Shredder
-      objectReference: {fileID: 0}
-    - target: {fileID: 8318536519656587226, guid: 75a4e3dc9871b954ca033cf55406b813, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 75a4e3dc9871b954ca033cf55406b813, type: 3}
@@ -74004,26 +73980,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 566308099, guid: c7d771049c583ed4d8583216cccd3132, type: 3}
-      propertyPath: viewIdField
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 1925217457, guid: c7d771049c583ed4d8583216cccd3132, type: 3}
-      propertyPath: viewIdField
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 1407414511388674112, guid: c7d771049c583ed4d8583216cccd3132, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1407414511388674112, guid: c7d771049c583ed4d8583216cccd3132, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1407414511388674112, guid: c7d771049c583ed4d8583216cccd3132, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1407414511947848912, guid: c7d771049c583ed4d8583216cccd3132, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -74035,14 +73991,6 @@ PrefabInstance:
     - target: {fileID: 1407414512137103672, guid: c7d771049c583ed4d8583216cccd3132, type: 3}
       propertyPath: m_Name
       value: AI Mustang
-      objectReference: {fileID: 0}
-    - target: {fileID: 1407414512137103672, guid: c7d771049c583ed4d8583216cccd3132, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1407414512137103674, guid: c7d771049c583ed4d8583216cccd3132, type: 3}
-      propertyPath: m_Enabled
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1407414512137103679, guid: c7d771049c583ed4d8583216cccd3132, type: 3}
       propertyPath: m_LocalPosition.x
@@ -74087,10 +74035,6 @@ PrefabInstance:
     - target: {fileID: 1407414512137103679, guid: c7d771049c583ed4d8583216cccd3132, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4477362338368450644, guid: c7d771049c583ed4d8583216cccd3132, type: 3}
-      propertyPath: viewIdField
-      value: 13
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7d771049c583ed4d8583216cccd3132, type: 3}
@@ -81143,6 +81087,7 @@ MonoBehaviour:
   FR: {fileID: 303874538}
   waypoints: []
   centerOfMass: {x: 0, y: -0.2, z: 2}
+  healthBar: {fileID: 0}
   Shooter: {fileID: 0}
   timeBeforeCarFreezes: 1
 --- !u!54 &1977109496

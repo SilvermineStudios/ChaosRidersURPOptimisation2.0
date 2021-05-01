@@ -8,8 +8,6 @@ public class ReplaceDisconnectedDriver : MonoBehaviour
     private GameObject car; //ref to the connected car
     private MoveTurretPosition mtp;
 
-    [SerializeField] private float spawnAIDelay = 3f;
-
     private Shooter ShooterScript;
     [SerializeField] private bool canReplaceDriver = false;
     [SerializeField] private int driverModelIndex = -1; //this is the same index from the Driver Title script; 0 = braker, 1 = shredder, 2 = colt
@@ -57,6 +55,8 @@ public class ReplaceDisconnectedDriver : MonoBehaviour
 
                     mtp.FakeParent = AIReplacementBraker.transform; //attach the ai braker to the shooter in the moveTurretPosition Script
                     mtp.car = AIReplacementBraker;
+
+                    AIReplacementBraker.GetComponent<AICarController>().healthBar.SetActive(false);
                 }
                 //shredder
                 if (driverModelIndex == 1)
@@ -65,6 +65,8 @@ public class ReplaceDisconnectedDriver : MonoBehaviour
 
                     mtp.FakeParent = AIReplacementShredder.transform;
                     mtp.car = AIReplacementShredder;
+
+                    AIReplacementShredder.GetComponent<AICarController>().healthBar.SetActive(false);
                 }
                 //colt
                 if (driverModelIndex == 2)
@@ -73,34 +75,13 @@ public class ReplaceDisconnectedDriver : MonoBehaviour
 
                     mtp.FakeParent = AIReplacementColt.transform;
                     mtp.car = AIReplacementColt;
+
+                    AIReplacementColt.GetComponent<AICarController>().healthBar.SetActive(false); 
                 }
 
                 canReplaceDriver = false;
                 //StartCoroutine(SpawnAIDelay(spawnAIDelay));
             }
         }
-    }
-
-    private IEnumerator SpawnAIDelay(float time)
-    {
-        yield return new WaitForSeconds(time);
-
-        //braker
-        if (driverModelIndex == 0)
-        {
-            GameObject AIReplacementBraker = Instantiate(AIBraker, this.transform.position, this.transform.rotation);
-        }
-        //shredder
-        if (driverModelIndex == 1)
-        {
-            //GameObject AIReplacementBraker = Instantiate(x, this.transform.position, this.transform.rotation);
-        }
-        //colt
-        if (driverModelIndex == 2)
-        {
-            GameObject AIReplacementBraker = Instantiate(AIColt, this.transform.position, this.transform.rotation);
-        }
-
-        canReplaceDriver = false;
     }
 }
