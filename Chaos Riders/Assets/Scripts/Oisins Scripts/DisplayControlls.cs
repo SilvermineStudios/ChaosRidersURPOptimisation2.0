@@ -11,13 +11,14 @@ public class DisplayControlls : MonoBehaviour
 
     private void Start()
     {
+        Controllers = Input.GetJoystickNames();
         InvokeRepeating("CheckForControllers", 0, 1);
     }
 
     void Update()
     {
         Controllers = Input.GetJoystickNames();
-        Debug.Log(Controllers.Length);
+        //Debug.Log(Controllers.Length);
 
         if(!controller)
         {

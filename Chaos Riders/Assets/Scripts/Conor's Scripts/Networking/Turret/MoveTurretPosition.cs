@@ -67,6 +67,9 @@ public class MoveTurretPosition : MonoBehaviour
     [PunRPC]
     void AttachToFakeParent()
     {
+        if (car == null)
+            return;
+
         carGunPos = car.GetComponent<MultiplayerCarPrefabs>().gunSpawnPoint;
         carGunStandPosition = car.GetComponent<MultiplayerCarPrefabs>().gunstand;
 

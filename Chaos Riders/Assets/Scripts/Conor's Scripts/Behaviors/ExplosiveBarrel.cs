@@ -6,6 +6,8 @@ using System.IO;
 
 public class ExplosiveBarrel : MonoBehaviour
 {
+    private PhotonView pv;
+
     private MeshRenderer[] meshRenderers; //used for making the object invisible
     private Collider[] colliders; //used for disabling the colliders
 
@@ -13,10 +15,11 @@ public class ExplosiveBarrel : MonoBehaviour
     private bool readyToExplode = true;
 
     [SerializeField] private GameObject explosionEffect;
-    
+
 
     void Start()
     {
+        pv = this.GetComponent<PhotonView>();
         meshRenderers = this.GetComponentsInChildren<MeshRenderer>();
         colliders = this.GetComponentsInChildren<Collider>();
 
@@ -27,10 +30,10 @@ public class ExplosiveBarrel : MonoBehaviour
     void Update()
     {
         //if the barrel is shot
-        if(readyToExplode && barrelHealth <= 0)
+        if (readyToExplode && barrelHealth <= 0)
         {
             StartCoroutine(ExplodeCoroutine(TrapManager.ExplodedForTime));
-        }  
+        }
     }
 
     public void TakeDamage()
@@ -40,6 +43,7 @@ public class ExplosiveBarrel : MonoBehaviour
     }
 
     #region Enable / Disable
+    [PunRPC]
     void ExplodeBarrel()
     {
         readyToExplode = false;
@@ -55,6 +59,7 @@ public class ExplosiveBarrel : MonoBehaviour
         Instantiate(explosionEffect, transform.position, transform.rotation);
     }
 
+    [PunRPC]
     void ResetBarrel()
     {
         readyToExplode = true;
@@ -77,10 +82,12 @@ public class ExplosiveBarrel : MonoBehaviour
 
     public IEnumerator ExplodeCoroutine(float time)
     {
+        pv.RPC("ExplodeBarrel", RpcTarget.AllBuffered);
         ExplodeBarrel();
         
         yield return new WaitForSeconds(time);
 
+        pv.RPC("ResetBarrel", RpcTarget.AllBuffered);
         ResetBarrel();
     }
 }

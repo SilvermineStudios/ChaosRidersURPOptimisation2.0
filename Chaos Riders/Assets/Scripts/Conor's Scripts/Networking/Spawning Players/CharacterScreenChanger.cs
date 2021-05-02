@@ -12,7 +12,6 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
 
     [SerializeField] private GameVariables gameVariables;
     [SerializeField] private PlayerDataManager playerDataManager;
-    [SerializeField] private PhotonMenuPlayer myPhotonMenuPlayer;
 
     public GameObject shooterCharacterScreen, driverCharacterScreen;
     public GameObject choosePlayerTypePanel; //panel for choosing whether to be a driver or shooter 
@@ -60,17 +59,6 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
             for(int i = 0; i < photonMenuPlayers.Length; i++)
             {
                 //photonMenuPlayers[i].playerNumber = i;
-            }
-        }
-
-        if(photonMenuPlayers.Length > 0 && myPhotonMenuPlayer == null)
-        {
-            foreach(PhotonMenuPlayer pmp in photonMenuPlayers)
-            {
-                if(pmp.gameObject.GetComponent<PhotonView>().IsMine)
-                {
-                    //myPhotonMenuPlayer = pmp;
-                }
             }
         }
     }
@@ -167,39 +155,17 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
                 }
 
                 pv.RPC("RPC_AssignDriverCharacter", RpcTarget.AllBuffered, whichCharacter, p);
-            }
-        }
-    }
-    [PunRPC]
-    void RPC_AssignDriverCharacter(int whichCharacter, Player p)
-    {
-        foreach (PhotonMenuPlayer pmp in photonMenuPlayers)
-        {
-            if (pmp.gameObject.GetComponent<PhotonView>().Owner == p)
-            {
-                pmp.picked = true;
 
                 //braker
-                if (whichCharacter == 0)
+                if(whichCharacter == 0)
                 {
-                    //Debug.Log("Braker");
-                    pmp.carModel = PhotonMenuPlayer.carType.Braker;
-                    pmp.currentCarClass = CarClass.Braker;
-
-                    //brakerButton.GetComponent<Image>().color = selectedButtonColour;
-                    //shredderButton.GetComponent<Image>().color = regularButtonColour;
                     pv.RPC("RPC_ButtonColour", p, brakerButton, selectedButtonColour);
                     pv.RPC("RPC_ButtonColour", p, shredderButton, regularButtonColour);
                 }
+
                 //shredder
                 if (whichCharacter == 1)
                 {
-                    //Debug.Log("Shredder");
-                    pmp.carModel = PhotonMenuPlayer.carType.Shredder;
-                    pmp.currentCarClass = CarClass.Shredder;
-
-                    //shredderButton.GetComponent<Image>().color = selectedButtonColour;
-                    //brakerButton.GetComponent<Image>().color = regularButtonColour;
                     pv.RPC("RPC_ButtonColour", p, shredderButton, selectedButtonColour);
                     pv.RPC("RPC_ButtonColour", p, brakerButton, regularButtonColour);
                 }
@@ -207,7 +173,32 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
         }
     }
 
-    
+    [PunRPC]
+    void RPC_AssignDriverCharacter(int whichCharacter, Player p)
+    {
+        foreach (PhotonMenuPlayer pmp in photonMenuPlayers)
+        {
+            if (pmp.gameObject.GetComponent<PhotonView>().Owner == p)
+            {
+                //braker
+                if (whichCharacter == 0)
+                {
+                    //Debug.Log("Braker");
+                    pmp.carModel = PhotonMenuPlayer.carType.Braker;
+                    pmp.currentCarClass = CarClass.Braker;
+                }
+                //shredder
+                if (whichCharacter == 1)
+                {
+                    //Debug.Log("Shredder");
+                    pmp.carModel = PhotonMenuPlayer.carType.Shredder;
+                    pmp.currentCarClass = CarClass.Shredder;
+                }
+            }
+        }
+    }
+
+
     #endregion
 
     #region Shooter Buttons
@@ -258,6 +249,20 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
                 }
 
                 pv.RPC("RPC_AssignShooterCharacter", RpcTarget.AllBuffered, whichCharacter, p);
+
+                //standard gun
+                if(whichCharacter == 0)
+                {
+                    pv.RPC("RPC_ButtonColour", p, standardGunButton, selectedButtonColour);
+                    pv.RPC("RPC_ButtonColour", p, goldenGunButton, regularButtonColour);
+                }
+
+                //golden gun
+                if(whichCharacter == 1)
+                {
+                    pv.RPC("RPC_ButtonColour", p, goldenGunButton, selectedButtonColour);
+                    pv.RPC("RPC_ButtonColour", p, standardGunButton, regularButtonColour);
+                }
             }
         }
     }
@@ -273,26 +278,17 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
                 //standard gun
                 if (whichCharacter == 0)
                 {
-                    Debug.Log("standard gun");
+                    //Debug.Log("standard gun");
                     pmp.shooterModel = PhotonMenuPlayer.shooterType.standardGun;
                     pmp.currentMinigunClass = MinigunClass.standard;
-
-                    //standardGunButton.GetComponent<Image>().color = selectedButtonColour;
-                    //goldenGunButton.GetComponent<Image>().color = regularButtonColour;
-                    pv.RPC("RPC_ButtonColour", p, standardGunButton, selectedButtonColour);
-                    pv.RPC("RPC_ButtonColour", p, goldenGunButton, regularButtonColour);
                 }
+
                 //golden gun
                 if (whichCharacter == 1)
                 {
-                    Debug.Log("golden gun");
+                    //Debug.Log("golden gun");
                     pmp.shooterModel = PhotonMenuPlayer.shooterType.goldenGun;
                     pmp.currentMinigunClass = MinigunClass.gold;
-
-                    //goldenGunButton.GetComponent<Image>().color = selectedButtonColour;
-                    //standardGunButton.GetComponent<Image>().color = regularButtonColour;
-                    pv.RPC("RPC_ButtonColour", p, goldenGunButton, selectedButtonColour);
-                    pv.RPC("RPC_ButtonColour", p, regularButtonColour, regularButtonColour);
                 }
             }
         }

@@ -43,7 +43,7 @@ public class PhotonMenuPlayer : MonoBehaviour
     void Awake()
     {
         pv = GetComponent<PhotonView>();
-        playerDataManager = FindObjectOfType<PlayerDataManager>();
+        
 
         carModel = carType.None;
         shooterModel = shooterType.None;
@@ -62,9 +62,30 @@ public class PhotonMenuPlayer : MonoBehaviour
 
     private void Start()
     {
+        playerDataManager = FindObjectOfType<PlayerDataManager>();
+
         Player = pv.Owner;
         
         //Debug.Log("My player is = " + Player.NickName);
+
+        if(pv.IsMine && roomController != null)
+        {
+            foreach(GameObject go in roomController.playerNameBoxes)
+            {
+                if (carModel == carType.None && shooterModel == shooterType.None)
+                    go.GetComponent<PlayerNameBox>().NoneSelected();
+
+                if (carModel == carType.Braker)
+                    go.GetComponent<PlayerNameBox>().BrakerSelected();
+                if (carModel == carType.Shredder)
+                    go.GetComponent<PlayerNameBox>().ShredderSelected();
+
+                if (shooterModel == shooterType.standardGun)
+                    go.GetComponent<PlayerNameBox>().StandardGunSelected();
+                if (shooterModel == shooterType.goldenGun)
+                    go.GetComponent<PlayerNameBox>().GoldenGunSelected();
+            }
+        }
     }
 
     void Update()

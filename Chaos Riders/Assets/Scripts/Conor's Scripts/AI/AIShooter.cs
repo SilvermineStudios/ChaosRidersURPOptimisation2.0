@@ -114,31 +114,22 @@ public class AIShooter : MonoBehaviour
 
         targets.RemoveAll(x => x == null); //remove any targets that are null (Disconnected drivers)
 
-        //Getting car info
-        if (mtp.car != null && car == null)
+        foreach(GameObject go in targets)
         {
-            car = mtp.car;
+            if(go.GetComponent<Checkpoint>().youFinishedTheRace)
+            {
+                targets.Remove(go);
+            }
         }
 
-        if (car != null && carRigidBody == null)
-            carRigidBody = car.GetComponent<Rigidbody>();
-
-        if(car != null)
-            carHealth = car.GetComponent<Target>().health;
-
-        if (carHealth <= 0 && !dead)
-            dead = true;
-        else
-            dead = false;
+        GetCarInfo();
+        CheckIfDead();
 
         //////////////////////////////////////////////////////////// Put all shooting stuff below here
         if (!MasterClientRaceStart.Instance.weaponsFree) { return; }
 
-        //dont do anything if there is no target
-        if (target == null)
-            return;
-        else
-            TargetLockOn();
+        CheckIfThereIsATarget();
+        CheckIfShooting();
     }
 
 
@@ -148,18 +139,6 @@ public class AIShooter : MonoBehaviour
 
         if (!MasterClientRaceStart.Instance.weaponsFree) { return; }
 
-        //Check If you are shooting or not
-        if (target != null)
-        {
-            float distanceToEnemy = Vector3.Distance(transform.position, target.transform.position); //check the distance of the target from the player
-            if (distanceToEnemy <= range)
-                shooting = true;
-            else
-                shooting = false;
-        }
-        else
-            shooting = false;
-
 
         //Shooting
         if (shooting)
@@ -168,7 +147,6 @@ public class AIShooter : MonoBehaviour
 
             if(!gunShooting)
             {
-                //InvokeRepeating("Shoot", 0, 1);
                 InvokeRepeating("ShootBullets", 0, shootingRepeatSpeed);
                 gunShooting = true;
             }
@@ -179,7 +157,6 @@ public class AIShooter : MonoBehaviour
 
             if(gunShooting)
             {
-                //CancelInvoke("Shoot");
                 CancelInvoke("ShootBullets");
                 gunShooting = false;
             }
@@ -200,6 +177,56 @@ public class AIShooter : MonoBehaviour
             Destroy(this.gameObject);
     }
 
+    #region Getting and Checking Variables
+    private void CheckIfShooting()
+    {
+        //Check If you are shooting or not
+        if (target != null) // if you have a target
+        {
+            float distanceToEnemy = Vector3.Distance(transform.position, target.transform.position); //check the distance of the target from the player
+
+            if (distanceToEnemy <= range && !dead) //if the target is in range and you are not dead
+                shooting = true;
+
+            if (distanceToEnemy > range || dead) //if the target is not in range or if you are dead
+                shooting = false;
+        }
+        else //if you dont have a target
+            shooting = false;
+    }
+
+    private void CheckIfDead()
+    {
+        if (carHealth <= 0)
+            dead = true;
+        else
+            dead = false;
+    }
+
+    private void CheckIfThereIsATarget()
+    {
+        //dont do anything if there is no target
+        if (target == null)
+            return;
+        else
+            TargetLockOn();
+    }
+
+    private void GetCarInfo()
+    {
+        //Getting car info
+        if (mtp.car != null && car == null)
+        {
+            car = mtp.car;
+        }
+
+        if (car != null && carRigidBody == null)
+            carRigidBody = car.GetComponent<Rigidbody>();
+
+        if (car != null)
+            carHealth = car.GetComponent<Target>().health;
+    }
+    #endregion
 
     #region Targeting
 
@@ -259,7 +286,6 @@ public class AIShooter : MonoBehaviour
         InvokeRepeating("UpdateTarget", 0f, timeBeforeLookingForANewTarget); //MOVE TO WHEN WEAPONS ARE ENABLED
     }
     #endregion
-
 
     #region Shooting
     void ShootingEffectsOn()

@@ -9,6 +9,10 @@ public class Checkpoint : MonoBehaviour
 {
     public float distanceToNextCheckpoint { get; private set; }
 
+    public bool youFinishedTheRace = false;
+    private MeshRenderer[] meshRenderers;
+    private Collider[] colliders;
+
     [SerializeField] private AudioClip soundEffect;
     [SerializeField] GameObject resetBar;
     float resetChargeAmount;
@@ -38,6 +42,9 @@ public class Checkpoint : MonoBehaviour
     {
         pv = GetComponent<PhotonView>();
         rb = GetComponent<Rigidbody>();
+
+        meshRenderers = this.GetComponentsInChildren<MeshRenderer>();
+        colliders = this.GetComponentsInChildren<Collider>();
     }
 
     private void Start()
@@ -179,8 +186,6 @@ public class Checkpoint : MonoBehaviour
 
             }
 
-
-
             //only let the player cross the line if they have collected the first check point then gone through the rest of the checkpoints
             if (other.gameObject.tag == "StartLine" && canCrossFinish && currentCheckpoint == 0 && currentLap < amountOfLaps)
             {
@@ -191,10 +196,7 @@ public class Checkpoint : MonoBehaviour
 
             if (other.gameObject.tag == "FinishLine")// && !FinishLine.GameWon)
             {
-                //CarUIManager.youWinText.SetActive(true);
-                youWinText.SetActive(true);
-                FinishLine.GameWon = true;
-                Debug.Log("YOU WIN");
+                FinishedTheRaceStuff();
             }
         }
     }
@@ -203,11 +205,6 @@ public class Checkpoint : MonoBehaviour
     {
         //canCollect = true;
     }
-
-
-
-    
-
 
     void OnlyDisplayNextCheckpoint()
     {
@@ -223,4 +220,52 @@ public class Checkpoint : MonoBehaviour
             currentCheckpoint = 0; //make the next waypoint the first waypoint
     }
 
+    void MakeYourselfInvisible()
+    {
+        foreach (MeshRenderer mr in meshRenderers)
+        {
+            mr.enabled = false;
+        }
+
+        foreach(Collider col in colliders)
+        {
+            col.enabled = false;
+        }
+    }
+
+    void FinishedTheRaceStuff()
+    {
+        youFinishedTheRace = true;
+        youWinText.SetActive(true);
+        FinishLine.GameWon = true;
+        Debug.Log("YOU CROSSED THE FINISH LINE");
+
+
+        foreach(GameObject go in this.GetComponent<MultiplayerCameraCheck>().cameras)
+        {
+            go.SetActive(false);
+        }
+
+        //used to disable ai car if it is connected to you
+        if(this.GetComponent<Shooter>())
+        {
+            GameObject car = this.GetComponent<MoveTurretPosition>().car;
+            
+            if (car.tag == "Player") //check if the car is an ai car
+            {
+                MeshRenderer[] carMeshes = car.GetComponentsInChildren<MeshRenderer>();
+                Collider[] carColliders = car.GetComponentsInChildren<Collider>();
+
+                foreach(MeshRenderer mr in carMeshes)
+                {
+                    mr.enabled = false;
+                }
+                foreach(Collider col in carColliders)
+                {
+                    col.enabled = false;
+                }
+            }
+        }
+        MakeYourselfInvisible();
+    }
 }

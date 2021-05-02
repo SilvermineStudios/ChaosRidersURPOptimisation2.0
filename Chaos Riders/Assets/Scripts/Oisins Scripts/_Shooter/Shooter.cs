@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
 using Cinemachine;
 using TMPro;
 using System.IO;
@@ -732,34 +733,35 @@ public class Shooter : MonoBehaviourPun
 
         Vector3 direction = Spread(currentBulletSpread);
 
-        /*
-        GameObject bulletCasingGO;
+        {
+            /*
+            GameObject bulletCasingGO;
 
-        if (IsThisMultiplayer.Instance.multiplayer)
-        {
-            bulletCasingGO = PhotonNetwork.Instantiate("BulletCasing", CasingSpawn.transform.position, CasingSpawn.transform.rotation);
-        }
-        else
-        {
-            bulletCasingGO = Instantiate(Casing, CasingSpawn.transform.position, CasingSpawn.transform.rotation);
-        }
-        bulletCasingGO.GetComponent<Rigidbody>().AddForce((bulletCasingGO.transform.right + (bulletCasingGO.transform.up * 2)) * 0.3f, ForceMode.Impulse);
-
-        if (!noCarNeeded)
-        {
-            if (car.GetComponent<Controller>())
+            if (IsThisMultiplayer.Instance.multiplayer)
             {
-                bulletCasingGO.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
+                bulletCasingGO = PhotonNetwork.Instantiate("BulletCasing", CasingSpawn.transform.position, CasingSpawn.transform.rotation);
             }
             else
             {
-                bulletCasingGO.GetComponent<Rigidbody>().velocity = aiCarController.rb.velocity;
+                bulletCasingGO = Instantiate(Casing, CasingSpawn.transform.position, CasingSpawn.transform.rotation);
             }
-
             bulletCasingGO.GetComponent<Rigidbody>().AddForce((bulletCasingGO.transform.right + (bulletCasingGO.transform.up * 2)) * 0.3f, ForceMode.Impulse);
-        }
-        */
 
+            if (!noCarNeeded)
+            {
+                if (car.GetComponent<Controller>())
+                {
+                    bulletCasingGO.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
+                }
+                else
+                {
+                    bulletCasingGO.GetComponent<Rigidbody>().velocity = aiCarController.rb.velocity;
+                }
+
+                bulletCasingGO.GetComponent<Rigidbody>().AddForce((bulletCasingGO.transform.right + (bulletCasingGO.transform.up * 2)) * 0.3f, ForceMode.Impulse);
+            }
+            */
+        }
         RaycastHit[] hits;
 
         hits = Physics.RaycastAll(cineCamera.transform.position, direction, weaponRange, everythingButIgnoreBullets);
@@ -784,7 +786,15 @@ public class Shooter : MonoBehaviourPun
                 if (target != null && target.gameObject != car)
                 {
                     //target.TakeDamage(weaponDamage);
-                    pv.RPC("RPC_DealDamage", RpcTarget.All, target, weaponDamage);
+                    //pv.RPC("RPC_DealDamage", RpcTarget.All, target, weaponDamage);
+
+                    foreach(Player p in PhotonNetwork.PlayerList)
+                    {
+                        if(target.pv.Owner == p && target.gameObject != this.GetComponent<MoveTurretPosition>().car) // <---------- New car check
+                        {
+                            pv.RPC("RPC_DealDamage", RpcTarget.All, weaponDamage, target.gameObject.GetPhotonView().ViewID);
+                        }
+                    }
                 }
 
                 GameObject impactGo;
@@ -798,8 +808,23 @@ public class Shooter : MonoBehaviourPun
                 }
                 //impactGo.transform.parent = impactEffectHolder;
 
-                hitmarker.ChangeAlpha(1);
-                FMODUnity.RuntimeManager.PlayOneShot(hitmarkerSound);
+
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// HIT MARKERS
+                //only show a hitmarker if the car doesnt belong to you
+                if (this.GetComponent<MoveTurretPosition>().car != null)
+                {
+                    if(hit.transform.gameObject != this.GetComponent<MoveTurretPosition>().car)
+                    {
+                        hitmarker.ChangeAlpha(1);
+                        FMODUnity.RuntimeManager.PlayOneShot(hitmarkerSound);
+                    }
+                }
+                else //if you are not connected to a car you can get hitmarkers on every car
+                {
+                    hitmarker.ChangeAlpha(1);
+                    FMODUnity.RuntimeManager.PlayOneShot(hitmarkerSound);
+                }
+
 
                 float chance = Random.Range(0, 100);
                 if (chance <= trailPercentage)
@@ -834,9 +859,10 @@ public class Shooter : MonoBehaviourPun
     }
 
     [PunRPC]
-    void RPC_DealDamage(Target target, float amount)
+    void RPC_DealDamage(float amountOfDamage, int targetViewID)
     {
-        target.TakeDamage(amount);
+        PhotonView.Find(targetViewID).gameObject.GetComponent<Target>().TakeDamage(amountOfDamage);
+        //TakeDamage(amountOfDamage);
     }
     #endregion
 

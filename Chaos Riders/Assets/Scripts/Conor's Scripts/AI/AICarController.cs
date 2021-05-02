@@ -24,6 +24,7 @@ public class AICarController : MonoBehaviour
 
     //private AIHealth healthScript;
     private Target healthScript;
+    public GameObject healthBar;
 
     //public TurretTester ShooterAttached;
 
