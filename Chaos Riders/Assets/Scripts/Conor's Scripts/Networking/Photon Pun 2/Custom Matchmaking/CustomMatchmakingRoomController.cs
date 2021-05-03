@@ -49,6 +49,11 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
         LoadingTime = loadingTime;
     }
 
+    private void Update()
+    {
+        playerNameBoxes.RemoveAll(x => x == null);
+    }
+
     void ClearPlayerListings()
     {
         for(int i = playersContainer.childCount -1; i >= 0; i--)
