@@ -114,11 +114,15 @@ public class AIShooter : MonoBehaviour
 
         targets.RemoveAll(x => x == null); //remove any targets that are null (Disconnected drivers)
 
-        foreach(GameObject go in targets)
+        //PUT SHIT HERE AND STUFF) 
+        if (targets.Count > 0)
         {
-            if(go.GetComponent<Checkpoint>().youFinishedTheRace)
+            foreach (GameObject go in targets)
             {
-                targets.Remove(go);
+                if (go.GetComponent<Checkpoint>() && go.GetComponent<Checkpoint>().youFinishedTheRace)
+                {
+                    targets.Remove(go);
+                }
             }
         }
 
