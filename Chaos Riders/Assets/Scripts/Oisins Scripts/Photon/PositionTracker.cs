@@ -13,6 +13,7 @@ using TMPro;
 public class PositionTracker : MonoBehaviourPun
 {
     PhotonView pv;
+    PhotonView Clientpv;
     PlayerDataManager playerDataManager;
 
     CarPositionHolder[] carPositionHolders;
@@ -28,10 +29,12 @@ public class PositionTracker : MonoBehaviourPun
 
     void Start()
     {
+        
         if (!PhotonNetwork.IsMasterClient) { return; }
         StartCoroutine(WaitForSpawns());
         InvokeRepeating("SortTeams", 5, 1);
     }
+
 
 
     void SortTeams()
@@ -43,6 +46,10 @@ public class PositionTracker : MonoBehaviourPun
 
     private void FixedUpdate()
     {
+        if(Clientpv == null && FindObjectOfType<myPV>() != null)
+        {
+            Clientpv = FindObjectOfType<myPV>().pv;
+        }
         if (!PhotonNetwork.IsMasterClient) { return; }
         if(!doneWaiting) { return; }
 
@@ -60,24 +67,25 @@ public class PositionTracker : MonoBehaviourPun
 
         for(int i = 0; i < teamPositions.Count; i ++)
         {
-            if (teamPositions[i].pv.IsMine)
+            if (teamPositions[i].pv == Clientpv)
             {
-                text[0].text = "(Place) " + i;
+                //text[0].text = "(Place) " + i;
+                Debug.Log("(Place) " + i);
                 break;
             }
         }
 
-        text[2].text = "(Driver) " + teamPositions[0].driverName;// + ", " + teamPositions[i].checkpointNumber;
+        //text[2].text = "(Driver) " + teamPositions[0].driverName;// + ", " + teamPositions[i].checkpointNumber;
 
         // + ", " + teamPositions[i].checkpointNumber; 
-        /*
+        
         text[0].text = "(Driver) " + teamPositions[0].driverName;// + ", " + teamPositions[i].checkpointNumber; 
         text[1].text = "(Shooter) " + teamPositions[0].shooterName;// + ", " + teamPositions[i].checkpointNumber; 
         text[2].text = "(Driver) " + teamPositions[1].driverName;// + ", " + teamPositions[i].checkpointNumber; 
         text[3].text = "(Shooter) " + teamPositions[1].shooterName;// + ", " + teamPositions[i].checkpointNumber; 
         text[4].text = "(Driver) " + teamPositions[2].driverName;// + ", " + teamPositions[i].checkpointNumber; 
         text[5].text = "(Shooter) " + teamPositions[2].shooterName;// + ", " + teamPositions[i].checkpointNumber; 
-        */
+        
 
 
         for (int i = 0; i < 5; i+=2)

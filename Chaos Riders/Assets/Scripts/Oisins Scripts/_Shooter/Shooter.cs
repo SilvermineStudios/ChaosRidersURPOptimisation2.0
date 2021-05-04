@@ -22,12 +22,15 @@ public class Shooter : MonoBehaviourPun
     [SerializeField] GameObject rpgGo;
     [SerializeField] GameObject rocketspawn;
     [SerializeField] GameObject rocket;
+    [SerializeField] Animator anim;
     [SerializeField] TMP_Text rpgcount;
     Rigidbody rb;
+    [SerializeField] private Transform stand; //stand that is going to rotate to face the correct direction
     [SerializeField] private Transform gunBarrel; //barrel that is going to rotate to face the correct direction
     [SerializeField] private GameObject bulletSpawnPoint;
     [SerializeField] GameObject MinigunHolder;
     [SerializeField] GameObject RifleHolder;
+    [SerializeField] GameObject[] TurnOffForRifle;
     [SerializeField] GameObject MinigunIcon, RifleIcon;
     [SerializeField] LayerMask everythingButIgnoreBullets;
     //[SerializeField] public ParticleSystem muzzleFlash;
@@ -36,6 +39,7 @@ public class Shooter : MonoBehaviourPun
     #endregion
 
     #region Camera  
+    [SerializeField] CinemachineVirtualCamera CinemachineVirtualCamera;
     public CinemachineVirtualCamera cineCamera { get; private set; }
     #endregion
 
@@ -52,6 +56,9 @@ public class Shooter : MonoBehaviourPun
     bool usingAmmo;
     bool rotate;
     bool shootingDecorationStuffOn = false;
+
+    bool RPGEquipped;
+    bool RPGReadytoFire;
     #endregion
 
     #region Floats
@@ -187,7 +194,7 @@ public class Shooter : MonoBehaviourPun
         RenderersS = standHolder.GetComponentsInChildren<MeshRenderer>();
         //pauseMenu = GetComponent<Pause>();
         pauseMenu = GetComponent<PauseMenu>();
-        cineCamera = transform.GetChild(0).GetChild(0).GetChild(0).gameObject.GetComponent<CinemachineVirtualCamera>();
+        cineCamera = CinemachineVirtualCamera;
         pv = GetComponent<PhotonView>();
         rb = GetComponent<Rigidbody>();
         VFXBulletGo.SetActive(false);
@@ -394,21 +401,12 @@ public class Shooter : MonoBehaviourPun
                     mouseScrollFactor = 0;
                 }
             }
-            if (!RPG)
-            {
-                if(IsThisMultiplayer.Instance.multiplayer)
-                {
-                    pv.RPC("HideRPG", RpcTarget.All);
-                }
-                else
-                {
-                    rpgGo.SetActive(false);
-                }
-            }
 
             //Wait for weapons Free
-            if (!MasterClientRaceStart.Instance.weaponsFree) { return; }
-            
+            if (IsThisMultiplayer.Instance.multiplayer)
+            {
+                if (!MasterClientRaceStart.Instance.weaponsFree) { return; }
+            }
             //Check to see if shootButton is held down for crosshair
             if ((Input.GetAxis("RT") > 0 || Input.GetKey(shootButton)) && usingAmmo && (pv.IsMine || !IsThisMultiplayer.Instance.multiplayer))
             {
@@ -419,28 +417,19 @@ public class Shooter : MonoBehaviourPun
                 shootButtonHeld = false;
             }
 
-            if (!RPG)
-            {
-                if (IsThisMultiplayer.Instance.multiplayer)
-                {
-                    pv.RPC("HideRPG", RpcTarget.All);
-                }
-                else
-                {
-                    rpgGo.SetActive(false);
-                }
-                
-            }
+
 
             //Wait for weapons Free
-            if (!MasterClientRaceStart.Instance.weaponsFree) { return; }
+            if (IsThisMultiplayer.Instance.multiplayer)
+            {
+                if (!MasterClientRaceStart.Instance.weaponsFree) { return; }
+            }
 
-            
             // Weapon Specific functions <-------------------------------------------------------------- MINIGUN DECORATIONS / AUDIO
             if (shooterClass == ShooterClass.minigun)
             {
                 //if you are shooting the minigun
-                if (shootButtonHeld && !RPG)
+                if (shootButtonHeld && !RPGEquipped)
                 {
                     if(!shootingDecorationStuffOn)
                     {
@@ -474,7 +463,7 @@ public class Shooter : MonoBehaviourPun
             if (shooterClass == ShooterClass.rifle)
             {
                 //shooting Rifle
-                if(Input.GetKey(shootButton) && amountOfAmmoForCooldownBar > weaponAmmoUsage && !RPG && Time.time >= fireCooldown + fireRate)
+                if(Input.GetKey(shootButton) && amountOfAmmoForCooldownBar > weaponAmmoUsage && !RPGEquipped && Time.time >= fireCooldown + fireRate)
                 {
                     Debug.Log("Playing rifle sound");
 
@@ -488,6 +477,8 @@ public class Shooter : MonoBehaviourPun
                 {
                     scopeOverlay.SetActive(true);
                     RifleHolder.SetActive(false);
+                    TurnOffForRifle[0].SetActive(false);
+                    TurnOffForRifle[1].SetActive(false);
                     UI.SetActive(false);
                     isScoped = true;
                     cineCamera.m_Lens.FieldOfView = 20;
@@ -496,6 +487,8 @@ public class Shooter : MonoBehaviourPun
                 {
                     scopeOverlay.SetActive(false);
                     RifleHolder.SetActive(true);
+                    TurnOffForRifle[0].SetActive(true);
+                    TurnOffForRifle[1].SetActive(true);
                     UI.SetActive(true);
                     isScoped = false;
                     cineCamera.m_Lens.FieldOfView = 60;
@@ -503,7 +496,7 @@ public class Shooter : MonoBehaviourPun
             }
 
             //if you are shooting and have ammo 
-            if (shootButtonHeld && amountOfAmmoForCooldownBar > weaponAmmoUsage && !RPG && Time.time >= fireCooldown + fireRate)
+            if (shootButtonHeld && amountOfAmmoForCooldownBar > weaponAmmoUsage && !RPGEquipped && Time.time >= fireCooldown + fireRate)
             {
                 currentlyShooting = true;
                 if (currentBulletSpread < maxBulletDeviation)
@@ -533,8 +526,18 @@ public class Shooter : MonoBehaviourPun
                 }
             }
 
-            
 
+            if (!RPG)
+            {
+                if (IsThisMultiplayer.Instance.multiplayer)
+                {
+                    pv.RPC("HideRPG", RpcTarget.All);
+                }
+                else
+                {
+                    HideRPG();
+                }
+            }
 
             if (RPG)
             {
@@ -544,38 +547,60 @@ public class Shooter : MonoBehaviourPun
                 }
                 else
                 {
-                    rpgGo.SetActive(true);
+                    ShowRPG();
                 }
-                if (shootButtonHeld && amountOfAmmoForRPG > 0 && Time.time >= fireCooldown + 1)
+
+                if(Time.time >= fireCooldown + 1.5f)
                 {
-                    amountOfAmmoForRPG--;
-                    if (IsThisMultiplayer.Instance.multiplayer)
-                    {
-                        pv.RPC("ShootRPG", RpcTarget.All);
-                    }
-                    else
-                    {
-                        OfflineShootRPG();
-                    }
-                    fireCooldown = Time.time;
+                    RPGReadytoFire = true;
                 }
-                if (amountOfAmmoForRPG <= 0)
+
+                if (shootButtonHeld && RPGEquipped)
                 {
-                    RPG = false;
-                    this.GetComponent<ShooterPickup>().hasRPG = false;
-                    amountOfAmmoForRPG = startAmountOfAmmoForRPG;
+                    if (RPGReadytoFire && amountOfAmmoForRPG > 0)// && Time.time >= fireCooldown + 1.5f)
+                    {
+                        amountOfAmmoForRPG--;
+                        if (IsThisMultiplayer.Instance.multiplayer)
+                        {
+                            pv.RPC("ShootRPG", RpcTarget.All);
+                        }
+                        else
+                        {
+                            OfflineShootRPG();
+                        }
+
+                    }
+                    if (amountOfAmmoForRPG <= 0)
+                    {
+                        RPG = false;
+                        RPGEquipped = false;
+                        RPGReadytoFire = false;
+                        anim.SetBool("Gun Anim", false);
+                        this.GetComponent<ShooterPickup>().hasRPG = false;
+                        amountOfAmmoForRPG = startAmountOfAmmoForRPG;
+                    }
                 }
             }
 
         }
 
 
-        if (Input.GetKeyDown(RPGButton) && pickedUpRPG)
+        if (Input.GetButtonDown("RPGButton") && RPG && !RPGEquipped)
         {
-            RPG = !RPG;
+            anim.SetBool("Gun Anim", true);
+            RPGEquipped = true;
+            fireCooldown = Time.time;
+        }
+        else if (Input.GetButtonDown("RPGButton") && RPG && RPGEquipped)
+        {
+            anim.SetBool("Gun Anim", false);
+            RPGEquipped = false;
+            RPGReadytoFire = false;
         }
     }
-    
+
+
+
     void BulletCasing()
     {
         if (!MasterClientRaceStart.Instance.weaponsFree) { return; }
@@ -623,13 +648,15 @@ public class Shooter : MonoBehaviourPun
 
         yAngle = Mathf.Clamp(yAngle, minRotationHeight, maxRotationHeight); //use this if you want to clamp the rotation. second var = min angle, third var = max angle
 
-        gunBarrel.localRotation = Quaternion.Euler(yAngle, xAngle, 0);
+        stand.localRotation = Quaternion.Euler(0, xAngle, 0);
+        gunBarrel.localRotation = Quaternion.Euler(yAngle, -90, 0);
     }
 
     #region UI
 
     void CrossHair()
     {
+        if (!IsThisMultiplayer.Instance.multiplayer) { return; }
         if (pauseMenu.paused || (!MasterClientRaceStart.Instance.weaponsFree && IsThisMultiplayer.Instance.multiplayer))
         {
             CrossHairGameobject.SetActive(false);
