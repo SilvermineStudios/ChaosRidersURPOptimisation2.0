@@ -59,7 +59,7 @@ public class MasterClientRaceStart : MonoBehaviour
     public bool setCountdownTimer1;
     public bool setCountdownTimerStart;
     public bool setWeaponsFree;
-
+    [SerializeField] bool SkipAllThis;
 
     bool fadePanelOut;
 
@@ -86,7 +86,16 @@ public class MasterClientRaceStart : MonoBehaviour
         }
         pv = GetComponent<PhotonView>();
         panelTemp = BackgroundPanel.color;
-        if(PhotonNetwork.IsMasterClient)
+
+        if (SkipAllThis)
+        {
+            MasterClientRaceStart.Instance.countdownTimerStart = true;
+            MasterClientRaceStart.Instance.raceStart = true;
+            MasterClientRaceStart.Instance.weaponsFree = true;
+            return;
+        }
+
+        if (PhotonNetwork.IsMasterClient)
         {
             StartCoroutine(InitWait());
         }
@@ -128,6 +137,8 @@ public class MasterClientRaceStart : MonoBehaviour
     void FixedUpdate()
     {
         if (!IsThisMultiplayer.Instance.multiplayer) { return; }
+
+
 
         if(count3.alpha > 0 && n3)
         {

@@ -47,12 +47,12 @@ public class ShooterPickup : MonoBehaviour
             if (rpgOn)
             {
                 rpgUI.SetActive(true);
-                pv.RPC("MakeMinigunInvisible", RpcTarget.All);
+                //pv.RPC("MakeMinigunInvisible", RpcTarget.All);
             }
             else
             {
                 rpgUI.SetActive(false);
-                pv.RPC("MakeMinigunVisible", RpcTarget.All);
+                //pv.RPC("MakeMinigunVisible", RpcTarget.All);
             }
         }
 

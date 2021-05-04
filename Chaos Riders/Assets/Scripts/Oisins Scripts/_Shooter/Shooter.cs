@@ -429,7 +429,7 @@ public class Shooter : MonoBehaviourPun
             if (shooterClass == ShooterClass.minigun)
             {
                 //if you are shooting the minigun
-                if (shootButtonHeld && !RPG)
+                if (shootButtonHeld && !RPGEquipped)
                 {
                     if(!shootingDecorationStuffOn)
                     {
@@ -463,7 +463,7 @@ public class Shooter : MonoBehaviourPun
             if (shooterClass == ShooterClass.rifle)
             {
                 //shooting Rifle
-                if(Input.GetKey(shootButton) && amountOfAmmoForCooldownBar > weaponAmmoUsage && !RPG && Time.time >= fireCooldown + fireRate)
+                if(Input.GetKey(shootButton) && amountOfAmmoForCooldownBar > weaponAmmoUsage && !RPGEquipped && Time.time >= fireCooldown + fireRate)
                 {
                     Debug.Log("Playing rifle sound");
 
@@ -496,7 +496,7 @@ public class Shooter : MonoBehaviourPun
             }
 
             //if you are shooting and have ammo 
-            if (shootButtonHeld && amountOfAmmoForCooldownBar > weaponAmmoUsage && !RPG && Time.time >= fireCooldown + fireRate)
+            if (shootButtonHeld && amountOfAmmoForCooldownBar > weaponAmmoUsage && !RPGEquipped && Time.time >= fireCooldown + fireRate)
             {
                 currentlyShooting = true;
                 if (currentBulletSpread < maxBulletDeviation)
@@ -550,9 +550,14 @@ public class Shooter : MonoBehaviourPun
                     ShowRPG();
                 }
 
+                if(Time.time >= fireCooldown + 1.5f)
+                {
+                    RPGReadytoFire = true;
+                }
+
                 if (shootButtonHeld && RPGEquipped)
                 {
-                    if (RPGReadytoFire && amountOfAmmoForRPG > 0 && Time.time >= fireCooldown + 1.5f)
+                    if (RPGReadytoFire && amountOfAmmoForRPG > 0)// && Time.time >= fireCooldown + 1.5f)
                     {
                         amountOfAmmoForRPG--;
                         if (IsThisMultiplayer.Instance.multiplayer)
@@ -568,6 +573,9 @@ public class Shooter : MonoBehaviourPun
                     if (amountOfAmmoForRPG <= 0)
                     {
                         RPG = false;
+                        RPGEquipped = false;
+                        RPGReadytoFire = false;
+                        anim.SetBool("Gun Anim", false);
                         this.GetComponent<ShooterPickup>().hasRPG = false;
                         amountOfAmmoForRPG = startAmountOfAmmoForRPG;
                     }
@@ -577,11 +585,20 @@ public class Shooter : MonoBehaviourPun
         }
 
 
-        if (Input.GetKeyDown(RPGButton) && pickedUpRPG)
+        if (Input.GetButtonDown("RPGButton") && RPG && !RPGEquipped)
         {
-            RPG = !RPG;
+            anim.SetBool("Gun Anim", true);
+            RPGEquipped = true;
+            fireCooldown = Time.time;
+        }
+        else if (Input.GetButtonDown("RPGButton") && RPG && RPGEquipped)
+        {
+            anim.SetBool("Gun Anim", false);
+            RPGEquipped = false;
+            RPGReadytoFire = false;
         }
     }
+
 
 
     void BulletCasing()
@@ -694,15 +711,12 @@ public class Shooter : MonoBehaviourPun
     void ShowRPG()
     {
         rpgGo.SetActive(true);
-        fireCooldown = Time.time;
-        anim.SetBool("Gun Anim", true);
     }
 
     [PunRPC]
     void HideRPG()
     {
         rpgGo.SetActive(false);
-        anim.SetBool("Gun Anim", false);
     }
 
     void OfflineShootRPG()
