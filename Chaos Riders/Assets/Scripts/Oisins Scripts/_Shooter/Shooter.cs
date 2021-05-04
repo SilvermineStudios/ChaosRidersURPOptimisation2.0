@@ -295,10 +295,13 @@ public class Shooter : MonoBehaviourPun
         //Pause Menu
         if (pauseMenu.paused) { return; }
 
+        
+
         //Check to see if we're offline, or if we're online check we are only recieveing instructions from the local player
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
             
+
             if (connectCar && GetComponentInParent<MoveTurretPosition>() != null)
             {
                 connectCar = false;
@@ -408,7 +411,17 @@ public class Shooter : MonoBehaviourPun
 
             //Wait for weapons Free
             if (!MasterClientRaceStart.Instance.weaponsFree) { return; }
-            
+
+
+
+
+
+            GunFX();
+
+
+
+
+
             //Check to see if shootButton is held down for crosshair
             if ((Input.GetAxis("RT") > 0 || Input.GetKey(shootButton)) && usingAmmo && (pv.IsMine || !IsThisMultiplayer.Instance.multiplayer))
             {
@@ -436,39 +449,7 @@ public class Shooter : MonoBehaviourPun
             if (!MasterClientRaceStart.Instance.weaponsFree) { return; }
 
             
-            // Weapon Specific functions <-------------------------------------------------------------- MINIGUN DECORATIONS / AUDIO
-            if (shooterClass == ShooterClass.minigun)
-            {
-                //if you are shooting the minigun
-                if (shootButtonHeld && !RPG)
-                {
-                    if(!shootingDecorationStuffOn)
-                    {
-                        barrelRotationSpeed = barrelRotationMaxSpeed;
-                        VFXBulletGo.SetActive(true);
-                        muzzleFlash.SetActive(true);
-
-                        FMODUnity.RuntimeManager.AttachInstanceToGameObject(minigunLoopSoundInstance, transform, rb);
-                        minigunLoopSoundInstance.setParameterByName("on", 0);
-                        minigunLoopSoundInstance.start();
-
-                        shootingDecorationStuffOn = true;
-                    }
-                }
-                else
-                {
-                    if(shootingDecorationStuffOn)
-                    {
-                        barrelRotationSpeed = barrelRotationStartSpeed;
-                        VFXBulletGo.SetActive(false);
-                        muzzleFlash.SetActive(false);
-                        minigunLoopSoundInstance.setParameterByName("on", 1);
-
-                        shootingDecorationStuffOn = false;
-                    }
-                }
-            }
-            //---------------------------------------------------------------------------------------------------------------------
+            
 
 
             if (shooterClass == ShooterClass.rifle)
@@ -575,7 +556,43 @@ public class Shooter : MonoBehaviourPun
             RPG = !RPG;
         }
     }
-    
+
+    void GunFX()
+    {
+        // Weapon Specific functions <-------------------------------------------------------------- MINIGUN DECORATIONS / AUDIO
+        if (shooterClass == ShooterClass.minigun)
+        {
+            //if you are shooting the minigun
+            if (shootButtonHeld && !RPG)
+            {
+                if (!shootingDecorationStuffOn)
+                {
+                    barrelRotationSpeed = barrelRotationMaxSpeed;
+                    VFXBulletGo.SetActive(true);
+                    muzzleFlash.SetActive(true);
+
+                    FMODUnity.RuntimeManager.AttachInstanceToGameObject(minigunLoopSoundInstance, transform, rb);
+                    minigunLoopSoundInstance.setParameterByName("on", 0);
+                    minigunLoopSoundInstance.start();
+
+                    shootingDecorationStuffOn = true;
+                }
+            }
+            else
+            {
+                if (shootingDecorationStuffOn)
+                {
+                    barrelRotationSpeed = barrelRotationStartSpeed;
+                    VFXBulletGo.SetActive(false);
+                    muzzleFlash.SetActive(false);
+                    minigunLoopSoundInstance.setParameterByName("on", 1);
+
+                    shootingDecorationStuffOn = false;
+                }
+            }
+        }
+    }
+
     void BulletCasing()
     {
         if (!MasterClientRaceStart.Instance.weaponsFree) { return; }
