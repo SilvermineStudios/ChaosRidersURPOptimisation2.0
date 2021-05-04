@@ -17,7 +17,7 @@ public class Checkpoint : MonoBehaviour
     [SerializeField] GameObject resetBar;
     float resetChargeAmount;
     private int amountOfLaps;
-    [SerializeField] private int currentLap = 1;
+    public int currentLap { get; private set; }
     [SerializeField] private TMP_Text lapsText;
     [SerializeField] private KeyCode resetKey = KeyCode.R;
     float resetTimer;
@@ -40,6 +40,7 @@ public class Checkpoint : MonoBehaviour
 
     private void Awake()
     {
+        currentLap = 1;
         pv = GetComponent<PhotonView>();
         rb = GetComponent<Rigidbody>();
 

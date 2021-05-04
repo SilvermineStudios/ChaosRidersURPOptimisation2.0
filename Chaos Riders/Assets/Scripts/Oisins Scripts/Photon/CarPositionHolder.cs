@@ -8,10 +8,22 @@ public class CarPositionHolder : MonoBehaviour
     public Position myPosition { get; private set; }
     DisplayNames dN;
     PhotonView pv;
+    Checkpoint checkpoint;
+    AICarController aICarController;
     [SerializeField] TrackNearbyWaypoints TNW;
+    [SerializeField] bool isAI;
 
     void Start()
     {
+        if (isAI)
+        {
+            aICarController = GetComponent<AICarController>();
+        }
+        else
+        {
+            checkpoint = GetComponent<Checkpoint>();
+        }
+
         pv = GetComponent<PhotonView>();
         dN = GetComponent<DisplayNames>();
         myPosition = new Position(dN.myName, dN.shooterName, 0, pv);
@@ -30,7 +42,15 @@ public class CarPositionHolder : MonoBehaviour
 
 
             //Calculate Position
-            myPosition.UpdatePosition(TNW.distToNearest, TNW.nearestNum);
+            if(isAI)
+            {
+                myPosition.UpdatePosition(TNW.distToNearest, TNW.nearestNum, aICarController.currentLap);
+            }
+            else
+            {
+                myPosition.UpdatePosition(TNW.distToNearest, TNW.nearestNum, checkpoint.currentLap);
+            }
+            
         }
     }
 }

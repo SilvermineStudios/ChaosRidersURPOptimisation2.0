@@ -16,6 +16,8 @@ public class AICarController : MonoBehaviour
     private int nearestWaypoint = 0; //the nearest waypoint to the car
     [SerializeField] private float changeWaypointDistance = 45f; // the distance the car needs to be from its current waypoint before it changes to the next waypoint
 
+    public int currentLap { get; private set; }
+
     [SerializeField] private WheelCollider FL, FR; // the front tire wheel colliders
 
     [SerializeField] public Transform[] waypoints;
@@ -41,6 +43,7 @@ public class AICarController : MonoBehaviour
 
     void Start()
     {
+        currentLap = 1;
         GetComponent<Rigidbody>().centerOfMass = centerOfMass;
         //healthScript = GetComponent<AIHealth>();
         healthScript = GetComponent<Target>();
@@ -130,10 +133,13 @@ public class AICarController : MonoBehaviour
 
         if (Vector3.Distance(transform.position, waypoints[currentWaypoint].position) < changeWaypointDistance) //if the car is within the changewaypointDistance of the currentwaypoint
         {
-            if (currentWaypoint == waypoints.Length - 1) //if the car is at the last waypoint
+            if (currentWaypoint == waypoints.Length - 1)
+            {//if the car is at the last waypoint
                 currentWaypoint = 0; //make the next waypoint the first waypoint
+                currentLap++;
+            }
             else
-                currentWaypoint ++;//if the current waypoint is not the last waypoint in the list then go to the next waypoint in the list
+                currentWaypoint++;//if the current waypoint is not the last waypoint in the list then go to the next waypoint in the list
         }
     }
 

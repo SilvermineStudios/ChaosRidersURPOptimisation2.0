@@ -16,10 +16,27 @@ public class PositionTracker : MonoBehaviourPun
     PhotonView Clientpv;
     PlayerDataManager playerDataManager;
 
+    Dictionary<int, string> places = new Dictionary<int, string>()
+    {
+        {1, "1st" },
+        {2, "2nd" },
+        {3, "3rd" },
+        {4, "4th" },
+        {5, "5th" },
+        {6, "6th" },
+        {7, "7th" },
+        {8, "8th" },
+        {9, "9th" },
+        {10, "10th" },
+    };
+
     CarPositionHolder[] carPositionHolders;
     List<Position> teamPositions = new List<Position>();
     bool doneWaiting;
     [SerializeField] TextMeshProUGUI[] text;
+
+    [SerializeField] TextMeshProUGUI myPositionText;
+
 
     private void Awake()
     {
@@ -29,8 +46,6 @@ public class PositionTracker : MonoBehaviourPun
 
     void Start()
     {
-        
-
         StartCoroutine(WaitForSpawns());
         InvokeRepeating("SortTeams", 5, 0.5f);
     }
@@ -70,9 +85,6 @@ public class PositionTracker : MonoBehaviourPun
         {
             teamPositions.Add(c.myPosition);
         }
-        
-
-
     }
 
 
@@ -82,7 +94,7 @@ public class PositionTracker : MonoBehaviourPun
         {
             if (teamPositions[i-1].pv == Clientpv)
             {
-                text[0].text = "Position: " + i ;
+                myPositionText.text =  places[i] ;
                 //Debug.Log("(Place) " + i);
                 break;
             }
