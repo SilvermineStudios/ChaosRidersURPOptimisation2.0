@@ -45,22 +45,23 @@ public class Position : IComparable<Position>
         }
         if (checkpointNumber - other.checkpointNumber == 0)
         {
-            if (currentPosition - other.currentPosition > 0)
-            {
-                return -1;
-            }
+
             if (currentPosition - other.currentPosition < 0)
             {
                 return 1;
             }
+            if (currentPosition - other.currentPosition > 0)
+            {
+                return -1;
+            }
+        }
+        if (checkpointNumber - other.checkpointNumber < 0)
+        {
+            return 1;
         }
         if (checkpointNumber - other.checkpointNumber > 0)
         {
             return -1;
-        }
-        if (checkpointNumber - other.checkpointNumber > 0)
-        {
-            return 1;
         }
 
         return 0;
