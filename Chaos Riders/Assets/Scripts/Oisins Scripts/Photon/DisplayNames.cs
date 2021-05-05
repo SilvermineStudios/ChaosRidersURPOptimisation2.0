@@ -15,7 +15,8 @@ public class DisplayNames : MonoBehaviour
     [SerializeField] GameObject canvas;
     TextMeshProUGUI DriverNameText;
     TextMeshProUGUI ShooterNameText;
-    PhotonView pv, pvS;
+    PhotonView pv; 
+    public PhotonView  pvS { get; private set; }
     CinemachineVirtualCamera cineCam;
     PlayerDataManager playerDataManager;
     public string myName { get; private set; } = "";

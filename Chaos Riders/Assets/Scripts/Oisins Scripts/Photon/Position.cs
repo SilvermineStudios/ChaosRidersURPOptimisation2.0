@@ -10,16 +10,17 @@ public class Position : IComparable<Position>
     public string driverName;
     public string shooterName;
     public string teamName;
-    public PhotonView pv;
+    public PhotonView pv, pvS;
     public int checkpointNumber = 0;
     public int lapNumber = 0;
     public float currentPosition;
 
-    public Position(string newDriverName, string newShooterName, float newCurrentPosition, PhotonView newPv)
+    public Position(string newDriverName, string newShooterName, float newCurrentPosition, PhotonView newPv, PhotonView newPvS)
     {
         driverName = newDriverName;
         shooterName = newShooterName;
         pv = newPv;
+        pvS = newPvS;
         teamName = "(Shooter) " + shooterName + "(Driver) " + driverName;
         currentPosition = newCurrentPosition;
     }

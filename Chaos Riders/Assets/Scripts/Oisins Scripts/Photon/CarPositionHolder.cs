@@ -26,7 +26,7 @@ public class CarPositionHolder : MonoBehaviour
 
         pv = GetComponent<PhotonView>();
         dN = GetComponent<DisplayNames>();
-        myPosition = new Position(dN.myName, dN.shooterName, 0, pv);
+        myPosition = new Position(dN.myName, dN.shooterName, 0, pv, dN.pvS);
     }
 
 

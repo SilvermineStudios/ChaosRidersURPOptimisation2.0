@@ -92,7 +92,7 @@ public class PositionTracker : MonoBehaviourPun
     {
         for (int i = 1; i < teamPositions.Count + 1; i++)
         {
-            if (teamPositions[i-1].pv == Clientpv)
+            if (teamPositions[i - 1].pv == Clientpv || teamPositions[i - 1].pvS == Clientpv)
             {
                 myPositionText.text =  places[i] ;
                 //Debug.Log("(Place) " + i);
