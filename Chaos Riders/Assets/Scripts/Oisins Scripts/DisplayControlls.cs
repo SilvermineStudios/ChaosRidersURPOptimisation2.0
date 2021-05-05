@@ -55,7 +55,7 @@ public class DisplayControlls : MonoBehaviour
                 if (!string.IsNullOrEmpty(Controllers[i]))
                 {
                     //Not empty, controller temp[i] is connected
-                    Debug.Log("Controller " + i + " is connected using: " + Controllers[i]);
+                    //Debug.Log("Controller " + i + " is connected using: " + Controllers[i]);
                     controller = true;
                     break;
                 }
@@ -63,7 +63,7 @@ public class DisplayControlls : MonoBehaviour
                 {
                     //If it is empty, controller i is disconnected
                     //where i indicates the controller number
-                    Debug.Log("Controller: " + i + " is disconnected.");
+                    //Debug.Log("Controller: " + i + " is disconnected.");
                     controller = false;
                 }
             }

@@ -13,12 +13,30 @@ using TMPro;
 public class PositionTracker : MonoBehaviourPun
 {
     PhotonView pv;
+    PhotonView Clientpv;
     PlayerDataManager playerDataManager;
+
+    Dictionary<int, string> places = new Dictionary<int, string>()
+    {
+        {1, "1st" },
+        {2, "2nd" },
+        {3, "3rd" },
+        {4, "4th" },
+        {5, "5th" },
+        {6, "6th" },
+        {7, "7th" },
+        {8, "8th" },
+        {9, "9th" },
+        {10, "10th" },
+    };
 
     CarPositionHolder[] carPositionHolders;
     List<Position> teamPositions = new List<Position>();
     bool doneWaiting;
     [SerializeField] TextMeshProUGUI[] text;
+
+    [SerializeField] TextMeshProUGUI myPositionText;
+
 
     private void Awake()
     {
@@ -28,48 +46,27 @@ public class PositionTracker : MonoBehaviourPun
 
     void Start()
     {
-        if (!PhotonNetwork.IsMasterClient) { return; }
         StartCoroutine(WaitForSpawns());
-        InvokeRepeating("SortTeams", 5, 1);
+        InvokeRepeating("SortTeams", 5, 0.5f);
     }
+
 
 
     void SortTeams()
     {
         doneWaiting = true;
         teamPositions.Sort();
+        ChangeDisplayNum();
     }
 
 
     private void FixedUpdate()
     {
-        if (!PhotonNetwork.IsMasterClient) { return; }
-        if(!doneWaiting) { return; }
-
-
-        //Debug.Log(text.Length);
-        //Debug.Log(teamPositions.Count);
-        foreach(Position p in teamPositions)
+        if(Clientpv == null && FindObjectOfType<myPV>() != null)
         {
-            if(p.pv.IsMine)
-            {
-                Debug.Log(234234234);
-                break;
-            }
+            Clientpv = FindObjectOfType<myPV>().pv;
         }
 
-        for(int i = 0; i < teamPositions.Count; i ++)
-        {
-            if (teamPositions[i].pv.IsMine)
-            {
-                text[0].text = "(Place) " + i;
-                break;
-            }
-        }
-
-        text[2].text = "(Driver) " + teamPositions[0].driverName;// + ", " + teamPositions[i].checkpointNumber;
-
-        // + ", " + teamPositions[i].checkpointNumber; 
         /*
         text[0].text = "(Driver) " + teamPositions[0].driverName;// + ", " + teamPositions[i].checkpointNumber; 
         text[1].text = "(Shooter) " + teamPositions[0].shooterName;// + ", " + teamPositions[i].checkpointNumber; 
@@ -78,15 +75,6 @@ public class PositionTracker : MonoBehaviourPun
         text[4].text = "(Driver) " + teamPositions[2].driverName;// + ", " + teamPositions[i].checkpointNumber; 
         text[5].text = "(Shooter) " + teamPositions[2].shooterName;// + ", " + teamPositions[i].checkpointNumber; 
         */
-
-
-        for (int i = 0; i < 5; i+=2)
-        {
-            //Debug.Log("Name: " + i.teamName +", Waypoint: " + i.checkpointNumber + ", Distance: " + i.currentPosition);
-            //Debug.Log(text.Length);
-            //text[i-1].text ="(Driver) " + teamPositions[i].driverName;// + ", " + teamPositions[i].checkpointNumber; 
-            //text[i].text = "(Shooter) " + teamPositions[i].shooterName;// + ", " + teamPositions[i].checkpointNumber; 
-        }
     }
 
     IEnumerator WaitForSpawns()
@@ -97,6 +85,19 @@ public class PositionTracker : MonoBehaviourPun
         {
             teamPositions.Add(c.myPosition);
         }
-        
+    }
+
+
+    void ChangeDisplayNum()
+    {
+        for (int i = 1; i < teamPositions.Count + 1; i++)
+        {
+            if (teamPositions[i - 1].pv == Clientpv || teamPositions[i - 1].pvS == Clientpv)
+            {
+                myPositionText.text =  places[i] ;
+                //Debug.Log("(Place) " + i);
+                break;
+            }
+        }
     }
 }
