@@ -9,7 +9,7 @@ public class CarPickup : MonoBehaviour
     private PhotonView pv;
     private Controller carController;
     [HideInInspector] public bool hasRPG = false;
-    private bool hasPickup = false;
+    [SerializeField] private bool hasPickup = false;
     private Target healthScript;
     
     [Header("Nitro Boost")]
@@ -57,10 +57,12 @@ public class CarPickup : MonoBehaviour
             //if (!shooter.GetComponent<Shooter>().RPG)
             //hasRPG = false;
 
+            /*
             if (hasSpeedBoost || hasInvincibilityPickup) //<---------------------------------------------------------Add all types of pickup bools here as more are added
                 hasPickup = true;
             else
                 hasPickup = false;
+            */
 
             //player can speedboost by pressing the space bar when they have one
             if (hasSpeedBoost && (Input.GetButtonDown("Y")))// || Input.GetButtonDown("A")))
@@ -72,7 +74,7 @@ public class CarPickup : MonoBehaviour
             //player can activate invincibility by pressing the space bar when they have one
             if (hasInvincibilityPickup && (Input.GetButtonDown("Y")))// || Input.GetButtonDown("A")))
             {
-                
+                hasInvincibilityPickup = false;
                 StartCoroutine(InvincibleTimer(PickupManager.InvincibleTime));
             }
 
@@ -100,6 +102,7 @@ public class CarPickup : MonoBehaviour
             //if the player picked up a speed pickup
             if (other.CompareTag("SpeedPickUp") && !hasPickup)
             {
+                hasPickup = true;
                 hasSpeedBoost = true;
                 nitroCurrentTimer = nitroStartTimer;
                 nitroUiImage.SetActive(true);
@@ -109,6 +112,7 @@ public class CarPickup : MonoBehaviour
             //if the player picked up the invincible pickup
             if (other.CompareTag("InvinciblePickUp") && !hasPickup)
             {
+                hasPickup = true;
                 hasInvincibilityPickup = true;
                 invincibleCurrentTimer = invincibleStartTimer;
                 armourUiImage.SetActive(true);
@@ -156,6 +160,7 @@ public class CarPickup : MonoBehaviour
 
         yield return new WaitForSeconds(time);
 
+        hasPickup = false;
         hasInvincibilityPickup = false;
         //healthScript.isProtected = false;
         healthScript.invincible = false;
@@ -176,6 +181,7 @@ public class CarPickup : MonoBehaviour
 
         yield return new WaitForSeconds(time);
 
+        hasPickup = false;
         carController.boost = false;
         nitroUiImage.SetActive(false);
         nitroTimerCountDown = false;
