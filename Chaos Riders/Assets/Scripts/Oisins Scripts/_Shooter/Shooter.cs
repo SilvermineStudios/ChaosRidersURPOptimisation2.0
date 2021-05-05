@@ -43,6 +43,7 @@ public class Shooter : MonoBehaviourPun
     [Header("Bools")]
     public bool connectCar = false;
     public bool RPG;
+    [SerializeField] private bool useImpactParticleEffect = false;
     [SerializeField] private bool pickedUpRPG = false;
     private bool currentlyShooting;
     private bool shootButtonHeld;
@@ -743,42 +744,7 @@ public class Shooter : MonoBehaviourPun
 
     void Shoot()
     {
-        //muzzleFlash.Play();
-        //muzzleFlash.SetActive(true);
-
-        //FMODUnity.RuntimeManager.PlayOneShotAttached(sound, gameObject);
-
         Vector3 direction = Spread(currentBulletSpread);
-
-        {
-            /*
-            GameObject bulletCasingGO;
-
-            if (IsThisMultiplayer.Instance.multiplayer)
-            {
-                bulletCasingGO = PhotonNetwork.Instantiate("BulletCasing", CasingSpawn.transform.position, CasingSpawn.transform.rotation);
-            }
-            else
-            {
-                bulletCasingGO = Instantiate(Casing, CasingSpawn.transform.position, CasingSpawn.transform.rotation);
-            }
-            bulletCasingGO.GetComponent<Rigidbody>().AddForce((bulletCasingGO.transform.right + (bulletCasingGO.transform.up * 2)) * 0.3f, ForceMode.Impulse);
-
-            if (!noCarNeeded)
-            {
-                if (car.GetComponent<Controller>())
-                {
-                    bulletCasingGO.GetComponent<Rigidbody>().velocity = carController.rb.velocity;
-                }
-                else
-                {
-                    bulletCasingGO.GetComponent<Rigidbody>().velocity = aiCarController.rb.velocity;
-                }
-
-                bulletCasingGO.GetComponent<Rigidbody>().AddForce((bulletCasingGO.transform.right + (bulletCasingGO.transform.up * 2)) * 0.3f, ForceMode.Impulse);
-            }
-            */
-        }
         RaycastHit[] hits;
 
         hits = Physics.RaycastAll(cineCamera.transform.position, direction, weaponRange, everythingButIgnoreBullets);
@@ -814,16 +780,20 @@ public class Shooter : MonoBehaviourPun
                     }
                 }
 
-                GameObject impactGo;
-                if (IsThisMultiplayer.Instance.multiplayer)
+                if(useImpactParticleEffect)
                 {
-                    impactGo = PhotonNetwork.Instantiate("Impact Particle Effect", hit.point, Quaternion.LookRotation(hit.normal), 0);
+                    GameObject impactGo;
+                    if (IsThisMultiplayer.Instance.multiplayer)
+                    {
+                        impactGo = PhotonNetwork.Instantiate("Impact Particle Effect", hit.point, Quaternion.LookRotation(hit.normal), 0);
+                    }
+                    else
+                    {
+                        impactGo = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+                    }
+                    //impactGo.transform.parent = impactEffectHolder;
                 }
-                else
-                {
-                    impactGo = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
-                }
-                //impactGo.transform.parent = impactEffectHolder;
+
 
 
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// HIT MARKERS
