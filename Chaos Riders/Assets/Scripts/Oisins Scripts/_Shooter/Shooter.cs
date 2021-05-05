@@ -47,6 +47,7 @@ public class Shooter : MonoBehaviourPun
     [Header("Bools")]
     public bool connectCar = false;
     public bool RPG;
+    [SerializeField] private bool useImpactParticleEffect = false;
     [SerializeField] private bool pickedUpRPG = false;
     private bool currentlyShooting;
     private bool shootButtonHeld;
@@ -824,16 +825,20 @@ public class Shooter : MonoBehaviourPun
                     }
                 }
 
-                GameObject impactGo;
-                if (IsThisMultiplayer.Instance.multiplayer)
+                if(useImpactParticleEffect)
                 {
-                    impactGo = PhotonNetwork.Instantiate("Impact Particle Effect", hit.point, Quaternion.LookRotation(hit.normal), 0);
+                    GameObject impactGo;
+                    if (IsThisMultiplayer.Instance.multiplayer)
+                    {
+                        impactGo = PhotonNetwork.Instantiate("Impact Particle Effect", hit.point, Quaternion.LookRotation(hit.normal), 0);
+                    }
+                    else
+                    {
+                        impactGo = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+                    }
+                    //impactGo.transform.parent = impactEffectHolder;
                 }
-                else
-                {
-                    impactGo = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
-                }
-                //impactGo.transform.parent = impactEffectHolder;
+
 
 
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// HIT MARKERS

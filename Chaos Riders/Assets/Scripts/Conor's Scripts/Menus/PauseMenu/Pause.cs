@@ -154,7 +154,10 @@ public class Pause : MonoBehaviour
     public void DisplayContolsButton()
     {
         if (gameControlsPanel != null)
+        {
             gameControlsPanel.SetActive(true);
+            Debug.Log("DISPLAY CONTROLS PANEL");
+        }
         else
             Debug.Log("Assign a game controls panel");
     }
