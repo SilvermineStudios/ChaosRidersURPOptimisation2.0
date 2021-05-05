@@ -35,7 +35,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 4250049136407925162}
-  viewIdField: 0
+  viewIdField: 69
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!1 &385213651810535952
@@ -5505,7 +5505,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 2999038144332935319}
-  viewIdField: 0
+  viewIdField: 66
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &2999038144332935319
@@ -5558,7 +5558,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 5849086940772189493}
-  viewIdField: 0
+  viewIdField: 65
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!1 &1277999267337459744
@@ -7356,7 +7356,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 8560985591772834279}
-  viewIdField: 0
+  viewIdField: 37
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &8560985591772834279
@@ -7900,7 +7900,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 7230189787019938894}
-  viewIdField: 0
+  viewIdField: 41
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &7230189787019938894
@@ -8232,7 +8232,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 4453152445703468119}
   - {fileID: 5962558317505918654}
-  viewIdField: 0
+  viewIdField: 68
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &5962558317505918654
@@ -8271,7 +8271,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 4453152445703468119}
   - {fileID: 5962558317505918654}
-  viewIdField: 0
+  viewIdField: 67
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!1 &3373271473038573468
@@ -9063,6 +9063,8 @@ GameObject:
   - component: {fileID: 8559470590920989875}
   - component: {fileID: 5536969712922794785}
   - component: {fileID: 1936687189509514071}
+  - component: {fileID: 2682615941085033866}
+  - component: {fileID: 3621361809514980287}
   m_Layer: 0
   m_Name: Shooter Stand FBX LODs (1)
   m_TagString: Untagged
@@ -9132,6 +9134,53 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2682615941085033866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4516795912900159250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  observableSearch: 2
+  Synchronization: 3
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 3621361809514980287}
+  viewIdField: 72
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &3621361809514980287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4516795912900159250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 1
+    Name: Gun Anim
+  - Type: 4
+    SynchronizeType: 1
+    Name: Leave Gun Anim
+  m_SynchronizeLayers:
+  - SynchronizeType: 0
+    LayerIndex: 0
 --- !u!1 &4632172455420065895
 GameObject:
   m_ObjectHideFlags: 0
@@ -9804,7 +9853,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 1039881825042336673}
-  viewIdField: 0
+  viewIdField: 56
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &1039881825042336673
@@ -10044,7 +10093,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 5720822376670771334}
-  viewIdField: 0
+  viewIdField: 40
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &5720822376670771334
@@ -15247,6 +15296,7 @@ MonoBehaviour:
   CinemachineVirtualCamera: {fileID: 7603583395818444693}
   connectCar: 0
   RPG: 0
+  useImpactParticleEffect: 0
   pickedUpRPG: 0
   noCarNeeded: 1
   playerNumber: 1
@@ -15301,7 +15351,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 5720822377400605392}
-  viewIdField: 0
+  viewIdField: 39
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &5720822377400605392
@@ -15378,7 +15428,6 @@ MonoBehaviour:
   youFinishedTheRace: 0
   soundEffect: {fileID: 8300000, guid: ed476ad4a6f78b64382ce8cd8d9c2f2f, type: 3}
   resetBar: {fileID: 0}
-  currentLap: 1
   lapsText: {fileID: 371842087230749138}
   resetKey: 114
   canCrossFinish: 0
@@ -27289,7 +27338,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 1361586828332631018}
   - {fileID: 4746954376455341195}
-  viewIdField: 0
+  viewIdField: 38
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &4746954376455341195
@@ -27328,7 +27377,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 1361586828332631018}
   - {fileID: 4746954376455341195}
-  viewIdField: 0
+  viewIdField: 42
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!1 &8786094903881900155
@@ -32698,14 +32747,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da6a4ca202288d419da07b2403af6d4, type: 3}
---- !u!1 &980494597517503314 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 1da6a4ca202288d419da07b2403af6d4, type: 3}
-  m_PrefabInstance: {fileID: 97394146632095235}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &491096905716609512 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1da6a4ca202288d419da07b2403af6d4, type: 3}
+  m_PrefabInstance: {fileID: 97394146632095235}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &980494597517503314 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 1da6a4ca202288d419da07b2403af6d4, type: 3}
   m_PrefabInstance: {fileID: 97394146632095235}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &875802702878616349
@@ -32781,14 +32830,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1da6a4ca202288d419da07b2403af6d4, type: 3}
---- !u!1 &64757089735874124 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 1da6a4ca202288d419da07b2403af6d4, type: 3}
-  m_PrefabInstance: {fileID: 875802702878616349}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &841540457893022966 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1da6a4ca202288d419da07b2403af6d4, type: 3}
+  m_PrefabInstance: {fileID: 875802702878616349}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &64757089735874124 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 1da6a4ca202288d419da07b2403af6d4, type: 3}
   m_PrefabInstance: {fileID: 875802702878616349}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2454114001320211171
@@ -32904,14 +32953,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 629d895192f6d1f4b8a91d113482fb81, type: 3}
---- !u!1 &2983028811234981537 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 822781355919819842, guid: 629d895192f6d1f4b8a91d113482fb81, type: 3}
-  m_PrefabInstance: {fileID: 2454114001320211171}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &7973643564269386682 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5523332056477321561, guid: 629d895192f6d1f4b8a91d113482fb81, type: 3}
+  m_PrefabInstance: {fileID: 2454114001320211171}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2983028811234981537 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 822781355919819842, guid: 629d895192f6d1f4b8a91d113482fb81, type: 3}
   m_PrefabInstance: {fileID: 2454114001320211171}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5828611462422344084
@@ -33110,14 +33159,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30b4cc2728d8cec499fad63ba93785a4, type: 3}
---- !u!1 &6790843512467139806 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100006, guid: 30b4cc2728d8cec499fad63ba93785a4, type: 3}
-  m_PrefabInstance: {fileID: 6790843512467171960}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6790843512466780414 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400006, guid: 30b4cc2728d8cec499fad63ba93785a4, type: 3}
+  m_PrefabInstance: {fileID: 6790843512467171960}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6790843512467139806 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100006, guid: 30b4cc2728d8cec499fad63ba93785a4, type: 3}
   m_PrefabInstance: {fileID: 6790843512467171960}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8302110874184607314
