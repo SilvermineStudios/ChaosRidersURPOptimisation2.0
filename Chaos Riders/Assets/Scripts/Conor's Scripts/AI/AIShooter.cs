@@ -17,11 +17,8 @@ public class AIShooter : MonoBehaviour
     [SerializeField] private bool shooting = false;
     [SerializeField] private bool gunShooting = false;
     [SerializeField] private Transform gunBarrel; //barrel that is going to rotate to face the correct direction
+    [SerializeField] private Transform stand; //barrel that is going to rotate to face the correct direction
     [SerializeField] private Transform minigunBarrel;
-    [SerializeField] private Transform rifleBarrel;
-    [SerializeField] GameObject rpgGo;
-    [SerializeField] GameObject rocketspawn;
-    [SerializeField] GameObject rocket;
     [SerializeField] private GameObject bulletSpawnPoint;
     [SerializeField] GameObject MinigunHolder;
     [SerializeField] GameObject RifleHolder;
@@ -34,7 +31,8 @@ public class AIShooter : MonoBehaviour
     private float shootingRepeatSpeed;
     [SerializeField] LayerMask everythingButIgnoreBullets;
     [SerializeField] private float weaponDamage = 0.2f;
-    public float range = 30f;
+    public float targetingRange = 30f;
+    private float weaponRange = 200f;
     public float turnSpeed = 5f;
     [SerializeField] private float barrelRotationStartSpeed = 100f;
     [SerializeField] private float barrelRotationMaxSpeed = 800f;
@@ -60,10 +58,11 @@ public class AIShooter : MonoBehaviour
     public string carTag = "car";
     public List<GameObject> targets = new List<GameObject>();
     private float xOffest = 0.2f;
-    private Transform target;
+    [SerializeField] private Transform target;
 
 
     [Header("Toggles")]
+    [SerializeField] private bool waitForWeaponsFree = true;
     [SerializeField] private bool useTestingCamera = false;
     public bool noCarNeeded = false;
     [SerializeField] private bool UseShootingSound = true;
@@ -77,7 +76,7 @@ public class AIShooter : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, range);
+        Gizmos.DrawWireSphere(transform.position, targetingRange);
     }
 
     private void Awake()
@@ -110,6 +109,7 @@ public class AIShooter : MonoBehaviour
 
     void Update()
     {
+        TestShootingRay();
         DestroyMeIfDriverDisconnects();
 
         targets.RemoveAll(x => x == null); //remove any targets that are null (Disconnected drivers)
@@ -130,7 +130,8 @@ public class AIShooter : MonoBehaviour
         CheckIfDead();
 
         //////////////////////////////////////////////////////////// Put all shooting stuff below here
-        if (!MasterClientRaceStart.Instance.weaponsFree) { return; }
+        if(waitForWeaponsFree && !MasterClientRaceStart.Instance.weaponsFree) { return; }
+        
 
         CheckIfThereIsATarget();
         CheckIfShooting();
@@ -189,10 +190,10 @@ public class AIShooter : MonoBehaviour
         {
             float distanceToEnemy = Vector3.Distance(transform.position, target.transform.position); //check the distance of the target from the player
 
-            if (distanceToEnemy <= range && !dead) //if the target is in range and you are not dead
+            if (distanceToEnemy <= targetingRange && !dead) //if the target is in range and you are not dead
                 shooting = true;
 
-            if (distanceToEnemy > range || dead) //if the target is not in range or if you are dead
+            if (distanceToEnemy > targetingRange || dead) //if the target is not in range or if you are dead
                 shooting = false;
         }
         else //if you dont have a target
@@ -253,9 +254,9 @@ public class AIShooter : MonoBehaviour
         }
 
         //if a nearest enemy is found and within range then it becomes the target
-        if (nearestEnemy != null && shortestDistance <= range)
+        if (nearestEnemy != null && shortestDistance <= targetingRange)
         {
-            if (nearestEnemy.transform.root.gameObject.GetComponent<Target>().health > 0)
+            if (nearestEnemy.transform.root.gameObject.GetComponent<Target>() && nearestEnemy.transform.root.gameObject.GetComponent<Target>().health > 0)
                 target = nearestEnemy.transform;
             else
                 target = null;
@@ -268,8 +269,15 @@ public class AIShooter : MonoBehaviour
     {
         Vector3 dir = target.position - transform.position;
         Quaternion lookRotation = Quaternion.LookRotation(dir);
+        //Vector3 rotation = Quaternion.Lerp(gunBarrel.rotation, lookRotation, Time.deltaTime * turnSpeed).eulerAngles;
+        //gunBarrel.rotation = Quaternion.Euler(rotation.x - xOffest, rotation.y, 0f);
+
+        //new
         Vector3 rotation = Quaternion.Lerp(gunBarrel.rotation, lookRotation, Time.deltaTime * turnSpeed).eulerAngles;
+        stand.rotation = Quaternion.Euler(0f, rotation.y, 0f);
         gunBarrel.rotation = Quaternion.Euler(rotation.x - xOffest, rotation.y, 0f);
+        //gunBarrel.rotation = Quaternion.Euler(rotation.x, rotation.y, 0f);
+        //Debug.Log("Rotating Gun");
     }
 
     private IEnumerator GetTargets(float time)
@@ -336,31 +344,41 @@ public class AIShooter : MonoBehaviour
         barrelRotationSpeed = barrelRotationStartSpeed;
     }
 
+    void TestShootingRay()
+    {
+        RaycastHit[] hits;
+        Vector3 direction = bulletSpawnPoint.transform.forward;
+        hits = Physics.RaycastAll(bulletSpawnPoint.transform.position, direction, weaponRange, everythingButIgnoreBullets);
+        Debug.DrawRay(bulletSpawnPoint.transform.position, direction * targetingRange, Color.green);
+        foreach (RaycastHit hit in hits)
+        {
+            //Debug.Log(hit.transform.root.gameObject.name);
+        }
+    }
+
     void ShootBullets()
     {
         RaycastHit[] hits;
         Vector3 direction = bulletSpawnPoint.transform.forward;
-
-        hits = Physics.RaycastAll(bulletSpawnPoint.transform.position, direction, range, everythingButIgnoreBullets);
-        Debug.DrawRay(bulletSpawnPoint.transform.position, direction * range, Color.red);
+        hits = Physics.RaycastAll(bulletSpawnPoint.transform.position, direction, weaponRange, everythingButIgnoreBullets);
+        Debug.DrawRay(bulletSpawnPoint.transform.position, direction * targetingRange, Color.green);
 
         foreach (RaycastHit hit in hits)
         {
+            //Debug.Log("YOU HIT " + hit.transform.root.gameObject.name);
+
             /*
-            if(hit.transform.gameObject.GetComponent<Target>())
+            if(hit.transform.gameObject.GetComponent<Target>() || hit.transform.root.gameObject.GetComponent<Target>())
                 Debug.Log("The AI Gun Hit: " + hit.transform.root.name);
             else
                 Debug.Log("The AI Gun Missed");
             */
 
             //dont so anything if what you hit doesnt have a target script on it or if it is your own car
-            if (!hit.transform.gameObject.GetComponent<Target>())
+            if (!hit.transform.root.gameObject.GetComponent<Target>() || !hit.transform.gameObject.GetComponent<Target>())
                 return;
 
-            Target target = hit.transform.GetComponent<Target>();
-
-            if (target.gameObject != car)
-                target.TakeDamage(weaponDamage);
+            Target target = hit.transform.root.gameObject.GetComponent<Target>();            
 
 
             if (UseImpactEffect)
