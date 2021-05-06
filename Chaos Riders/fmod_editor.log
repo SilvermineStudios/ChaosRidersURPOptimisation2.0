@@ -7,7 +7,7 @@
 [LOG] OutputWASAPI::init                       : Output buffer size: 4096 samples, latency: 0.00ms, period: 10.00ms, DSP buffer: 1024 * 4
 [LOG] Thread::initThread                       : Init FMOD stream thread. Affinity: 0x8000000000000003, Priority: 0xFFFF7FFB, Stack Size: 98304, Semaphore: No, Sleep Time: 10, Looping: Yes.
 [LOG] Thread::initThread                       : Init FMOD mixer thread. Affinity: 0x8000000000000001, Priority: 0xFFFF7FFA, Stack Size: 81920, Semaphore: No, Sleep Time: 0, Looping: Yes.
-[LOG] AsyncManager::init                       : manager 000002CB90D04CF8 isAsync 0 updatePeriod 0.02
+[LOG] AsyncManager::init                       : manager 000002CB3E3F93E8 isAsync 0 updatePeriod 0.02
 [LOG] AsyncManager::init                       : done
 [LOG] PlaybackSystem::init                     : 
 [LOG] Thread::initThread                       : Init FMOD Studio sample load thread. Affinity: 0x8000000000000003, Priority: 0xFFFF7FFD, Stack Size: 98304, Semaphore: No, Sleep Time: 1, Looping: No.
@@ -16,6 +16,44 @@
 [LOG] Manager::init                            : done.
 [LOG] Manager::readBank                        : fileversion = 135, compatVersion = 132 (oldest = 44, newest = 135)
 [LOG] Manager::readBank                        : fileversion = 135, compatVersion = 132 (oldest = 44, newest = 135)
-[LOG] Manager::readBank                        : fileversion = 135, compatVersion = 132 (oldest = 44, newest = 135)
-[LOG] Manager::readBank                        : fileversion = 135, compatVersion = 132 (oldest = 44, newest = 135)
-[LOG] PlaybackSystem::acquireMasterBus         : Setting master channel group format to 6
+[LOG] SystemI::createSound                     : filename = FMOD\Chaos Riders\Build\Desktop/Master.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSound                     : setdata soundi = 000002CACF3CA6B8 : node = 000002CB3DB03520
+[LOG] SystemI::createSound                     : add node to async list : head = 000002CB2E1AF3A8.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000002CACF3CA6B8
+[LOG] SystemI::createSoundInternal             :     Create name='FMOD\Chaos Riders\Build\Desktop/Master.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 6843232
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 55456
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 000002CB3DB03630
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekposition = 2000
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='2017-08-05_-_Orc_Chase_-_David_Fesliyan', format=5, channels=2, frequency=48000, lengthbytes=2134560, lengthpcm=7405400, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.976685.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000002CACF3CA6B8
+[LOG] SoundI::release                          : 2017-08-05_-_Orc_Chase_-_David_Fesliyan (000002CA617E7648)
+[LOG] SoundI::release                          :     2017-08-05_-_Orc_Chase_-_David_Fesliyan (000002CB2DD1E3D8)
+[LOG] SoundI::release                          :     2017-08-05_-_Orc_Chase_-_David_Fesliyan (000002CA617E7D08)
+[LOG] SoundI::release                          : 2017-08-05_-_Orc_Chase_-_David_Fesliyan (000002CACF3CA6B8)
+[LOG] SoundI::release                          :     2017-08-05_-_Orc_Chase_-_David_Fesliyan (000002CACEECCA08)
+[LOG] SoundI::release                          :     2017-08-05_-_Orc_Chase_-_David_Fesliyan (000002CACF3CAA18)
+[LOG] SoundI::release                          :  (000002CAD83CE378)
+[LOG] SoundI::release                          :     click 1 (000002CB2DC07D98)
+[LOG] SoundI::release                          :  (000002CA61640E08)
+[LOG] SoundI::release                          :     click 2 (000002CB2E753F48)
+[LOG] SoundI::release                          :  (000002CA615053E8)
+[LOG] SoundI::release                          :     click 3 (000002CB2E7540E8)
+[LOG] SoundI::release                          :  (000002CA95BD6398)
+[LOG] SoundI::release                          :     click 4 (000002CB2E455068)
+[LOG] Thread::callback                         : FMOD Studio update thread finished.
+[LOG] Thread::callback                         : FMOD Studio bank load thread finished.
+[LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
+[LOG] Thread::callback                         : FMOD Studio sample load thread finished.
+[LOG] LiveUpdate::release                      : 
+[LOG] LiveUpdate::reset                        : Reset connection (reason Disconnected)
+[LOG] Thread::callback                         : FMOD stream thread finished.
+[LOG] Thread::callback                         : FMOD mixer thread finished.
+[LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
+[LOG] SystemI::close                           : Closed.
