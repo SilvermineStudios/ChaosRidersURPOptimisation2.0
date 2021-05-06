@@ -109,7 +109,7 @@ public class AIShooter : MonoBehaviour
 
     void Update()
     {
-        TestShootingRay();
+        //TestShootingRay();
         DestroyMeIfDriverDisconnects();
 
         targets.RemoveAll(x => x == null); //remove any targets that are null (Disconnected drivers)
@@ -143,7 +143,6 @@ public class AIShooter : MonoBehaviour
         RotateGunBarrel();
 
         if (!MasterClientRaceStart.Instance.weaponsFree) { return; }
-
 
         //Shooting
         if (shooting)
@@ -344,18 +343,6 @@ public class AIShooter : MonoBehaviour
         barrelRotationSpeed = barrelRotationStartSpeed;
     }
 
-    void TestShootingRay()
-    {
-        RaycastHit[] hits;
-        Vector3 direction = bulletSpawnPoint.transform.forward;
-        hits = Physics.RaycastAll(bulletSpawnPoint.transform.position, direction, weaponRange, everythingButIgnoreBullets);
-        Debug.DrawRay(bulletSpawnPoint.transform.position, direction * targetingRange, Color.green);
-        foreach (RaycastHit hit in hits)
-        {
-            //Debug.Log(hit.transform.root.gameObject.name);
-        }
-    }
-
     void ShootBullets()
     {
         RaycastHit[] hits;
@@ -363,23 +350,23 @@ public class AIShooter : MonoBehaviour
         hits = Physics.RaycastAll(bulletSpawnPoint.transform.position, direction, weaponRange, everythingButIgnoreBullets);
         Debug.DrawRay(bulletSpawnPoint.transform.position, direction * targetingRange, Color.green);
 
+        //TestShootingRay();
+
         foreach (RaycastHit hit in hits)
         {
-            //Debug.Log("YOU HIT " + hit.transform.root.gameObject.name);
-
             /*
-            if(hit.transform.gameObject.GetComponent<Target>() || hit.transform.root.gameObject.GetComponent<Target>())
+            if(hit.transform.root.gameObject.GetComponent<Target>())
                 Debug.Log("The AI Gun Hit: " + hit.transform.root.name);
             else
                 Debug.Log("The AI Gun Missed");
             */
 
-            //dont so anything if what you hit doesnt have a target script on it or if it is your own car
-            if (!hit.transform.root.gameObject.GetComponent<Target>() || !hit.transform.gameObject.GetComponent<Target>())
-                return;
-
-            Target target = hit.transform.root.gameObject.GetComponent<Target>();            
-
+            Target target;
+            if(hit.transform.root.gameObject.GetComponent<Target>())
+            {
+                target = hit.transform.root.gameObject.GetComponent<Target>();
+                target.TakeDamage(weaponDamage);
+            }
 
             if (UseImpactEffect)
             {
