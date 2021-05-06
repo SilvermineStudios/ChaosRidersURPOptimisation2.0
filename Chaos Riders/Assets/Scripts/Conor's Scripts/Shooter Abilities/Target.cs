@@ -25,6 +25,7 @@ public class Target : MonoBehaviour
     [Header("Death Stuff")]
     public bool dead;
     public bool respawning;
+    [SerializeField] private GameObject deathExplosionVFX;
     [SerializeField] private float deathExplosionHeight = 3f;
     [SerializeField] private float deathTimer = 3;
     [SerializeField] private float timeSinceDeath;
@@ -40,6 +41,7 @@ public class Target : MonoBehaviour
         pv = GetComponent<PhotonView>();
         startHealth = health;
         healthbarSlider = myHealthBar.GetComponentInChildren<Slider>();
+        deathExplosionVFX.SetActive(false);
     }
 
     void Start()
@@ -150,7 +152,8 @@ public class Target : MonoBehaviour
         //deathParticles.SetActive(true);
         Debug.Log("YOU FUCKING DIED!!!!!");
         StartCoroutine(DeathCourotine(deathTimer));
-        deathinstance = PhotonNetwork.Instantiate("DeathExplosion", this.transform.position, this.transform.rotation, 0);
+        //deathinstance = PhotonNetwork.Instantiate("DeathExplosion", this.transform.position, this.transform.rotation, 0);
+        
     }
 
 
@@ -176,7 +179,11 @@ public class Target : MonoBehaviour
 
     private IEnumerator DeathCourotine(float time)
     {
+        deathExplosionVFX.SetActive(true);
+
         yield return new WaitForSeconds(time);
+
+        deathExplosionVFX.SetActive(false);
 
         respawning = false;
     }
