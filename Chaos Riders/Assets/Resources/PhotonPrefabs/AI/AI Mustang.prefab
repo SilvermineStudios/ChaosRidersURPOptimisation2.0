@@ -8410,6 +8410,7 @@ Transform:
   - {fileID: 1461044850931275329}
   - {fileID: 4568921535773889726}
   - {fileID: 1798556634261575419}
+  - {fileID: 981449880502738018}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 54.78, z: 0}
@@ -8546,6 +8547,7 @@ MonoBehaviour:
   healthNormalized: 0
   dead: 0
   respawning: 0
+  deathExplosionVFX: {fileID: 557439924615165444}
   deathExplosionHeight: 3
   deathTimer: 3
   timeSinceDeath: 0
@@ -9787,6 +9789,93 @@ Transform:
 GameObject:
   m_CorrespondingSourceObject: {fileID: -7875249635484847957, guid: 41c0f11819ce1ee4c81571b68e4b8644, type: 3}
   m_PrefabInstance: {fileID: 1597365527}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1145481558899552258
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1407414512137103679}
+    m_Modifications:
+    - target: {fileID: 178840100715687008, guid: edf125c9cbaa7314e8257df4a9b396c4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 178840100715687008, guid: edf125c9cbaa7314e8257df4a9b396c4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 178840100715687008, guid: edf125c9cbaa7314e8257df4a9b396c4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 178840100715687008, guid: edf125c9cbaa7314e8257df4a9b396c4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 178840100715687008, guid: edf125c9cbaa7314e8257df4a9b396c4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 178840100715687008, guid: edf125c9cbaa7314e8257df4a9b396c4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 178840100715687008, guid: edf125c9cbaa7314e8257df4a9b396c4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 178840100715687008, guid: edf125c9cbaa7314e8257df4a9b396c4, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 178840100715687008, guid: edf125c9cbaa7314e8257df4a9b396c4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 178840100715687008, guid: edf125c9cbaa7314e8257df4a9b396c4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 178840100715687008, guid: edf125c9cbaa7314e8257df4a9b396c4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 601791029875131910, guid: edf125c9cbaa7314e8257df4a9b396c4, type: 3}
+      propertyPath: m_Name
+      value: DeathExplosionVFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 601791029875131910, guid: edf125c9cbaa7314e8257df4a9b396c4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860632072581167356, guid: edf125c9cbaa7314e8257df4a9b396c4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860632072581167356, guid: edf125c9cbaa7314e8257df4a9b396c4, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860632072581167356, guid: edf125c9cbaa7314e8257df4a9b396c4, type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860632072581167356, guid: edf125c9cbaa7314e8257df4a9b396c4, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: edf125c9cbaa7314e8257df4a9b396c4, type: 3}
+--- !u!1 &557439924615165444 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 601791029875131910, guid: edf125c9cbaa7314e8257df4a9b396c4, type: 3}
+  m_PrefabInstance: {fileID: 1145481558899552258}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &981449880502738018 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 178840100715687008, guid: edf125c9cbaa7314e8257df4a9b396c4, type: 3}
+  m_PrefabInstance: {fileID: 1145481558899552258}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1407414512802149375
 PrefabInstance:
