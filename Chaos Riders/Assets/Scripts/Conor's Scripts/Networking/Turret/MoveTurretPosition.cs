@@ -6,11 +6,17 @@ using Photon.Realtime;
 
 public class MoveTurretPosition : MonoBehaviour
 {
+    [Header("New Stuff")]
+    public Transform Stand;
+    public Transform GunBarrel;
+    public GameObject MuzzleFlash;
+    public GameObject BulletCasings;
+
     [SerializeField] private Transform gunstand;
 
     public GameObject car;
     private Transform carGunPos, carGunStandPosition;
-    [SerializeField] private bool isAiGun = false;
+    public bool isAiGun = false;
 
     public Transform FakeParent;
 
@@ -114,43 +120,26 @@ public class MoveTurretPosition : MonoBehaviour
 
     void GiveGunRefrenceToCar()
     {
-        car.GetComponent<ReplaceDisconnectedShooters>().shooter = this.gameObject;
+        if(car != null)
+        {
+            car.GetComponent<ReplaceDisconnectedShooters>().shooter = this.gameObject;
+
+            if (car.GetComponent<CarShooterMirror>())
+            {
+                CarShooterMirror csm = car.GetComponent<CarShooterMirror>();
+                csm.connectedStand = Stand;
+                csm.connectedGunBarrel = GunBarrel;
+                csm.shooter = this.gameObject;
+                csm.connectedMuzzleFlash = MuzzleFlash;
+                csm.connectedBulletCasings = BulletCasings;
+            }
+        } 
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (!canConnect) return;
 
-        /*
-        if (other.gameObject.tag == "Smooth Car" && canConnectShooter)
-        {
-            Debug.Log("Connect to smooth car here");
-
-            canConnectShooter = false;
-
-            smoothCar = other.gameObject;
-            FakeParent = other.gameObject.transform;
-
-            if (shooterScript != null)
-                shooterScript.connectCar = true;
-        }
-
-
-        if(other.gameObject.layer == LayerMask.NameToLayer("Cars") && canGetRefToDriverCar)
-        {
-            canGetRefToDriverCar = false;
-
-            if (other.gameObject.tag == "car")
-            {
-                driverCar = other.gameObject.transform.root.gameObject;
-            }
-            else
-            {
-                driverCar = other.gameObject;
-            }
-        }
-        */
-        
         if (other.gameObject.layer == LayerMask.NameToLayer("Cars") && canConnect)
         {
             //Debug.Log("Connect to not smooth car here");
