@@ -39,9 +39,21 @@ public class ExplosiveBarrel : MonoBehaviour
         }
     }
 
+    
     public void TakeDamage()
     {
         //Debug.Log("Barrel Took Damage");
+        //barrelHealth -= 1;
+
+        if (IsThisMultiplayer.Instance.multiplayer)
+            pv.RPC("RPC_DealDamage", RpcTarget.All);
+        else
+            barrelHealth -= 1;
+    }
+
+    [PunRPC]
+    void RPC_DealDamage()
+    {
         barrelHealth -= 1;
     }
 

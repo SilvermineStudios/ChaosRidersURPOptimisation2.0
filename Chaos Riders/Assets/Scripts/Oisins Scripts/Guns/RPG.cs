@@ -91,7 +91,7 @@ public class RPG : MonoBehaviour
         //Debug.Log("RPG COUROUTINE FINISHED");
 
 
-        if (IsThisMultiplayer.Instance.multiplayer)
+        if (IsThisMultiplayer.Instance.multiplayer && pv.IsMine)
             PhotonNetwork.Destroy(this.gameObject);
         else
             Destroy(this.gameObject);
@@ -101,7 +101,7 @@ public class RPG : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
 
-        if (IsThisMultiplayer.Instance.multiplayer)
+        if (IsThisMultiplayer.Instance.multiplayer && pv.IsMine)
             PhotonNetwork.Destroy(this.gameObject);
         else
             Destroy(this.gameObject);
