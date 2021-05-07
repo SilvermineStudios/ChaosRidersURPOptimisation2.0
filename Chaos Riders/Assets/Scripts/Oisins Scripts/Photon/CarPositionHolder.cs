@@ -50,6 +50,11 @@ public class CarPositionHolder : MonoBehaviour
             {
                 myPosition.UpdatePosition(TNW.distToNearest, TNW.nearestNum, checkpoint.currentLap);
             }
+
+            if(checkpoint.youFinishedTheRace)
+            {
+                myPosition.FinishRace();
+            }
             
         }
     }

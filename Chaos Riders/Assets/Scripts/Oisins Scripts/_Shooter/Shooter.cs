@@ -13,8 +13,6 @@ public class Shooter : MonoBehaviourPun
     public GameObject car { get; private set; }
     #region General GameObjects
     [Header("General GameObjects")]
-
-    
     private Transform barrelToRotate;
     [SerializeField] private Transform minigunBarrel;
     [SerializeField] private Transform rifleBarrel;
@@ -34,7 +32,7 @@ public class Shooter : MonoBehaviourPun
     [SerializeField] GameObject MinigunIcon, RifleIcon;
     [SerializeField] LayerMask everythingButIgnoreBullets;
     //[SerializeField] public ParticleSystem muzzleFlash;
-    [SerializeField] private GameObject muzzleFlash;
+    
 
     #endregion
 
@@ -142,7 +140,7 @@ public class Shooter : MonoBehaviourPun
 
     [SerializeField] GameObject CasingSpawn, Casing;
     [SerializeField] GameObject VFXBulletGo;
-
+    [SerializeField] private GameObject muzzleFlash;
     [SerializeField] Image hitmarker;
     #endregion
 
@@ -426,41 +424,6 @@ public class Shooter : MonoBehaviourPun
                 if (!MasterClientRaceStart.Instance.weaponsFree) { return; }
             }
 
-            // Weapon Specific functions <-------------------------------------------------------------- MINIGUN DECORATIONS / AUDIO
-            if (shooterClass == ShooterClass.minigun)
-            {
-                //if you are shooting the minigun
-                if (shootButtonHeld && !RPGEquipped)
-                {
-                    if(!shootingDecorationStuffOn)
-                    {
-                        barrelRotationSpeed = barrelRotationMaxSpeed;
-                        VFXBulletGo.SetActive(true);
-                        muzzleFlash.SetActive(true);
-
-                        FMODUnity.RuntimeManager.AttachInstanceToGameObject(minigunLoopSoundInstance, transform, rb);
-                        minigunLoopSoundInstance.setParameterByName("on", 0);
-                        minigunLoopSoundInstance.start();
-
-                        shootingDecorationStuffOn = true;
-                    }
-                }
-                else
-                {
-                    if(shootingDecorationStuffOn)
-                    {
-                        barrelRotationSpeed = barrelRotationStartSpeed;
-                        VFXBulletGo.SetActive(false);
-                        muzzleFlash.SetActive(false);
-                        minigunLoopSoundInstance.setParameterByName("on", 1);
-
-                        shootingDecorationStuffOn = false;
-                    }
-                }
-            }
-            //---------------------------------------------------------------------------------------------------------------------
-
-
             if (shooterClass == ShooterClass.rifle)
             {
                 //shooting Rifle
@@ -583,8 +546,52 @@ public class Shooter : MonoBehaviourPun
                 }
             }
 
-        }
+            // Weapon Specific functions <-------------------------------------------------------------- MINIGUN DECORATIONS / AUDIO
+            if (shooterClass == ShooterClass.minigun)
+            {
+                //if you are shooting the minigun
+                if (shootButtonHeld && !RPGEquipped)
+                {
+                    if (!shootingDecorationStuffOn)
+                    {
+                        /*
+                        barrelRotationSpeed = barrelRotationMaxSpeed;
+                        VFXBulletGo.SetActive(true);
+                        muzzleFlash.SetActive(true);
 
+                        FMODUnity.RuntimeManager.AttachInstanceToGameObject(minigunLoopSoundInstance, transform, rb);
+                        minigunLoopSoundInstance.setParameterByName("on", 0);
+                        minigunLoopSoundInstance.start();
+
+                        shootingDecorationStuffOn = true;
+                        */
+                        if (IsThisMultiplayer.Instance.multiplayer)
+                            pv.RPC("RPC_EnableBulletEffects", RpcTarget.All);
+                        else
+                            RPC_EnableBulletEffects();
+                    }
+                }
+                else
+                {
+                    if (shootingDecorationStuffOn)
+                    {
+                        /*
+                        barrelRotationSpeed = barrelRotationStartSpeed;
+                        VFXBulletGo.SetActive(false);
+                        muzzleFlash.SetActive(false);
+                        minigunLoopSoundInstance.setParameterByName("on", 1);
+
+                        shootingDecorationStuffOn = false;
+                        */
+                        if (IsThisMultiplayer.Instance.multiplayer)
+                            pv.RPC("RPC_DisableBulletEffects", RpcTarget.All);
+                        else
+                            RPC_DisableBulletEffects();
+                    }
+                }
+            }
+            //---------------------------------------------------------------------------------------------------------------------
+        }
 
         if (Input.GetButtonDown("RPGButton") && RPG && !RPGEquipped)
         {
@@ -600,7 +607,30 @@ public class Shooter : MonoBehaviourPun
         }
     }
 
+    [PunRPC]
+    void RPC_EnableBulletEffects()
+    {
+        barrelRotationSpeed = barrelRotationMaxSpeed;
+        VFXBulletGo.SetActive(true);
+        muzzleFlash.SetActive(true);
 
+        FMODUnity.RuntimeManager.AttachInstanceToGameObject(minigunLoopSoundInstance, transform, rb);
+        minigunLoopSoundInstance.setParameterByName("on", 0);
+        minigunLoopSoundInstance.start();
+
+        shootingDecorationStuffOn = true;
+    }
+
+    [PunRPC]
+    void RPC_DisableBulletEffects()
+    {
+        barrelRotationSpeed = barrelRotationStartSpeed;
+        VFXBulletGo.SetActive(false);
+        muzzleFlash.SetActive(false);
+        minigunLoopSoundInstance.setParameterByName("on", 1);
+
+        shootingDecorationStuffOn = false;
+    }
 
     void BulletCasing()
     {

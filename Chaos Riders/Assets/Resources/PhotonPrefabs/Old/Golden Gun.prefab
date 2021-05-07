@@ -5091,7 +5091,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3707357067955818796
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15309,7 +15309,6 @@ MonoBehaviour:
   everythingButIgnoreBullets:
     serializedVersion: 2
     m_Bits: 57143
-  muzzleFlash: {fileID: 6790843512467139806}
   CinemachineVirtualCamera: {fileID: 7603583395818444693}
   connectCar: 0
   RPG: 0
@@ -15337,6 +15336,7 @@ MonoBehaviour:
   CasingSpawn: {fileID: 8152410540058721113}
   Casing: {fileID: 861391098359841573, guid: 26e80ede9ba2652449e5169bf69301aa, type: 3}
   VFXBulletGo: {fileID: 5964948348564422075}
+  muzzleFlash: {fileID: 6790843512467139806}
   hitmarker: {fileID: 6729572273647586364}
   shooterClass: 0
   minigunClass: 1
@@ -15442,18 +15442,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60098c4ae8c3c524ea0933609487c06c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  youFinishedTheRace: 0
-  soundEffect: {fileID: 8300000, guid: ed476ad4a6f78b64382ce8cd8d9c2f2f, type: 3}
-  resetBar: {fileID: 0}
+  isAI: 0
   lapsText: {fileID: 371842087230749138}
-  resetKey: 114
+  playerCanvas: {fileID: 5720822377651440783}
   canCrossFinish: 0
+  youFinishedTheRace: 0
+  resetKey: 114
+  resetBar: {fileID: 0}
   checkpoints: []
   currentCheckpoint: 0
-  youWinText: {fileID: 780998495192644188}
-  canCollect: 1
-  Music: {fileID: 385213651810535952}
-  isAI: 0
 --- !u!114 &5720822377400605395
 MonoBehaviour:
   m_ObjectHideFlags: 0
