@@ -16,6 +16,12 @@ public class RPG : MonoBehaviour
     private Rigidbody rb;
     private PhotonView pv;
 
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, radius);
+    }
+
     private void Awake()
     {
         pv = this.GetComponent<PhotonView>();
@@ -23,6 +29,8 @@ public class RPG : MonoBehaviour
 
         trailSmokeVFX.SetActive(true);
         explosionVFX.SetActive(false);
+
+        StartCoroutine(DestroyIfHitsNothing(20f));
     }
 
     //new
@@ -45,12 +53,8 @@ public class RPG : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        rb.velocity = Vector3.zero;
-        rb.isKinematic = true;
         ExplosiveDamage();
-        explosionVFX.SetActive(true);
-
-        ExplosionCoroutine(timeUntilDeleted);
+        StartCoroutine(ExplosionCoroutine(timeUntilDeleted));
         
 
         /*
@@ -67,13 +71,40 @@ public class RPG : MonoBehaviour
 
     private IEnumerator ExplosionCoroutine(float time)
     {
+        //Debug.Log("RPG COUROUTINE STARTED");
+
+        trailSmokeVFX.SetActive(false);
+        explosionVFX.SetActive(true);
+
+        rb.velocity = Vector3.zero;
+        rb.isKinematic = true;
+
+        Collider[] colliders = this.GetComponentsInChildren<Collider>();
+        foreach (Collider col in colliders)
+        {
+            col.enabled = false;
+        }
+
         yield return new WaitForSeconds(time);
 
-        explosionVFX.SetActive(false);
-        PhotonNetwork.Destroy(this.gameObject);
+        //Debug.Log("RPG COUROUTINE FINISHED");
+
+
+        if (IsThisMultiplayer.Instance.multiplayer)
+            PhotonNetwork.Destroy(this.gameObject);
+        else
+            Destroy(this.gameObject);
     }
 
+    private IEnumerator DestroyIfHitsNothing(float time)
+    {
+        yield return new WaitForSeconds(time);
 
+        if (IsThisMultiplayer.Instance.multiplayer)
+            PhotonNetwork.Destroy(this.gameObject);
+        else
+            Destroy(this.gameObject);
+    }
 
 
 
