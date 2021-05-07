@@ -71,6 +71,11 @@ public class Checkpoint : MonoBehaviour
         //update currentlap
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
+            if(youFinishedTheRace)
+            {
+                Cursor.visible = true;
+            }
+
             if(rb.isKinematic)
             {
                 rb.isKinematic = false;
@@ -240,9 +245,10 @@ public class Checkpoint : MonoBehaviour
         youWinText.SetActive(true);
         FinishLine.GameWon = true;
         Debug.Log("YOU CROSSED THE FINISH LINE");
+        GameObject.FindGameObjectWithTag("End").transform.GetChild(0).gameObject.SetActive(true);
+        GameObject.FindGameObjectWithTag("Main UI").SetActive(false);
 
-
-        foreach(GameObject go in this.GetComponent<MultiplayerCameraCheck>().cameras)
+        foreach (GameObject go in this.GetComponent<MultiplayerCameraCheck>().cameras)
         {
             go.SetActive(false);
         }

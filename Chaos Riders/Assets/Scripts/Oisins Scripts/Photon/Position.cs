@@ -14,6 +14,7 @@ public class Position : IComparable<Position>
     public int checkpointNumber = 0;
     public int lapNumber = 0;
     public float currentPosition;
+    public bool finishedRace { get; private set; }
 
     public Position(string newDriverName, string newShooterName, float newCurrentPosition, PhotonView newPv, PhotonView newPvS)
     {
@@ -39,6 +40,10 @@ public class Position : IComparable<Position>
         lapNumber = lap;
     }
 
+    public void FinishRace()
+    {
+        finishedRace = true;
+    }
 
     public int CompareTo(Position other)
     {
