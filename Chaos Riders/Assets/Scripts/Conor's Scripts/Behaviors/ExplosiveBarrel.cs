@@ -88,18 +88,24 @@ public class ExplosiveBarrel : MonoBehaviour
 
     public IEnumerator ExplodeCoroutine(float time)
     {
+        /*
         if (IsThisMultiplayer.Instance.multiplayer)
             pv.RPC("ExplodeBarrel", RpcTarget.AllBuffered);
         else
             ExplodeBarrel();
+        */
 
+        ExplodeBarrel();
 
         yield return new WaitForSeconds(time);
 
-
+        /*
         if (IsThisMultiplayer.Instance.multiplayer)
             pv.RPC("ResetBarrel", RpcTarget.AllBuffered);
         else
             ResetBarrel();
+        */
+
+        ResetBarrel();
     }
 }
