@@ -34,9 +34,9 @@ public class PositionTracker : MonoBehaviourPun
     List<Position> teamPositions = new List<Position>();
     bool doneWaiting;
     [SerializeField] TextMeshProUGUI[] text;
-
+    [SerializeField] GameObject Holder;
     [SerializeField] TextMeshProUGUI myPositionText;
-
+    int currentPlaceForFinsh = 1;
 
     private void Awake()
     {
@@ -47,7 +47,7 @@ public class PositionTracker : MonoBehaviourPun
     void Start()
     {
         StartCoroutine(WaitForSpawns());
-        InvokeRepeating("SortTeams", 5, 0.5f);
+        //InvokeRepeating("SortTeams", 5, 0.5f);
     }
 
 
@@ -59,14 +59,24 @@ public class PositionTracker : MonoBehaviourPun
         ChangeDisplayNum();
     }
 
-
     private void FixedUpdate()
     {
         if(Clientpv == null && FindObjectOfType<myPV>() != null)
         {
             Clientpv = FindObjectOfType<myPV>().pv;
         }
-
+        if (teamPositions.Count > 0 && currentPlaceForFinsh < 5)
+        {
+            foreach (Position p in teamPositions)
+            {
+                if (p.finishedRace)
+                {
+                    CreateEntry(p);
+                    teamPositions.Remove(p);
+                    break;
+                }
+            }
+        }
         /*
         text[0].text = "(Driver) " + teamPositions[0].driverName;// + ", " + teamPositions[i].checkpointNumber; 
         text[1].text = "(Shooter) " + teamPositions[0].shooterName;// + ", " + teamPositions[i].checkpointNumber; 
@@ -76,6 +86,16 @@ public class PositionTracker : MonoBehaviourPun
         text[5].text = "(Shooter) " + teamPositions[2].shooterName;// + ", " + teamPositions[i].checkpointNumber; 
         */
     }
+
+    void CreateEntry(Position teamPosition)
+    {
+        GameObject Entry = PhotonNetwork.Instantiate("Entry", Vector3.zero, Quaternion.identity);
+        Entry.transform.parent = Holder.transform;
+        Entry.GetComponent<EntryScript>().Setup(teamPosition.driverName, teamPosition.shooterName, places[currentPlaceForFinsh]);
+        currentPlaceForFinsh++;
+    }
+
+
 
     IEnumerator WaitForSpawns()
     {
