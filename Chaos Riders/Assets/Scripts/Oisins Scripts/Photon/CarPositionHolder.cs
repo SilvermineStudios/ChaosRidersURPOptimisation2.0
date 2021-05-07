@@ -12,6 +12,7 @@ public class CarPositionHolder : MonoBehaviour
     AICarController aICarController;
     [SerializeField] TrackNearbyWaypoints TNW;
     [SerializeField] bool isAI;
+    bool aiFinished = false;
 
     void Start()
     {
@@ -51,11 +52,23 @@ public class CarPositionHolder : MonoBehaviour
                 myPosition.UpdatePosition(TNW.distToNearest, TNW.nearestNum, checkpoint.currentLap);
             }
 
-            if(checkpoint.youFinishedTheRace)
+            if(checkpoint != null && checkpoint.youFinishedTheRace)
             {
                 myPosition.FinishRace();
             }
             
+            if(aiFinished && aiFinished)
+            {
+                myPosition.FinishRace();
+            }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("FinishLine"))
+        {
+            aiFinished = true;
         }
     }
 }
