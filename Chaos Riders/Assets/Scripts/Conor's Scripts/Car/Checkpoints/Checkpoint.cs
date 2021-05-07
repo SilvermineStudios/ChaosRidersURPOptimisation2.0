@@ -7,39 +7,42 @@ using UnityEngine.UI;
 
 public class Checkpoint : MonoBehaviour
 {
-    public float distanceToNextCheckpoint { get; private set; }
+    [Header("General")]
+    [SerializeField] bool isAI;
+    private PhotonView pv;
+    Rigidbody rb;
 
+    [Header("Laps")]
+    private int amountOfLaps;
+    [SerializeField] private TMP_Text lapsText;
+    public int currentLap { get; private set; }
+
+    [Header("Finished Race Stuff")]
+    [SerializeField] private GameObject playerCanvas;
+    [SerializeField] private bool canCrossFinish = false;
     public bool youFinishedTheRace = false;
     private MeshRenderer[] meshRenderers;
     private Collider[] colliders;
-
-    [SerializeField] private AudioClip soundEffect;
+    private GameObject MainCamera;
+    
+    [Header("Resetting")]
+    [SerializeField] private KeyCode resetKey = KeyCode.R;
     [SerializeField] GameObject resetBar;
     float resetChargeAmount;
-    private int amountOfLaps;
-    public int currentLap { get; private set; }
-    [SerializeField] private TMP_Text lapsText;
-    [SerializeField] private KeyCode resetKey = KeyCode.R;
     float resetTimer;
-    [SerializeField] private bool canCrossFinish = false;
+    bool isResetting;
 
-    //script for what happens when a player drives through a checkpoint
+    [Header("Checkpoints")]
     [SerializeField] private GameObject[] checkpoints;
     [SerializeField] private float currentCheckpoint = 0f;
     private float previousCheckpoint = -1f;
-    [SerializeField] private GameObject youWinText;
-
-    [SerializeField] private bool canCollect = true;
-    bool isResetting;
-    [SerializeField] GameObject Music;
-
-    private PhotonView pv;
-    Rigidbody rb;
-    [SerializeField] bool isAI;
-
+    public float distanceToNextCheckpoint { get; private set; }
+    
 
     private void Awake()
     {
+        MainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+
         currentLap = 1;
         pv = GetComponent<PhotonView>();
         rb = GetComponent<Rigidbody>();
@@ -60,7 +63,6 @@ public class Checkpoint : MonoBehaviour
         checkpoints = CheckpointManager.checkPoints;
         if (!isAI)
         {
-            youWinText.SetActive(false);
             OnlyDisplayNextCheckpoint();
         }
     }
@@ -110,12 +112,6 @@ public class Checkpoint : MonoBehaviour
             {
                 //CarUIManager.lapsText.text = "Lap " + currentLap + " / " + amountOfLaps;
                 lapsText.text = "Lap " + currentLap + " / " + amountOfLaps;
-            }
-
-            //Start the music on the last lap
-            if(currentLap == amountOfLaps && !Music.activeInHierarchy)
-            {
-                //Music.SetActive(true);
             }
 
             if (currentLap == amountOfLaps && canCrossFinish && currentCheckpoint == 0)
@@ -202,11 +198,6 @@ public class Checkpoint : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        //canCollect = true;
-    }
-
     void OnlyDisplayNextCheckpoint()
     {
         for (int i = 0; i < checkpoints.Length; i++)
@@ -237,20 +228,21 @@ public class Checkpoint : MonoBehaviour
     void FinishedTheRaceStuff()
     {
         youFinishedTheRace = true;
-        youWinText.SetActive(true);
-        FinishLine.GameWon = true;
-        Debug.Log("YOU CROSSED THE FINISH LINE");
+        MainCamera.GetComponent<Animator>().SetBool("Start", true);
+        FinishLine.GameWon = true; //send a message to the finish line script that the game has been won
+        playerCanvas.SetActive(false); //turn off the players UI
+        MakeYourselfInvisible();
 
-
-        foreach(GameObject go in this.GetComponent<MultiplayerCameraCheck>().cameras)
+        //turn off all of the players cameras
+        foreach (GameObject go in this.GetComponent<MultiplayerCameraCheck>().cameras)
         {
             go.SetActive(false);
         }
 
         //used to disable ai car if it is connected to you
-        if(this.GetComponent<Shooter>())
+        if(this.GetComponent<Shooter>()) //if you are a shooter player type
         {
-            GameObject car = this.GetComponent<MoveTurretPosition>().car;
+            GameObject car = this.GetComponent<MoveTurretPosition>().car; //get the car you are connected to
             
             if (car.tag == "Player") //check if the car is an ai car
             {
@@ -259,14 +251,14 @@ public class Checkpoint : MonoBehaviour
 
                 foreach(MeshRenderer mr in carMeshes)
                 {
-                    mr.enabled = false;
+                    mr.enabled = false; //disable all of the mesh renderers on the ai car
                 }
                 foreach(Collider col in carColliders)
                 {
-                    col.enabled = false;
+                    col.enabled = false; //disable all of the colliders on the ai car
                 }
             }
         }
-        MakeYourselfInvisible();
+        
     }
 }
