@@ -4992,9 +4992,9 @@ Avatar:
     1458779140: Shrederr Final 1 _ LOD/Roof_LOD3/WheeL Front Left003
     3376153815: Wheels/BL/BL_LOD0
     1508240209: Shrederr Final 1 _ LOD/Roof_LOD0/Wheel Front Right
-    450102893: Shrederr Final 1 _ LOD/Roof_LOD2/Wheel Back Left002
-    4115355920: Shrederr Final 1 _ LOD/Roof_LOD0/WheeL Front Left
     1714164140: Wheels/BR/BR_LOD1/Wheel Spike Bsck right001
+    4115355920: Shrederr Final 1 _ LOD/Roof_LOD0/WheeL Front Left
+    450102893: Shrederr Final 1 _ LOD/Roof_LOD2/Wheel Back Left002
     2497904351: Wheels/BR/BR_LOD0
     3191551041: Wheels/BL/BL_LOD1
     2949244515: Wheels/FL/FL_LOD0/Wheel Spike Front Left
@@ -5585,7 +5585,13 @@ VisualEffect:
     m_Vector3f:
       m_Array: []
     m_Vector4f:
-      m_Array: []
+      m_Array:
+      - m_Value: {x: 102.75575, y: 12.37373, z: 10.759765, w: 0}
+        m_Name: ContinousSmoke_Color 1
+        m_Overridden: 1
+      - m_Value: {x: 102.75575, y: 9.145801, z: 1.6139647, w: 0}
+        m_Name: BurstSmoke_Color
+        m_Overridden: 1
     m_Uint:
       m_Array: []
     m_Int:
@@ -5711,6 +5717,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1624245555431735871, guid: b78730aacc541dd44a659417ece5ed09, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1624245555431735871, guid: b78730aacc541dd44a659417ece5ed09, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1624245555431735871, guid: b78730aacc541dd44a659417ece5ed09, type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2186854764157882117, guid: b78730aacc541dd44a659417ece5ed09, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0.60076374
@@ -5774,6 +5792,10 @@ PrefabInstance:
     - target: {fileID: 3205815201014583769, guid: b78730aacc541dd44a659417ece5ed09, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3284960067534284394, guid: b78730aacc541dd44a659417ece5ed09, type: 3}
+      propertyPath: viewIdField
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3448017271988867497, guid: b78730aacc541dd44a659417ece5ed09, type: 3}
       propertyPath: m_LocalRotation.x
@@ -6055,6 +6077,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6040178453459880268, guid: b78730aacc541dd44a659417ece5ed09, type: 3}
+      propertyPath: viewIdField
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 6473614845824247053, guid: b78730aacc541dd44a659417ece5ed09, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.0000344038
@@ -6099,6 +6125,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 117.858
       objectReference: {fileID: 0}
+    - target: {fileID: 6761076749365651188, guid: b78730aacc541dd44a659417ece5ed09, type: 3}
+      propertyPath: viewIdField
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7557444686333247872, guid: b78730aacc541dd44a659417ece5ed09, type: 3}
+      propertyPath: viewIdField
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7987386016332740462, guid: b78730aacc541dd44a659417ece5ed09, type: 3}
+      propertyPath: viewIdField
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 7996710355397922111, guid: b78730aacc541dd44a659417ece5ed09, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0.49332398
@@ -6122,6 +6160,10 @@ PrefabInstance:
     - target: {fileID: 7996710355397922111, guid: b78730aacc541dd44a659417ece5ed09, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8545129988917355036, guid: b78730aacc541dd44a659417ece5ed09, type: 3}
+      propertyPath: viewIdField
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8572108261515471630, guid: b78730aacc541dd44a659417ece5ed09, type: 3}
       propertyPath: m_LocalRotation.x

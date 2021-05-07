@@ -361,6 +361,8 @@ public class AIShooter : MonoBehaviour
                 Debug.Log("The AI Gun Missed");
             */
 
+
+
             Target target;
             if(hit.transform.root.gameObject.GetComponent<Target>())
             {

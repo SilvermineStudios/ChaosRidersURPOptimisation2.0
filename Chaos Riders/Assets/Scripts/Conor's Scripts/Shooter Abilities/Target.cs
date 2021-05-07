@@ -30,9 +30,13 @@ public class Target : MonoBehaviour
     [SerializeField] private float deathTimer = 3;
     [SerializeField] private float timeSinceDeath;
 
-    //used for stopping the target from being hit multiple times by 1 mine
+
+    //used for stopping the target from being hit multiple times by the same thing
+    [Header ("Stop Target Being Hit Multiple Times")]
     [HideInInspector] public bool hitByMine = false;
     private bool resettingHitByMine = false;
+    [HideInInspector] public bool hitByRPG = false;
+    private bool resettingHitByRPG = false;
 
     public bool isDead { get { return dead; } private set { isDead = dead; } }
 
@@ -69,6 +73,12 @@ public class Target : MonoBehaviour
             StartCoroutine(ResetMineBool());
             resettingHitByMine = true;
         }
+
+        if(hitByRPG && !resettingHitByRPG)
+        {
+            StartCoroutine(ResetRPGBool());
+            resettingHitByRPG = true;
+        }
     }
 
     private IEnumerator ResetMineBool()
@@ -76,6 +86,13 @@ public class Target : MonoBehaviour
         yield return new WaitForSeconds(1);
         resettingHitByMine = false;
         hitByMine = false;
+    }
+
+    private IEnumerator ResetRPGBool()
+    {
+        yield return new WaitForSeconds(1);
+        resettingHitByRPG = false;
+        hitByRPG = false;
     }
 
     private void SetHealthBarUiSize(float sizeNormalized)
@@ -153,7 +170,6 @@ public class Target : MonoBehaviour
         Debug.Log("YOU FUCKING DIED!!!!!");
         StartCoroutine(DeathCourotine(deathTimer));
         //deathinstance = PhotonNetwork.Instantiate("DeathExplosion", this.transform.position, this.transform.rotation, 0);
-        
     }
 
 
@@ -188,9 +204,11 @@ public class Target : MonoBehaviour
         respawning = false;
     }
 
+    /*
     [PunRPC]
     void RPC_TakeDamage(float amountOfDamage)
     {
         TakeDamage(amountOfDamage);
     }
+    */
 }
