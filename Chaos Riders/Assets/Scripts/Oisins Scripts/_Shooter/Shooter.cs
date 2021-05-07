@@ -724,8 +724,8 @@ public class Shooter : MonoBehaviourPun
     {
         FMODUnity.RuntimeManager.PlayOneShotAttached("event:/GunFX/RPG/RPGFire", gameObject);
         GameObject grenade = Instantiate(rocket, rocketspawn.transform.position, rpgGo.transform.rotation);
-        Vector3 direction = Spread(0);
-        grenade.GetComponent<Rigidbody>().AddForce(direction * 100, ForceMode.Impulse);
+
+        grenade.GetComponent<Rigidbody>().AddForce(cineCamera.transform.position * 100, ForceMode.Impulse);
     }
 
     [PunRPC]
@@ -735,8 +735,8 @@ public class Shooter : MonoBehaviourPun
         {
             FMODUnity.RuntimeManager.PlayOneShotAttached("event:/GunFX/RPG/RPGFire", gameObject);
             GameObject grenade = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Grenade"), rocketspawn.transform.position, rpgGo.transform.rotation, 0);
-            Vector3 direction = Spread(0);
-            grenade.GetComponent<Rigidbody>().AddForce(direction * 100, ForceMode.Impulse);
+
+            grenade.GetComponent<Rigidbody>().AddForce(cineCamera.transform.position * 100, ForceMode.Impulse);
         }
     }
 
