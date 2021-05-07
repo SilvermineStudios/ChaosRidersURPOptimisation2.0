@@ -14,7 +14,8 @@ public class ExplosiveBarrel : MonoBehaviour
     [SerializeField] private int barrelHealth, startHealth;
     private bool readyToExplode = true;
 
-    [SerializeField] private GameObject explosionEffect;
+    //[SerializeField] private GameObject explosionEffect;
+    [SerializeField] private GameObject explosionVFX;
 
 
     void Start()
@@ -25,6 +26,8 @@ public class ExplosiveBarrel : MonoBehaviour
 
         barrelHealth = TrapManager.BarrelHealth;
         startHealth = barrelHealth;
+
+        explosionVFX.SetActive(false);
     }
 
     void Update()
@@ -56,7 +59,8 @@ public class ExplosiveBarrel : MonoBehaviour
         foreach (Collider col in colliders)
             col.enabled = false;
 
-        Instantiate(explosionEffect, transform.position, transform.rotation);
+        //Instantiate(explosionEffect, transform.position, transform.rotation);
+        explosionVFX.SetActive(true);
     }
 
     [PunRPC]
@@ -72,6 +76,8 @@ public class ExplosiveBarrel : MonoBehaviour
         //enable the colliders
         foreach (Collider col in colliders)
             col.enabled = true;
+
+        explosionVFX.SetActive(false);
     }
     #endregion
 
@@ -82,12 +88,18 @@ public class ExplosiveBarrel : MonoBehaviour
 
     public IEnumerator ExplodeCoroutine(float time)
     {
-        pv.RPC("ExplodeBarrel", RpcTarget.AllBuffered);
-        ExplodeBarrel();
-        
+        if (IsThisMultiplayer.Instance.multiplayer)
+            pv.RPC("ExplodeBarrel", RpcTarget.AllBuffered);
+        else
+            ExplodeBarrel();
+
+
         yield return new WaitForSeconds(time);
 
-        pv.RPC("ResetBarrel", RpcTarget.AllBuffered);
-        ResetBarrel();
+
+        if (IsThisMultiplayer.Instance.multiplayer)
+            pv.RPC("ResetBarrel", RpcTarget.AllBuffered);
+        else
+            ResetBarrel();
     }
 }
