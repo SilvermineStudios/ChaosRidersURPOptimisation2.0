@@ -12,7 +12,7 @@ public class RPG : MonoBehaviour
     [SerializeField] float damage;
     [SerializeField] float radius;
     [SerializeField] float timeUntilDeleted = 3f;
-
+    [SerializeField] bool isFake;
     private Rigidbody rb;
     private PhotonView pv;
 
@@ -53,6 +53,7 @@ public class RPG : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+
         ExplosiveDamage();
         StartCoroutine(ExplosionCoroutine(timeUntilDeleted));
         
