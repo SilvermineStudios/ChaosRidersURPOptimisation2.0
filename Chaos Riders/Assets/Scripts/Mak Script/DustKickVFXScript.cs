@@ -16,6 +16,8 @@ public class DustKickVFXScript : MonoBehaviour
     Vector3 FrontMinVel, FrontMaxVel, BackMinVel, BackMaxVel, TestFrontMinVel, TestFrontMaxVel, TestBackMinVel, TestBackMaxVel;
     // Start is called before the first frame update
     [SerializeField] bool isAI;
+    Controller cont;
+    AICarController aiCont;
 
     void Start()
     {
@@ -28,9 +30,13 @@ public class DustKickVFXScript : MonoBehaviour
             MaxSpeed = 170;
         }
         pv = GetComponent<PhotonView>();
+        cont = GetComponent<Controller>();
+        aiCont = GetComponent<AICarController>();
         //get original components (front particle use same number and baack particles use same, meaning back and front have diff values)
         //pv.RPC("Init",RpcTarget.All);
         Init();
+
+        InvokeRepeating("Calculate", 0, 1f);
     }
 
 
@@ -51,11 +57,11 @@ public class DustKickVFXScript : MonoBehaviour
     {
         if (!isAI)
         {
-            CurrentSpeed = GetComponent<Controller>().currentSpeed; //gets car speed
+            CurrentSpeed = cont.currentSpeed; //gets car speed
         }
         else
         {
-            CurrentSpeed = GetComponent<AICarController>().currentSpeed;
+            CurrentSpeed = aiCont.currentSpeed;
         }
     }
     private void Calculate()
