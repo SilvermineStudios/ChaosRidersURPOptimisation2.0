@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
 using System.IO;
 
 public class ExplosiveBarrel : MonoBehaviour
@@ -32,29 +33,14 @@ public class ExplosiveBarrel : MonoBehaviour
 
     void Update()
     {
-        //if the barrel is shot
+        //if the barrel is shot and out of health
         if (readyToExplode && barrelHealth <= 0)
         {
             StartCoroutine(ExplodeCoroutine(TrapManager.ExplodedForTime));
         }
     }
-
     
     public void TakeDamage()
-    {
-        //Debug.Log("Barrel Took Damage");
-        barrelHealth -= 1;
-
-        /*
-        if (IsThisMultiplayer.Instance.multiplayer)
-            pv.RPC("RPC_DealDamage", RpcTarget.All);
-        else
-            barrelHealth -= 1;
-        */
-    }
-
-    [PunRPC]
-    void RPC_DealDamage()
     {
         barrelHealth -= 1;
     }
@@ -102,24 +88,41 @@ public class ExplosiveBarrel : MonoBehaviour
 
     public IEnumerator ExplodeCoroutine(float time)
     {
-        /*
-        if (IsThisMultiplayer.Instance.multiplayer)
-            pv.RPC("ExplodeBarrel", RpcTarget.AllBuffered);
+        if(IsThisMultiplayer.Instance.multiplayer)
+        {
+            foreach (Player p in PhotonNetwork.PlayerList)
+            {
+                if (p.IsLocal)
+                {
+                    pv.RPC("ExplodeBarrel", RpcTarget.All);
+                    //Debug.Log("RPC EXPLODE");
+                }
+            }
+        }
         else
+        {
             ExplodeBarrel();
-        */
-
-        ExplodeBarrel();
+            //Debug.Log("OFFLINE EXPLODE");
+        }
+        
 
         yield return new WaitForSeconds(time);
 
-        /*
         if (IsThisMultiplayer.Instance.multiplayer)
-            pv.RPC("ResetBarrel", RpcTarget.AllBuffered);
+        {
+            foreach (Player p in PhotonNetwork.PlayerList)
+            {
+                if (p.IsLocal)
+                {
+                    pv.RPC("ResetBarrel", RpcTarget.All);
+                    //Debug.Log("RPC RESET");
+                }
+            }
+        }
         else
+        {
             ResetBarrel();
-        */
-
-        ResetBarrel();
+            //Debug.Log("OFFLINE RESET");
+        }
     }
 }

@@ -8,6 +8,8 @@ public class AIShooter : MonoBehaviour
     // https://www.youtube.com/watch?v=QKhn2kl9_8I // usefull youtube video 
 
     #region Variables
+    private PhotonView pv;
+
     [Header("General GameObjects")]
     public GameObject car;
     public float carHealth;
@@ -85,6 +87,7 @@ public class AIShooter : MonoBehaviour
         //Debug.Log("Shooting speed = " + shootingRepeatSpeed);
 
         rb = GetComponent<Rigidbody>();
+        pv = this.GetComponent<PhotonView>();
         Camera = this.gameObject.GetComponentInChildren<AudioListener>().gameObject;
 
         if(mtp == null)
@@ -121,7 +124,7 @@ public class AIShooter : MonoBehaviour
             {
                 if (go.GetComponent<Checkpoint>() && go.GetComponent<Checkpoint>().youFinishedTheRace)
                 {
-                    targets.Remove(go);
+                    //targets.Remove(go);
                 }
             }
         }
@@ -135,6 +138,7 @@ public class AIShooter : MonoBehaviour
 
         CheckIfThereIsATarget();
         CheckIfShooting();
+        DestroyMeWhenFinishLineCrossed();
     }
 
 
@@ -179,6 +183,17 @@ public class AIShooter : MonoBehaviour
 
         if (readyToDestroy && car == null)
             Destroy(this.gameObject);
+    }
+
+    private void DestroyMeWhenFinishLineCrossed()
+    {
+        if(car!= null && car.GetComponent<Checkpoint>() && car.GetComponent<Checkpoint>().youFinishedTheRace)  
+        {
+            if (IsThisMultiplayer.Instance.multiplayer)
+                PhotonNetwork.Destroy(this.gameObject);
+            else
+                Destroy(this.gameObject);
+        }
     }
 
     #region Getting and Checking Variables
