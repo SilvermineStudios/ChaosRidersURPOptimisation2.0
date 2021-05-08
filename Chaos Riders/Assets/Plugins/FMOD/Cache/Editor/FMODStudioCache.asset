@@ -465,6 +465,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 1
+--- !u!114 &-7621817306537346704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/MinigunLoop/on
+  m_EditorClassIdentifier: 
+  Name: on
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-7398873337377415038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1389,7 +1409,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/Master.bank
   Name: Master
-  lastModified: 637560945806524784
+  lastModified: 637553466135602430
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -1856,7 +1876,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/Master.strings.bank
   Name: Master.strings
-  lastModified: 637560945806534755
+  lastModified: 637553466135622448
   LoadResult: 0
   FileSizes:
   - Name: Desktop
@@ -1900,7 +1920,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 0
   Parameters:
-  - {fileID: 5028228468349428507}
+  - {fileID: -7621817306537346704}
   MinDistance: 1
   MaxDistance: 20
   Length: 1771
@@ -2549,7 +2569,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 1
   Parameters:
-  - {fileID: 540621116738692209}
+  - {fileID: 6369599074842452657}
   MinDistance: 1
   MaxDistance: 20
   Length: 1574
@@ -2775,7 +2795,7 @@ MonoBehaviour:
   ID:
     data1: 0
     data2: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &-719502705726745615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2941,6 +2961,26 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 4416
+--- !u!114 &-133263506746681497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/BrakerAudio/Gear Change
+  m_EditorClassIdentifier: 
+  Name: Gear Change
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-67361899288129746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3016,6 +3056,7 @@ MonoBehaviour:
   EditorBanks:
   - {fileID: -2954939187940535496}
   - {fileID: -4466803539278922483}
+  - {fileID: 4205698528583335485}
   EditorEvents:
   - {fileID: -4789631137126399954}
   - {fileID: -2173327587602132150}
@@ -3056,7 +3097,7 @@ MonoBehaviour:
   - {fileID: -4466803539278922483}
   StringsBanks:
   - {fileID: -2954939187940535496}
-  stringsBankWriteTime: 637560945806534755
+  stringsBankWriteTime: 637553466135622448
   cacheVersion: 5
 --- !u!114 &29246924673847868
 MonoBehaviour:
@@ -3303,7 +3344,7 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
---- !u!114 &540621116738692209
+--- !u!114 &557960873047245420
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3313,16 +3354,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/RifleShot2/on
+  m_Name: parameter:/BrakerAudio/Gear Change
   m_EditorClassIdentifier: 
-  Name: on
+  Name: Gear Change
   Min: 0
   Max: 1
   Default: 0
   ID:
     data1: 0
     data2: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &666190666654146220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3934,7 +3975,7 @@ MonoBehaviour:
   ID:
     data1: 0
     data2: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &1929909668448360258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4648,7 +4689,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/CarNoise.bank
   Name: CarNoise
-  lastModified: 637552255597685489
+  lastModified: 637553466133674871
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -4871,26 +4912,6 @@ MonoBehaviour:
   lastModified: 637525491704131644
   LoadResult: 0
   FileSizes: []
-  Exists: 1
---- !u!114 &5028228468349428507
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/MinigunLoop/on
-  m_EditorClassIdentifier: 
-  Name: on
-  Min: 0
-  Max: 1
-  Default: 0
-  ID:
-    data1: 0
-    data2: 0
   Exists: 1
 --- !u!114 &5032157713940315357
 MonoBehaviour:
@@ -5431,6 +5452,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &6369599074842452657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/RifleShot2/on
+  m_EditorClassIdentifier: 
+  Name: on
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &6377668687428779922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5574,26 +5615,6 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 230
---- !u!114 &6581213394137344900
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/BrakerAudio/Gear Change
-  m_EditorClassIdentifier: 
-  Name: Gear Change
-  Min: 0
-  Max: 1
-  Default: 0
-  ID:
-    data1: 0
-    data2: 0
-  Exists: 1
 --- !u!114 &6582687345382335072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5900,7 +5921,7 @@ MonoBehaviour:
   ID:
     data1: 0
     data2: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &7834448272872875836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6236,12 +6257,13 @@ MonoBehaviour:
   - {fileID: 5025758556672022499}
   - {fileID: 29246924673847868}
   - {fileID: 9075118074253863180}
+  - {fileID: 4205698528583335485}
   - {fileID: -4466803539278922483}
   IsStream: 0
   Is3D: 1
   IsOneShot: 0
   Parameters:
-  - {fileID: 6581213394137344900}
+  - {fileID: -133263506746681497}
   MinDistance: 1
   MaxDistance: 10000
   Length: 5400
