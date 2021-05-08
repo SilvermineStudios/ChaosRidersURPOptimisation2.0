@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Cinemachine;
 using Photon.Pun;
+using UnityEngine.VFX;
 
 public class Controller : MonoBehaviour
 {
@@ -127,6 +128,7 @@ public class Controller : MonoBehaviour
     #region Default Functions
     private void Awake()
     {
+        
         shredUltimate = GetComponent<ShredUltimate>();
         if(anim == null)
             anim = GetComponentInChildren<Animator>();
@@ -150,6 +152,11 @@ public class Controller : MonoBehaviour
     private void Start()
     {
         SetupCar(currentCarClass);
+        if(currentCarClass == CarClass.Braker)
+        {
+            smokeBall = PhotonNetwork.Instantiate(equipmentData.photonPrefab, Vector3.zero, Quaternion.identity, 0);
+            smokeBall.GetComponent<VisualEffect>().Stop();
+        }
         cineCamera = gameObject.transform.GetChild(0).gameObject.GetComponent<CinemachineVirtualCamera>();
         cineCamTransposer = cineCamera.GetCinemachineComponent<CinemachineTransposer>();
         cineCamTransposer.m_FollowOffset = carData.stationaryCamOffset;
@@ -447,7 +454,10 @@ public class Controller : MonoBehaviour
             //spawn the smoke grenade accross the network
             if (IsThisMultiplayer.Instance.multiplayer)
             {
-                PhotonNetwork.Instantiate(equipmentData.photonPrefab, abilitySpawn.transform.position, abilitySpawn.transform.rotation, 0);
+                smokeBall.transform.position = abilitySpawn.transform.position;
+                smokeBall.transform.rotation = abilitySpawn.transform.rotation;
+                smokeBall.GetComponent<VisualEffect>().Play();
+                smokeBall.GetComponent<TurnOff>().TriggerMe();
             }
             //spawn the smoke grenade in single player
             if (!IsThisMultiplayer.Instance.multiplayer)
@@ -484,6 +494,9 @@ public class Controller : MonoBehaviour
         }
 
     }
+
+    GameObject smokeBall;
+
 
     private IEnumerator SmokeTrailCourotine(float time)
     {

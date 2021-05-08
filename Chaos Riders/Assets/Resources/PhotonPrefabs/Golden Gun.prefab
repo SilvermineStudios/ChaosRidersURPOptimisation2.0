@@ -6127,7 +6127,6 @@ MonoBehaviour:
   everythingButIgnoreBullets:
     serializedVersion: 2
     m_Bits: 57143
-  muzzleFlash: {fileID: 2312496836552525653}
   CinemachineVirtualCamera: {fileID: 3743629652910534923}
   connectCar: 0
   RPG: 0
@@ -6155,6 +6154,7 @@ MonoBehaviour:
   CasingSpawn: {fileID: 3172069432752539481}
   Casing: {fileID: 861391098359841573, guid: 26e80ede9ba2652449e5169bf69301aa, type: 3}
   VFXBulletGo: {fileID: 196921448862264343}
+  muzzleFlash: {fileID: 2312496836552525653}
   hitmarker: {fileID: 18687527734718524}
   shooterClass: 0
   minigunClass: 1
@@ -6260,18 +6260,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60098c4ae8c3c524ea0933609487c06c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  youFinishedTheRace: 0
-  soundEffect: {fileID: 8300000, guid: ed476ad4a6f78b64382ce8cd8d9c2f2f, type: 3}
-  resetBar: {fileID: 0}
+  isAI: 0
   lapsText: {fileID: 1665179948968719208}
-  resetKey: 114
+  playerCanvas: {fileID: 0}
   canCrossFinish: 0
+  youFinishedTheRace: 0
+  resetKey: 114
+  resetBar: {fileID: 0}
   checkpoints: []
   currentCheckpoint: 0
-  youWinText: {fileID: 1315662157409544427}
-  canCollect: 1
-  Music: {fileID: 6376771207274100240}
-  isAI: 0
 --- !u!114 &1315662156546385619
 MonoBehaviour:
   m_ObjectHideFlags: 0
