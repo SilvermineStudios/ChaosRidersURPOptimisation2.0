@@ -36,7 +36,7 @@ public class DustKickVFXScript : MonoBehaviour
         //pv.RPC("Init",RpcTarget.All);
         Init();
 
-        InvokeRepeating("Calculate", 0, 1f);
+        InvokeRepeating("Calculate", 0, 0.5f);
     }
 
 
