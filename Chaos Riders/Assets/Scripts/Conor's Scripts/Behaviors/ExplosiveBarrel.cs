@@ -49,6 +49,8 @@ public class ExplosiveBarrel : MonoBehaviour
     [PunRPC]
     void ExplodeBarrel()
     {
+        FMODUnity.RuntimeManager.PlayOneShotAttached("event:/GunFX/RPG/Explosion", gameObject);
+
         readyToExplode = false;
 
         //make invisible

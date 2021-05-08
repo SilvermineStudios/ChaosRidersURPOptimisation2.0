@@ -14,6 +14,8 @@ public class Mine : MonoBehaviour
     [SerializeField] float waitTime;
     [SerializeField] float timeUntilDeleted = 5f;
 
+    bool playSound = true;
+
     private void Awake()
     {
         explosionEffectVFX.SetActive(false);
@@ -33,6 +35,12 @@ public class Mine : MonoBehaviour
         {
             StartCoroutine(ExplodeCoroutine(timeUntilDeleted));
 
+            
+            if (playSound)
+            {
+                FMODUnity.RuntimeManager.PlayOneShotAttached("event:/GunFX/RPG/Explosion", gameObject);
+                playSound = false;
+            }
 
             /*
             if (!IsThisMultiplayer.Instance.multiplayer)
