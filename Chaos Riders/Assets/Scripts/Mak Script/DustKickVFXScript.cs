@@ -34,7 +34,13 @@ public class DustKickVFXScript : MonoBehaviour
         TestBackMinVel.x = Mathf.Lerp(0, BackLeftDustKickUp.GetVector3("MinVelocity").x, LerpPercentage);
         TestBackMinVel.y = Mathf.Lerp(0, BackLeftDustKickUp.GetVector3("MinVelocity").y, LerpPercentage);
         TestBackMinVel.z = Mathf.Lerp(0, BackLeftDustKickUp.GetVector3("MinVelocity").z, LerpPercentage);
+        TestBackMaxVel.x = Mathf.Lerp(0, BackLeftDustKickUp.GetVector3("MaxVelocity").x, LerpPercentage);
+        TestBackMaxVel.y = Mathf.Lerp(0, BackLeftDustKickUp.GetVector3("MaxVelocity").y, LerpPercentage);
+        TestBackMaxVel.z = Mathf.Lerp(0, BackLeftDustKickUp.GetVector3("MaxVelocity").z, LerpPercentage);
 
+        TestBackMinVel.x = Mathf.Lerp(0, BackLeftDustKickUp.GetVector3("MinVelocity").x, LerpPercentage);
+        TestBackMinVel.y = Mathf.Lerp(0, BackLeftDustKickUp.GetVector3("MinVelocity").y, LerpPercentage);
+        TestBackMinVel.z = Mathf.Lerp(0, BackLeftDustKickUp.GetVector3("MinVelocity").z, LerpPercentage);
         TestBackMaxVel.x = Mathf.Lerp(0, BackLeftDustKickUp.GetVector3("MaxVelocity").x, LerpPercentage);
         TestBackMaxVel.y = Mathf.Lerp(0, BackLeftDustKickUp.GetVector3("MaxVelocity").y, LerpPercentage);
         TestBackMaxVel.z = Mathf.Lerp(0, BackLeftDustKickUp.GetVector3("MaxVelocity").z, LerpPercentage);
