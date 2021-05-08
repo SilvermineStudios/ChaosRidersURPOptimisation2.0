@@ -6,29 +6,36 @@ using Photon.Realtime;
 
 public class CarPickup : MonoBehaviour
 {
-    private GameObject go;
-    Health healthScript;
-    [SerializeField] private bool hasSpeedBoost = false, hasInvincibilityPickup = false; //<-------------use this bool in target script
-    private bool hasPickup = false;
-    public bool hasRPG = false;
-    [SerializeField] private GameObject shooter;
-    [SerializeField] private GameObject nitroUiImage, armourUiImage;
-
-    //CoolDown Bars
-    [SerializeField] private Transform nitroCooldownBar, invincibleCooldownBar;
-    [SerializeField] private float nitroTimerNormalized, invincibleTimerNormalized;
-    [SerializeField] private float nitroStartTimer, invincibleStartTimer;
-    [SerializeField] private float nitroCurrentTimer, invincibleCurrentTimer;
-    [SerializeField] private bool nitroTimerCountDown = false, invincibleTimerCountDown = false;
-
     private PhotonView pv;
     private Controller carController;
+    [HideInInspector] public bool hasRPG = false;
+    [SerializeField] private bool hasPickup = false;
+    private Target healthScript;
+    
+    [Header("Nitro Boost")]
+    [SerializeField] private Transform nitroCooldownBar;
+    [SerializeField] private GameObject nitroUiImage;
+    [SerializeField] private GameObject nitroVFX;
+    private bool hasSpeedBoost = false;
+    private float nitroTimerNormalized;
+    private float nitroStartTimer;
+    private float nitroCurrentTimer;
+    private bool nitroTimerCountDown = false;
+
+    [Header("Invincible")]
+    [SerializeField] private Transform invincibleCooldownBar;
+    [SerializeField] private GameObject armourUiImage;
+    private bool hasInvincibilityPickup = false;
+    private float invincibleTimerNormalized;
+    private float invincibleStartTimer;
+    private float invincibleCurrentTimer;
+    private bool invincibleTimerCountDown = false;
+
 
     void Start()
     {
         carController = GetComponent<Controller>();
-        healthScript = GetComponent<Health>();
-        go = this.GetComponent<GameObject>();
+        healthScript = GetComponent<Target>();
 
         nitroUiImage.SetActive(false);
         armourUiImage.SetActive(false);
@@ -37,6 +44,9 @@ public class CarPickup : MonoBehaviour
 
         nitroStartTimer = PickupManager.speedBoostTime;
         invincibleStartTimer = PickupManager.InvincibleTime;
+
+        if (nitroVFX != null)
+            nitroVFX.SetActive(false);
     }
 
     private void Update()
@@ -44,26 +54,27 @@ public class CarPickup : MonoBehaviour
         //Debug.Log(PickupManager.speedBoostTime);
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
-            shooter = GetComponent<Controller>().Shooter;
             //if (!shooter.GetComponent<Shooter>().RPG)
             //hasRPG = false;
 
+            /*
             if (hasSpeedBoost || hasInvincibilityPickup) //<---------------------------------------------------------Add all types of pickup bools here as more are added
                 hasPickup = true;
             else
                 hasPickup = false;
+            */
 
             //player can speedboost by pressing the space bar when they have one
-            if (hasSpeedBoost && (Input.GetKeyDown(KeyCode.Space)))// || Input.GetButtonDown("A")))
+            if (hasSpeedBoost && (Input.GetButtonDown("Y")))// || Input.GetButtonDown("A")))
             {
                 hasSpeedBoost = false;
                 StartCoroutine(SpeedBoostTimer(PickupManager.speedBoostTime));
             }
 
             //player can activate invincibility by pressing the space bar when they have one
-            if (hasInvincibilityPickup && (Input.GetKeyDown(KeyCode.Space)))// || Input.GetButtonDown("A")))
+            if (hasInvincibilityPickup && (Input.GetButtonDown("Y")))// || Input.GetButtonDown("A")))
             {
-                
+                hasInvincibilityPickup = false;
                 StartCoroutine(InvincibleTimer(PickupManager.InvincibleTime));
             }
 
@@ -86,11 +97,12 @@ public class CarPickup : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
-        {
+        //if(pv.IsMine)
+        //{
             //if the player picked up a speed pickup
             if (other.CompareTag("SpeedPickUp") && !hasPickup)
             {
+                hasPickup = true;
                 hasSpeedBoost = true;
                 nitroCurrentTimer = nitroStartTimer;
                 nitroUiImage.SetActive(true);
@@ -100,18 +112,20 @@ public class CarPickup : MonoBehaviour
             //if the player picked up the invincible pickup
             if (other.CompareTag("InvinciblePickUp") && !hasPickup)
             {
+                hasPickup = true;
                 hasInvincibilityPickup = true;
                 invincibleCurrentTimer = invincibleStartTimer;
                 armourUiImage.SetActive(true);
                 invincibleCooldownBar.localScale = new Vector3(1f, 1f, 1f);
             }
-                
+
 
             if (other.CompareTag("RPGPickup") && !hasRPG)
                 hasRPG = true;
-        }
+        //}
 
         ////////////////////////////////////////////////////////////////////////////////////////////<---------------------check if RPC necessary
+        /*
         if(pv.IsMine && IsThisMultiplayer.Instance.multiplayer)
         {
             if (other.CompareTag("RPGPickup") && !hasRPG)
@@ -119,6 +133,7 @@ public class CarPickup : MonoBehaviour
                 pv.RPC("RPG", RpcTarget.All);
             }
         }
+        */
     }
 
     [PunRPC]
@@ -135,17 +150,20 @@ public class CarPickup : MonoBehaviour
     #region Puwerup Courotines
     private IEnumerator InvincibleTimer(float time)
     {
-        FMODUnity.RuntimeManager.PlayOneShotAttached("event:/Pickups/Use", gameObject);
+        FMODUnity.RuntimeManager.PlayOneShotAttached("event:/Pickups/PickupShield", gameObject);
         //armourUiImage.SetActive(true);
-        healthScript.isProtected = true;
+        //healthScript.isProtected = true;
+        healthScript.invincible = true;
         invincibleTimerCountDown = true;
         this.GetComponent<Target>().invincible = true;
         
 
         yield return new WaitForSeconds(time);
 
+        hasPickup = false;
         hasInvincibilityPickup = false;
-        healthScript.isProtected = false;
+        //healthScript.isProtected = false;
+        healthScript.invincible = false;
         armourUiImage.SetActive(false);
         invincibleTimerCountDown = false;
         this.GetComponent<Target>().invincible = false;
@@ -154,16 +172,21 @@ public class CarPickup : MonoBehaviour
     
     private IEnumerator SpeedBoostTimer(float time)
     {
-        FMODUnity.RuntimeManager.PlayOneShotAttached("event:/Pickups/Use", gameObject);
+        FMODUnity.RuntimeManager.PlayOneShotAttached("event:/Pickups/PickupBoost", gameObject);
         //nitroUiImage.SetActive(true);
         carController.boost = true;
         nitroTimerCountDown = true;
+        if (nitroVFX != null)
+            nitroVFX.SetActive(true);
 
         yield return new WaitForSeconds(time);
 
+        hasPickup = false;
         carController.boost = false;
         nitroUiImage.SetActive(false);
         nitroTimerCountDown = false;
+        if (nitroVFX != null)
+            nitroVFX.SetActive(false);
     }
     #endregion
 }

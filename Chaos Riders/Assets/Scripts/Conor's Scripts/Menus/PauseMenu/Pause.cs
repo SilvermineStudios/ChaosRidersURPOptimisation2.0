@@ -5,10 +5,14 @@ using Photon.Pun;
 using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+using TMPro;
+using UnityEngine.Rendering;
 
 public class Pause : MonoBehaviour
 {
-    [SerializeField] private int menuSceneIndex = 0;
+    private PhotonView pv;
+
+    private int menuSceneIndex = 0;
 
     //Audio
     FMOD.Studio.Bus Music;
@@ -16,26 +20,69 @@ public class Pause : MonoBehaviour
     FMOD.Studio.Bus Master;
 
     //Pause Menu Gameobject 
-    [SerializeField] private GameObject PauseMenu, audioSettingsPanel, mainPauseMenuPanel, controlsPanel; 
-    [SerializeField] private KeyCode pauseMenuButton1, pauseMenuButton2;
-    [SerializeField] Slider MasterSlider;
-    [SerializeField] Slider MusicSlider;
-    [SerializeField] Slider SFXSlider;
-    [SerializeField] Toggle saveChanges;
+    private GameObject PauseMenu; 
+    private GameObject mainPauseMenuPanel;
+    private GameObject sliders;
+    private GameObject audioSettingsPanel, videoSettingsPanel, controlsPanel;
+    public List<GameObject> menuPanels;
+    private GameObject playerCanvas;
 
-    float timeSinceLastPush = 0;
-    public bool paused = false;
-    public bool saveChangesToAudio;
-    [SerializeField] private int LobbySceneIndex = 0;
-    private PhotonView pv;
+    //Audio stuff
+    private Slider MasterSlider, MusicSlider, SFXSlider;
+    private Toggle saveChanges;
+
+    //video Stuff
+    private GameObject videoSettingsHolder;
+    private TMP_Dropdown imageQualityDropDown;
+    private GameObject FPSText;
+    public GameObject gameControlsPanel;
+
+    float timeSinceLastPush = 0; //dont delete
+    [HideInInspector] public bool paused = false;
+    private bool saveChangesToAudio;
+
+    
+
+    private void Awake()
+    {
+        PauseMenu = this.gameObject;
+        pv = GetComponent<PhotonView>();
+
+        mainPauseMenuPanel = PauseMenu.transform.Find("MainPauseMenu").gameObject;
+        playerCanvas = this.transform.parent.gameObject;
+
+        audioSettingsPanel = PauseMenu.transform.Find("Audio Settings").gameObject;
+        videoSettingsPanel = PauseMenu.transform.Find("Video Settings").gameObject;
+        controlsPanel = PauseMenu.transform.Find("Controls Panel").gameObject;
+        menuPanels.Add(audioSettingsPanel);
+        menuPanels.Add(videoSettingsPanel);
+        menuPanels.Add(controlsPanel);
+
+        //audio
+        sliders = audioSettingsPanel.transform.Find("Sliders").gameObject;
+        MasterSlider = sliders.transform.Find("Master Volume Slider").GetComponent<Slider>();
+        MusicSlider = sliders.transform.Find("Music Volume Slider").GetComponent<Slider>();
+        SFXSlider = sliders.transform.Find("SFX Volume Slider").GetComponent<Slider>();
+        saveChanges = sliders.transform.Find("SaveChanges").GetComponent<Toggle>();
+
+        //video
+        videoSettingsHolder = videoSettingsPanel.transform.Find("Settings Stuff").gameObject;
+        imageQualityDropDown = videoSettingsHolder.transform.Find("Video Quality Dropdown").GetComponent<TMP_Dropdown>();
+        //imageQualityDropDown.value = QualitySettings.GetQualityLevel();
+        imageQualityDropDown.value = QualitySettings.GetQualityLevel() - 1; //REVERT IF USING VERY LOW SETTINGS
+        FPSText = playerCanvas.transform.Find("FPSText").gameObject;
+    }
 
     void Start()
     {
-        pv = GetComponent<PhotonView>();
-        PauseMenu.SetActive(false); //deactivate pause menu
+        //Debug.Log("Quality settings int value: " + QualitySettings.GetQualityLevel());
+
+        //PauseMenu.SetActive(false); //deactivate pause menu
         Music = FMODUnity.RuntimeManager.GetBus("bus:/Master/Music");
         SFX = FMODUnity.RuntimeManager.GetBus("bus:/Master/SFX");
         Master = FMODUnity.RuntimeManager.GetBus("bus:/Master");
+
+        /*
         if (!PlayerPrefs.HasKey("MasterVolume") || !PlayerPrefs.HasKey("MusicVolume") || !PlayerPrefs.HasKey("SFXVolume"))
         {
             PlayerPrefs.SetFloat("MasterVolume", 1);
@@ -43,11 +90,13 @@ public class Pause : MonoBehaviour
             PlayerPrefs.SetFloat("MusicVolume", 0.5f);
             PlayerPrefs.SetInt("SaveChanges", 1);
         }
-        else
-        {
+        */
+        //else
+        //{
             MasterSlider.value = PlayerPrefs.GetFloat("MasterVolume");
             MusicSlider.value = PlayerPrefs.GetFloat("MusicVolume");
             SFXSlider.value = PlayerPrefs.GetFloat("SFXVolume");
+        /*
             if(PlayerPrefs.GetInt("SaveChanges") == 1)
             {
                 saveChanges.isOn = true;
@@ -59,6 +108,7 @@ public class Pause : MonoBehaviour
                 saveChangesToAudio = false;
             }
         }
+        */
 
         // AUDIO SETTINGS
         Music.setVolume(PlayerPrefs.GetFloat("MusicVolume"));
@@ -68,77 +118,155 @@ public class Pause : MonoBehaviour
 
     void Update()
     {
-        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
+
+    }
+
+    #region Video Settings
+    public void VideoSettingsButton()
+    {
+        mainPauseMenuPanel.SetActive(false); // disable the main pause menu panel 
+        videoSettingsPanel.SetActive(true); //enable the audio settings panel
+    }
+
+    public void ChangeRenderPipelineAsset(int value)
+    {
+        //Debug.Log("Value: " + value);
+
+        int test = value + 1;
+        //Debug.Log("Test: " + test);
+
+        //QualitySettings.SetQualityLevel(value); 
+        QualitySettings.SetQualityLevel(test); //REVERT IF USING VERY LOW SETTINGS
+    }
+
+    public void ToggleDisplayFPS(bool toggle)
+    {
+        if(toggle)
         {
-            //check if the pause buttons are pressed
-            if(Input.GetKeyDown(pauseMenuButton1) || Input.GetKeyDown(pauseMenuButton2))
-            {
-                paused = !paused; //flip if the game is paused when the pause buttons are pressed 
-
-
-                if (paused)
-                {
-                    PauseMenu.SetActive(true);
-                    BackButton(); //deactivate all the other settings pages and bring up the front of the pause menu everytime you reopen it
-                }
-                else
-                {
-                    PauseMenu.SetActive(false);
-                }
-            }
+            FPSText.SetActive(true);
+        }
+        else
+        {
+            FPSText.SetActive(false);
         }
     }
 
-    #region Buttons
+    public void DisplayContolsButton()
+    {
+        if (gameControlsPanel != null)
+        {
+            gameControlsPanel.SetActive(true);
+            Debug.Log("DISPLAY CONTROLS PANEL");
+        }
+        else
+            Debug.Log("Assign a game controls panel");
+    }
+    #endregion
+
+    #region Audio Settings
+    public void AudioSettingsButton()
+    {
+        mainPauseMenuPanel.SetActive(false); // disable the main pause menu panel 
+        audioSettingsPanel.SetActive(true); //enable the audio settings panel
+    }
+
+    public void SetMasterLevel(float sliderValue)
+    {
+        /*
+        if (saveChangesToAudio)
+        {
+            PlayerPrefs.SetFloat("MasterVolume", sliderValue);
+        }
+       
+        Master.setVolume(sliderValue);
+        */
+
+
+        //new
+        PlayerPrefs.SetFloat("MasterVolume", sliderValue);
+        Master.setVolume(sliderValue);
+    }
+
+    public void SetMusicLevel(float sliderValue)
+    {
+        /*
+        if (saveChangesToAudio)
+        {
+            PlayerPrefs.SetFloat("MusicVolume", sliderValue);
+        }
+
+        Music.setVolume(sliderValue);
+        */
+
+        //new
+        PlayerPrefs.SetFloat("MusicVolume", sliderValue);
+        Music.setVolume(sliderValue);
+    }
+
+    public void SetSFXLevel(float sliderValue)
+    {
+        /*
+        if (saveChangesToAudio)
+        {
+            PlayerPrefs.SetFloat("SFXVolume", sliderValue);
+        }
+
+        SFX.setVolume(sliderValue);
+        */
+
+        //new
+        PlayerPrefs.SetFloat("SFXVolume", sliderValue);
+        SFX.setVolume(sliderValue);
+    }
+
+    public void SaveChangesToAudio()
+    {
+        timeSinceLastPush = Time.time;
+        saveChangesToAudio = saveChanges.isOn;
+        if (saveChangesToAudio)
+        {
+            PlayerPrefs.SetFloat("MasterVolume", MasterSlider.value);
+            PlayerPrefs.SetFloat("SFXVolume", SFXSlider.value);
+            PlayerPrefs.SetFloat("MusicVolume", MusicSlider.value);
+        }
+        if (PlayerPrefs.GetInt("SaveChanges") == 1)
+        {
+            PlayerPrefs.SetInt("SaveChanges", 0);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("SaveChanges", 1);
+        }
+    }
+    #endregion
+
+    #region General Buttons
     public void LeaveRaceButton()
     {
-        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
-        {
-            //PhotonNetwork.Disconnect(); //disconnect the player from the photon network before removing them from the game
-            //SceneManager.LoadScene(LobbySceneIndex); //return to the custom matchmaking lobby
-            StartCoroutine(DisconnectAndLoad());
-        }
+        StartCoroutine(DisconnectAndLoad());
     }
     IEnumerator DisconnectAndLoad()
     {
-        //PhotonNetwork.Disconnect();
         PhotonNetwork.LeaveRoom();
-        //while (PhotonNetwork.IsConnected)
+
         while(PhotonNetwork.InRoom)
             yield return null;
+
         SceneManager.LoadScene(menuSceneIndex);
     }
 
     public void QuitGameButton()
     {
-        
-        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
-        {
-            //PhotonNetwork.Disconnect(); //disconnect the player from the photon network before removing them from the game
-            //Application.Quit(); //close the game for the player   
-            StartCoroutine(Disconnect());
-        }
-        
-        
+        StartCoroutine(Disconnect());
     }
     IEnumerator Disconnect()
     {
-        //PhotonNetwork.Disconnect();
         PhotonNetwork.LeaveRoom();
-        //while (PhotonNetwork.IsConnected)
+
         while (PhotonNetwork.InRoom)
             yield return null;
+
         Application.Quit();
-    }
-
-
-    public void AudioSettingsButton()
-    {
-        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
-        {
-            mainPauseMenuPanel.SetActive(false); // disable the main pause menu panel 
-            audioSettingsPanel.SetActive(true); //enable the audio settings panel
-        }
     }
 
     public void GameControlsButton()
@@ -149,90 +277,27 @@ public class Pause : MonoBehaviour
 
     public void BackButton()
     {
-        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
+        mainPauseMenuPanel.SetActive(true); //enable the main pause menu panel 
+
+        audioSettingsPanel.SetActive(false);
+        videoSettingsPanel.SetActive(false);
+        controlsPanel.SetActive(false);
+
+        /*
+        foreach (GameObject go in menuPanels)
         {
-            mainPauseMenuPanel.SetActive(true); //enable the main pause menu panel 
-            audioSettingsPanel.SetActive(false); //disable the audio settings panel
-            controlsPanel.SetActive(false); //disable the controls panel
+            go.SetActive(false);
         }
+        */
     }
 
     public void ResumeGameButton()
     {
-        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
-        {
-            PauseMenu.SetActive(false); //close the pause menu
-            paused = false;
-        }   
-    }
-    
-    public void SaveChangesToAudio()
-    {
-        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer && Time.timeSinceLevelLoad > 5)
-        {
-            timeSinceLastPush = Time.time;
-            saveChangesToAudio = saveChanges.isOn;
-            if(saveChangesToAudio)
-            {
-                PlayerPrefs.SetFloat("MasterVolume", MasterSlider.value);
-                PlayerPrefs.SetFloat("SFXVolume", SFXSlider.value);
-                PlayerPrefs.SetFloat("MusicVolume", MusicSlider.value);
-            }
-            if (PlayerPrefs.GetInt("SaveChanges") == 1)
-            {
-                PlayerPrefs.SetInt("SaveChanges", 0);
-            }
-            else
-            {
-                PlayerPrefs.SetInt("SaveChanges", 1);
-            }
-        }
-    }
+        PauseMenu.SetActive(false); //close the pause menu
+        paused = false;
 
-    #endregion
-
-    #region Sliders
-    public void SetMasterLevel(float sliderValue)
-    {
-        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
-        {
-            if(saveChangesToAudio)
-            {
-                PlayerPrefs.SetFloat("MasterVolume", sliderValue);
-            }
-
-            Master.setVolume(sliderValue);
-            
-        }
-            
-    }
-
-    public void SetMusicLevel(float sliderValue)
-    {
-        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
-        {
-            if (saveChangesToAudio)
-            {
-                PlayerPrefs.SetFloat("MusicVolume", sliderValue);
-            }
-
-
-             Music.setVolume(sliderValue);
-            
-        }
-    }
-
-    public void SetSFXLevel(float sliderValue)
-    {
-        if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
-        {
-            if (saveChangesToAudio)
-            {
-                PlayerPrefs.SetFloat("SFXVolume", sliderValue);
-            }
-             SFX.setVolume(sliderValue);
-              
-        }
+        this.transform.root.GetComponent<PauseMenu>().paused = false;
+        Cursor.visible = false;
     }
     #endregion
 }

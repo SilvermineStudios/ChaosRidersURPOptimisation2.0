@@ -6,10 +6,17 @@ using Photon.Realtime;
 
 public class MoveTurretPosition : MonoBehaviour
 {
+    [Header("New Stuff")]
+    public Transform Stand;
+    public Transform GunBarrel;
+    public GameObject MuzzleFlash;
+    public GameObject BulletCasings;
+
     [SerializeField] private Transform gunstand;
 
     public GameObject car;
-    private Transform carGunPos, carGunStandPosition; 
+    private Transform carGunPos, carGunStandPosition;
+    public bool isAiGun = false;
 
     public Transform FakeParent;
 
@@ -19,7 +26,7 @@ public class MoveTurretPosition : MonoBehaviour
     private PlayerSpawner ps;
     private bool canConnect = true;
 
-    private TurretTester turretTester;
+    [SerializeField] private TurretTester turretTester;
 
     private Shooter shooterScript;
 
@@ -35,7 +42,8 @@ public class MoveTurretPosition : MonoBehaviour
     private void Awake()
     {
         //pv.GetComponent<PhotonView>();
-        shooterScript = GetComponent<Shooter>();
+        if(this.GetComponent<Shooter>())
+            shooterScript = GetComponent<Shooter>();
     }
 
     private void Start()
@@ -52,7 +60,7 @@ public class MoveTurretPosition : MonoBehaviour
         if (FakeParent == null)
             return;
 
-        if (IsThisMultiplayer.Instance.multiplayer)
+        if (IsThisMultiplayer.Instance.multiplayer && car != null && !isAiGun)
         {
             pv.RPC("AttachToFakeParent", RpcTarget.All);
         }
@@ -60,29 +68,31 @@ public class MoveTurretPosition : MonoBehaviour
         {
             AttachToFakeParent();
         }
-        
     }
 
     [PunRPC]
     void AttachToFakeParent()
     {
+        if (car == null)
+            return;
+
         carGunPos = car.GetComponent<MultiplayerCarPrefabs>().gunSpawnPoint;
         carGunStandPosition = car.GetComponent<MultiplayerCarPrefabs>().gunstand;
 
         transform.position = carGunPos.transform.position;
-
+        transform.rotation = Quaternion.Euler(0, -90, 0);
 
         //var targetPos = carGunPos.position;
         var targetRot = car.transform.rotation;
 
-        //targetRot.x = 0;
-        //targetRot.z = 0;
-
-        //this.transform.position = RotatePointAroundPivot(targetPos, targetPos, targetRot);
-        //this.transform.localRotation = targetRot;
-
-        gunstand.localRotation = targetRot;
+        //transform.rotation = targetRot;
+        //gunstand.localRotation = targetRot;
+        gunstand.localRotation = Quaternion.Euler(0, targetRot.eulerAngles.y - targetRot.eulerAngles.y, 0);
         gunstand.transform.position = carGunStandPosition.transform.position;
+        //Debug.Log("Attached to fake parent");
+
+        if (car != null && car.tag == "car")
+            GiveGunRefrenceToCar();
     }
 
 
@@ -108,37 +118,51 @@ public class MoveTurretPosition : MonoBehaviour
         return point;
     }
 
+    void GiveGunRefrenceToCar()
+    {
+        if(car != null)
+        {
+            car.GetComponent<ReplaceDisconnectedShooters>().shooter = this.gameObject;
+
+            if (car.GetComponent<CarShooterMirror>())
+            {
+                CarShooterMirror csm = car.GetComponent<CarShooterMirror>();
+                csm.connectedStand = Stand;
+                csm.connectedGunBarrel = GunBarrel;
+                csm.shooter = this.gameObject;
+                csm.connectedMuzzleFlash = MuzzleFlash;
+                csm.connectedBulletCasings = BulletCasings;
+            }
+        } 
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (!canConnect) return;
 
-        /* OLD VERSION
-        if (other.gameObject.tag == "car" && canConnect)
-        {
-            canConnect = false;
-            car = other.gameObject;
-            car.GetComponent<Controller>().ShooterAttached = turretTester; ////HERE
-            FakeParent = other.gameObject.transform;
-            shooterScript.connectCar = true;
-        }
-        */
         if (other.gameObject.layer == LayerMask.NameToLayer("Cars") && canConnect)
         {
+            //Debug.Log("Connect to not smooth car here");
+
             canConnect = false;
-            car = other.gameObject;
+            
+            
+            if (other.gameObject.tag == "car")
+            {
+                car = other.gameObject.transform.root.gameObject;
+                //Debug.Log(car);
+                FakeParent = other.gameObject.transform.root;
+            }
+            else
+            {
+                car = other.gameObject;
+                FakeParent = other.gameObject.transform;
+            }
 
-            if(other.gameObject.tag == "car")
-                car.GetComponent<Controller>().ShooterAttached = turretTester;
-            //else
-                //car.GetComponent<AICarController>().ShooterAttached = turretTester;
 
-            FakeParent = other.gameObject.transform;
-            shooterScript.connectCar = true;
+            if (shooterScript != null)
+                shooterScript.connectCar = true;
         }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
         
     }
 }

@@ -10,25 +10,55 @@ using System.IO;
 public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
 {
     #region Variables
+    private PhotonView pv;
+    public GameObject thisRoomListing;
+    [SerializeField] private float disconnectTime = 2f;
+    private bool isHost = false;
+    [SerializeField] private TMP_Text roomNameDisplay; //display for the name of the room
     [SerializeField] private int multiplayerSceneIndex; //scene index for loading multiplayer scene
 
+    [Header("Panels")]
+    [SerializeField] private GameObject mainMenuPanel; 
     [SerializeField] private GameObject lobbyPanel; //display for when in lobby
     [SerializeField] private GameObject roomPanel; //display for when in room
+    [SerializeField] private GameObject disconnectPanel; //display for when in room
 
-    [SerializeField] private GameObject startButton; //only for the master client
-
+    [Header("Player Listings")]
     [SerializeField] private Transform playersContainer; //used to display all the players in the current room
     [SerializeField] private GameObject playerListingPrefab; //Instansiate to display each player in the room
-
-    [SerializeField] private TMP_Text roomNameDisplay; //display for the name of the room
+    public List<GameObject> playerNameBoxes = new List<GameObject>();
     [SerializeField] private GameObject photonMenuPlayer; //each player will be given one of these when they join the room
-    [SerializeField] private Transform playerHolder; //this game object will be the parent object for each player in the lobby
+    [SerializeField] private GameObject playerDataManager; //
+
+    [Header("Buttons")]
+    public GameObject startButton; //only for the master client
+
+    [Header("Loading")]
+    [SerializeField] private GameObject loadingScreen;
+    [SerializeField] private float loadingTime;
+    public static float LoadingTime;
+    [SerializeField] public TMP_Text hintText;
+
     #endregion
-   
+
+    private void Awake()
+    {
+        pv = GetComponent<PhotonView>();
+        loadingScreen.SetActive(false);
+        disconnectPanel.SetActive(false);
+        LoadingTime = loadingTime;
+    }
+
+    private void Update()
+    {
+        playerNameBoxes.RemoveAll(x => x == null);
+    }
+
     void ClearPlayerListings()
     {
         for(int i = playersContainer.childCount -1; i >= 0; i--)
         {
+            playerNameBoxes.Remove(playerNameBoxes[i]);
             Destroy(playersContainer.GetChild(i).gameObject);
         }
     }
@@ -37,9 +67,16 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
     {
         foreach(Player player in PhotonNetwork.PlayerList) //loop through each player 
         {
-            GameObject tempListing = Instantiate(playerListingPrefab, playersContainer);
-            TMP_Text tempText = tempListing.transform.GetChild(0).GetComponent<TMP_Text>();              
+            //GameObject tempListing = Instantiate(playerListingPrefab, playersContainer);
+            GameObject tempListing = PhotonNetwork.Instantiate(playerListingPrefab.name, this.transform.position, this.transform.rotation, 0);
+            
+            TMP_Text tempText = tempListing.transform.GetChild(1).GetComponent<TMP_Text>();
+            tempListing.transform.parent = playersContainer;
+            tempListing.transform.localScale = new Vector3(5.289001f, 1, 1);
+            //Debug.Log("Players nickname is: " + player.NickName);
             tempText.text = player.NickName;
+            
+            playerNameBoxes.Add(tempListing);
         }
     }
 
@@ -52,6 +89,8 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient) //for the host
         {
             startButton.SetActive(true);
+            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", playerDataManager.name), this.transform.position, this.transform.rotation, 0);
+            isHost = true;
         }
         else
         {
@@ -63,9 +102,7 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
         {
             if(p == PhotonNetwork.LocalPlayer)
             {
-                //GameObject player = 
-                    PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", photonMenuPlayer.name), this.transform.position, this.transform.rotation, 0);
-                //player.transform.parent = playerHolder;
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", photonMenuPlayer.name), this.transform.position, this.transform.rotation, 0);
             }
         }
 
@@ -78,6 +115,7 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
     {
         ClearPlayerListings(); //remove all old player listings
         ListPlayers(); //relist all current player listings
+
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
@@ -87,23 +125,50 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsMasterClient) //if the host leaves give the new host access to the start button
         {
-            startButton.SetActive(true);
+            // startButton.SetActive(true);
+
+            if(!isHost)
+            {
+                PhotonNetwork.CurrentRoom.IsOpen = false; // makes room close 
+                PhotonNetwork.CurrentRoom.IsVisible = false; // makes room invisible to random match
+                StartCoroutine(DisconnectedCouroutine(disconnectTime));
+            }
         }
     }
 
+    private void DisconnectEveryone()
+    {
+        if (thisRoomListing != null)
+            Destroy(thisRoomListing);
+
+        PhotonNetwork.LeaveRoom();
+        PhotonNetwork.LeaveLobby();
+        StartCoroutine(rejoinLobby());
+
+        disconnectPanel.SetActive(false);
+        lobbyPanel.SetActive(true);
+        roomPanel.SetActive(false);
+    }
+
+    #region Buttons
     public void StartGame() //paired to the start button
     {
-        if(PhotonNetwork.IsMasterClient)
-        {
-            PhotonNetwork.CurrentRoom.IsOpen = false; //close the room
-            PhotonNetwork.LoadLevel(multiplayerSceneIndex);
-        }
+        StartCoroutine(LoadingCouroutine(loadingTime));
+        pv.RPC("RPC_TurnOnLoadingScreen", RpcTarget.All);
+    }
+    [PunRPC]
+    private void RPC_TurnOnLoadingScreen ()
+    {
+        loadingScreen.SetActive(true);
+        //Debug.Log("ACTIVATING LOADING SCREEN");
     }
 
-    IEnumerator rejoinLobby()
+    [PunRPC]
+    private void Activate(int viewId)
     {
-        yield return new WaitForSeconds(1);
-        PhotonNetwork.JoinLobby();
+        Debug.Log("Activate");
+        PhotonView view = PhotonView.Find(viewId);
+        view.GetComponent<GameObject>().SetActive(true);
     }
 
     public void BackClick() //paired to the back button in the room panel
@@ -113,5 +178,40 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveRoom();
         PhotonNetwork.LeaveLobby();
         StartCoroutine(rejoinLobby());
+        isHost = false;
+
+        if (thisRoomListing != null)
+            Destroy(thisRoomListing);
     }
+    #endregion
+    #region Couroutines
+    private IEnumerator DisconnectedCouroutine(float time)
+    {
+        disconnectPanel.SetActive(true);
+
+        yield return new WaitForSeconds(time);
+
+        DisconnectEveryone();
+    }
+
+
+    IEnumerator rejoinLobby()
+    {
+        yield return new WaitForSeconds(1);
+        PhotonNetwork.JoinLobby();
+    }
+
+    //countdown until the game starts
+    private IEnumerator LoadingCouroutine(float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.CurrentRoom.IsOpen = false; //close the room
+            PhotonNetwork.LoadLevel(multiplayerSceneIndex);
+        }
+    }
+    #endregion
+
 }

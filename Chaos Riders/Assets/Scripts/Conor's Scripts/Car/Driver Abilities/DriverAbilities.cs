@@ -7,13 +7,12 @@ using UnityEngine.UI;
 public class DriverAbilities : MonoBehaviour
 {
 
-    enum Abilities { SmokeScreen, Mine }
-    enum Ultimates { Brake, Shred }
-    [SerializeField] Abilities CurrentAbility;
-    [SerializeField] Ultimates CurrentUltimate;
+    public enum Abilities { SmokeScreen, Mine }
+    public enum Ultimates { Brake, Shred }
+    public Abilities CurrentAbility;
+    public Ultimates CurrentUltimate;
     public GameObject abilitySpawn, smokeGameObject, mineGameObject, shredObject;
     [SerializeField] private KeyCode abilityKeyCode = KeyCode.Q, equipmentKeyCode = KeyCode.E; //Create Keycode Variables for the buttons
-
     [SerializeField] private Transform equipmentChargeBar, equipmentOverChargeBar, abilityChargeBar, abilityOverChargeBar; //equipment/ability chargebars
     [SerializeField] private float equipmentChargeAmount, equipmentOverchargeAmount, abilityChargeAmount, abilityOverChargeAmount; //equipment/ability charge Amount
     [SerializeField] private float equipmentChargeSpeed = 8f, abilityChargeSpeed = 2f;

@@ -149,7 +149,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &581070504
 RectTransform:
   m_ObjectHideFlags: 0
@@ -203,16 +203,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 1
-  m_ReferencePixelsPerUnit: 100
-  m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 1920, y: 1080}
+  m_UiScaleMode: 1336809536
+  m_ReferencePixelsPerUnit: 6.03e-43
+  m_ScaleFactor: 0.01
+  m_ReferenceResolution: {x: 0, y: 0}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
-  m_PhysicalUnit: 3
-  m_FallbackScreenDPI: 96
-  m_DefaultSpriteDPI: 96
-  m_DynamicPixelsPerUnit: 1
+  m_PhysicalUnit: 0
+  m_FallbackScreenDPI: 3e-45
+  m_DefaultSpriteDPI: 1
+  m_DynamicPixelsPerUnit: 1e-45
 --- !u!114 &581070505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1079,15 +1079,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38ad6163bb62a0145a3d10b43a7d24a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerDataManager: {fileID: 0}
+  roomController: {fileID: 0}
   teamNumber: 0
+  driverAndShooterNames: 
   playerNumber: 0
+  myCheckpoint: {fileID: 0}
+  picked: 0
   driver: 0
   shooter: 0
-  carModel: 0
-  shooterModel: 0
-  characterTypeSelectionScreen: {fileID: 660332785}
-  driverSelectionScreen: {fileID: 1686730051}
-  shooterSelectionScreen: {fileID: 1084657153}
+  carModel: 3
+  currentCarClass: 0
+  shooterModel: 2
+  currentMinigunClass: 0
 --- !u!114 &4765716784231101049
 MonoBehaviour:
   m_ObjectHideFlags: 0

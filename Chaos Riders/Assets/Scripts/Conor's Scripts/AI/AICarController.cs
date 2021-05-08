@@ -12,17 +12,21 @@ public class AICarController : MonoBehaviour
     [SerializeField] private float maxSpeed = 2000f; //maximum speed the car can achieve
     [SerializeField] private float maxSteerAngle = 45f; //maximum angle the wheels can rotate +/-
 
-    [SerializeField] private int currentWaypoint = 0; //the current waypoint the car is moving towards
-    [SerializeField] private int nearestWaypoint = 0; //the nearest waypoint to the car
+    public int currentWaypoint = 0; //the current waypoint the car is moving towards
+    private int nearestWaypoint = 0; //the nearest waypoint to the car
     [SerializeField] private float changeWaypointDistance = 45f; // the distance the car needs to be from its current waypoint before it changes to the next waypoint
+
+    public int currentLap { get; private set; }
 
     [SerializeField] private WheelCollider FL, FR; // the front tire wheel colliders
 
-    [SerializeField] private Transform[] waypoints;
+    [SerializeField] public Transform[] waypoints;
 
     [SerializeField] private Vector3 centerOfMass;
 
-    private AIHealth healthScript;
+    //private AIHealth healthScript;
+    private Target healthScript;
+    public GameObject healthBar;
 
     //public TurretTester ShooterAttached;
 
@@ -39,8 +43,10 @@ public class AICarController : MonoBehaviour
 
     void Start()
     {
+        currentLap = 1;
         GetComponent<Rigidbody>().centerOfMass = centerOfMass;
-        healthScript = GetComponent<AIHealth>();
+        //healthScript = GetComponent<AIHealth>();
+        healthScript = GetComponent<Target>();
 
         nearestWaypoint = NearestWP();
         currentWaypoint = nearestWaypoint;
@@ -127,10 +133,13 @@ public class AICarController : MonoBehaviour
 
         if (Vector3.Distance(transform.position, waypoints[currentWaypoint].position) < changeWaypointDistance) //if the car is within the changewaypointDistance of the currentwaypoint
         {
-            if (currentWaypoint == waypoints.Length - 1) //if the car is at the last waypoint
+            if (currentWaypoint == waypoints.Length - 1)
+            {//if the car is at the last waypoint
                 currentWaypoint = 0; //make the next waypoint the first waypoint
+                currentLap++;
+            }
             else
-                currentWaypoint ++;//if the current waypoint is not the last waypoint in the list then go to the next waypoint in the list
+                currentWaypoint++;//if the current waypoint is not the last waypoint in the list then go to the next waypoint in the list
         }
     }
 
@@ -155,6 +164,31 @@ public class AICarController : MonoBehaviour
         }
         return nearestWP;
     }
+    
+    /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void ResetPosition(float range, float yOffset)
+    {
+        if (currentWaypoint == 0)
+        {
+            //this.transform.position = waypoints[currentWaypoint].transform.position;
+
+            Vector3 waypointPos = waypoints[currentWaypoint].transform.position;
+            this.transform.position = new Vector3(waypointPos.x + Random.Range(0, range), waypointPos.y + yOffset, waypointPos.z + Random.Range(0, range));
+
+            this.transform.rotation = waypoints[currentWaypoint].transform.rotation;
+            currentWaypoint++;
+        }
+        else
+        {
+            //this.transform.position = waypoints[currentWaypoint - 1].transform.position;
+
+            Vector3 waypointPos = waypoints[currentWaypoint - 1].transform.position;
+            this.transform.position = new Vector3(waypointPos.x + Random.Range(0, range), waypointPos.y + yOffset, waypointPos.z + Random.Range(0, range));
+
+            this.transform.rotation = waypoints[currentWaypoint - 1].transform.rotation;
+        }
+    }
+    /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void OnTriggerEnter(Collider other)
     {

@@ -9,6 +9,7 @@ using TMPro;
 public class RoomButton : MonoBehaviour
 {
     #region Variables
+    private CustomMatchmakingRoomController roomController;
     [SerializeField] private TMP_Text nameText; //display for room name
     [SerializeField] private TMP_Text sizeText; //display for room size
 
@@ -17,9 +18,15 @@ public class RoomButton : MonoBehaviour
     private int playerCount;
     #endregion
 
+    private void Awake()
+    {
+        roomController = FindObjectOfType<CustomMatchmakingRoomController>();
+    }
+
     public void JoinRoomOnClick() 
     {
         PhotonNetwork.JoinRoom(roomName);
+        roomController.thisRoomListing = this.gameObject;
     }
 
     public void SetRoom(string nameInput, int sizeInput, int countInput)

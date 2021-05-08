@@ -17,7 +17,7 @@ public class ShooterUIManager : MonoBehaviour
     public static TMP_Text lapsText;
 
 
-    [SerializeField] private GameObject minimapCam;
+    private GameObject minimapCam;
     public static GameObject minimapCamera;
 
 
@@ -26,7 +26,7 @@ public class ShooterUIManager : MonoBehaviour
         pv = GetComponent<PhotonView>();
         youWinText = youWinTextGo;
         lapsText = lapsTextUI;
-        minimapCamera = minimapCam;
+        //minimapCamera = minimapCam;
     }
 
     void Start()
@@ -34,13 +34,18 @@ public class ShooterUIManager : MonoBehaviour
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
             gunnerCanvas.SetActive(true); //activate the gunners UI canvas
-            minimapCam.SetActive(true);
+            //minimapCam.SetActive(true);
         }
         else if (!pv.IsMine && IsThisMultiplayer.Instance.multiplayer)
         {
             gunnerCanvas.SetActive(false); //deactivate all the UI canvas' that dont belong to you
-            minimapCam.SetActive(false);
+            //minimapCam.SetActive(false);
         }
-            
+    }
+
+    private void Update()
+    {
+        if (minimapCam == null)
+            minimapCam = FindObjectOfType<MiniMap>().gameObject;
     }
 }

@@ -6,81 +6,90 @@ using Photon.Realtime;
 
 public class PlayerDataManager : MonoBehaviour
 {
-    private PhotonView pv;
-
-    [SerializeField] private PhotonMenuPlayer[] players;
-    public static PhotonMenuPlayer[] Players;
+    public PhotonMenuPlayer[] photonMenuPlayers;
+    public static PhotonMenuPlayer[] PhotonMenuPlayers;
 
     public List <GameObject> drivers = new List<GameObject>();
+    public static List <GameObject> Drivers;
     public List <GameObject> shooters = new List<GameObject>();
+    public static List<GameObject> Shooters;
 
-    void Start()
+    void Awake()
     {
-        
+        DontDestroyOnLoad(this);
     }
 
     
     void Update()
     {
+        //all players
         UpdatePlayerList();
-        AssignPlayerNumbers(); //give each player the index of the spawnpoint they will be spawned at
-    }
 
-    private void FixedUpdate()
-    {
-        UpdateDriverAndShooterLists();
+        //shooters
+        AddToShooters();
+
+        //drivers
+        AddToDrivers();
+        
+        Drivers = drivers;
+        Shooters = shooters;
+
+        drivers.RemoveAll(x => x == null); //remove any targets that are null (Disconnected drivers)
+        Shooters.RemoveAll(x => x == null); //remove any targets that are null (Disconnected drivers)
+
+        RemovePlayersFromList();
     }
 
     private void UpdatePlayerList()
     {
-        players = FindObjectsOfType<PhotonMenuPlayer>();
-        Players = players;
+        photonMenuPlayers = FindObjectsOfType<PhotonMenuPlayer>();
+        PhotonMenuPlayers = photonMenuPlayers;
     }
 
-    private void UpdateDriverAndShooterLists()
+    //removes players from dirver / shooter list when they change team
+    private void RemovePlayersFromList()
     {
-        //remove players from list when they leave the game
-        if (drivers.Count != 0)
+        foreach (PhotonMenuPlayer p in photonMenuPlayers)
         {
-            foreach (GameObject go in drivers)
+            if (!p.shooter && shooters.Contains(p.gameObject))
             {
-                if (go == null)
-                {
-                    drivers.Remove(go);
-                }
+                shooters.Remove(p.gameObject);
             }
-        }
-        //remove players from list when they leave the game
-        if (shooters.Count != 0)
-        {
-            foreach (GameObject go in shooters)
+            if (!p.driver && drivers.Contains(p.gameObject))
             {
-                if (go == null)
-                {
-                    shooters.Remove(go);
-                }
+                drivers.Remove(p.gameObject);
             }
         }
     }
 
-    private void AssignPlayerNumbers()
+    private void AddToShooters()
     {
-        //drivers
-        if(drivers.Count != 0)
+        if (photonMenuPlayers.Length > 0)
         {
-            for (int i = 0; i < drivers.Count; i++)
+            foreach(PhotonMenuPlayer p in photonMenuPlayers)
             {
-                drivers[i].GetComponent<PhotonMenuPlayer>().teamNumber = i;
+                if(p.shooter && !shooters.Contains(p.gameObject))
+                {
+                    shooters.Add(p.gameObject);
+                }
             }
         }
-
-        //shooters
-        if (shooters.Count != 0)
+        else
+            return;
+    }
+    private void AddToDrivers()
+    {
+        if (photonMenuPlayers.Length > 0)
         {
-            for (int i = 0; i < shooters.Count; i++)
+            foreach (PhotonMenuPlayer p in photonMenuPlayers)
             {
-                shooters[i].GetComponent<PhotonMenuPlayer>().teamNumber = i;
+                if (p.driver && !drivers.Contains(p.gameObject))
+                {
+                    drivers.Add(p.gameObject);
+                }
             }
         }
+        else
+            return;
     }
 }

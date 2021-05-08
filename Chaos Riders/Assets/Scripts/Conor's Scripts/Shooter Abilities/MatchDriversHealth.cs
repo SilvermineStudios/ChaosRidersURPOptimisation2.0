@@ -6,13 +6,9 @@ using Photon.Pun;
 public class MatchDriversHealth : MonoBehaviour
 {
     private Shooter ShooterScript; //ref to the shooter script so you can access the car gameobject
+    public Target CarHealth; //ref to the shooter script so you can access the car gameobject
     private GameObject car; //ref to the connected car
-    [SerializeField] private GameObject healthBarAboveCar;
     [SerializeField] private Transform myHealthBarUi;
-    private Transform carHealthBarUI;
-
-    [SerializeField] private float health, startHealth, healthNormalized;
-    [SerializeField] private bool setStartHealth = false;
 
     private PhotonView pv;
 
@@ -23,51 +19,43 @@ public class MatchDriversHealth : MonoBehaviour
         ShooterScript = GetComponent<Shooter>();
     }
 
-    void Start()
-    {
-        
-    }
-
-
     void Update()
     {
         if (pv.IsMine && IsThisMultiplayer.Instance.multiplayer || !IsThisMultiplayer.Instance.multiplayer)
         {
+            /*
             //if there is a car connected to the shooter
             if (ShooterScript.car != null)
             {
                 car = ShooterScript.car;
 
-                if(car.tag == "car")
-                {
-                    healthBarAboveCar = car.GetComponent<Health>().myHealthBar;
-                    carHealthBarUI = car.GetComponent<Health>().healthBarUi;
-                }
-                if(car.tag != "car")
-                {
-                    healthBarAboveCar = car.GetComponent<AIHealth>().myHealthBar;
-                    health = car.GetComponent<AIHealth>().health;
-                    startHealth = car.GetComponent<AIHealth>().startHealth;
-                    healthNormalized = car.GetComponent<AIHealth>().healthNormalized;
+                if (CarHealth == null)
+                    CarHealth = car.GetComponent<Target>();
 
-                    SetHealthBarUiSize(healthNormalized);
-                }
+                CarHealth.myHealthBar.SetActive(false); //make the cars healthbar invisable to the gunner
+                SetHealthBarUiSize(CarHealth.healthNormalized);
+            }
+            */
 
-                if (healthBarAboveCar != null)
-                {
-                    healthBarAboveCar.SetActive(false); //make the cars healthbar invisable to the gunner
+            //assign carhealth if it hasnt been assigned or if the car disconnects
+            if(CarHealth == null && ShooterScript.car != null)
+            {
+                CarHealth = ShooterScript.car.GetComponent<Target>();
+                car = ShooterScript.car;
+            }
 
-
-                    //myHealthBarUi.localScale = carHealthBarUI.localScale;
-                    //myHealthBarUi.localScale = new Vector3(1f, sizeNormalized);
-                }
-
+            //match the health bar with the connected drivers health
+            if(CarHealth != null)
+            {
+                CarHealth.myHealthBar.SetActive(false); //make the cars healthbar invisable to the gunner
+                SetHealthBarUiSize(CarHealth.healthNormalized);
             }
         }
     }
 
     private void SetHealthBarUiSize(float sizeNormalized)
     {
+        //Debug.Log("Health Normalized is: " + CarHealth.healthNormalized);
         myHealthBarUi.localScale = new Vector3(1f, sizeNormalized);
     }
 }

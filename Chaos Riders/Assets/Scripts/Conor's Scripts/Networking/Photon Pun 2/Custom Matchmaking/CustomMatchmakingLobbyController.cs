@@ -9,15 +9,19 @@ using TMPro;
 public class CustomMatchmakingLobbyController : MonoBehaviourPunCallbacks
 {
     #region Variables
+    private GameObject[] panels; //used for disableing / enabling the panels
     [SerializeField] private GameObject lobbyConnectButton; //button used for joining lobby
     [SerializeField] private GameObject lobbyPanel; //panel for displaying lobby
     [SerializeField] private GameObject mainPanel; //panel for displaying main menu
     [SerializeField] private GameObject controlsPanel; //panel for displaying game controls
+    [SerializeField] private GameObject settingsPanel; //panel for changing the game settings
+    [SerializeField] private GameObject tutorialPanel; //panel for changing the game settings
     //[SerializeField] private GameObject choosePlayerTypePanel; //panel for choosing whether to be a driver or shooter 
 
     public TMP_InputField playerNameInput; //input field so player can change their NickName
 
     private string roomName; //string for saving room name
+    private bool roomNameBlank = true;
     private int roomSize; //int for saving room size
 
     private List<RoomInfo> roomLisings; //list of current rooms
@@ -30,6 +34,16 @@ public class CustomMatchmakingLobbyController : MonoBehaviourPunCallbacks
         mainPanel.SetActive(true);
         lobbyPanel.SetActive(false);
         controlsPanel.SetActive(false);
+        settingsPanel.SetActive(false);
+        tutorialPanel.SetActive(false);
+
+        panels = new GameObject[] { lobbyPanel, mainPanel, controlsPanel, settingsPanel, tutorialPanel }; //ADD ANY NEW PANELS HERE
+    }
+
+    private void Update()
+    {
+        if (roomName == "")
+            roomNameBlank = true;
     }
 
     public override void OnConnectedToMaster()
@@ -118,6 +132,7 @@ public class CustomMatchmakingLobbyController : MonoBehaviourPunCallbacks
     public void OnRoomNameChanged(string nameIn) //input function for changing room name
     {
         roomName = nameIn;
+        roomNameBlank = false;
     }
     public void OnRoomSizeChanged(string sizeIn) //input function for changing room size
     {
@@ -128,7 +143,14 @@ public class CustomMatchmakingLobbyController : MonoBehaviourPunCallbacks
     {
         //Debug.Log("Creating Room Now");
         RoomOptions roomOps = new RoomOptions() { IsVisible = true, IsOpen = true, MaxPlayers = (byte)roomSize };
-        PhotonNetwork.CreateRoom(roomName, roomOps); //attempting to create a new room
+
+        if (!roomNameBlank)
+            PhotonNetwork.CreateRoom(roomName, roomOps); //attempting to create a new room
+        else
+        {
+            string defaultRoomName = PhotonNetwork.NickName + "'s Room";
+            PhotonNetwork.CreateRoom(defaultRoomName, roomOps); //attempting to create a new room
+        }
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
@@ -140,22 +162,39 @@ public class CustomMatchmakingLobbyController : MonoBehaviourPunCallbacks
 
     public void MatchmakingCancel() //paired to the cancel button / used to go back to main menu
     {
-        mainPanel.SetActive(true);
-        lobbyPanel.SetActive(false);
+        ChangePanel(mainPanel);
         PhotonNetwork.LeaveLobby();
     }
 
-
     public void ToControlsButton()
     {
-        lobbyPanel.SetActive(false);
-        mainPanel.SetActive(false);
-        controlsPanel.SetActive(true);
+        ChangePanel(controlsPanel);
     }
 
-    public void BackFromControlsButton()
+    public void ToSettingsButton()
     {
-        controlsPanel.SetActive(false);
-        mainPanel.SetActive(true);
+        ChangePanel(settingsPanel);
+    }
+
+    public void ToTutorialButton()
+    {
+        ChangePanel(tutorialPanel);
+    }
+
+    public void BackButton()
+    {
+        ChangePanel(mainPanel);
+    }
+
+    void ChangePanel(GameObject Panel)
+    {
+        //disable all of the panels and activate the one you want to go to
+        foreach(GameObject go in panels)
+        {
+            if (go == Panel)
+                go.SetActive(true);
+            else
+                go.SetActive(false);
+        }
     }
 }

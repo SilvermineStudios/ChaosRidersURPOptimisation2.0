@@ -13,7 +13,9 @@ public class RegionSelector : MonoBehaviour
 
     private void Start()
     {
-        PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = null; //reset the fixed region to be blank
+        SpeedRates();
+        //PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = null; //reset the fixed region to be blank
+        PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "eu"; 
         PhotonNetwork.ConnectUsingSettings(); // connets to the region with the best ping
 
         PhotonNetwork.NetworkingClient.AppId = PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime;
@@ -70,7 +72,12 @@ public class RegionSelector : MonoBehaviour
     }
 
 
-
+    void SpeedRates()
+    {
+        Debug.Log("Changed Photon Speed");
+        PhotonNetwork.SendRate = 40; //usually 20
+        PhotonNetwork.SerializationRate = 30; //usually 10
+    }
 
 
     #region Voids to Connect to different regions
@@ -79,6 +86,7 @@ public class RegionSelector : MonoBehaviour
     {
         PhotonNetwork.Disconnect(); //disconnect from the current region 
         PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "asia"; //select the region you want to join
+        SpeedRates();
         PhotonNetwork.ConnectUsingSettings(); //connect to that region with all the other settings
     }
 
@@ -87,6 +95,7 @@ public class RegionSelector : MonoBehaviour
     {
         PhotonNetwork.Disconnect();
         PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "au";
+        SpeedRates();
         PhotonNetwork.ConnectUsingSettings();
     }
 
@@ -95,6 +104,7 @@ public class RegionSelector : MonoBehaviour
     {
         PhotonNetwork.Disconnect();
         PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "cae";
+        SpeedRates();
         PhotonNetwork.ConnectUsingSettings();
     }
 
@@ -103,6 +113,7 @@ public class RegionSelector : MonoBehaviour
     {
         PhotonNetwork.Disconnect();
         PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "eu";
+        SpeedRates();
         PhotonNetwork.ConnectUsingSettings();
     }
 
@@ -111,6 +122,7 @@ public class RegionSelector : MonoBehaviour
     {
         PhotonNetwork.Disconnect();
         PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "in";
+        SpeedRates();
         PhotonNetwork.ConnectUsingSettings();
     }
 
@@ -119,6 +131,7 @@ public class RegionSelector : MonoBehaviour
     {
         PhotonNetwork.Disconnect();
         PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "jp";
+        SpeedRates();
         PhotonNetwork.ConnectUsingSettings();
     }
 
@@ -127,6 +140,7 @@ public class RegionSelector : MonoBehaviour
     {
         PhotonNetwork.Disconnect();
         PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "ru";
+        SpeedRates();
         PhotonNetwork.ConnectUsingSettings();
     }
 
@@ -135,6 +149,7 @@ public class RegionSelector : MonoBehaviour
     {
         PhotonNetwork.Disconnect();
         PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "rue";
+        SpeedRates();
         PhotonNetwork.ConnectUsingSettings();
     }
 
@@ -143,6 +158,7 @@ public class RegionSelector : MonoBehaviour
     {
         PhotonNetwork.Disconnect();
         PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "za";
+        SpeedRates();
         PhotonNetwork.ConnectUsingSettings();
     }
 
@@ -151,6 +167,7 @@ public class RegionSelector : MonoBehaviour
     {
         PhotonNetwork.Disconnect();
         PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "sa";
+        SpeedRates();
         PhotonNetwork.ConnectUsingSettings();
     }
 
@@ -159,6 +176,7 @@ public class RegionSelector : MonoBehaviour
     {
         PhotonNetwork.Disconnect();
         PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "kr";
+        SpeedRates();
         PhotonNetwork.ConnectUsingSettings();
     }
 
@@ -167,6 +185,7 @@ public class RegionSelector : MonoBehaviour
     {
         PhotonNetwork.Disconnect();
         PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "us";
+        SpeedRates();
         PhotonNetwork.ConnectUsingSettings();
     }
 
@@ -175,6 +194,7 @@ public class RegionSelector : MonoBehaviour
     {
         PhotonNetwork.Disconnect();
         PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "usw";
+        SpeedRates();
         PhotonNetwork.ConnectUsingSettings();
     }
     #endregion

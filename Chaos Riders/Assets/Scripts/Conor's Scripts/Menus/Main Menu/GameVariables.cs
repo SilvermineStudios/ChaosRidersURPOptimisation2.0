@@ -21,7 +21,6 @@ public class GameVariables : MonoBehaviour
 
     public static int AmountOfAICars;
     [SerializeField] private int amountOfAICars = 2;
-    [SerializeField] private TMP_Dropdown amountOfAIDropdown;
 
     public static bool Pickups;
     [SerializeField] private bool pickups = true;
@@ -34,9 +33,6 @@ public class GameVariables : MonoBehaviour
 
     public static bool RPGPickup;
     [SerializeField] private bool rpgPickup = true;
-
-    public static int AmountOfDrivers, AmountOfShooters;
-    public int amountOfDrivers, amountOfShooters;
 
     void Awake()
     {
@@ -53,9 +49,7 @@ public class GameVariables : MonoBehaviour
     
     void Update()
     {
-        
-
-        if (PhotonNetwork.IsMasterClient) 
+        if (PhotonNetwork.IsMasterClient)
         {
             hostScreen.SetActive(true);
             nonHostScreen.SetActive(false);
@@ -72,8 +66,6 @@ public class GameVariables : MonoBehaviour
         NitroPickup = nitroPickup;
         ShieldPickup = shieldPickup;
         RPGPickup = rpgPickup;
-        AmountOfDrivers = amountOfDrivers;
-        AmountOfShooters = amountOfShooters;
     }
 
 
@@ -108,7 +100,8 @@ public class GameVariables : MonoBehaviour
     {
         int lapVal = val + 1; //adding 1 to val, val is the array index value from the dropdown which starts at 0, the index 0 on the drop down is 1 lap
         laps = lapVal;
-        nonHostLapText.text = "Laps: " + laps; //display what the host chooses for the other players
+        //nonHostLapText.text = "Laps: " + laps; //display what the host chooses for the other players
+        nonHostLapText.text = laps.ToString(); //display what the host chooses for the other players
         Laps = laps;
     }
 
@@ -118,7 +111,8 @@ public class GameVariables : MonoBehaviour
         if (val == 0)
         {
             toggleAI = true;
-            nonHostToggleAIText.text = "AI Drivers: on"; //display what the host chooses for the other players
+            //nonHostToggleAIText.text = "AI Drivers: on"; //display what the host chooses for the other players
+            nonHostToggleAIText.text = "on"; //display what the host chooses for the other players
             ToggleAI = toggleAI;
 
             //amountOfAIDropdown.value = 2;
@@ -127,7 +121,8 @@ public class GameVariables : MonoBehaviour
         else
         {
             toggleAI = false;
-            nonHostToggleAIText.text = "AI Drivers: off"; //display what the host chooses for the other players
+            //nonHostToggleAIText.text = "AI Drivers: off"; //display what the host chooses for the other players
+            nonHostToggleAIText.text = "off"; //display what the host chooses for the other players
             ToggleAI = toggleAI;
 
             //amountOfAIDropdown.value = 0;
@@ -155,7 +150,8 @@ public class GameVariables : MonoBehaviour
             pv.RPC("UpdateToggleAI", RpcTarget.AllBuffered, 0);
         }
 
-        nonHostAmountOfAIText.text = "Amount of AI: " + amountAI; //display what the host chooses for the other players
+        //nonHostAmountOfAIText.text = "Amount of AI: " + amountAI; //display what the host chooses for the other players
+        nonHostAmountOfAIText.text = amountAI.ToString(); //display what the host chooses for the other players
         AmountOfAICars = amountOfAICars;
     }
 
@@ -165,13 +161,15 @@ public class GameVariables : MonoBehaviour
         if (val == 0)
         {
             pickups = true;
-            nonHostPickupsText.text = "Pickups: on"; //display what the host chooses for the other players
+            //nonHostPickupsText.text = "Pickups: on"; //display what the host chooses for the other players
+            nonHostPickupsText.text = "on"; //display what the host chooses for the other players
             Pickups = pickups;
         }
         else
         {
             pickups = false;
-            nonHostPickupsText.text = "Pickups: off"; //display what the host chooses for the other players
+            //nonHostPickupsText.text = "Pickups: off"; //display what the host chooses for the other players
+            nonHostPickupsText.text = "off"; //display what the host chooses for the other players
             Pickups = pickups;
         }
     }

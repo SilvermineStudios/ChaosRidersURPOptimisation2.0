@@ -111,12 +111,14 @@ public class CarControllerMultiplayer : MonoBehaviour
     }
     #endregion
 
-    Health healthScript;
+    //Health healthScript;
+    Target healthScript;
 
     // Initialize
     private void Awake()
     {
-        healthScript = GetComponent<Health>();
+        //healthScript = GetComponent<Health>();
+        healthScript = GetComponent<Target>();
         pv = GetComponent<PhotonView>();
     }
     void Start()
