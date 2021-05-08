@@ -11,7 +11,7 @@ public class AssignTeamNumbers : MonoBehaviour
             for (int i = 1; i < PlayerDataManager.Drivers.Count; i++)
             {
                 PlayerDataManager.Drivers[i].GetComponent<PhotonMenuPlayer>().teamNumber = i;
-                PlayerDataManager.Drivers[i].GetComponent<PhotonMenuPlayer>().Player.JoinTeam(1);
+                //PlayerDataManager.Drivers[i].GetComponent<PhotonMenuPlayer>().Player.JoinTeam(1);
                 Debug.Log(PlayerDataManager.Drivers[i].GetComponent<PhotonMenuPlayer>().Player.JoinTeam(1));
                 
                 //Debug.Log(PlayerDataManager.Drivers[i].GetComponent<PhotonMenuPlayer>().Player.NickName + "'s team number is " + PlayerDataManager.Drivers[i].GetComponent<PhotonMenuPlayer>().teamNumber);
@@ -23,7 +23,7 @@ public class AssignTeamNumbers : MonoBehaviour
             for (int i = 1; i < PlayerDataManager.Shooters.Count; i++)
             {
                 PlayerDataManager.Shooters[i].GetComponent<PhotonMenuPlayer>().teamNumber = i;
-                PlayerDataManager.Drivers[i].GetComponent<PhotonMenuPlayer>().Player.JoinTeam((byte)i);
+                //PlayerDataManager.Drivers[i].GetComponent<PhotonMenuPlayer>().Player.JoinTeam((byte)i);
                 //Debug.Log(PlayerDataManager.Shooters[i].GetComponent<PhotonMenuPlayer>().Player.NickName + "'s team number is " + PlayerDataManager.Shooters[i].GetComponent<PhotonMenuPlayer>().teamNumber);
             }
         }
