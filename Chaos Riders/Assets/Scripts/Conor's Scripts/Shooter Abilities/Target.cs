@@ -189,7 +189,11 @@ public class Target : MonoBehaviour
         if(other.gameObject.tag == "Blade")
         {
             TakeDamage(TrapManager.BladeTrapDamage);
-            //pv.RPC("RPC_TakeDamage", RpcTarget.All, this.gameObject, TrapManager.BladeTrapDamage);
+        }
+
+        if(other.gameObject.tag == "Axe")
+        {
+            TakeDamage(TrapManager.AxeTrapDamage);
         }
     }
 
