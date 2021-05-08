@@ -27,7 +27,6 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
     [SerializeField] private Transform playersContainer; //used to display all the players in the current room
     [SerializeField] private GameObject playerListingPrefab; //Instansiate to display each player in the room
     public List<GameObject> playerNameBoxes = new List<GameObject>();
-    public List<GameObject> photonMenuPlayers = new List<GameObject>();
     [SerializeField] private GameObject photonMenuPlayer; //each player will be given one of these when they join the room
     [SerializeField] private GameObject playerDataManager; //
 
@@ -53,7 +52,6 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
     private void Update()
     {
         playerNameBoxes.RemoveAll(x => x == null);
-        photonMenuPlayers.RemoveAll(x => x == null);
     }
 
     void ClearPlayerListings()
@@ -104,19 +102,13 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
         {
             if(p == PhotonNetwork.LocalPlayer)
             {
-                GameObject go = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", photonMenuPlayer.name), this.transform.position, this.transform.rotation, 0);
-                photonMenuPlayers.Add(go);
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", photonMenuPlayer.name), this.transform.position, this.transform.rotation, 0);
             }
         }
 
         //photonPlayers = PhotonNetwork.playerList;
         ClearPlayerListings(); //remove all old player listings
         ListPlayers();
-
-        foreach(GameObject go in photonMenuPlayers)
-        {
-            go.GetComponent<PhotonMenuPlayer>().UpdatePlayerPics();
-        }
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer) 

@@ -103,22 +103,7 @@ public class PhotonMenuPlayer : MonoBehaviour
         }
         ///////////////////////////////////////////////////////////////////////////
 
-        UpdatePlayerPics();
-
-        if(roomController == null)
-        {
-            myCheckpoint = pv.gameObject.GetComponent<Checkpoint>();
-        }
-
-        driverAndShooterNames = pv.Owner.NickName;
-
-        //Debug.Log(Player.GetPhotonTeam());
-        //Debug.Log(teamNumber);
-    }
-
-    public void UpdatePlayerPics()
-    {
-        if (roomController != null)
+        if(roomController != null)
         {
             foreach (GameObject go in roomController.playerNameBoxes)
             {
@@ -143,6 +128,16 @@ public class PhotonMenuPlayer : MonoBehaviour
                 }
             }
         }
+
+        if(roomController == null)
+        {
+            myCheckpoint = pv.gameObject.GetComponent<Checkpoint>();
+        }
+
+        driverAndShooterNames = pv.Owner.NickName;
+
+        //Debug.Log(Player.GetPhotonTeam());
+        //Debug.Log(teamNumber);
     }
 
 
