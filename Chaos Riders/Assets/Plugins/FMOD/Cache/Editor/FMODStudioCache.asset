@@ -299,6 +299,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 1
+--- !u!114 &-8143652319086126463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/RifleShot2/on
+  m_EditorClassIdentifier: 
+  Name: on
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-8090097787118771119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1429,7 +1449,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/Master.bank
   Name: Master
-  lastModified: 637560945806524784
+  lastModified: 637553466135602430
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -1456,6 +1476,44 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 4416
+--- !u!114 &-4362327432231561190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/CarNoise.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Chaos Riders/Build/Desktop/CarNoise.bank
+  Name: CarNoise
+  lastModified: 637553466133674871
+  LoadResult: 0
+  FileSizes: []
+  Exists: 1
+--- !u!114 &-4359354839566027473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/BrakerAudio/Gear Change
+  m_EditorClassIdentifier: 
+  Name: Gear Change
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 0
 --- !u!114 &-4262256260349297644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1539,6 +1597,26 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 2940
+--- !u!114 &-4056053842930439637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/BrakerAudio/Gear Change
+  m_EditorClassIdentifier: 
+  Name: Gear Change
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 0
 --- !u!114 &-4042473355376429168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1896,7 +1974,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: FMOD/Chaos Riders/Build/Desktop/Master.strings.bank
   Name: Master.strings
-  lastModified: 637560945806534755
+  lastModified: 637553466135622448
   LoadResult: 0
   FileSizes:
   - Name: Desktop
@@ -1940,7 +2018,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 0
   Parameters:
-  - {fileID: 4886890175766813278}
+  - {fileID: 1928074987016971173}
   MinDistance: 1
   MaxDistance: 20
   Length: 1771
@@ -2589,7 +2667,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 1
   Parameters:
-  - {fileID: 6205177711191483299}
+  - {fileID: -8143652319086126463}
   MinDistance: 1
   MaxDistance: 20
   Length: 1574
@@ -3076,6 +3154,7 @@ MonoBehaviour:
   EditorBanks:
   - {fileID: -2954939187940535496}
   - {fileID: -4466803539278922483}
+  - {fileID: 2247930878525235407}
   EditorEvents:
   - {fileID: -4789631137126399954}
   - {fileID: -2173327587602132150}
@@ -3116,7 +3195,7 @@ MonoBehaviour:
   - {fileID: -4466803539278922483}
   StringsBanks:
   - {fileID: -2954939187940535496}
-  stringsBankWriteTime: 637560945806534755
+  stringsBankWriteTime: 637553466135622448
   cacheVersion: 5
 --- !u!114 &29246924673847868
 MonoBehaviour:
@@ -4015,6 +4094,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &1928074987016971173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/MinigunLoop/on
+  m_EditorClassIdentifier: 
+  Name: on
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &1929909668448360258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4162,6 +4261,24 @@ MonoBehaviour:
   ID:
     data1: 0
     data2: 0
+  Exists: 1
+--- !u!114 &2247930878525235407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/CarNoise.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD/Chaos Riders/Build/Desktop/CarNoise.bank
+  Name: CarNoise
+  lastModified: 637553466133674871
+  LoadResult: 0
+  FileSizes: []
   Exists: 1
 --- !u!114 &2315423974674540716
 MonoBehaviour:
@@ -4381,6 +4498,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &3125410581756299860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/BrakerAudio/Gear Change
+  m_EditorClassIdentifier: 
+  Name: Gear Change
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &3140280014407465733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6396,12 +6533,14 @@ MonoBehaviour:
   - {fileID: 5025758556672022499}
   - {fileID: 29246924673847868}
   - {fileID: 9075118074253863180}
+  - {fileID: -4362327432231561190}
   - {fileID: -4466803539278922483}
+  - {fileID: 2247930878525235407}
   IsStream: 0
   Is3D: 1
   IsOneShot: 0
   Parameters:
-  - {fileID: -9071499798777553770}
+  - {fileID: 3125410581756299860}
   MinDistance: 1
   MaxDistance: 10000
   Length: 5400
