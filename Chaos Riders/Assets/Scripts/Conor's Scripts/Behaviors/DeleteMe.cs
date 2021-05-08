@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
 
-public class DeleteMe : MonoBehaviour
+public class DeleteMe : MonoBehaviourPun
 {
     [SerializeField] private float timeToDelete = 1f;
     private PhotonView pv;
@@ -30,6 +31,17 @@ public class DeleteMe : MonoBehaviour
     private IEnumerator DeleteTimer(float time)
     {
         yield return new WaitForSeconds(time);
-        PhotonNetwork.Destroy(this.gameObject); //delete over photon network
+
+        foreach (Player p in PhotonNetwork.PlayerList)
+        {
+            if (p.IsLocal)
+            {
+                PhotonNetwork.Destroy(this.gameObject); //delete over photon network
+                //Debug.Log("RPC RESET");
+            }
+        }
+        
+
+        
     }
 }
