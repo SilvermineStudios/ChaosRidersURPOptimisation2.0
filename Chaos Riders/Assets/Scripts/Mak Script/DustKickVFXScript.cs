@@ -15,6 +15,8 @@ public class DustKickVFXScript : MonoBehaviour
     [SerializeField] float MaxSpeed = 100;
     Vector3 FrontMinVel, FrontMaxVel, BackMinVel, BackMaxVel, TestFrontMinVel, TestFrontMaxVel, TestBackMinVel, TestBackMaxVel;
     // Start is called before the first frame update
+    [SerializeField] bool isAI;
+
     void Start()
     {
         pv = GetComponent<PhotonView>();
@@ -39,7 +41,14 @@ public class DustKickVFXScript : MonoBehaviour
 
     private void Update()
     {
-        CurrentSpeed = GetComponent<Controller>().currentSpeed; //gets car speed
+        if (!isAI)
+        {
+            CurrentSpeed = GetComponent<Controller>().currentSpeed; //gets car speed
+        }
+        else
+        {
+            CurrentSpeed = GetComponent<AICarController>().currentSpeed;
+        }
     }
     private void FixedUpdate()
     {
