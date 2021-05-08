@@ -20,11 +20,13 @@ public class TrapManager : MonoBehaviour
     public static int ExplodedForTime;
 
 
-    [Header("Blade Traps")]
+    [Header("Traps")]
     [SerializeField] private float bladeTrapDamage = 6f;
+    [SerializeField] private float axeTrapDamage = 10f;
 
     //public statics
     public static float BladeTrapDamage;
+    public static float AxeTrapDamage;
     
 
     void Awake()
@@ -35,5 +37,6 @@ public class TrapManager : MonoBehaviour
         ExplodedForTime = explodedForTime;
 
         BladeTrapDamage = bladeTrapDamage;
+        AxeTrapDamage = axeTrapDamage;
     }
 }
