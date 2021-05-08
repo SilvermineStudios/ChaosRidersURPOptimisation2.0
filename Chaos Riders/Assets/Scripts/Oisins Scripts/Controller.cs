@@ -454,10 +454,7 @@ public class Controller : MonoBehaviour
             //spawn the smoke grenade accross the network
             if (IsThisMultiplayer.Instance.multiplayer)
             {
-                smokeBall.transform.position = abilitySpawn.transform.position;
-                smokeBall.transform.rotation = abilitySpawn.transform.rotation;
-                smokeBall.GetComponent<VisualEffect>().Play();
-                smokeBall.GetComponent<TurnOff>().TriggerMe();
+                pv.RPC("SendSmoke", RpcTarget.All);
             }
             //spawn the smoke grenade in single player
             if (!IsThisMultiplayer.Instance.multiplayer)
@@ -497,6 +494,14 @@ public class Controller : MonoBehaviour
 
     GameObject smokeBall;
 
+    [PunRPC]
+    void SendSmoke()
+    {
+        smokeBall.transform.position = abilitySpawn.transform.position;
+        smokeBall.transform.rotation = abilitySpawn.transform.rotation;
+        smokeBall.GetComponent<VisualEffect>().Play();
+        smokeBall.GetComponent<TurnOff>().TriggerMe();
+    }
 
     private IEnumerator SmokeTrailCourotine(float time)
     {

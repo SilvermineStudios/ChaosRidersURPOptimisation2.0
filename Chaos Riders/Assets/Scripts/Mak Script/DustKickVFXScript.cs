@@ -43,22 +43,21 @@ public class DustKickVFXScript : MonoBehaviour
         FrontLeftDustKickUp.SetInt("Spawn Rate", Mathf.RoundToInt(Mathf.Lerp(0, FrontSpawnRate, LerpPercentage)));
         FrontRightDustKickUp.SetInt("Spawn Rate", Mathf.RoundToInt(Mathf.Lerp(0, FrontSpawnRate, LerpPercentage)));
         
-        //Calculates the value after lerping
+        //Calculates the value after lerping BACK
         TestBackMinVel.x = Mathf.Lerp(0, BackMinVel.x, LerpPercentage);
         TestBackMinVel.y = Mathf.Lerp(0, BackMinVel.y, LerpPercentage);
-
         TestBackMinVel.z = Mathf.Lerp(0, BackMinVel.z, LerpPercentage);
-        TestBackMaxVel.x = Mathf.Lerp(0, BackMaxVel.x, LerpPercentage);
 
+        TestBackMaxVel.x = Mathf.Lerp(0, BackMaxVel.x, LerpPercentage);
         TestBackMaxVel.y = Mathf.Lerp(0, BackMaxVel.y, LerpPercentage);
         TestBackMaxVel.z = Mathf.Lerp(0, BackMaxVel.z, LerpPercentage);
 
+        //Calculates the value after lerping FRONT
         TestFrontMinVel.x = Mathf.Lerp(0, FrontMinVel.x, LerpPercentage);
         TestFrontMinVel.y = Mathf.Lerp(0, FrontMinVel.y, LerpPercentage);
-
         TestFrontMinVel.z = Mathf.Lerp(0, FrontMinVel.z, LerpPercentage);
-        TestFrontMaxVel.x = Mathf.Lerp(0, FrontMaxVel.x, LerpPercentage);
 
+        TestFrontMaxVel.x = Mathf.Lerp(0, FrontMaxVel.x, LerpPercentage);
         TestFrontMaxVel.y = Mathf.Lerp(0, FrontMaxVel.y, LerpPercentage);
         TestFrontMaxVel.z = Mathf.Lerp(0, FrontMaxVel.z, LerpPercentage);
        
