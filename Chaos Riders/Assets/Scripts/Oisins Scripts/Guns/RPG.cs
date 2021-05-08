@@ -73,7 +73,7 @@ public class RPG : MonoBehaviour
     private IEnumerator ExplosionCoroutine(float time)
     {
         //Debug.Log("RPG COUROUTINE STARTED");
-
+        FMODUnity.RuntimeManager.PlayOneShotAttached("event:/GunFX/RPG/Explosion", gameObject);
         trailSmokeVFX.SetActive(false);
         explosionVFX.SetActive(true);
 
