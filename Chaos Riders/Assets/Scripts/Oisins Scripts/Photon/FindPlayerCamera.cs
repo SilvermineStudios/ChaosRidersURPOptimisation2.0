@@ -21,7 +21,6 @@ public class FindPlayerCamera : MonoBehaviour
     {
         if (!foundCam)
         {
-            Debug.Log("NoiseSettings player cam");
             photonViews = FindObjectsOfType<PhotonView>();
             foreach (PhotonView pv in photonViews)
             {

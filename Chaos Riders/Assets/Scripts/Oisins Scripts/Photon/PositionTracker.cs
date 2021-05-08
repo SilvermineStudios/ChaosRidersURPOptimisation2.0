@@ -8,6 +8,7 @@ using Photon;
 using Photon.Realtime;
 using UnityEngine.UI;
 using TMPro;
+using ExitGames.Client.Photon;
 
 
 public class PositionTracker : MonoBehaviourPun
@@ -50,7 +51,29 @@ public class PositionTracker : MonoBehaviourPun
         //InvokeRepeating("SortTeams", 5, 0.5f);
     }
 
+    private void OnEnable()
+    {
+        PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
+    }
 
+    private void OnDisable()
+    {
+        PhotonNetwork.NetworkingClient.EventReceived -= OnEvent;
+    }
+
+    public void OnEvent(EventData photonEvent)
+    {
+        Debug.Log("Received");
+        byte eventCode = photonEvent.Code;
+
+        if (eventCode == 1)
+        {
+            object[] data = (object[])photonEvent.CustomData;
+
+            CreateEntry((string)data[0],(string)data[1]);
+            Debug.Log((string)data[0]);
+        }
+    }
 
     void SortTeams()
     {
@@ -65,6 +88,8 @@ public class PositionTracker : MonoBehaviourPun
         {
             Clientpv = FindObjectOfType<myPV>().pv;
         }
+
+        /*
         if (teamPositions.Count > 0 && currentPlaceForFinsh < 5)
         {
             foreach (Position p in teamPositions)
@@ -77,7 +102,7 @@ public class PositionTracker : MonoBehaviourPun
                 }
             }
         }
-        /*
+        
         text[0].text = "(Driver) " + teamPositions[0].driverName;// + ", " + teamPositions[i].checkpointNumber; 
         text[1].text = "(Shooter) " + teamPositions[0].shooterName;// + ", " + teamPositions[i].checkpointNumber; 
         text[2].text = "(Driver) " + teamPositions[1].driverName;// + ", " + teamPositions[i].checkpointNumber; 
@@ -87,11 +112,11 @@ public class PositionTracker : MonoBehaviourPun
         */
     }
 
-    void CreateEntry(Position teamPosition)
+    void CreateEntry(string driverName, string shooterName)
     {
         GameObject Entry = PhotonNetwork.Instantiate("Entry", Vector3.zero, Quaternion.identity);
         Entry.transform.parent = Holder.transform;
-        Entry.GetComponent<EntryScript>().Setup(teamPosition.driverName, teamPosition.shooterName, places[currentPlaceForFinsh]);
+        Entry.GetComponent<EntryScript>().Setup(driverName, shooterName, places[currentPlaceForFinsh]);
         currentPlaceForFinsh++;
     }
 
