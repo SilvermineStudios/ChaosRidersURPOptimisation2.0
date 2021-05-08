@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-
-public class CarPositionHolder : MonoBehaviour
+using Photon.Realtime;
+using Photon.Pun.UtilityScripts;
+using ExitGames.Client.Photon;
+public class CarPositionHolder : MonoBehaviourPun
 {
     public Position myPosition { get; private set; }
     DisplayNames dN;
@@ -13,7 +15,7 @@ public class CarPositionHolder : MonoBehaviour
     [SerializeField] TrackNearbyWaypoints TNW;
     [SerializeField] bool isAI;
     bool aiFinished = false;
-
+    bool sent;
     void Start()
     {
         if (isAI)
@@ -57,9 +59,14 @@ public class CarPositionHolder : MonoBehaviour
                 myPosition.FinishRace();
             }
             
-            if(aiFinished && aiFinished)
+            if(!sent && aiFinished)
             {
-                myPosition.FinishRace();
+                //myPosition.FinishRace();
+                sent = true;
+                object[] content = new object[] {myPosition.driverName,myPosition.shooterName};
+                RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
+                PhotonNetwork.RaiseEvent(1, content, raiseEventOptions, SendOptions.SendReliable);
+                Debug.Log("Sent");
             }
         }
     }
