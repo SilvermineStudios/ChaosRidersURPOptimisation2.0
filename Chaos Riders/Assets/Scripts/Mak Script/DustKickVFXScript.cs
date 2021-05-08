@@ -12,13 +12,21 @@ public class DustKickVFXScript : MonoBehaviour
     [SerializeField] VisualEffect BackLeftDustKickUp, BackRightDustKickUp, FrontLeftDustKickUp, FrontRightDustKickUp;
     int FrontSpawnRate, BackSpawnRate;
     float CurrentSpeed, LerpPercentage;
-    [SerializeField] float MaxSpeed = 100;
+    [SerializeField] float MaxSpeed;
     Vector3 FrontMinVel, FrontMaxVel, BackMinVel, BackMaxVel, TestFrontMinVel, TestFrontMaxVel, TestBackMinVel, TestBackMaxVel;
     // Start is called before the first frame update
     [SerializeField] bool isAI;
 
     void Start()
     {
+        if(isAI)
+        {
+            MaxSpeed = 2000;
+        }
+        else
+        {
+            MaxSpeed = 170;
+        }
         pv = GetComponent<PhotonView>();
         //get original components (front particle use same number and baack particles use same, meaning back and front have diff values)
         //pv.RPC("Init",RpcTarget.All);
@@ -50,7 +58,7 @@ public class DustKickVFXScript : MonoBehaviour
             CurrentSpeed = GetComponent<AICarController>().currentSpeed;
         }
     }
-    private void FixedUpdate()
+    private void Calculate()
     {
         if (pv.IsMine)
         {
