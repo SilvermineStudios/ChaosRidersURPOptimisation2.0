@@ -213,11 +213,13 @@ public class Shooter : MonoBehaviourPun
         SetupGun(currentShooterClass);
         startAmmo = amountOfAmmoForCooldownBar;
         barrelRotationSpeed = barrelRotationStartSpeed;
+
+
         if (minigunClass == MinigunClass.gold)
         {
             foreach (MeshRenderer mr in RenderersG)
             {
-                mr.material = gold;
+                //mr.material = gold;
             }
             foreach (MeshRenderer mr in RenderersS)
             {
