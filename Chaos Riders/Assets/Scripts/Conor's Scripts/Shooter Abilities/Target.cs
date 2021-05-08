@@ -167,7 +167,7 @@ public class Target : MonoBehaviour
     void Die()
     {
         //deathParticles.SetActive(true);
-        Debug.Log("YOU FUCKING DIED!!!!!");
+        //Debug.Log("YOU FUCKING DIED!!!!!");
         StartCoroutine(DeathCourotine(deathTimer));
         //deathinstance = PhotonNetwork.Instantiate("DeathExplosion", this.transform.position, this.transform.rotation, 0);
     }
@@ -200,6 +200,7 @@ public class Target : MonoBehaviour
     private IEnumerator DeathCourotine(float time)
     {
         deathExplosionVFX.SetActive(true);
+        FMODUnity.RuntimeManager.PlayOneShotAttached("event:/GunFX/RPG/Explosion", gameObject);
 
         yield return new WaitForSeconds(time);
 
