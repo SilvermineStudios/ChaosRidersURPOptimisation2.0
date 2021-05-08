@@ -234,6 +234,8 @@ public class Checkpoint : MonoBehaviour
     {
         youFinishedTheRace = true;
 
+      
+
         MainCamera.GetComponent<Animator>().SetBool("Start", true);
         FinishLine.GameWon = true; //send a message to the finish line script that the game has been won
         playerCanvas.SetActive(false); //turn off the players UI
