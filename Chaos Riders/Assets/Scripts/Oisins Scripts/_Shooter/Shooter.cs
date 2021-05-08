@@ -13,6 +13,7 @@ public class Shooter : MonoBehaviourPun
     public GameObject car { get; private set; }
     #region General GameObjects
     [Header("General GameObjects")]
+    GameObject trailGO;
     private Transform barrelToRotate;
     [SerializeField] private Transform minigunBarrel;
     [SerializeField] private Transform rifleBarrel;
@@ -201,6 +202,7 @@ public class Shooter : MonoBehaviourPun
         minigunLoopSoundInstance = FMODUnity.RuntimeManager.CreateInstance("event:/GunFX/Minigun/MinigunLoop");
         rifleSoundInstance = FMODUnity.RuntimeManager.CreateInstance(rifleSoundString);
         //FMODUnity.RuntimeManager.AttachInstanceToGameObject(minigunLoopSoundInstance, transform, rb);
+        trailGO = PhotonNetwork.Instantiate("Trail", Vector3.zero, Quaternion.identity);
     }
 
     void Start()
@@ -889,14 +891,14 @@ public class Shooter : MonoBehaviourPun
                     FMODUnity.RuntimeManager.PlayOneShot(hitmarkerSound);
                 }
 
-
+                /*
                 float chance = Random.Range(0, 100);
                 if (chance <= trailPercentage)
                 {
-                    GameObject trailGO;
+                    
                     if (IsThisMultiplayer.Instance.multiplayer)
                     {
-                        trailGO = PhotonNetwork.Instantiate("Trail", bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.rotation);
+                        
                     }
                     else
                     {
@@ -915,8 +917,8 @@ public class Shooter : MonoBehaviourPun
                     }
 
                     trailGO.GetComponent<Rigidbody>().AddForce(trailGO.transform.forward * 100, ForceMode.Impulse);
-                    trailGO.GetComponent<DeleteMe>().enabled = true;
-                }
+
+                }*/
                 
             }
         }
