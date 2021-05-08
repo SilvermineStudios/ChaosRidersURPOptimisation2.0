@@ -12,10 +12,8 @@ GameObject:
   - component: {fileID: 811231400246012914}
   - component: {fileID: 811231400246012877}
   - component: {fileID: 811231400246012876}
-  - component: {fileID: -327225334256768651}
   - component: {fileID: -1004389954146217085}
   - component: {fileID: -9182880208851899826}
-  - component: {fileID: -5355825247304937562}
   m_Layer: 0
   m_Name: Trail
   m_TagString: Untagged
@@ -164,19 +162,6 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
---- !u!114 &-327225334256768651
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 811231400246012879}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62e71592ce44a8a4187b2bb4ad5914f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeToDelete: 0.5
 --- !u!114 &-1004389954146217085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -197,7 +182,6 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: -9182880208851899826}
-  - {fileID: -5355825247304937562}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -217,18 +201,3 @@ MonoBehaviour:
   m_SynchronizeAngularVelocity: 0
   m_TeleportEnabled: 0
   m_TeleportIfDistanceGreaterThan: 3
---- !u!114 &-5355825247304937562
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 811231400246012879}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
