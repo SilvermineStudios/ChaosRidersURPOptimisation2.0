@@ -47530,6 +47530,8 @@ GameObject:
   - component: {fileID: 2109867051}
   - component: {fileID: 2109867052}
   - component: {fileID: 2109867053}
+  - component: {fileID: 2109867054}
+  - component: {fileID: 2109867055}
   m_Layer: 0
   m_Name: GameManagers
   m_TagString: Untagged
@@ -47620,6 +47622,41 @@ MonoBehaviour:
   - {fileID: 580154959}
   Holder: {fileID: 1928243095}
   myPositionText: {fileID: 1079312183}
+--- !u!114 &2109867054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2109867048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19745b5b57879a94ea949ed14f466fe6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  i: 0
+--- !u!114 &2109867055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2109867048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  observableSearch: 2
+  Synchronization: 3
+  OwnershipTransfer: 0
+  ObservedComponents: []
+  viewIdField: 102
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!4 &2118919150 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5249299721269817172, guid: 7b8efdb7b4232c44fa225e037165846b, type: 3}
