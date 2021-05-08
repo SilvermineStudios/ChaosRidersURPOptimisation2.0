@@ -120,8 +120,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Pause, Assembly-CSharp
+      - m_Target: {fileID: 1928243097}
+        m_TargetAssemblyTypeName: Leave, Assembly-CSharp
         m_MethodName: QuitGameButton
         m_Mode: 1
         m_Arguments:
@@ -132,7 +132,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 272730709589152443}
         m_TargetAssemblyTypeName: SoundFX, Assembly-CSharp
         m_MethodName: PlayButtonSound
         m_Mode: 1
@@ -366,6 +366,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3586889133789564764}
+  - component: {fileID: 1928243097}
+  - component: {fileID: 1928243098}
+  - component: {fileID: 272730709589152443}
   m_Layer: 0
   m_Name: EndScreen
   m_TagString: End
@@ -388,6 +391,46 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1928243097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4905347929768456072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cac327a23bf3864438bf36a97df32ffd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuSceneIndex: 0
+--- !u!114 &1928243098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4905347929768456072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1b279498cedad42be1f35b29654e67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &272730709589152443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4905347929768456072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab889a14b5d51564c8fcd6eb7e6c950c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonSound: event:/SoundFX/ButtonSound
+  changeSoundEffectVolume: event:/SoundFX/SoundEffectSound
+  startGameButtonSound: event:/SoundFX/StartGameSound
 --- !u!1 &6598281357245892051
 GameObject:
   m_ObjectHideFlags: 0
@@ -642,19 +685,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Pause, Assembly-CSharp
-        m_MethodName: LeaveRaceButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 272730709589152443}
         m_TargetAssemblyTypeName: SoundFX, Assembly-CSharp
         m_MethodName: PlayButtonSound
         m_Mode: 1
@@ -666,7 +697,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1928243097}
+        m_TargetAssemblyTypeName: Leave, Assembly-CSharp
+        m_MethodName: LeaveRaceButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1928243098}
         m_TargetAssemblyTypeName: StopFMODSounds, Assembly-CSharp
         m_MethodName: StopAllSounds
         m_Mode: 4
