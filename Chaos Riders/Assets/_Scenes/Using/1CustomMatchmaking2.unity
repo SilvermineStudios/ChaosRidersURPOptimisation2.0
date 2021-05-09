@@ -5167,7 +5167,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &234914864
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7237,7 +7237,8 @@ MonoBehaviour:
   loadingTime: 1
   hintText: {fileID: 1539279593}
   gameMessageText: {fileID: 613282351}
-  cantStartMsg: Waiting on everyone to pick their player....
+  cantStartMsg: Waiting on everyone to pick their role
+  loadingDots: Waiting on everyone to pick their player....
   readyToStartMsg: Everyone is ready! The host can now start the game!
   canStartRace: 0
 --- !u!114 &328847882
@@ -18021,7 +18022,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Waiting on everyone to pick their player....
+  m_text: Waiting on everyone to pick their role....
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e5f6c45bf62b99c418e023ae1f117b3f, type: 2}
   m_sharedMaterial: {fileID: 4939574517869569498, guid: e5f6c45bf62b99c418e023ae1f117b3f, type: 2}
@@ -18114,7 +18115,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 1, y: -6.0999756}
+  m_AnchoredPosition: {x: 1, y: 18}
   m_SizeDelta: {x: 1505.4766, y: 48.252853}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!1 &616944431
@@ -21917,7 +21918,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &793394571
 RectTransform:
   m_ObjectHideFlags: 0

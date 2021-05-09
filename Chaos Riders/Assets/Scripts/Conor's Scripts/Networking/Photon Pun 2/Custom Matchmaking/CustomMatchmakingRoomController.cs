@@ -43,6 +43,7 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
     [Header("Starting Race Stuff")]
     [SerializeField] private TMP_Text gameMessageText;
     [SerializeField] private string cantStartMsg;
+    [SerializeField] private string loadingDots;
     [SerializeField] private string readyToStartMsg;
     [SerializeField] private bool canStartRace = false;
     private bool CanStartRace()
@@ -110,8 +111,22 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
         }
         else
         {
-            gameMessageText.text = cantStartMsg;
+            gameMessageText.text = cantStartMsg;// + loadingDots;
+            //StartCoroutine(LoadingDots());
         }
+    }
+
+    private IEnumerator LoadingDots()
+    {
+        loadingDots = ".";
+
+        yield return new WaitForSeconds(0.5f);
+
+        loadingDots = "..";
+
+        yield return new WaitForSeconds(0.5f);
+
+        loadingDots = "...";
     }
 
     void ClearPlayerListings()
