@@ -801,15 +801,24 @@ public class Controller : MonoBehaviour
         {
             for (int i = 0; i < 4; i++)
             {
-                wheelColliders[i].motorTorque = thrustTorque;
+                if (wheelColliders[i].rpm > 25000)
+                {
+                    wheelColliders[i].motorTorque = thrustTorque;
+                }
+                
             }
         }
 
         //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         foreach (WheelCollider wheel in wheelColliders)
         {
-            Debug.Log(wheel.gameObject.name + " Motor Torque = " + wheel.motorTorque);
+            //Debug.Log(wheel.gameObject.name + " Motor Torque = " + wheel.motorTorque);
+            Debug.Log(wheel.gameObject.name + " RPM = " + wheel.rpm);
+
         }
+
+
+
 
         /*
         //holding s
