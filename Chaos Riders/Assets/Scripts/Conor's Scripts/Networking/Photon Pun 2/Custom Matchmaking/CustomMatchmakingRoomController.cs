@@ -71,6 +71,7 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
         loadingScreen.SetActive(false);
         disconnectPanel.SetActive(false);
         LoadingTime = loadingTime;
+        startButton.SetActive(false);
     }
 
     private void Update()
