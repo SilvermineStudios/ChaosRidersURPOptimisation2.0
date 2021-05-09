@@ -96,6 +96,8 @@ public class Controller : MonoBehaviour
     public DriverUltimate CurrentUltimate;
     DriverUltimate OldUltimate;
     [SerializeField] private KeyCode abilityKeyCode = KeyCode.Q, equipmentKeyCode = KeyCode.E; //Create Keycode Variables for the buttons
+    bool notUsingBrakerAbility = false;
+    bool usingBrakerAbility = true;
     #endregion
 
     #region Ability Data
@@ -426,7 +428,7 @@ public class Controller : MonoBehaviour
     {
         if (!MasterClientRaceStart.Instance.countdownTimerStart)
         {
-            ApplyBrake(carData.brakeTorque);
+            ApplyBrake(carData.brakeTorque, notUsingBrakerAbility);
         }
         else
         {
@@ -526,7 +528,7 @@ public class Controller : MonoBehaviour
         anim.SetBool("LeaveBreaker", false);
 
         //brake
-        ApplyBrake(30000000);
+        ApplyBrake(30000000, usingBrakerAbility);
 
 
         yield return new WaitForSeconds(ultimateData.ultimatePrepTime);
@@ -804,6 +806,42 @@ public class Controller : MonoBehaviour
         }
 
 
+
+
+
+        //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        foreach (WheelCollider wheel in wheelColliders)
+        {
+            Debug.Log(wheel.gameObject.name + " Motor Torque = " + wheel.motorTorque);
+        }
+        //holding s
+        if (verticalInput < 0)
+        {
+            //ApplyBrake(1000, usingBrakerAbility);
+
+            foreach (WheelCollider wheel in wheelColliders)
+            {
+                wheel.motorTorque = 1000;
+
+                //Debug.Log(wheel.gameObject.name + " Motor Torque = " + wheel.motorTorque);
+
+                if (wheel.motorTorque > 1)
+                {
+                    //defaultForwardFrictionCurve.stiffness = 2;
+                    //wheel.forwardFriction = defaultForwardFrictionCurve;
+                    //wheel.motorTorque = 2;
+                    //rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z - rb.velocity.z);
+                }
+            }
+        }
+
+
+
+
+
+
+
+
         if(rb.velocity.magnitude > carData.topSpeed)
         {
             Debug.Log(12313);
@@ -867,7 +905,7 @@ public class Controller : MonoBehaviour
         {
             if (brake && !braking)
             {
-                ApplyBrake(carData.brakeTorque);
+                ApplyBrake(carData.brakeTorque, notUsingBrakerAbility);
             }
             else if (!brake && !braking)
             {
@@ -876,14 +914,31 @@ public class Controller : MonoBehaviour
         }
     }
 
-    public void ApplyBrake(float brakeAmount)
+    public void ApplyBrake(float brakeAmount, bool brakerAbility)
     {
         braking = true;
-        defaultForwardFrictionCurve.stiffness = 1;
-        foreach (WheelCollider wheel in wheelColliders)
+
+        if (brakerAbility)
         {
-            wheel.brakeTorque = brakeAmount;
-            wheel.forwardFriction = defaultForwardFrictionCurve;
+            //<-------------------------------------------------------------------------------------------------------------------------------------------------BRAKER ABILITY
+            Debug.Log("Using Brake Ability");
+
+            defaultForwardFrictionCurve.stiffness = 200f;
+            foreach (WheelCollider wheel in wheelColliders)
+            {
+                wheel.motorTorque = 0;
+                //wheel.brakeTorque = brakeAmount;
+                wheel.forwardFriction = defaultForwardFrictionCurve;
+            }
+        }
+        else
+        {
+            defaultForwardFrictionCurve.stiffness = 1;
+            foreach (WheelCollider wheel in wheelColliders)
+            {
+                wheel.brakeTorque = brakeAmount;
+                wheel.forwardFriction = defaultForwardFrictionCurve;
+            }
         }
     }
 
