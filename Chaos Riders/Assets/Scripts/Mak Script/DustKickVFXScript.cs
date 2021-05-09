@@ -10,6 +10,7 @@ public class DustKickVFXScript : MonoBehaviour
 {
     PhotonView pv;
     [SerializeField] VisualEffect BackLeftDustKickUp, BackRightDustKickUp, FrontLeftDustKickUp, FrontRightDustKickUp;
+    [SerializeField] WheelCollider backLeft, backRight, frontLeft, frontRight;
     int FrontSpawnRate, BackSpawnRate;
     float CurrentSpeed, LerpPercentage;
     [SerializeField] float MaxSpeed;
@@ -63,10 +64,23 @@ public class DustKickVFXScript : MonoBehaviour
         {
             CurrentSpeed = aiCont.currentSpeed;
         }
+
+
+        if (!backLeft.isGrounded || !backRight.isGrounded || !frontRight.isGrounded || !frontLeft.isGrounded)
+        {
+            if (IsThisMultiplayer.Instance.multiplayer)
+            {
+                pv.RPC("SendOut", RpcTarget.All);
+            }
+            else
+            {
+                SendOut();
+            }
+        }
     }
     private void Calculate()
     {
-        if (pv.IsMine)
+        if (pv.IsMine || !IsThisMultiplayer.Instance.multiplayer)
         {
             LerpPercentage = CurrentSpeed / MaxSpeed; // gets lerp number
             
@@ -91,7 +105,14 @@ public class DustKickVFXScript : MonoBehaviour
             TestFrontMaxVel.y = Mathf.Lerp(0, FrontMaxVel.y, LerpPercentage);
             TestFrontMaxVel.z = Mathf.Lerp(0, FrontMaxVel.z, LerpPercentage);
 
-            pv.RPC("SendOut", RpcTarget.All);
+            if (IsThisMultiplayer.Instance.multiplayer)
+            {
+                pv.RPC("SendOut", RpcTarget.All);
+            }
+            else
+            {
+                SendOut();
+            }
         }
 
     }
@@ -100,25 +121,66 @@ public class DustKickVFXScript : MonoBehaviour
     [PunRPC]
     void SendOut()
     {
-        //edits the spawn rates for the vfx
-        BackLeftDustKickUp.SetInt("Spawn Rate", Mathf.RoundToInt(Mathf.Lerp(0, BackSpawnRate, LerpPercentage)));
-        BackRightDustKickUp.SetInt("Spawn Rate", Mathf.RoundToInt(Mathf.Lerp(0, BackSpawnRate, LerpPercentage)));
+        //edits the spawn rates for the vfx //assigns the lerped vector3 to VFX
+        if (backLeft.isGrounded)
+        {
+            BackLeftDustKickUp.SetInt("Spawn Rate", Mathf.RoundToInt(Mathf.Lerp(0, BackSpawnRate, LerpPercentage)));
+            BackLeftDustKickUp.SetVector3("MinVelocity", TestBackMinVel);
+            BackLeftDustKickUp.SetVector3("MaxVelocity", TestBackMaxVel);
+        }
+        else
+        {
+            BackLeftDustKickUp.SetInt("Spawn Rate",0);
+            BackLeftDustKickUp.SetVector3("MinVelocity", Vector3.zero);
+            BackLeftDustKickUp.SetVector3("MaxVelocity", Vector3.zero);
+        }
 
-        FrontLeftDustKickUp.SetInt("Spawn Rate", Mathf.RoundToInt(Mathf.Lerp(0, FrontSpawnRate, LerpPercentage)));
-        FrontRightDustKickUp.SetInt("Spawn Rate", Mathf.RoundToInt(Mathf.Lerp(0, FrontSpawnRate, LerpPercentage)));
 
-        //assigns the lerped vector3 to VFX
-        BackLeftDustKickUp.SetVector3("MinVelocity", TestBackMinVel);
-        BackLeftDustKickUp.SetVector3("MaxVelocity", TestBackMaxVel);
+        if (backRight.isGrounded)
+        {
+            BackRightDustKickUp.SetInt("Spawn Rate", Mathf.RoundToInt(Mathf.Lerp(0, BackSpawnRate, LerpPercentage)));
+            BackRightDustKickUp.SetVector3("MinVelocity", TestBackMinVel);
+            BackRightDustKickUp.SetVector3("MaxVelocity", TestBackMaxVel);
+        }
+        else
+        {
+            BackRightDustKickUp.SetInt("Spawn Rate", 0);
+            BackRightDustKickUp.SetVector3("MinVelocity", Vector3.zero);
+            BackRightDustKickUp.SetVector3("MaxVelocity", Vector3.zero);
+        }
 
-        BackRightDustKickUp.SetVector3("MinVelocity", TestBackMinVel);
-        BackRightDustKickUp.SetVector3("MaxVelocity", TestBackMaxVel);
 
-        FrontLeftDustKickUp.SetVector3("MinVelocity", TestFrontMinVel);
-        FrontLeftDustKickUp.SetVector3("MaxVelocity", TestFrontMaxVel);
+        if (frontLeft.isGrounded)
+        {
+            FrontLeftDustKickUp.SetInt("Spawn Rate", Mathf.RoundToInt(Mathf.Lerp(0, FrontSpawnRate, LerpPercentage)));
+            FrontLeftDustKickUp.SetVector3("MinVelocity", TestFrontMinVel);
+            FrontLeftDustKickUp.SetVector3("MaxVelocity", TestFrontMaxVel);
+        }
+        else
+        {
+            FrontLeftDustKickUp.SetInt("Spawn Rate", 0);
+            FrontLeftDustKickUp.SetVector3("MinVelocity", Vector3.zero);
+            FrontLeftDustKickUp.SetVector3("MaxVelocity", Vector3.zero);
+        }
 
-        FrontRightDustKickUp.SetVector3("MinVelocity", TestFrontMinVel);
-        FrontRightDustKickUp.SetVector3("MaxVelocity", TestFrontMaxVel);
+
+        if (frontRight.isGrounded)
+        {
+            FrontRightDustKickUp.SetInt("Spawn Rate", Mathf.RoundToInt(Mathf.Lerp(0, FrontSpawnRate, LerpPercentage)));
+            FrontRightDustKickUp.SetVector3("MinVelocity", TestFrontMinVel);
+            FrontRightDustKickUp.SetVector3("MaxVelocity", TestFrontMaxVel);
+        }
+        else
+        {
+            FrontRightDustKickUp.SetInt("Spawn Rate", 0);
+            FrontRightDustKickUp.SetVector3("MinVelocity", Vector3.zero);
+            FrontRightDustKickUp.SetVector3("MaxVelocity", Vector3.zero);
+        }
+
+
+
+
+
     }
 
 }

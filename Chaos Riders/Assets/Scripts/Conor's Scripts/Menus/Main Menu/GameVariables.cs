@@ -10,7 +10,7 @@ public class GameVariables : MonoBehaviour
     private PhotonView pv;
 
     [SerializeField] private GameObject hostScreen, nonHostScreen;
-    public TMP_Text nonHostLapText, nonHostToggleAIText, nonHostAmountOfAIText, nonHostPickupsText;
+    public TMP_Text nonHostLapText, nonHostToggleAIText, nonHostAmountOfAIText, nonHostPickupsText, nonHostTimeOfDayText;
 
     public static int Laps;
     [SerializeField] private int laps = 3;
@@ -21,6 +21,9 @@ public class GameVariables : MonoBehaviour
 
     public static int AmountOfAICars;
     [SerializeField] private int amountOfAICars = 2;
+
+    public static bool Daytime;
+    [SerializeField] private bool daytime = true;
 
     public static bool Pickups;
     [SerializeField] private bool pickups = true;
@@ -44,6 +47,7 @@ public class GameVariables : MonoBehaviour
         NitroPickup = nitroPickup;
         ShieldPickup = shieldPickup;
         RPGPickup = rpgPickup;
+        Daytime = daytime;
     }
 
     
@@ -66,6 +70,7 @@ public class GameVariables : MonoBehaviour
         NitroPickup = nitroPickup;
         ShieldPickup = shieldPickup;
         RPGPickup = rpgPickup;
+        Daytime = daytime;
     }
 
 
@@ -74,6 +79,12 @@ public class GameVariables : MonoBehaviour
     public void HangleLapsInputData(int val)
     {
         pv.RPC("UpdateLap", RpcTarget.AllBuffered, val); //val = the array index of the chose box on the dropdown menu
+    }
+
+    //runs everytime the host changes the time of day
+    public void HangleUpdateTimeOfDay(int val)
+    {
+        pv.RPC("UpdateTimeOfDay", RpcTarget.AllBuffered, val); //val = the array index of the chose box on the dropdown menu
     }
 
     //runs everytime the host toggles the Ai on and off
@@ -103,6 +114,21 @@ public class GameVariables : MonoBehaviour
         //nonHostLapText.text = "Laps: " + laps; //display what the host chooses for the other players
         nonHostLapText.text = laps.ToString(); //display what the host chooses for the other players
         Laps = laps;
+    }
+
+    [PunRPC]
+    void UpdateTimeOfDay(int val)
+    {
+        if(val == 0)
+        {
+            nonHostTimeOfDayText.text = "Day";
+            daytime = true;
+        }
+        if(val == 1)
+        {
+            nonHostTimeOfDayText.text = "Night";
+            daytime = false;
+        }
     }
 
     [PunRPC]
