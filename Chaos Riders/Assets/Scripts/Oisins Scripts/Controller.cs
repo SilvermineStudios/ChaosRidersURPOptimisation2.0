@@ -45,8 +45,6 @@ public class Controller : MonoBehaviour
     [SerializeField] float ShakeAmplitude = 1.2f;         
     [SerializeField] float ShakeFrequency = 2.0f;
     public float currentSpeed { get { return rb.velocity.magnitude * 2.23693629f; } private set { } }
-    public int lastGear { get; private set; }
-    public int currentGear { get; private set; }
     #endregion
 
     #region Wheels
@@ -90,7 +88,7 @@ public class Controller : MonoBehaviour
     public float Revs { get; private set; }
     private int gearNum;
     private float gearFactor;
-    FMOD.Studio.EventInstance brakerSound;
+
     //public string revsoundLocation; //<-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     #endregion
 
@@ -259,7 +257,6 @@ public class Controller : MonoBehaviour
             StartRace();
             Brake();
             AdjustStiffness();
-            ChangeGear();
             Accelerate();
             CalculateRevs();
             GearChanging();
@@ -768,40 +765,9 @@ public class Controller : MonoBehaviour
         wheelColliders[1].steerAngle = steeringAngle;
     }
 
-    
-
-    void ChangeGear()
-    {
-        if (boost)
-        {
-            currentGear = 5;
-            currentTorque = carData.gearRatio[4] - (carData.tractionControl * carData.gearRatio[4]);
-        }
-        else if (currentSpeed < 4 * (carData.topSpeed / 5))
-        {
-            currentGear = 4;
-            currentTorque = carData.gearRatio[3] - (carData.tractionControl * carData.gearRatio[3]);
-        }
-        else if (currentSpeed < 3 * (carData.topSpeed / 5))
-        {
-            currentGear = 3;
-            currentTorque = carData.gearRatio[2] - (carData.tractionControl * carData.gearRatio[2]);
-        }
-        else if (currentSpeed < 2 * (carData.topSpeed / 5))
-        {
-            currentGear = 2;
-            currentTorque = carData.gearRatio[1] - (carData.tractionControl * carData.gearRatio[1]);
-        }
-        else if (currentSpeed < 1 * (carData.topSpeed / 5))
-        {
-            currentGear = 1;
-            currentTorque = carData.gearRatio[0] - (carData.tractionControl * carData.gearRatio[0]);
-        }    
-    }
-
     private void Accelerate()
     {
-        if (verticalInput > 0)
+        if(verticalInput > 0)
         {
             //Debug.Log(1);
         }
@@ -815,7 +781,7 @@ public class Controller : MonoBehaviour
         //rb.drag = 0;
         if (wheelColliders[0].brakeTorque > 0 && !braking)
         {
-            foreach (WheelCollider wheel in wheelColliders)
+            foreach(WheelCollider wheel in wheelColliders)
             {
                 wheel.brakeTorque = 0;
             }
@@ -829,11 +795,11 @@ public class Controller : MonoBehaviour
         }
         else if (currentSpeed > 10 && verticalInput == 0)
         {
-            thrustTorque = -verticalInput * (currentTorque / 4f * a);
+            thrustTorque = -verticalInput * (currentTorque  / 4f * a);
         }
         else
         {
-            thrustTorque = -verticalInput * (currentTorque / 4f * a);
+            thrustTorque = -verticalInput * (currentTorque  / 4f * a);
 
         }
         //Debug.Log(thrustTorque);
@@ -845,7 +811,7 @@ public class Controller : MonoBehaviour
                 {
                     wheelColliders[i].motorTorque = thrustTorque;
                 }
-
+                
             }
         }
 
@@ -858,7 +824,7 @@ public class Controller : MonoBehaviour
         }
 
 
-        { 
+
 
         /*
         //holding s
@@ -886,7 +852,7 @@ public class Controller : MonoBehaviour
 
 
 
-    }
+
 
 
         if(rb.velocity.magnitude > carData.topSpeed)
