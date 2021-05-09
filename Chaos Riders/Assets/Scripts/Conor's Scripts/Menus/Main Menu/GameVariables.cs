@@ -10,7 +10,7 @@ public class GameVariables : MonoBehaviour
     private PhotonView pv;
 
     [SerializeField] private GameObject hostScreen, nonHostScreen;
-    public TMP_Text nonHostLapText, nonHostToggleAIText, nonHostAmountOfAIText, nonHostPickupsText;
+    public TMP_Text nonHostLapText, nonHostToggleAIText, nonHostAmountOfAIText, nonHostPickupsText, nonHostTimeOfDayText;
 
     public static int Laps;
     [SerializeField] private int laps = 3;
@@ -76,6 +76,12 @@ public class GameVariables : MonoBehaviour
         pv.RPC("UpdateLap", RpcTarget.AllBuffered, val); //val = the array index of the chose box on the dropdown menu
     }
 
+    //runs everytime the host changes the time of day
+    public void HangleUpdateTimeOfDay(string Tod)
+    {
+        pv.RPC("UpdateLap", RpcTarget.AllBuffered, Tod); //val = the array index of the chose box on the dropdown menu
+    }
+
     //runs everytime the host toggles the Ai on and off
     public void HangleToggleAIInputData(int val)
     {
@@ -103,6 +109,12 @@ public class GameVariables : MonoBehaviour
         //nonHostLapText.text = "Laps: " + laps; //display what the host chooses for the other players
         nonHostLapText.text = laps.ToString(); //display what the host chooses for the other players
         Laps = laps;
+    }
+
+    [PunRPC]
+    void UpdateTimeOfDay(string tod)
+    {
+        nonHostTimeOfDayText.text = tod;
     }
 
     [PunRPC]
