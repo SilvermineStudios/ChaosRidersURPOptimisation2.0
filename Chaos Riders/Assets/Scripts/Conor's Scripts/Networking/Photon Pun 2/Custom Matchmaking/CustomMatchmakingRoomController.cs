@@ -15,7 +15,9 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
     [SerializeField] private float disconnectTime = 2f;
     private bool isHost = false;
     [SerializeField] private TMP_Text roomNameDisplay; //display for the name of the room
-    [SerializeField] private int multiplayerSceneIndex; //scene index for loading multiplayer scene
+    //[SerializeField] private int multiplayerSceneIndex; //scene index for loading multiplayer scene
+    [SerializeField] private int daySceneIndex = 1; //scene index for loading multiplayer scene
+    [SerializeField] private int nightSceneIndex = 2; //scene index for loading multiplayer scene
 
     [Header("Panels")]
     [SerializeField] private GameObject mainMenuPanel; 
@@ -308,8 +310,16 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.CurrentRoom.IsOpen = false; //close the room
-            PhotonNetwork.LoadLevel(multiplayerSceneIndex);
+            if(GameVariables.Daytime)
+            {
+                PhotonNetwork.CurrentRoom.IsOpen = false; //close the room
+                PhotonNetwork.LoadLevel(daySceneIndex);
+            }
+            else
+            {
+                PhotonNetwork.CurrentRoom.IsOpen = false; //close the room
+                PhotonNetwork.LoadLevel(nightSceneIndex);
+            }
         }
     }
     #endregion

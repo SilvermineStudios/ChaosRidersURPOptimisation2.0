@@ -7382,7 +7382,8 @@ MonoBehaviour:
   thisRoomListing: {fileID: 0}
   disconnectTime: 2
   roomNameDisplay: {fileID: 1941439936}
-  multiplayerSceneIndex: 1
+  daySceneIndex: 1
+  nightSceneIndex: 2
   mainMenuPanel: {fileID: 234914863}
   lobbyPanel: {fileID: 277121216}
   roomPanel: {fileID: 793394570}
@@ -28022,7 +28023,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &843897456
 RectTransform:
   m_ObjectHideFlags: 0
@@ -28044,7 +28045,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 53.000034, y: 95}
+  m_AnchoredPosition: {x: 53.000034, y: 137.99997}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &844450701
@@ -28330,7 +28331,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &864663354
 RectTransform:
   m_ObjectHideFlags: 0
@@ -28352,7 +28353,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 32.9, y: 110}
+  m_AnchoredPosition: {x: 32.9, y: 153}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &864720467
@@ -32611,7 +32612,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -498.2, y: 292.3}
+  m_AnchoredPosition: {x: -498.2, y: 335.29996}
   m_SizeDelta: {x: 291.87958, y: 46.11618}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1076624684
@@ -49159,6 +49160,7 @@ MonoBehaviour:
   toggleAI: 1
   toggleAIDropdown: {fileID: 479571944}
   amountOfAICars: 2
+  daytime: 1
   pickups: 1
   nitroPickup: 1
   shieldPickup: 1
@@ -56398,7 +56400,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1555406166}
         m_TargetAssemblyTypeName: GameVariables, Assembly-CSharp
-        m_MethodName: HangleAmountOfAIInputData
+        m_MethodName: HangleUpdateTimeOfDay
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
