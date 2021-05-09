@@ -40,12 +40,13 @@ public class Audio : MonoBehaviour
     public bool useDoppler = true;                                              // Toggle for using doppler
     Rigidbody rb;
 
-    private Controller m_CarController; // Reference to car we are controlling
-    private OfflineController m_OfflineCarController; // Reference to car we are controlling
+    private Controller m_CarController; 
+    private OfflineController m_OfflineCarController; 
+
 
     FMOD.Studio.EventInstance brakerSound;
     FMOD.Studio.EventInstance brakerSound2;
-
+    Checkpoint Checkpoint;
 
     public Vehicle vehicalData;
     private float topSpeed, currentSpeed, currentGear;
@@ -63,7 +64,7 @@ public class Audio : MonoBehaviour
         FMODUnity.RuntimeManager.AttachInstanceToGameObject(brakerSound, transform, rb);
         FMODUnity.RuntimeManager.AttachInstanceToGameObject(brakerSound2, transform, rb);
         brakerSound.start();
-
+        Checkpoint = GetComponent<Checkpoint>();
         if (onlineCar)
             m_CarController = GetComponent<Controller>();
         else
@@ -99,6 +100,12 @@ public class Audio : MonoBehaviour
     // Update is called once per frame
     private void FixedUpdate()
     {
+        if(Checkpoint.youFinishedTheRace)
+        {
+            brakerSound.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            return;
+        }
+
 
         // The pitch is interpolated between the min and max values, according to the car's revs.
         float pitch;
@@ -113,7 +120,6 @@ public class Audio : MonoBehaviour
 
         if (engineSoundStyle == EngineAudioOptions.Simple)
         {
-            // for 1 channel engine sound, it's oh so simple:
             if (onlineCar)
             {
                 if (m_CarController.boost)
