@@ -88,7 +88,7 @@ public class Audio : MonoBehaviour
             FMODUnity.RuntimeManager.PlayOneShotAttached(revsoundLocation, gameObject);
             played = true;
         }
-        else
+        if ((!Input.GetKey(driveButtonKeyboard) && Input.GetAxis("RT") == 0))
         {
             played = false;
         }
