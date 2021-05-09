@@ -117,15 +117,15 @@ public class MasterClientRaceStart : MonoBehaviour
     IEnumerator StartTime()
     {
         yield return new WaitForSeconds(2.1f);
-        CountDown(3);
+        pv.RPC("CountDown3", RpcTarget.All);
         yield return new WaitForSeconds(2.05f);
-        CountDown(2);
+        pv.RPC("CountDown2", RpcTarget.All);
         yield return new WaitForSeconds(2.05f);
-        CountDown(1);
+        pv.RPC("CountDown1", RpcTarget.All);
         yield return new WaitForSeconds(2.05f);
-        CountDown(0);
+        pv.RPC("CountDownStart", RpcTarget.All);
         yield return new WaitForSeconds(5);
-        CountDown(-1);
+        pv.RPC("WeaponsFree", RpcTarget.All);
     }
 
     [PunRPC]
@@ -133,6 +133,37 @@ public class MasterClientRaceStart : MonoBehaviour
     {
         StartCoroutine(StartTime());
     }
+
+    [PunRPC]
+    public void CountDown3()
+    {
+        CountDown(3);
+    }
+
+    [PunRPC]
+    public void CountDown2()
+    {
+        CountDown(2);
+    }
+
+    [PunRPC]
+    public void CountDown1()
+    {
+        CountDown(1);
+    }
+
+    [PunRPC]
+    public void CountDownStart()
+    {
+        CountDown(0);
+    }
+
+    [PunRPC]
+    public void WeaponsFree()
+    {
+        CountDown(-1);
+    }
+
 
     void FixedUpdate()
     {
@@ -168,7 +199,6 @@ public class MasterClientRaceStart : MonoBehaviour
     
     public void CountDown(int time)
     {
-        MasterClientRaceStart.Instance.countdownTimer = time;
 
         switch (time)
         {
@@ -182,18 +212,21 @@ public class MasterClientRaceStart : MonoBehaviour
             case 2:
                 n2 = true;
                 count2.ChangeAlpha(1);
+                count3.ChangeAlpha(0);
                 FMODUnity.RuntimeManager.PlayOneShot("event:/RaceStart/CountDown");
                 break;
 
             case 1:
                 n1 = true;
                 count1.ChangeAlpha(1);
+                count2.ChangeAlpha(0);
                 FMODUnity.RuntimeManager.PlayOneShot("event:/RaceStart/CountDown");
                 break;
 
             case 0:
                 n0 = true;
                 countStart.ChangeAlpha(1);
+                count1.ChangeAlpha(0);
                 FMODUnity.RuntimeManager.PlayOneShot("event:/RaceStart/Start");
                 MasterClientRaceStart.Instance.countdownTimerStart = true;
                 MasterClientRaceStart.Instance.raceStart = true;
@@ -212,12 +245,6 @@ public class MasterClientRaceStart : MonoBehaviour
     }
 
 
-    [PunRPC]
-    public void WeaponsFree()
-    {
-        MasterClientRaceStart.Instance.weaponsFree = true;
-        FMODUnity.RuntimeManager.PlayOneShot("event:/RaceStart/Start");
-    }
 
 
 

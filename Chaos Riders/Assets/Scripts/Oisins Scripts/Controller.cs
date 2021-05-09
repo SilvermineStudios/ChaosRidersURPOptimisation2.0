@@ -42,6 +42,10 @@ public class Controller : MonoBehaviour
     private float oldRot;
     private float currentTorque;
     private float boostTorque;
+    [SerializeField] float ShakeAmplitude = 1.2f;         
+    [SerializeField] float NormalAmplitude = 0.05f;         
+    [SerializeField] float ShakeFrequency = 2.0f;
+    [SerializeField] float NormalFrequency = 1.0f;
     public float currentSpeed { get { return rb.velocity.magnitude * 2.23693629f; } private set { } }
     #endregion
 
@@ -55,6 +59,7 @@ public class Controller : MonoBehaviour
     [Header("Camera")]
     private CinemachineVirtualCamera cineCamera;
     CinemachineTransposer cineCamTransposer;
+    CinemachineBasicMultiChannelPerlin virtualCameraNoise;
     #endregion
 
     #region Scripts
@@ -90,12 +95,17 @@ public class Controller : MonoBehaviour
     #endregion
 
     #region Driver Abilities
+    
     [Header("Driver Abilities")]
+    [SerializeField] private GameObject nitroEffects;
     public DriverEquipment CurrentEquipment;
     DriverEquipment OldEquipment;
     public DriverUltimate CurrentUltimate;
     DriverUltimate OldUltimate;
     [SerializeField] private KeyCode abilityKeyCode = KeyCode.Q, equipmentKeyCode = KeyCode.E; //Create Keycode Variables for the buttons
+    bool notUsingBrakerAbility = false;
+    bool usingBrakerAbility = true;
+    
     #endregion
 
     #region Ability Data
@@ -128,7 +138,8 @@ public class Controller : MonoBehaviour
     #region Default Functions
     private void Awake()
     {
-        
+        nitroEffects.SetActive(false);
+
         shredUltimate = GetComponent<ShredUltimate>();
         if(anim == null)
             anim = GetComponentInChildren<Animator>();
@@ -160,6 +171,9 @@ public class Controller : MonoBehaviour
         cineCamera = gameObject.transform.GetChild(0).gameObject.GetComponent<CinemachineVirtualCamera>();
         cineCamTransposer = cineCamera.GetCinemachineComponent<CinemachineTransposer>();
         cineCamTransposer.m_FollowOffset = carData.stationaryCamOffset;
+
+        virtualCameraNoise = cineCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+    
 
         skidmarks[0] = skidmarksController;
         skidmarks[1] = skidmarksController;
@@ -261,7 +275,7 @@ public class Controller : MonoBehaviour
             CapSpeed();
             UpdateWheelPoses();
             ChangeFOV();
-
+            ScreenShake();
         }
     }
 
@@ -426,7 +440,7 @@ public class Controller : MonoBehaviour
     {
         if (!MasterClientRaceStart.Instance.countdownTimerStart)
         {
-            ApplyBrake(carData.brakeTorque);
+            ApplyBrake(carData.brakeTorque, notUsingBrakerAbility);
         }
         else
         {
@@ -452,12 +466,13 @@ public class Controller : MonoBehaviour
             StartCoroutine(UseEquipmentUI(equipmentData.equipmentUseTime));
             FMODUnity.RuntimeManager.PlayOneShotAttached(equipmentData.sound, gameObject);
             //spawn the smoke grenade accross the network
-            if (IsThisMultiplayer.Instance.multiplayer)
+            if (IsThisMultiplayer.Instance.multiplayer && currentCarClass == CarClass.Braker)
             {
-                smokeBall.transform.position = abilitySpawn.transform.position;
-                smokeBall.transform.rotation = abilitySpawn.transform.rotation;
-                smokeBall.GetComponent<VisualEffect>().Play();
-                smokeBall.GetComponent<TurnOff>().TriggerMe();
+                pv.RPC("SendSmoke", RpcTarget.All);
+            }
+            else if(IsThisMultiplayer.Instance.multiplayer && currentCarClass == CarClass.Shredder)
+            {
+                PhotonNetwork.Instantiate(equipmentData.photonPrefab, abilitySpawn.transform.position, abilitySpawn.transform.rotation);
             }
             //spawn the smoke grenade in single player
             if (!IsThisMultiplayer.Instance.multiplayer)
@@ -497,6 +512,14 @@ public class Controller : MonoBehaviour
 
     GameObject smokeBall;
 
+    [PunRPC]
+    void SendSmoke()
+    {
+        smokeBall.transform.position = abilitySpawn.transform.position;
+        smokeBall.transform.rotation = abilitySpawn.transform.rotation;
+        smokeBall.GetComponent<VisualEffect>().Play();
+        smokeBall.GetComponent<TurnOff>().TriggerMe();
+    }
 
     private IEnumerator SmokeTrailCourotine(float time)
     {
@@ -521,11 +544,15 @@ public class Controller : MonoBehaviour
         anim.SetBool("LeaveBreaker", false);
 
         //brake
-        ApplyBrake(30000000);
+        ApplyBrake(30000000, usingBrakerAbility);
+
+        nitroEffects.SetActive(false);
 
 
         yield return new WaitForSeconds(ultimateData.ultimatePrepTime);
-        
+
+
+        nitroEffects.SetActive(true);
 
         ReleaseBrake();
 
@@ -537,9 +564,14 @@ public class Controller : MonoBehaviour
         StartCoroutine(UseUltimateUI(ultimateData.ultimateUsetime));
         boost = true;
 
+
         yield return new WaitForSeconds(ultimateData.ultimateUsetime);
+
+
         boost = false;
         usingUltimate = false;
+
+        nitroEffects.SetActive(false);
     }
 
     private IEnumerator UseShredderAbility()
@@ -794,9 +826,52 @@ public class Controller : MonoBehaviour
         {
             for (int i = 0; i < 4; i++)
             {
-                wheelColliders[i].motorTorque = thrustTorque;
+                if (wheelColliders[i].rpm < 25000)
+                {
+                    wheelColliders[i].motorTorque = thrustTorque;
+                }
+                
             }
         }
+
+        //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        foreach (WheelCollider wheel in wheelColliders)
+        {
+            //Debug.Log(wheel.gameObject.name + " Motor Torque = " + wheel.motorTorque);
+            Debug.Log(wheel.gameObject.name + " RPM = " + wheel.rpm);
+
+        }
+
+
+
+
+        /*
+        //holding s
+        if (verticalInput < 0)
+        {
+            //ApplyBrake(1000, usingBrakerAbility);
+
+            foreach (WheelCollider wheel in wheelColliders)
+            {
+                wheel.motorTorque = -1000;
+
+                //Debug.Log(wheel.gameObject.name + " Motor Torque = " + wheel.motorTorque);
+
+                if (wheel.motorTorque > 1)
+                {
+                    //defaultForwardFrictionCurve.stiffness = 2;
+                    //wheel.forwardFriction = defaultForwardFrictionCurve;
+                    //wheel.motorTorque = 2;
+                    //rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z - rb.velocity.z);
+                }
+            }
+        }
+
+        */
+
+
+
+
 
 
         if(rb.velocity.magnitude > carData.topSpeed)
@@ -862,7 +937,7 @@ public class Controller : MonoBehaviour
         {
             if (brake && !braking)
             {
-                ApplyBrake(carData.brakeTorque);
+                ApplyBrake(carData.brakeTorque, notUsingBrakerAbility);
             }
             else if (!brake && !braking)
             {
@@ -871,14 +946,31 @@ public class Controller : MonoBehaviour
         }
     }
 
-    public void ApplyBrake(float brakeAmount)
+    public void ApplyBrake(float brakeAmount, bool brakerAbility)
     {
         braking = true;
-        defaultForwardFrictionCurve.stiffness = 1;
-        foreach (WheelCollider wheel in wheelColliders)
+
+        if (brakerAbility)
         {
-            wheel.brakeTorque = brakeAmount;
-            wheel.forwardFriction = defaultForwardFrictionCurve;
+            //<-------------------------------------------------------------------------------------------------------------------------------------------------BRAKER ABILITY
+            Debug.Log("Using Brake Ability");
+
+            defaultForwardFrictionCurve.stiffness = 200f;
+            foreach (WheelCollider wheel in wheelColliders)
+            {
+                wheel.motorTorque = 0;
+                //wheel.brakeTorque = brakeAmount;
+                wheel.forwardFriction = defaultForwardFrictionCurve;
+            }
+        }
+        else
+        {
+            defaultForwardFrictionCurve.stiffness = 1;
+            foreach (WheelCollider wheel in wheelColliders)
+            {
+                wheel.brakeTorque = brakeAmount;
+                wheel.forwardFriction = defaultForwardFrictionCurve;
+            }
         }
     }
 
@@ -1008,6 +1100,22 @@ public class Controller : MonoBehaviour
     #endregion
 
     #region Driving Aesthetics
+
+    void ScreenShake()
+    {
+        if (boost)
+        {
+            virtualCameraNoise.m_AmplitudeGain = ShakeAmplitude;
+            virtualCameraNoise.m_FrequencyGain = ShakeFrequency;
+        }
+        else
+        {
+            virtualCameraNoise.m_AmplitudeGain = NormalAmplitude;
+            virtualCameraNoise.m_FrequencyGain = NormalFrequency;
+        }
+    }
+    
+
 
     private void UpdateWheelPoses()
     {

@@ -239,7 +239,7 @@ public class Checkpoint : MonoBehaviour
         MainCamera.GetComponent<Animator>().SetBool("Start", true);
         FinishLine.GameWon = true; //send a message to the finish line script that the game has been won
         playerCanvas.SetActive(false); //turn off the players UI
-        GameObject.FindGameObjectWithTag("End").transform.GetChild(0).gameObject.SetActive(true);
+        GameObject.FindGameObjectWithTag("End").SendMessage("Activate");
         MakeYourselfInvisible();
 
         //turn off all of the players cameras

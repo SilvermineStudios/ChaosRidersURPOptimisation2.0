@@ -115,7 +115,9 @@ public class PositionTracker : MonoBehaviourPun
     void CreateEntry(string driverName, string shooterName)
     {
         GameObject Entry = PhotonNetwork.Instantiate("Entry", Vector3.zero, Quaternion.identity);
+        
         Entry.transform.parent = Holder.transform;
+        Entry.transform.localScale = new Vector3(1, 1, 1);
         Entry.GetComponent<EntryScript>().Setup(driverName, shooterName, places[currentPlaceForFinsh]);
         currentPlaceForFinsh++;
     }

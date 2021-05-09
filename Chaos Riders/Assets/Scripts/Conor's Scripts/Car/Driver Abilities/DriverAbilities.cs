@@ -96,7 +96,7 @@ public class DriverAbilities : MonoBehaviour
     {
         anim.SetTrigger("BreakerTransTrigger");
         //brake
-        carController.ApplyBrake(30000000);
+        //carController.ApplyBrake(30000000);
         
         yield return new WaitForSeconds(1.5f);
         carController.ReleaseBrake();
