@@ -69,8 +69,9 @@ public class DustKickVFXScript : MonoBehaviour
         if (pv.IsMine)
         {
             LerpPercentage = CurrentSpeed / MaxSpeed; // gets lerp number
-            Debug.Log("LerpPercentage = " + LerpPercentage);
-            Debug.Log("Current speeed = " + CurrentSpeed);
+            
+            //Debug.Log("LerpPercentage = " + LerpPercentage);
+            //Debug.Log("Current speeed = " + CurrentSpeed);
 
             //Calculates the value after lerping BACK
             TestBackMinVel.x = Mathf.Lerp(0, BackMinVel.x, LerpPercentage);

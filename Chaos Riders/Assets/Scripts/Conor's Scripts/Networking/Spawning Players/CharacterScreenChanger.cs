@@ -84,6 +84,11 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
                 backButton.SetActive(false);
 
                 pv.RPC("RPC_BackButton", RpcTarget.AllBuffered, p);
+
+                pv.RPC("RPC_ButtonColour", p, brakerButton, regularButtonColour);
+                pv.RPC("RPC_ButtonColour", p, shredderButton, regularButtonColour);
+                pv.RPC("RPC_ButtonColour", p, standardGunButton, regularButtonColour);
+                pv.RPC("RPC_ButtonColour", p, goldenGunButton, regularButtonColour);
             }
         }
     }
@@ -180,6 +185,8 @@ public class CharacterScreenChanger : MonoBehaviourPunCallbacks
         {
             if (pmp.gameObject.GetComponent<PhotonView>().Owner == p)
             {
+                pmp.picked = true;
+
                 //braker
                 if (whichCharacter == 0)
                 {
