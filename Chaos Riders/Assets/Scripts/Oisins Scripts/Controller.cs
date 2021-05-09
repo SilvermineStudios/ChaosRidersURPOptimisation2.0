@@ -95,7 +95,9 @@ public class Controller : MonoBehaviour
     #endregion
 
     #region Driver Abilities
+    
     [Header("Driver Abilities")]
+    [SerializeField] private GameObject nitroEffects;
     public DriverEquipment CurrentEquipment;
     DriverEquipment OldEquipment;
     public DriverUltimate CurrentUltimate;
@@ -103,6 +105,7 @@ public class Controller : MonoBehaviour
     [SerializeField] private KeyCode abilityKeyCode = KeyCode.Q, equipmentKeyCode = KeyCode.E; //Create Keycode Variables for the buttons
     bool notUsingBrakerAbility = false;
     bool usingBrakerAbility = true;
+    
     #endregion
 
     #region Ability Data
@@ -135,7 +138,8 @@ public class Controller : MonoBehaviour
     #region Default Functions
     private void Awake()
     {
-        
+        nitroEffects.SetActive(false);
+
         shredUltimate = GetComponent<ShredUltimate>();
         if(anim == null)
             anim = GetComponentInChildren<Animator>();
@@ -538,9 +542,13 @@ public class Controller : MonoBehaviour
         //brake
         ApplyBrake(30000000, usingBrakerAbility);
 
+        nitroEffects.SetActive(false);
+
 
         yield return new WaitForSeconds(ultimateData.ultimatePrepTime);
-        
+
+
+        nitroEffects.SetActive(true);
 
         ReleaseBrake();
 
@@ -552,9 +560,14 @@ public class Controller : MonoBehaviour
         StartCoroutine(UseUltimateUI(ultimateData.ultimateUsetime));
         boost = true;
 
+
         yield return new WaitForSeconds(ultimateData.ultimateUsetime);
+
+
         boost = false;
         usingUltimate = false;
+
+        nitroEffects.SetActive(false);
     }
 
     private IEnumerator UseShredderAbility()
