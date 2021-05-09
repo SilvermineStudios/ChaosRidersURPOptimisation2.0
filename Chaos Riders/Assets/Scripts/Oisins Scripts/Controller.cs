@@ -43,7 +43,9 @@ public class Controller : MonoBehaviour
     private float currentTorque;
     private float boostTorque;
     [SerializeField] float ShakeAmplitude = 1.2f;         
+    [SerializeField] float NormalAmplitude = 0.05f;         
     [SerializeField] float ShakeFrequency = 2.0f;
+    [SerializeField] float NormalFrequency = 1.0f;
     public float currentSpeed { get { return rb.velocity.magnitude * 2.23693629f; } private set { } }
     #endregion
 
@@ -1091,7 +1093,8 @@ public class Controller : MonoBehaviour
         }
         else
         {
-            virtualCameraNoise.m_AmplitudeGain = 0f;
+            virtualCameraNoise.m_AmplitudeGain = NormalAmplitude;
+            virtualCameraNoise.m_FrequencyGain = NormalFrequency;
         }
     }
     
