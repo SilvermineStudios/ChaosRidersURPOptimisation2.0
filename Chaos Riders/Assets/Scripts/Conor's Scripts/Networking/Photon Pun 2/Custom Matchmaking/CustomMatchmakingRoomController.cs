@@ -29,6 +29,7 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
     public List<GameObject> playerNameBoxes = new List<GameObject>();
     [SerializeField] private GameObject photonMenuPlayer; //each player will be given one of these when they join the room
     [SerializeField] private GameObject playerDataManager; //
+    [SerializeField] private GameObject playerDataManagerForCurrentRoom;
 
     [Header("Buttons")]
     public GameObject startButton; //only for the master client
@@ -39,7 +40,30 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
     public static float LoadingTime;
     [SerializeField] public TMP_Text hintText;
 
+    [Header("Starting Race Stuff")]
+    [SerializeField] private TMP_Text gameMessageText;
+    [SerializeField] private string cantStartMsg;
+    [SerializeField] private string readyToStartMsg;
+    [SerializeField] private bool canStartRace = false;
+    private bool CanStartRace()
+    {
+        if (PhotonNetwork.IsMasterClient && playerDataManagerForCurrentRoom != null)
+        {
+            PlayerDataManager pdm = playerDataManagerForCurrentRoom.GetComponent<PlayerDataManager>();
+            if (pdm.photonMenuPlayers.Length > 0)
+            {
+                for (int i = 0; i < pdm.photonMenuPlayers.Length; i++)
+                {
+                    if (pdm.photonMenuPlayers[i].picked == false)
+                        return false;
+                }
+            }
+        }
+        return true;
+    }
     #endregion
+
+
 
     private void Awake()
     {
@@ -47,11 +71,47 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
         loadingScreen.SetActive(false);
         disconnectPanel.SetActive(false);
         LoadingTime = loadingTime;
+        startButton.SetActive(false);
     }
 
     private void Update()
     {
         playerNameBoxes.RemoveAll(x => x == null);
+
+        CheckIfCanStart();
+    }
+
+    void CheckIfCanStart()
+    {
+        //checking if the race can start
+        canStartRace = CanStartRace();
+
+        if(PhotonNetwork.IsMasterClient)
+        {
+            if(canStartRace)
+            {
+                startButton.SetActive(true);
+                pv.RPC("UpdateGameMessageText", RpcTarget.All, canStartRace);
+            }
+            else
+            {
+                startButton.SetActive(false);
+                pv.RPC("UpdateGameMessageText", RpcTarget.All, canStartRace);
+            }
+        }   
+    }
+
+    [PunRPC]
+    void UpdateGameMessageText(bool ready)
+    {
+        if(ready)
+        {
+            gameMessageText.text = readyToStartMsg;
+        }
+        else
+        {
+            gameMessageText.text = cantStartMsg;
+        }
     }
 
     void ClearPlayerListings()
@@ -80,6 +140,7 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
         }
     }
 
+
     public override void OnJoinedRoom()
     {
         roomPanel.SetActive(true); //activate the display for being in a room
@@ -88,13 +149,13 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsMasterClient) //for the host
         {
-            startButton.SetActive(true);
-            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", playerDataManager.name), this.transform.position, this.transform.rotation, 0);
+            //startButton.SetActive(true);
+            playerDataManagerForCurrentRoom = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", playerDataManager.name), this.transform.position, this.transform.rotation, 0);
             isHost = true;
         }
         else
         {
-            startButton.SetActive(false);
+            //startButton.SetActive(false);
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////Spawn photon menu player
@@ -109,6 +170,8 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
         //photonPlayers = PhotonNetwork.playerList;
         ClearPlayerListings(); //remove all old player listings
         ListPlayers();
+
+        //InvokeRepeating("CheckIfCanStart", 0, 1);
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer) 
