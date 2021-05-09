@@ -801,7 +801,7 @@ public class Controller : MonoBehaviour
         {
             for (int i = 0; i < 4; i++)
             {
-                if (wheelColliders[i].rpm > 25000)
+                if (wheelColliders[i].rpm < 25000)
                 {
                     wheelColliders[i].motorTorque = thrustTorque;
                 }
