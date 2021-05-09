@@ -462,9 +462,13 @@ public class Controller : MonoBehaviour
             StartCoroutine(UseEquipmentUI(equipmentData.equipmentUseTime));
             FMODUnity.RuntimeManager.PlayOneShotAttached(equipmentData.sound, gameObject);
             //spawn the smoke grenade accross the network
-            if (IsThisMultiplayer.Instance.multiplayer)
+            if (IsThisMultiplayer.Instance.multiplayer && currentCarClass == CarClass.Braker)
             {
                 pv.RPC("SendSmoke", RpcTarget.All);
+            }
+            else if(IsThisMultiplayer.Instance.multiplayer && currentCarClass == CarClass.Shredder)
+            {
+                PhotonNetwork.Instantiate(equipmentData.photonPrefab, abilitySpawn.transform.position, abilitySpawn.transform.rotation);
             }
             //spawn the smoke grenade in single player
             if (!IsThisMultiplayer.Instance.multiplayer)
