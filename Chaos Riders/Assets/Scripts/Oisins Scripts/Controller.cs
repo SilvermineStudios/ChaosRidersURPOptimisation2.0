@@ -42,6 +42,8 @@ public class Controller : MonoBehaviour
     private float oldRot;
     private float currentTorque;
     private float boostTorque;
+    [SerializeField] float ShakeAmplitude = 1.2f;         
+    [SerializeField] float ShakeFrequency = 2.0f;
     public float currentSpeed { get { return rb.velocity.magnitude * 2.23693629f; } private set { } }
     #endregion
 
@@ -55,6 +57,7 @@ public class Controller : MonoBehaviour
     [Header("Camera")]
     private CinemachineVirtualCamera cineCamera;
     CinemachineTransposer cineCamTransposer;
+    CinemachineBasicMultiChannelPerlin virtualCameraNoise;
     #endregion
 
     #region Scripts
@@ -163,6 +166,9 @@ public class Controller : MonoBehaviour
         cineCamTransposer = cineCamera.GetCinemachineComponent<CinemachineTransposer>();
         cineCamTransposer.m_FollowOffset = carData.stationaryCamOffset;
 
+        virtualCameraNoise = cineCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+    
+
         skidmarks[0] = skidmarksController;
         skidmarks[1] = skidmarksController;
         skidmarks[2] = skidmarksController;
@@ -263,7 +269,7 @@ public class Controller : MonoBehaviour
             CapSpeed();
             UpdateWheelPoses();
             ChangeFOV();
-
+            ScreenShake();
         }
     }
 
@@ -1075,6 +1081,21 @@ public class Controller : MonoBehaviour
     #endregion
 
     #region Driving Aesthetics
+
+    void ScreenShake()
+    {
+        if (boost)
+        {
+            virtualCameraNoise.m_AmplitudeGain = ShakeAmplitude;
+            virtualCameraNoise.m_FrequencyGain = ShakeFrequency;
+        }
+        else
+        {
+            virtualCameraNoise.m_AmplitudeGain = 0f;
+        }
+    }
+    
+
 
     private void UpdateWheelPoses()
     {
