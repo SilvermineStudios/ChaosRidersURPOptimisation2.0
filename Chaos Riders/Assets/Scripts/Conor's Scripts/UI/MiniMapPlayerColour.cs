@@ -7,9 +7,10 @@ public class MiniMapPlayerColour : MonoBehaviour
 {
     private PhotonView pv;
     private SpriteRenderer sr; //use this to change the colour of the player on the map
+
     private Controller c; //use this to get access to the shooter attached
     private AICarController aic;
- 
+
     private void Awake()
     {
         pv = this.transform.parent.gameObject.GetComponent<PhotonView>();
@@ -34,6 +35,7 @@ public class MiniMapPlayerColour : MonoBehaviour
             else
             {
                 sr.color = Color.red;
+
             }
         }
 
