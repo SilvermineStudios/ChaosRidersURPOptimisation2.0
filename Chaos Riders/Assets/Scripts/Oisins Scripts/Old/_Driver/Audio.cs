@@ -74,7 +74,7 @@ public class Audio : MonoBehaviour
         gear1Speed = fifth - (fifth / 4);
     }
 
-
+    bool played;
     private void Update()
     {
         if (onlineCar)
@@ -83,9 +83,14 @@ public class Audio : MonoBehaviour
             currentSpeed = m_OfflineCarController.currentSpeed;
 
         //rev sound <-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        if (Input.GetKeyDown(driveButtonKeyboard))
+        if ((Input.GetKeyDown(driveButtonKeyboard) || Input.GetAxis("RT") > 0) && !played)
         {
             FMODUnity.RuntimeManager.PlayOneShotAttached(revsoundLocation, gameObject);
+            played = true;
+        }
+        else
+        {
+            played = false;
         }
 
         ChangingGear();
