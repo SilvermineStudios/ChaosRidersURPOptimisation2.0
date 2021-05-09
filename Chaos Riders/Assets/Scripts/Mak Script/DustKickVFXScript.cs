@@ -66,14 +66,21 @@ public class DustKickVFXScript : MonoBehaviour
         }
 
 
-        if(!backLeft.isGrounded || !backRight.isGrounded || !frontRight.isGrounded || !frontLeft.isGrounded)
+        if (!backLeft.isGrounded || !backRight.isGrounded || !frontRight.isGrounded || !frontLeft.isGrounded)
         {
-            pv.RPC("SendOut", RpcTarget.All);
+            if (IsThisMultiplayer.Instance.multiplayer)
+            {
+                pv.RPC("SendOut", RpcTarget.All);
+            }
+            else
+            {
+                SendOut();
+            }
         }
     }
     private void Calculate()
     {
-        if (pv.IsMine)
+        if (pv.IsMine || !IsThisMultiplayer.Instance.multiplayer)
         {
             LerpPercentage = CurrentSpeed / MaxSpeed; // gets lerp number
             
@@ -98,7 +105,14 @@ public class DustKickVFXScript : MonoBehaviour
             TestFrontMaxVel.y = Mathf.Lerp(0, FrontMaxVel.y, LerpPercentage);
             TestFrontMaxVel.z = Mathf.Lerp(0, FrontMaxVel.z, LerpPercentage);
 
-            pv.RPC("SendOut", RpcTarget.All);
+            if (IsThisMultiplayer.Instance.multiplayer)
+            {
+                pv.RPC("SendOut", RpcTarget.All);
+            }
+            else
+            {
+                SendOut();
+            }
         }
 
     }

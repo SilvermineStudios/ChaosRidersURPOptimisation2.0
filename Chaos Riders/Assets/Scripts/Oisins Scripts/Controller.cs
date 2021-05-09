@@ -805,15 +805,13 @@ public class Controller : MonoBehaviour
             }
         }
 
-
-
-
-
         //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         foreach (WheelCollider wheel in wheelColliders)
         {
             Debug.Log(wheel.gameObject.name + " Motor Torque = " + wheel.motorTorque);
         }
+
+        /*
         //holding s
         if (verticalInput < 0)
         {
@@ -821,7 +819,7 @@ public class Controller : MonoBehaviour
 
             foreach (WheelCollider wheel in wheelColliders)
             {
-                wheel.motorTorque = 1000;
+                wheel.motorTorque = -1000;
 
                 //Debug.Log(wheel.gameObject.name + " Motor Torque = " + wheel.motorTorque);
 
@@ -835,7 +833,7 @@ public class Controller : MonoBehaviour
             }
         }
 
-
+        */
 
 
 
