@@ -111,22 +111,44 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
         }
         else
         {
-            gameMessageText.text = cantStartMsg;// + loadingDots;
-            //StartCoroutine(LoadingDots());
+            gameMessageText.text = cantStartMsg + loadingDots;
+            LoadingDots();
         }
     }
 
-    private IEnumerator LoadingDots()
+    public float elipseCooldown, elipseRate;
+    bool timeRecorded;
+    private void LoadingDots()
     {
-        loadingDots = ".";
+        if(!timeRecorded)
+        {
+            timeRecorded = true;
+            elipseCooldown = Time.time;
+        }
+        loadingDots = "";
 
-        yield return new WaitForSeconds(0.5f);
+        if (Time.time >= elipseCooldown + elipseRate)
+        {
+            loadingDots = ".";
 
-        loadingDots = "..";
-
-        yield return new WaitForSeconds(0.5f);
-
-        loadingDots = "...";
+            if (Time.time >= elipseCooldown + 2 * elipseRate)
+            {
+                loadingDots = "..";
+                if (Time.time >= elipseCooldown + 3 * elipseRate)
+                {
+                    loadingDots = "..";
+                    if (Time.time >= elipseCooldown + 3 * elipseRate)
+                    {
+                        loadingDots = "...";
+                        if (Time.time >= elipseCooldown + 4 * elipseRate)
+                        {
+                            timeRecorded = false;
+                        }
+                    }
+                }
+            }
+        }
+        
     }
 
     void ClearPlayerListings()
