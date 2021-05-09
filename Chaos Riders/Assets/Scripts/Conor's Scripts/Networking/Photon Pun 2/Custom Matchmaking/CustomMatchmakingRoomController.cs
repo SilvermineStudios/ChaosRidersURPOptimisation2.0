@@ -43,6 +43,7 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
     [Header("Starting Race Stuff")]
     [SerializeField] private TMP_Text gameMessageText;
     [SerializeField] private string cantStartMsg;
+    [SerializeField] private string loadingDots;
     [SerializeField] private string readyToStartMsg;
     [SerializeField] private bool canStartRace = false;
     private bool CanStartRace()
@@ -71,6 +72,7 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
         loadingScreen.SetActive(false);
         disconnectPanel.SetActive(false);
         LoadingTime = loadingTime;
+        startButton.SetActive(false);
     }
 
     private void Update()
@@ -109,8 +111,44 @@ public class CustomMatchmakingRoomController : MonoBehaviourPunCallbacks
         }
         else
         {
-            gameMessageText.text = cantStartMsg;
+            gameMessageText.text = cantStartMsg + loadingDots;
+            LoadingDots();
         }
+    }
+
+    public float elipseCooldown, elipseRate;
+    bool timeRecorded;
+    private void LoadingDots()
+    {
+        if(!timeRecorded)
+        {
+            timeRecorded = true;
+            elipseCooldown = Time.time;
+        }
+        loadingDots = "";
+
+        if (Time.time >= elipseCooldown + elipseRate)
+        {
+            loadingDots = ".";
+
+            if (Time.time >= elipseCooldown + 2 * elipseRate)
+            {
+                loadingDots = "..";
+                if (Time.time >= elipseCooldown + 3 * elipseRate)
+                {
+                    loadingDots = "..";
+                    if (Time.time >= elipseCooldown + 3 * elipseRate)
+                    {
+                        loadingDots = "...";
+                        if (Time.time >= elipseCooldown + 4 * elipseRate)
+                        {
+                            timeRecorded = false;
+                        }
+                    }
+                }
+            }
+        }
+        
     }
 
     void ClearPlayerListings()
