@@ -39,7 +39,7 @@ public class Audio : MonoBehaviour
     public float dopplerLevel = 1;                                              // The mount of doppler effect used in the audio
     public bool useDoppler = true;                                              // Toggle for using doppler
     Rigidbody rb;
-    
+
     private Controller m_CarController; // Reference to car we are controlling
     private OfflineController m_OfflineCarController; // Reference to car we are controlling
 
@@ -143,27 +143,6 @@ public class Audio : MonoBehaviour
     {
         //Debug.Log("One Fifth = " + fifth + "    gear 1 speed = " + gear1Speed);
 
-        if (m_CarController.currentGear == 1)
-        {
-            brakerSound.setParameterByName("Gear Change", 0.1f);
-        }
-        if (m_CarController.currentGear == 2)
-        {
-            brakerSound.setParameterByName("Gear Change", 0.2f);
-        }
-        if (m_CarController.currentGear == 3)
-        {
-            brakerSound.setParameterByName("Gear Change", 0.3f);
-        }
-        if (m_CarController.currentGear == 4)
-        {
-            brakerSound.setParameterByName("Gear Change", 0.4f);
-        }
-        if (m_CarController.currentGear == 5)
-        {
-            brakerSound.setParameterByName("Gear Change", 0.5f);
-        }
-        /*
         //gear 1
         if (currentSpeed <= gear1Speed)
         {
@@ -198,8 +177,6 @@ public class Audio : MonoBehaviour
             currentGear = 5f;
             brakerSound.setParameterByName("Gear Change", 0.5f);
         }
-
-        */
     }
 
 
