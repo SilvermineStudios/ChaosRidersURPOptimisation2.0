@@ -70,6 +70,7 @@ public class GameVariables : MonoBehaviour
         NitroPickup = nitroPickup;
         ShieldPickup = shieldPickup;
         RPGPickup = rpgPickup;
+        Daytime = daytime;
     }
 
 
@@ -126,7 +127,7 @@ public class GameVariables : MonoBehaviour
         if(val == 1)
         {
             nonHostTimeOfDayText.text = "Night";
-            Daytime = false;
+            daytime = false;
         }
     }
 
